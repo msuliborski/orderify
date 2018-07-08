@@ -1,0 +1,2198 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="297mm"
+   height="210mm"
+   viewBox="0 0 1052.3622 744.09448"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="drawing.svg">
+  <defs
+     id="defs4">
+    <filter
+       style="color-interpolation-filters:sRGB;"
+       inkscape:label="Drop Shadow"
+       id="filter4152">
+      <feFlood
+         flood-opacity="0.717647"
+         flood-color="rgb(0,0,0)"
+         result="flood"
+         id="feFlood4154" />
+      <feComposite
+         in="flood"
+         in2="SourceGraphic"
+         operator="in"
+         result="composite1"
+         id="feComposite4156" />
+      <feGaussianBlur
+         in="composite1"
+         stdDeviation="3.7"
+         result="blur"
+         id="feGaussianBlur4158" />
+      <feOffset
+         dx="2.77556e-017"
+         dy="0.7"
+         result="offset"
+         id="feOffset4160" />
+      <feComposite
+         in="SourceGraphic"
+         in2="offset"
+         operator="over"
+         result="composite2"
+         id="feComposite4162" />
+    </filter>
+    <filter
+       style="color-interpolation-filters:sRGB;"
+       inkscape:label="Drop Shadow"
+       id="filter4164">
+      <feFlood
+         flood-opacity="0.717647"
+         flood-color="rgb(0,0,0)"
+         result="flood"
+         id="feFlood4166" />
+      <feComposite
+         in="flood"
+         in2="SourceGraphic"
+         operator="in"
+         result="composite1"
+         id="feComposite4168" />
+      <feGaussianBlur
+         in="composite1"
+         stdDeviation="3.7"
+         result="blur"
+         id="feGaussianBlur4170" />
+      <feOffset
+         dx="2.77556e-017"
+         dy="0.7"
+         result="offset"
+         id="feOffset4172" />
+      <feComposite
+         in="SourceGraphic"
+         in2="offset"
+         operator="over"
+         result="composite2"
+         id="feComposite4174" />
+    </filter>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.4"
+     inkscape:cx="120.75944"
+     inkscape:cy="-154.93806"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="986"
+     inkscape:window-x="-11"
+     inkscape:window-y="-11"
+     inkscape:window-maximized="1"
+     showguides="true" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-308.26772)">
+    <rect
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#b4307e;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="rect4136"
+       width="184.33876"
+       height="130.85316"
+       x="-33.895092"
+       y="986.34576"
+       inkscape:export-xdpi="900"
+       inkscape:export-ydpi="900" />
+    <rect
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#fbb8ff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="rect4232"
+       width="87.088699"
+       height="6.8603787"
+       x="30.559788"
+       y="989.97534"
+       ry="0" />
+    <rect
+       y="305.21933"
+       x="-1.4285715"
+       height="751.42859"
+       width="295.71426"
+       id="rect4148"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#8e2663;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;filter:url(#filter4152);color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       transform="matrix(0.21945275,0,0,0.17279603,-33.937877,933.98532)" />
+    <rect
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="rect4176"
+       width="46.595047"
+       height="5.4371428"
+       x="-24.143675"
+       y="991.6001"
+       ry="1.6081691" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot4178"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       transform="matrix(0.17413919,0,0,0.17413919,-36.50718,986.7531)"><flowRegion
+         id="flowRegion4180"><rect
+           id="rect4182"
+           width="239.40613"
+           height="23.738577"
+           x="87.378197"
+           y="31.936937" /></flowRegion><flowPara
+         id="flowPara4184"
+         style="font-size:15px">Witam w restauracji DaGrasso!</flowPara></flowRoot>    <rect
+       ry="1.6081691"
+       y="997.31708"
+       x="-24.143675"
+       height="5.4371428"
+       width="46.595047"
+       id="rect4186"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+    <flowRoot
+       transform="matrix(0.17413919,0,0,0.17413919,-36.50718,992.57212)"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       id="flowRoot4188"
+       xml:space="preserve"><flowRegion
+         id="flowRegion4190"><rect
+           y="31.936937"
+           x="87.378197"
+           height="23.738577"
+           width="239.40613"
+           id="rect4192" /></flowRegion><flowPara
+         style="font-size:15px"
+         id="flowPara4194">Co chciałbyś dzisiaj zamówić?</flowPara></flowRoot>    <circle
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#bcffaf;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="path4196"
+       cx="-28.367813"
+       cy="994.06519"
+       r="2.7668757" />
+    <rect
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#c745ff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="rect4198"
+       width="42.373272"
+       height="8.6711559"
+       x="-16.563505"
+       y="1003.6607"
+       ry="2.5647082" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot4200"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       transform="matrix(0.17413919,0,0,0.17413919,-28.523674,998.91576)"><flowRegion
+         id="flowRegion4202"><rect
+           id="rect4204"
+           width="244.40614"
+           height="38.024292"
+           x="87.378197"
+           y="31.936937"
+           style="fill:#ffffff;fill-opacity:1" /></flowRegion><flowPara
+         id="flowPara4206"
+         style="font-size:15px;fill:#ffffff;fill-opacity:1">Mam ochotę na kurczaka w cieście.</flowPara></flowRoot>    <rect
+       transform="matrix(0.11336032,0,0,0.17371046,118.17196,933.36265)"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#8e2663;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;filter:url(#filter4152);color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="rect4208"
+       width="295.71426"
+       height="751.42859"
+       x="-1.4285715"
+       y="305.21933" />
+    <rect
+       ry="1.7642556"
+       y="1013.2367"
+       x="-24.143675"
+       height="5.9648643"
+       width="46.595047"
+       id="rect4210"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+    <flowRoot
+       transform="matrix(0.17413919,0,0,0.17413919,-36.50718,1008.3897)"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       id="flowRoot4212"
+       xml:space="preserve"><flowRegion
+         id="flowRegion4214"><rect
+           y="31.936937"
+           x="87.378197"
+           height="42.931477"
+           width="238.39598"
+           id="rect4216" /></flowRegion><flowPara
+         style="font-size:15px"
+         id="flowPara4218">A więc kurczak w cieście. </flowPara></flowRoot>    <circle
+       r="2.7668757"
+       cy="1015.7018"
+       cx="-28.367813"
+       id="circle4220"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#bcffaf;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+    <flowRoot
+       transform="matrix(0.17413919,0,0,0.17413919,51.414855,986.04415)"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#412b8b;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       id="flowRoot4234"
+       xml:space="preserve"><flowRegion
+         id="flowRegion4236"><rect
+           y="31.936937"
+           x="87.378197"
+           height="23.738577"
+           width="239.40613"
+           id="rect4238"
+           style="fill:#412b8b;fill-opacity:1" /></flowRegion><flowPara
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;font-family:Calibri;-inkscape-font-specification:Calibri;fill:#412b8b;fill-opacity:1"
+         id="flowPara4240">Przystawki</flowPara></flowRoot>    <g
+       id="g4408"
+       transform="matrix(0.17413919,0,0,0.17413919,-33.646322,933.1951)">
+      <g
+         id="g4352">
+        <rect
+           style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#afefda;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+           id="rect4222"
+           width="327.57358"
+           height="31.222971"
+           x="525.30035"
+           y="385.39523"
+           ry="9.2349634" />
+        <flowRoot
+           xml:space="preserve"
+           id="flowRoot4224"
+           style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           transform="translate(454.30252,358.14708)"><flowRegion
+             id="flowRegion4226"><rect
+               id="rect4228"
+               width="302.26328"
+               height="22.310005"
+               x="87.378197"
+               y="31.936937" /></flowRegion><flowPara
+             id="flowPara4230"
+             style="font-size:15px">Szparagi zawijane w łososiu wędzonym</flowPara></flowRoot>      </g>
+      <g
+         id="g4387">
+        <rect
+           ry="9.2349634"
+           y="385.39523"
+           x="385.89929"
+           height="31.222971"
+           width="78.065903"
+           id="rect4242"
+           style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#afefda;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+        <flowRoot
+           transform="translate(305.8101,358.14708)"
+           style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           id="flowRoot4244"
+           xml:space="preserve"><flowRegion
+             id="flowRegion4246"><rect
+               y="31.936937"
+               x="87.378197"
+               height="22.310005"
+               width="302.26328"
+               id="rect4248" /></flowRegion><flowPara
+             style="font-size:15px"
+             id="flowPara4250">25,00 zł</flowPara></flowRoot>      </g>
+    </g>
+    <g
+       id="g4422"
+       transform="matrix(0.17413919,0,0,0.17413919,-33.646322,932.75533)">
+      <g
+         id="g4359">
+        <rect
+           ry="9.2349634"
+           y="420.75058"
+           x="563.68616"
+           height="31.222971"
+           width="289.18777"
+           id="rect4252"
+           style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#afefda;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+        <flowRoot
+           transform="translate(491.67816,393.50242)"
+           style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           id="flowRoot4254"
+           xml:space="preserve"><flowRegion
+             id="flowRegion4256"><rect
+               y="31.936937"
+               x="87.378197"
+               height="22.310005"
+               width="302.26328"
+               id="rect4258" /></flowRegion><flowPara
+             style="font-size:15px"
+             id="flowPara4260">Koktajl z krewetek w sosie brandy</flowPara></flowRoot>      </g>
+      <g
+         id="g4380">
+        <rect
+           style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#afefda;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+           id="rect4262"
+           width="78.065903"
+           height="31.222971"
+           x="385.89929"
+           y="420.75058"
+           ry="9.2349634" />
+        <flowRoot
+           xml:space="preserve"
+           id="flowRoot4264"
+           style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           transform="translate(305.8101,393.50242)"><flowRegion
+             id="flowRegion4266"><rect
+               id="rect4268"
+               width="302.26328"
+               height="22.310005"
+               x="87.378197"
+               y="31.936937" /></flowRegion><flowPara
+             id="flowPara4270"
+             style="font-size:15px">25,00 zł</flowPara></flowRoot>      </g>
+    </g>
+    <g
+       id="g4436"
+       transform="matrix(0.17413919,0,0,0.17413919,-33.646322,932.66737)">
+      <g
+         id="g4394">
+        <rect
+           style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#afefda;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+           id="rect4272"
+           width="324.54312"
+           height="31.222971"
+           x="528.33081"
+           y="454.0856"
+           ry="9.2349634" />
+        <flowRoot
+           xml:space="preserve"
+           id="flowRoot4274"
+           style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           transform="translate(458.34313,426.83745)"><flowRegion
+             id="flowRegion4276"><rect
+               id="rect4278"
+               width="302.26328"
+               height="22.310005"
+               x="87.378197"
+               y="31.936937" /></flowRegion><flowPara
+             id="flowPara4280"
+             style="font-size:15px">Roladki z szynki z musem chrzanowym</flowPara></flowRoot>      </g>
+      <g
+         id="g4401">
+        <rect
+           ry="9.2349634"
+           y="454.0856"
+           x="385.89929"
+           height="31.222971"
+           width="78.065903"
+           id="rect4282"
+           style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#afefda;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+        <flowRoot
+           transform="translate(305.8101,426.83745)"
+           style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           id="flowRoot4284"
+           xml:space="preserve"><flowRegion
+             id="flowRegion4286"><rect
+               y="31.936937"
+               x="87.378197"
+               height="22.310005"
+               width="302.26328"
+               id="rect4288" /></flowRegion><flowPara
+             style="font-size:15px"
+             id="flowPara4290">25,00 zł</flowPara></flowRoot>      </g>
+    </g>
+    <rect
+       ry="0"
+       y="1021.6387"
+       x="30.559788"
+       height="6.8603787"
+       width="87.088699"
+       id="rect4450"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#fbb8ff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot4452"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#412b8b;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       transform="matrix(0.17413919,0,0,0.17413919,55.440123,1017.6233)"><flowRegion
+         id="flowRegion4454"><rect
+           style="fill:#412b8b;fill-opacity:1"
+           id="rect4456"
+           width="239.40613"
+           height="23.738577"
+           x="87.378197"
+           y="31.936937" /></flowRegion><flowPara
+         id="flowPara4458"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;font-family:Calibri;-inkscape-font-specification:Calibri;fill:#412b8b;fill-opacity:1">Zupy</flowPara></flowRoot>    <g
+       transform="matrix(0.17413919,0,0,0.17413919,-33.646322,953.0726)"
+       id="g4460">
+      <g
+         id="g4462">
+        <rect
+           ry="9.2349634"
+           y="454.0856"
+           x="673.79279"
+           height="31.222971"
+           width="179.08116"
+           id="rect4464"
+           style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#afefda;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+        <flowRoot
+           transform="translate(603.8051,426.83745)"
+           style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           id="flowRoot4466"
+           xml:space="preserve"><flowRegion
+             id="flowRegion4468"><rect
+               y="31.936937"
+               x="87.378197"
+               height="22.310005"
+               width="302.26328"
+               id="rect4470" /></flowRegion><flowPara
+             style="font-size:15px"
+             id="flowPara4472">Rosół z makaronem</flowPara></flowRoot>      </g>
+      <g
+         id="g4474">
+        <rect
+           style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#afefda;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+           id="rect4476"
+           width="78.065903"
+           height="31.222971"
+           x="385.89929"
+           y="454.0856"
+           ry="9.2349634" />
+        <flowRoot
+           xml:space="preserve"
+           id="flowRoot4478"
+           style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           transform="translate(305.8101,426.83745)"><flowRegion
+             id="flowRegion4480"><rect
+               id="rect4482"
+               width="302.26328"
+               height="22.310005"
+               x="87.378197"
+               y="31.936937" /></flowRegion><flowPara
+             id="flowPara4484"
+             style="font-size:15px">25,00 zł</flowPara></flowRoot>      </g>
+    </g>
+    <g
+       id="g4486"
+       transform="matrix(0.17413919,0,0,0.17413919,-33.646322,958.87754)">
+      <g
+         id="g4488">
+        <rect
+           style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#afefda;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+           id="rect4490"
+           width="183.12177"
+           height="31.222971"
+           x="669.7522"
+           y="454.0856"
+           ry="9.2349634" />
+        <flowRoot
+           xml:space="preserve"
+           id="flowRoot4492"
+           style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           transform="translate(596.73403,426.83745)"><flowRegion
+             id="flowRegion4494"><rect
+               id="rect4496"
+               width="302.26328"
+               height="22.310005"
+               x="87.378197"
+               y="31.936937" /></flowRegion><flowPara
+             id="flowPara4498"
+             style="font-size:15px">Pomidorowa z ryżem</flowPara></flowRoot>      </g>
+      <g
+         id="g4500">
+        <rect
+           ry="9.2349634"
+           y="454.0856"
+           x="385.89929"
+           height="31.222971"
+           width="78.065903"
+           id="rect4502"
+           style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#afefda;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+        <flowRoot
+           transform="translate(305.8101,426.83745)"
+           style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           id="flowRoot4504"
+           xml:space="preserve"><flowRegion
+             id="flowRegion4506"><rect
+               y="31.936937"
+               x="87.378197"
+               height="22.310005"
+               width="302.26328"
+               id="rect4508" /></flowRegion><flowPara
+             style="font-size:15px"
+             id="flowPara4510">25,00 zł</flowPara></flowRoot>      </g>
+    </g>
+    <g
+       transform="matrix(0.17413919,0,0,0.17413919,-33.646322,964.68247)"
+       id="g4512">
+      <g
+         id="g4514">
+        <rect
+           ry="14.314181"
+           y="454.0856"
+           x="586.91968"
+           height="48.395565"
+           width="265.95428"
+           id="rect4516"
+           style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#afefda;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+        <flowRoot
+           transform="translate(514.91167,426.83745)"
+           style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           id="flowRoot4518"
+           xml:space="preserve"><flowRegion
+             id="flowRegion4520"><rect
+               y="31.936937"
+               x="87.378197"
+               height="41.502903"
+               width="299.23282"
+               id="rect4522" /></flowRegion><flowPara
+             style="font-size:15px"
+             id="flowPara4524">Krem cebulowy z parmezanem i grahamkami</flowPara></flowRoot>      </g>
+      <g
+         id="g4526">
+        <rect
+           style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#afefda;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+           id="rect4528"
+           width="78.065903"
+           height="31.222971"
+           x="385.89929"
+           y="454.0856"
+           ry="9.2349634" />
+        <flowRoot
+           xml:space="preserve"
+           id="flowRoot4530"
+           style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           transform="translate(305.8101,426.83745)"><flowRegion
+             id="flowRegion4532"><rect
+               id="rect4534"
+               width="302.26328"
+               height="22.310005"
+               x="87.378197"
+               y="31.936937" /></flowRegion><flowPara
+             id="flowPara4536"
+             style="font-size:15px">25,00 zł</flowPara></flowRoot>      </g>
+    </g>
+    <rect
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="rect4538"
+       width="46.595047"
+       height="11.945707"
+       x="-24.143675"
+       y="1019.5693"
+       ry="3.5332372" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot4540"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       transform="matrix(0.17413919,0,0,0.17413919,-36.50718,1014.7223)"><flowRegion
+         id="flowRegion4542"><rect
+           id="rect4544"
+           width="242.4366"
+           height="61.114227"
+           x="87.378197"
+           y="31.936937" /></flowRegion><flowPara
+         id="flowPara4546"
+         style="font-size:15px">Czy ma on być podany z sosem musztardowym, czy z grzybowym?</flowPara></flowRoot>    <g
+       id="g4746"
+       transform="matrix(0.17413919,0,0,0.17413919,-18.612511,941.11092)">
+      <rect
+         style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#c745ff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+         id="rect4548"
+         width="170.59894"
+         height="35.652264"
+         x="11.225523"
+         y="569.30603"
+         ry="10.545035" />
+      <flowRoot
+         xml:space="preserve"
+         id="flowRoot4550"
+         style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         transform="translate(-40.772127,543.87337)"><flowRegion
+           id="flowRegion4552"><rect
+             id="rect4554"
+             width="244.40614"
+             height="38.024292"
+             x="87.378197"
+             y="31.936937"
+             style="fill:#ffffff;fill-opacity:1" /></flowRegion><flowPara
+           id="flowPara4556"
+           style="font-size:15px;fill:#ffffff;fill-opacity:1">Musztardowy</flowPara></flowRoot>    </g>
+    <g
+       id="g4753"
+       transform="matrix(0.17413919,0,0,0.17413919,-49.220354,948.32311)">
+      <rect
+         ry="10.545035"
+         y="569.30603"
+         x="186.99207"
+         height="35.652264"
+         width="170.59894"
+         id="rect4558"
+         style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#c745ff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+      <flowRoot
+         transform="translate(147.50784,543.87337)"
+         style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         id="flowRoot4560"
+         xml:space="preserve"><flowRegion
+           id="flowRegion4562"><rect
+             style="fill:#ffffff;fill-opacity:1"
+             y="31.936937"
+             x="87.378197"
+             height="38.024292"
+             width="244.40614"
+             id="rect4564" /></flowRegion><flowPara
+           style="font-size:15px;fill:#ffffff;fill-opacity:1"
+           id="flowPara4566">Grzybowy</flowPara></flowRoot>    </g>
+    <rect
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#fbb8ff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="rect4568"
+       width="87.088699"
+       height="6.8603787"
+       x="30.559788"
+       y="1056.6442"
+       ry="0" />
+    <flowRoot
+       transform="matrix(0.17413919,0,0,0.17413919,49.187098,1052.7198)"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#412b8b;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       id="flowRoot4570"
+       xml:space="preserve"><flowRegion
+         id="flowRegion4572"><rect
+           y="31.936937"
+           x="87.378197"
+           height="23.738577"
+           width="239.40613"
+           id="rect4574"
+           style="fill:#412b8b;fill-opacity:1" /></flowRegion><flowPara
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;font-family:Calibri;-inkscape-font-specification:Calibri;fill:#412b8b;fill-opacity:1"
+         id="flowPara4576">Dania główne</flowPara></flowRoot>    <g
+       id="g4578"
+       transform="matrix(0.17413919,0,0,0.17413919,-33.646322,1000.0398)">
+      <g
+         id="g4580">
+        <rect
+           ry="9.2349634"
+           y="385.39523"
+           x="659.65063"
+           height="31.222971"
+           width="193.22328"
+           id="rect4582"
+           style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#afefda;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+        <flowRoot
+           transform="translate(587.64266,358.14708)"
+           style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           id="flowRoot4584"
+           xml:space="preserve"><flowRegion
+             id="flowRegion4586"><rect
+               y="31.936937"
+               x="87.378197"
+               height="22.310005"
+               width="302.26328"
+               id="rect4588" /></flowRegion><flowPara
+             style="font-size:15px"
+             id="flowPara4590">Rolada śląska wołowa</flowPara></flowRoot>      </g>
+      <g
+         id="g4592">
+        <rect
+           style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#afefda;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+           id="rect4594"
+           width="78.065903"
+           height="31.222971"
+           x="385.89929"
+           y="385.39523"
+           ry="9.2349634" />
+        <flowRoot
+           xml:space="preserve"
+           id="flowRoot4596"
+           style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           transform="translate(305.8101,358.14708)"><flowRegion
+             id="flowRegion4598"><rect
+               id="rect4600"
+               width="302.26328"
+               height="22.310005"
+               x="87.378197"
+               y="31.936937" /></flowRegion><flowPara
+             id="flowPara4602"
+             style="font-size:15px">25,00 zł</flowPara></flowRoot>      </g>
+    </g>
+    <g
+       transform="matrix(0.17413919,0,0,0.17413919,-33.646322,999.60004)"
+       id="g4604">
+      <g
+         id="g4606">
+        <rect
+           style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#afefda;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+           id="rect4608"
+           width="254.84259"
+           height="31.222971"
+           x="598.03137"
+           y="420.75058"
+           ry="9.2349634" />
+        <flowRoot
+           xml:space="preserve"
+           id="flowRoot4610"
+           style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           transform="translate(527.0335,393.50242)"><flowRegion
+             id="flowRegion4612"><rect
+               id="rect4614"
+               width="302.26328"
+               height="22.310005"
+               x="87.378197"
+               y="31.936937" /></flowRegion><flowPara
+             id="flowPara4616"
+             style="font-size:15px">Kotlet schabowy panierowany</flowPara></flowRoot>      </g>
+      <g
+         id="g4618">
+        <rect
+           ry="9.2349634"
+           y="420.75058"
+           x="385.89929"
+           height="31.222971"
+           width="78.065903"
+           id="rect4620"
+           style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#afefda;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+        <flowRoot
+           transform="translate(305.8101,393.50242)"
+           style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           id="flowRoot4622"
+           xml:space="preserve"><flowRegion
+             id="flowRegion4624"><rect
+               y="31.936937"
+               x="87.378197"
+               height="22.310005"
+               width="302.26328"
+               id="rect4626" /></flowRegion><flowPara
+             style="font-size:15px"
+             id="flowPara4628">25,00 zł</flowPara></flowRoot>      </g>
+    </g>
+    <g
+       transform="matrix(0.17413919,0,0,0.17413919,-33.646322,999.51209)"
+       id="g4630">
+      <g
+         id="g4632">
+        <rect
+           ry="9.2349634"
+           y="454.0856"
+           x="691.97552"
+           height="31.222971"
+           width="160.89841"
+           id="rect4634"
+           style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#afefda;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+        <flowRoot
+           transform="translate(619.96754,426.83745)"
+           style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           id="flowRoot4636"
+           xml:space="preserve"><flowRegion
+             id="flowRegion4638"><rect
+               y="31.936937"
+               x="87.378197"
+               height="22.310005"
+               width="302.26328"
+               id="rect4640" /></flowRegion><flowPara
+             style="font-size:15px"
+             id="flowPara4642">Kurczak w cieście</flowPara></flowRoot>      </g>
+      <g
+         id="g4644">
+        <rect
+           style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#afefda;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+           id="rect4646"
+           width="78.065903"
+           height="31.222971"
+           x="385.89929"
+           y="454.0856"
+           ry="9.2349634" />
+        <flowRoot
+           xml:space="preserve"
+           id="flowRoot4648"
+           style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           transform="translate(305.8101,426.83745)"><flowRegion
+             id="flowRegion4650"><rect
+               id="rect4652"
+               width="302.26328"
+               height="22.310005"
+               x="87.378197"
+               y="31.936937" /></flowRegion><flowPara
+             id="flowPara4654"
+             style="font-size:15px">25,00 zł</flowPara></flowRoot>      </g>
+    </g>
+    <g
+       id="g4656"
+       transform="matrix(0.17413919,0,0,0.17413919,-33.646322,1017.1028)">
+      <g
+         id="g4658">
+        <rect
+           ry="14.314181"
+           y="385.39523"
+           x="591.9704"
+           height="48.395565"
+           width="260.9035"
+           id="rect4660"
+           style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#afefda;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+        <flowRoot
+           transform="translate(522.99289,358.14708)"
+           style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           id="flowRoot4662"
+           xml:space="preserve"><flowRegion
+             id="flowRegion4664"><rect
+               y="31.936937"
+               x="87.378197"
+               height="43.523209"
+               width="301.25314"
+               id="rect4666" /></flowRegion><flowPara
+             style="font-size:15px"
+             id="flowPara4668">Kotlet schabowy z pieczarkami zapiekany żółtym serem</flowPara></flowRoot>      </g>
+      <g
+         id="g4670">
+        <rect
+           style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#afefda;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+           id="rect4672"
+           width="78.065903"
+           height="31.222971"
+           x="385.89929"
+           y="385.39523"
+           ry="9.2349634" />
+        <flowRoot
+           xml:space="preserve"
+           id="flowRoot4674"
+           style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           transform="translate(305.8101,358.14708)"><flowRegion
+             id="flowRegion4676"><rect
+               id="rect4678"
+               width="302.26328"
+               height="22.310005"
+               x="87.378197"
+               y="31.936937" /></flowRegion><flowPara
+             id="flowPara4680"
+             style="font-size:15px">25,00 zł</flowPara></flowRoot>      </g>
+    </g>
+    <g
+       transform="matrix(0.17413919,0,0,0.17413919,-33.646322,1019.6535)"
+       id="g4682">
+      <g
+         id="g4684">
+        <rect
+           style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#afefda;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+           id="rect4686"
+           width="289.18777"
+           height="31.222971"
+           x="563.68616"
+           y="420.75058"
+           ry="9.2349634" />
+        <flowRoot
+           xml:space="preserve"
+           id="flowRoot4688"
+           style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           transform="translate(530.06396,393.50242)"><flowRegion
+             id="flowRegion4690"><rect
+               id="rect4692"
+               width="302.26328"
+               height="22.310005"
+               x="87.378197"
+               y="31.936937" /></flowRegion><flowPara
+             id="flowPara4694"
+             style="font-size:15px">Szaszłyk drobiowo-wieprzowy</flowPara></flowRoot>      </g>
+      <g
+         id="g4696">
+        <rect
+           ry="9.2349634"
+           y="420.75058"
+           x="385.89929"
+           height="31.222971"
+           width="78.065903"
+           id="rect4698"
+           style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#afefda;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+        <flowRoot
+           transform="translate(305.8101,393.50242)"
+           style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           id="flowRoot4700"
+           xml:space="preserve"><flowRegion
+             id="flowRegion4702"><rect
+               y="31.936937"
+               x="87.378197"
+               height="22.310005"
+               width="302.26328"
+               id="rect4704" /></flowRegion><flowPara
+             style="font-size:15px"
+             id="flowPara4706">25,00 zł</flowPara></flowRoot>      </g>
+    </g>
+    <g
+       transform="matrix(0.17413919,0,0,0.17413919,-33.646322,1019.5655)"
+       id="g4708">
+      <g
+         id="g4710">
+        <rect
+           ry="9.2349634"
+           y="454.0856"
+           x="729.3512"
+           height="31.222971"
+           width="123.52277"
+           id="rect4712"
+           style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#afefda;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+        <flowRoot
+           transform="translate(660.37364,426.83745)"
+           style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           id="flowRoot4714"
+           xml:space="preserve"><flowRegion
+             id="flowRegion4716"><rect
+               y="31.936937"
+               x="87.378197"
+               height="22.310005"
+               width="302.26328"
+               id="rect4718" /></flowRegion><flowPara
+             style="font-size:15px"
+             id="flowPara4720">Flaki wołowe</flowPara></flowRoot>      </g>
+      <g
+         id="g4722">
+        <rect
+           style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#afefda;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+           id="rect4724"
+           width="78.065903"
+           height="31.222971"
+           x="385.89929"
+           y="454.0856"
+           ry="9.2349634" />
+        <flowRoot
+           xml:space="preserve"
+           id="flowRoot4726"
+           style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           transform="translate(305.8101,426.83745)"><flowRegion
+             id="flowRegion4728"><rect
+               id="rect4730"
+               width="302.26328"
+               height="22.310005"
+               x="87.378197"
+               y="31.936937" /></flowRegion><flowPara
+             id="flowPara4732"
+             style="font-size:15px">25,00 zł</flowPara></flowRoot>      </g>
+    </g>
+    <rect
+       ry="0"
+       y="1107.3054"
+       x="30.559788"
+       height="6.8603787"
+       width="87.088699"
+       id="rect4734"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#fbb8ff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot4736"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#412b8b;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       transform="matrix(0.17413919,0,0,0.17413919,53.878143,1103.381)"><flowRegion
+         id="flowRegion4738"><rect
+           style="fill:#412b8b;fill-opacity:1"
+           id="rect4740"
+           width="239.40613"
+           height="23.738577"
+           x="87.378197"
+           y="31.936937" /></flowRegion><flowPara
+         id="flowPara4742"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;font-family:Calibri;-inkscape-font-specification:Calibri;fill:#412b8b;fill-opacity:1">Desery</flowPara><flowPara
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;font-family:Calibri;-inkscape-font-specification:Calibri;fill:#412b8b;fill-opacity:1"
+         id="flowPara4744" /></flowRoot>    <g
+       transform="matrix(0.17413919,0,0,0.17413919,-5.8529937,933.371)"
+       id="g4760">
+      <rect
+         ry="10.545035"
+         y="569.30603"
+         x="137.4946"
+         height="35.652264"
+         width="44.329868"
+         id="rect4762"
+         style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#c745ff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+      <flowRoot
+         transform="translate(64.283738,543.87337)"
+         style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         id="flowRoot4764"
+         xml:space="preserve"><flowRegion
+           id="flowRegion4766"><rect
+             style="fill:#ffffff;fill-opacity:1"
+             y="31.936937"
+             x="87.378197"
+             height="38.024292"
+             width="244.40614"
+             id="rect4768" /></flowRegion><flowPara
+           style="font-size:15px;fill:#ffffff;fill-opacity:1"
+           id="flowPara4770">...</flowPara></flowRoot>    </g>
+    <rect
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#afafef;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="rect4772"
+       width="33.638634"
+       height="13.184825"
+       x="117.73793"
+       y="992.06744"
+       ry="0" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot4778"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#412b8b;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       transform="matrix(0.17413919,0,0,0.17413919,111.86797,991.29847)"><flowRegion
+         id="flowRegion4780"><rect
+           style="fill:#412b8b;fill-opacity:1"
+           id="rect4782"
+           width="239.40613"
+           height="23.738577"
+           x="87.378197"
+           y="31.936937" /></flowRegion><flowPara
+         id="flowPara4784"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;font-family:Calibri;-inkscape-font-specification:Calibri;fill:#412b8b;fill-opacity:1">Przystawki</flowPara></flowRoot>    <rect
+       ry="0"
+       y="1005.3924"
+       x="117.73793"
+       height="13.184825"
+       width="33.638634"
+       id="rect4786"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#afafef;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+    <flowRoot
+       transform="matrix(0.17413919,0,0,0.17413919,115.89324,1004.5393)"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#412b8b;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       id="flowRoot4788"
+       xml:space="preserve"><flowRegion
+         id="flowRegion4790"><rect
+           y="31.936937"
+           x="87.378197"
+           height="23.738577"
+           width="239.40613"
+           id="rect4792"
+           style="fill:#412b8b;fill-opacity:1" /></flowRegion><flowPara
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;font-family:Calibri;-inkscape-font-specification:Calibri;fill:#412b8b;fill-opacity:1"
+         id="flowPara4794">Zupy</flowPara></flowRoot>    <rect
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#afafef;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="rect4796"
+       width="33.638634"
+       height="13.184825"
+       x="117.73793"
+       y="1018.7174"
+       ry="0" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot4798"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#412b8b;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       transform="matrix(0.17413919,0,0,0.17413919,109.64021,1017.8642)"><flowRegion
+         id="flowRegion4800"><rect
+           style="fill:#412b8b;fill-opacity:1"
+           id="rect4802"
+           width="239.40613"
+           height="23.738577"
+           x="87.378197"
+           y="31.936937" /></flowRegion><flowPara
+         id="flowPara4804"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;font-family:Calibri;-inkscape-font-specification:Calibri;fill:#412b8b;fill-opacity:1">Dania główne</flowPara></flowRoot>    <rect
+       ry="0"
+       y="1032.0424"
+       x="117.73793"
+       height="13.184825"
+       width="33.638634"
+       id="rect4806"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#afafef;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+    <flowRoot
+       transform="matrix(0.17413919,0,0,0.17413919,114.33125,1031.1892)"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#412b8b;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       id="flowRoot4808"
+       xml:space="preserve"><flowRegion
+         id="flowRegion4810"><rect
+           y="31.936937"
+           x="87.378197"
+           height="23.738577"
+           width="239.40613"
+           id="rect4812"
+           style="fill:#412b8b;fill-opacity:1" /></flowRegion><flowPara
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;font-family:Calibri;-inkscape-font-specification:Calibri;fill:#412b8b;fill-opacity:1"
+         id="flowPara4814">Desery</flowPara></flowRoot>    <rect
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#afafef;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="rect4816"
+       width="33.638634"
+       height="13.184825"
+       x="117.73793"
+       y="1045.3673"
+       ry="0" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot4818"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#412b8b;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       transform="matrix(0.17413919,0,0,0.17413919,114.20116,1044.5141)"><flowRegion
+         id="flowRegion4820"><rect
+           style="fill:#412b8b;fill-opacity:1"
+           id="rect4822"
+           width="239.40613"
+           height="23.738577"
+           x="87.378197"
+           y="31.936937" /></flowRegion><flowPara
+         id="flowPara4824"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;font-family:Calibri;-inkscape-font-specification:Calibri;fill:#412b8b;fill-opacity:1">Napoje</flowPara></flowRoot>    <rect
+       y="983.72601"
+       x="316.04596"
+       height="133.23999"
+       width="187.7012"
+       id="rect4826"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#b4307e;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       inkscape:export-xdpi="900"
+       inkscape:export-ydpi="900" />
+    <rect
+       ry="0"
+       y="987.42188"
+       x="381.67645"
+       height="6.9855156"
+       width="88.677238"
+       id="rect4828"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#fbb8ff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+    <rect
+       transform="matrix(0.22345568,0,0,0.17594792,316.00239,930.41052)"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#8e2663;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;filter:url(#filter4152);color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="rect4830"
+       width="295.71426"
+       height="751.42859"
+       x="-1.4285715"
+       y="305.21933" />
+    <rect
+       ry="1.6375029"
+       y="989.07623"
+       x="325.97528"
+       height="5.5363193"
+       width="47.444962"
+       id="rect4832"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+    <flowRoot
+       transform="matrix(0.17731558,0,0,0.17731558,313.38619,984.14081)"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       id="flowRoot4834"
+       xml:space="preserve"><flowRegion
+         id="flowRegion4836"><rect
+           y="31.936937"
+           x="87.378197"
+           height="23.738577"
+           width="239.40613"
+           id="rect4838" /></flowRegion><flowPara
+         style="font-size:15px"
+         id="flowPara4840">Witam w restauracji DaGrasso!</flowPara></flowRoot>    <rect
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="rect4842"
+       width="47.444962"
+       height="5.5363193"
+       x="325.97528"
+       y="994.89752"
+       ry="1.6375029" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot4844"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       transform="matrix(0.17731558,0,0,0.17731558,313.38619,990.06597)"><flowRegion
+         id="flowRegion4846"><rect
+           id="rect4848"
+           width="239.40613"
+           height="23.738577"
+           x="87.378197"
+           y="31.936937" /></flowRegion><flowPara
+         id="flowPara4850"
+         style="font-size:15px">Co chciałbyś dzisiaj zamówić?</flowPara></flowRoot>    <circle
+       r="2.8173451"
+       cy="991.5863"
+       cx="321.67401"
+       id="circle4852"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#bcffaf;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+    <rect
+       ry="2.6114898"
+       y="1001.3569"
+       x="333.69366"
+       height="8.8293228"
+       width="43.146183"
+       id="rect4854"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#c745ff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+    <flowRoot
+       transform="matrix(0.17731558,0,0,0.17731558,321.51529,996.52532)"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       id="flowRoot4856"
+       xml:space="preserve"><flowRegion
+         id="flowRegion4858"><rect
+           style="fill:#ffffff;fill-opacity:1"
+           y="31.936937"
+           x="87.378197"
+           height="38.024292"
+           width="244.40614"
+           id="rect4860" /></flowRegion><flowPara
+         style="font-size:15px;fill:#ffffff;fill-opacity:1"
+         id="flowPara4862">Mam ochotę na kurczaka w cieście.</flowPara></flowRoot>    <rect
+       y="305.21933"
+       x="-1.4285715"
+       height="751.42859"
+       width="295.71426"
+       id="rect4864"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#8e2663;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;filter:url(#filter4152);color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       transform="matrix(0.11542807,0,0,0.17687903,470.88679,929.77649)" />
+    <rect
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="rect4866"
+       width="47.444962"
+       height="6.0736666"
+       x="325.97528"
+       y="1011.1075"
+       ry="1.7964367" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot4868"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       transform="matrix(0.17731558,0,0,0.17731558,313.38619,1006.1721)"><flowRegion
+         id="flowRegion4870"><rect
+           id="rect4872"
+           width="238.39598"
+           height="42.931477"
+           x="87.378197"
+           y="31.936937" /></flowRegion><flowPara
+         id="flowPara4874"
+         style="font-size:15px">A więc kurczak w cieście. </flowPara></flowRoot>    <circle
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#bcffaf;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="circle4876"
+       cx="321.67401"
+       cy="1013.6176"
+       r="2.8173451" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot4878"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#412b8b;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       transform="matrix(0.17731558,0,0,0.17731558,402.91199,983.41893)"><flowRegion
+         id="flowRegion4880"><rect
+           style="fill:#412b8b;fill-opacity:1"
+           id="rect4882"
+           width="239.40613"
+           height="23.738577"
+           x="87.378197"
+           y="31.936937" /></flowRegion><flowPara
+         id="flowPara4884"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;font-family:Calibri;-inkscape-font-specification:Calibri;fill:#412b8b;fill-opacity:1">Przystawki</flowPara></flowRoot>    <g
+       id="g4886"
+       transform="matrix(0.17731558,0,0,0.17731558,316.29919,929.60588)">
+      <g
+         id="g4888">
+        <rect
+           ry="9.2349634"
+           y="385.39523"
+           x="525.30035"
+           height="31.222971"
+           width="327.57358"
+           id="rect4890"
+           style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#afefda;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+        <flowRoot
+           transform="translate(454.30252,358.14708)"
+           style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           id="flowRoot4892"
+           xml:space="preserve"><flowRegion
+             id="flowRegion4894"><rect
+               y="31.936937"
+               x="87.378197"
+               height="22.310005"
+               width="302.26328"
+               id="rect4896" /></flowRegion><flowPara
+             style="font-size:15px"
+             id="flowPara4898">Szparagi zawijane w łososiu wędzonym</flowPara></flowRoot>      </g>
+      <g
+         id="g4900">
+        <rect
+           style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#afefda;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+           id="rect4902"
+           width="78.065903"
+           height="31.222971"
+           x="385.89929"
+           y="385.39523"
+           ry="9.2349634" />
+        <flowRoot
+           xml:space="preserve"
+           id="flowRoot4904"
+           style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           transform="translate(305.8101,358.14708)"><flowRegion
+             id="flowRegion4906"><rect
+               id="rect4908"
+               width="302.26328"
+               height="22.310005"
+               x="87.378197"
+               y="31.936937" /></flowRegion><flowPara
+             id="flowPara4910"
+             style="font-size:15px">25,00 zł</flowPara></flowRoot>      </g>
+    </g>
+    <g
+       transform="matrix(0.17731558,0,0,0.17731558,316.29919,929.15809)"
+       id="g4912">
+      <g
+         id="g4914">
+        <rect
+           style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#afefda;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+           id="rect4916"
+           width="289.18777"
+           height="31.222971"
+           x="563.68616"
+           y="420.75058"
+           ry="9.2349634" />
+        <flowRoot
+           xml:space="preserve"
+           id="flowRoot4918"
+           style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           transform="translate(491.67816,393.50242)"><flowRegion
+             id="flowRegion4920"><rect
+               id="rect4922"
+               width="302.26328"
+               height="22.310005"
+               x="87.378197"
+               y="31.936937" /></flowRegion><flowPara
+             id="flowPara4924"
+             style="font-size:15px">Koktajl z krewetek w sosie brandy</flowPara></flowRoot>      </g>
+      <g
+         id="g4926">
+        <rect
+           ry="9.2349634"
+           y="420.75058"
+           x="385.89929"
+           height="31.222971"
+           width="78.065903"
+           id="rect4928"
+           style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#afefda;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+        <flowRoot
+           transform="translate(305.8101,393.50242)"
+           style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           id="flowRoot4930"
+           xml:space="preserve"><flowRegion
+             id="flowRegion4932"><rect
+               y="31.936937"
+               x="87.378197"
+               height="22.310005"
+               width="302.26328"
+               id="rect4934" /></flowRegion><flowPara
+             style="font-size:15px"
+             id="flowPara4936">25,00 zł</flowPara></flowRoot>      </g>
+    </g>
+    <g
+       transform="matrix(0.17731558,0,0,0.17731558,316.29919,929.06854)"
+       id="g4938">
+      <g
+         id="g4940">
+        <rect
+           ry="9.2349634"
+           y="454.0856"
+           x="528.33081"
+           height="31.222971"
+           width="324.54312"
+           id="rect4942"
+           style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#afefda;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+        <flowRoot
+           transform="translate(458.34313,426.83745)"
+           style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           id="flowRoot4944"
+           xml:space="preserve"><flowRegion
+             id="flowRegion4946"><rect
+               y="31.936937"
+               x="87.378197"
+               height="22.310005"
+               width="302.26328"
+               id="rect4948" /></flowRegion><flowPara
+             style="font-size:15px"
+             id="flowPara4950">Roladki z szynki z musem chrzanowym</flowPara></flowRoot>      </g>
+      <g
+         id="g4952">
+        <rect
+           style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#afefda;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+           id="rect4954"
+           width="78.065903"
+           height="31.222971"
+           x="385.89929"
+           y="454.0856"
+           ry="9.2349634" />
+        <flowRoot
+           xml:space="preserve"
+           id="flowRoot4956"
+           style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           transform="translate(305.8101,426.83745)"><flowRegion
+             id="flowRegion4958"><rect
+               id="rect4960"
+               width="302.26328"
+               height="22.310005"
+               x="87.378197"
+               y="31.936937" /></flowRegion><flowPara
+             id="flowPara4962"
+             style="font-size:15px">25,00 zł</flowPara></flowRoot>      </g>
+    </g>
+    <rect
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#fbb8ff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="rect4964"
+       width="88.677238"
+       height="6.9855156"
+       x="381.67645"
+       y="1019.6627"
+       ry="0" />
+    <flowRoot
+       transform="matrix(0.17731558,0,0,0.17731558,407.01069,1015.5741)"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#412b8b;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       id="flowRoot4966"
+       xml:space="preserve"><flowRegion
+         id="flowRegion4968"><rect
+           y="31.936937"
+           x="87.378197"
+           height="23.738577"
+           width="239.40613"
+           id="rect4970"
+           style="fill:#412b8b;fill-opacity:1" /></flowRegion><flowPara
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;font-family:Calibri;-inkscape-font-specification:Calibri;fill:#412b8b;fill-opacity:1"
+         id="flowPara4972">Zupy</flowPara></flowRoot>    <g
+       id="g4974"
+       transform="matrix(0.17731558,0,0,0.17731558,316.29919,949.84597)">
+      <g
+         id="g4976">
+        <rect
+           style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#afefda;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+           id="rect4978"
+           width="179.08116"
+           height="31.222971"
+           x="673.79279"
+           y="454.0856"
+           ry="9.2349634" />
+        <flowRoot
+           xml:space="preserve"
+           id="flowRoot4980"
+           style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           transform="translate(603.8051,426.83745)"><flowRegion
+             id="flowRegion4982"><rect
+               id="rect4984"
+               width="302.26328"
+               height="22.310005"
+               x="87.378197"
+               y="31.936937" /></flowRegion><flowPara
+             id="flowPara4986"
+             style="font-size:15px">Rosół z makaronem</flowPara></flowRoot>      </g>
+      <g
+         id="g4988">
+        <rect
+           ry="9.2349634"
+           y="454.0856"
+           x="385.89929"
+           height="31.222971"
+           width="78.065903"
+           id="rect4990"
+           style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#afefda;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+        <flowRoot
+           transform="translate(305.8101,426.83745)"
+           style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           id="flowRoot4992"
+           xml:space="preserve"><flowRegion
+             id="flowRegion4994"><rect
+               y="31.936937"
+               x="87.378197"
+               height="22.310005"
+               width="302.26328"
+               id="rect4996" /></flowRegion><flowPara
+             style="font-size:15px"
+             id="flowPara4998">25,00 zł</flowPara></flowRoot>      </g>
+    </g>
+    <g
+       transform="matrix(0.17731558,0,0,0.17731558,316.29919,955.75679)"
+       id="g5000">
+      <g
+         id="g5002">
+        <rect
+           ry="9.2349634"
+           y="454.0856"
+           x="669.7522"
+           height="31.222971"
+           width="183.12177"
+           id="rect5004"
+           style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#afefda;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+        <flowRoot
+           transform="translate(596.73403,426.83745)"
+           style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           id="flowRoot5006"
+           xml:space="preserve"><flowRegion
+             id="flowRegion5008"><rect
+               y="31.936937"
+               x="87.378197"
+               height="22.310005"
+               width="302.26328"
+               id="rect5010" /></flowRegion><flowPara
+             style="font-size:15px"
+             id="flowPara5012">Pomidorowa z ryżem</flowPara></flowRoot>      </g>
+      <g
+         id="g5014">
+        <rect
+           style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#afefda;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+           id="rect5016"
+           width="78.065903"
+           height="31.222971"
+           x="385.89929"
+           y="454.0856"
+           ry="9.2349634" />
+        <flowRoot
+           xml:space="preserve"
+           id="flowRoot5018"
+           style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           transform="translate(305.8101,426.83745)"><flowRegion
+             id="flowRegion5020"><rect
+               id="rect5022"
+               width="302.26328"
+               height="22.310005"
+               x="87.378197"
+               y="31.936937" /></flowRegion><flowPara
+             id="flowPara5024"
+             style="font-size:15px">25,00 zł</flowPara></flowRoot>      </g>
+    </g>
+    <g
+       id="g5026"
+       transform="matrix(0.17731558,0,0,0.17731558,316.29919,961.66761)">
+      <g
+         id="g5028">
+        <rect
+           style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#afefda;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+           id="rect5030"
+           width="265.95428"
+           height="48.395565"
+           x="586.91968"
+           y="454.0856"
+           ry="14.314181" />
+        <flowRoot
+           xml:space="preserve"
+           id="flowRoot5032"
+           style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           transform="translate(514.91167,426.83745)"><flowRegion
+             id="flowRegion5034"><rect
+               id="rect5036"
+               width="299.23282"
+               height="41.502903"
+               x="87.378197"
+               y="31.936937" /></flowRegion><flowPara
+             id="flowPara5038"
+             style="font-size:15px">Krem cebulowy z parmezanem i grahamkami</flowPara></flowRoot>      </g>
+      <g
+         id="g5040">
+        <rect
+           ry="9.2349634"
+           y="454.0856"
+           x="385.89929"
+           height="31.222971"
+           width="78.065903"
+           id="rect5042"
+           style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#afefda;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+        <flowRoot
+           transform="translate(305.8101,426.83745)"
+           style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           id="flowRoot5044"
+           xml:space="preserve"><flowRegion
+             id="flowRegion5046"><rect
+               y="31.936937"
+               x="87.378197"
+               height="22.310005"
+               width="302.26328"
+               id="rect5048" /></flowRegion><flowPara
+             style="font-size:15px"
+             id="flowPara5050">25,00 zł</flowPara></flowRoot>      </g>
+    </g>
+    <rect
+       ry="2.702107"
+       y="1017.5556"
+       x="325.97528"
+       height="12.163604"
+       width="47.444962"
+       id="rect5052"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+    <flowRoot
+       transform="matrix(0.17731558,0,0,0.17731558,313.38619,1012.6202)"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       id="flowRoot5054"
+       xml:space="preserve"><flowRegion
+         id="flowRegion5056"><rect
+           y="31.936937"
+           x="87.378197"
+           height="61.114227"
+           width="242.4366"
+           id="rect5058" /></flowRegion><flowPara
+         style="font-size:15px"
+         id="flowPara5060">Czy ma on być podany z sosem musztardowym, czy z grzybowym?</flowPara></flowRoot>    <g
+       transform="matrix(0.17731558,0,0,0.17731558,344.59949,929.81355)"
+       id="g5062">
+      <rect
+         ry="10.545035"
+         y="569.30603"
+         x="-88.774475"
+         height="35.652264"
+         width="270.59894"
+         id="rect5064"
+         style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#c745ff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+      <flowRoot
+         transform="translate(-166.48641,543.87337)"
+         style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         id="flowRoot5066"
+         xml:space="preserve"><flowRegion
+           id="flowRegion5068"><rect
+             style="fill:#ffffff;fill-opacity:1"
+             y="31.936937"
+             x="87.378197"
+             height="24.452862"
+             width="261.54898"
+             id="rect5070" /></flowRegion><flowPara
+           style="font-size:15px;fill:#ffffff;fill-opacity:1"
+           id="flowPara5072">Poproszę z sosem musztardowym</flowPara></flowRoot>    </g>
+    <rect
+       ry="0"
+       y="1055.3068"
+       x="381.67645"
+       height="6.9855156"
+       width="88.677238"
+       id="rect5086"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#fbb8ff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot5088"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#412b8b;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       transform="matrix(0.17731558,0,0,0.17731558,400.64359,1051.3107)"><flowRegion
+         id="flowRegion5090"><rect
+           style="fill:#412b8b;fill-opacity:1"
+           id="rect5092"
+           width="239.40613"
+           height="23.738577"
+           x="87.378197"
+           y="31.936937" /></flowRegion><flowPara
+         id="flowPara5094"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;font-family:Calibri;-inkscape-font-specification:Calibri;fill:#412b8b;fill-opacity:1">Dania główne</flowPara></flowRoot>    <g
+       transform="matrix(0.17731558,0,0,0.17731558,316.29919,997.66988)"
+       id="g5096">
+      <g
+         id="g5098">
+        <rect
+           style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#afefda;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+           id="rect5100"
+           width="193.22328"
+           height="31.222971"
+           x="659.65063"
+           y="385.39523"
+           ry="9.2349634" />
+        <flowRoot
+           xml:space="preserve"
+           id="flowRoot5102"
+           style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           transform="translate(587.64266,358.14708)"><flowRegion
+             id="flowRegion5104"><rect
+               id="rect5106"
+               width="302.26328"
+               height="22.310005"
+               x="87.378197"
+               y="31.936937" /></flowRegion><flowPara
+             id="flowPara5108"
+             style="font-size:15px">Rolada śląska wołowa</flowPara></flowRoot>      </g>
+      <g
+         id="g5110">
+        <rect
+           ry="9.2349634"
+           y="385.39523"
+           x="385.89929"
+           height="31.222971"
+           width="78.065903"
+           id="rect5112"
+           style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#afefda;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+        <flowRoot
+           transform="translate(305.8101,358.14708)"
+           style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           id="flowRoot5114"
+           xml:space="preserve"><flowRegion
+             id="flowRegion5116"><rect
+               y="31.936937"
+               x="87.378197"
+               height="22.310005"
+               width="302.26328"
+               id="rect5118" /></flowRegion><flowPara
+             style="font-size:15px"
+             id="flowPara5120">25,00 zł</flowPara></flowRoot>      </g>
+    </g>
+    <g
+       id="g5122"
+       transform="matrix(0.17731558,0,0,0.17731558,316.29919,997.22209)">
+      <g
+         id="g5124">
+        <rect
+           ry="9.2349634"
+           y="420.75058"
+           x="598.03137"
+           height="31.222971"
+           width="254.84259"
+           id="rect5126"
+           style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#afefda;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+        <flowRoot
+           transform="translate(527.0335,393.50242)"
+           style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           id="flowRoot5128"
+           xml:space="preserve"><flowRegion
+             id="flowRegion5130"><rect
+               y="31.936937"
+               x="87.378197"
+               height="22.310005"
+               width="302.26328"
+               id="rect5132" /></flowRegion><flowPara
+             style="font-size:15px"
+             id="flowPara5134">Kotlet schabowy panierowany</flowPara></flowRoot>      </g>
+      <g
+         id="g5136">
+        <rect
+           style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#afefda;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+           id="rect5138"
+           width="78.065903"
+           height="31.222971"
+           x="385.89929"
+           y="420.75058"
+           ry="9.2349634" />
+        <flowRoot
+           xml:space="preserve"
+           id="flowRoot5140"
+           style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           transform="translate(305.8101,393.50242)"><flowRegion
+             id="flowRegion5142"><rect
+               id="rect5144"
+               width="302.26328"
+               height="22.310005"
+               x="87.378197"
+               y="31.936937" /></flowRegion><flowPara
+             id="flowPara5146"
+             style="font-size:15px">25,00 zł</flowPara></flowRoot>      </g>
+    </g>
+    <g
+       id="g5148"
+       transform="matrix(0.17731558,0,0,0.17731558,316.29919,997.13253)">
+      <g
+         id="g5150">
+        <rect
+           style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#afefda;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+           id="rect5152"
+           width="160.89841"
+           height="31.222971"
+           x="691.97552"
+           y="454.0856"
+           ry="9.2349634" />
+        <flowRoot
+           xml:space="preserve"
+           id="flowRoot5154"
+           style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           transform="translate(619.96754,426.83745)"><flowRegion
+             id="flowRegion5156"><rect
+               id="rect5158"
+               width="302.26328"
+               height="22.310005"
+               x="87.378197"
+               y="31.936937" /></flowRegion><flowPara
+             id="flowPara5160"
+             style="font-size:15px">Kurczak w cieście</flowPara></flowRoot>      </g>
+      <g
+         id="g5162">
+        <rect
+           ry="9.2349634"
+           y="454.0856"
+           x="385.89929"
+           height="31.222971"
+           width="78.065903"
+           id="rect5164"
+           style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#afefda;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+        <flowRoot
+           transform="translate(305.8101,426.83745)"
+           style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           id="flowRoot5166"
+           xml:space="preserve"><flowRegion
+             id="flowRegion5168"><rect
+               y="31.936937"
+               x="87.378197"
+               height="22.310005"
+               width="302.26328"
+               id="rect5170" /></flowRegion><flowPara
+             style="font-size:15px"
+             id="flowPara5172">25,00 zł</flowPara></flowRoot>      </g>
+    </g>
+    <g
+       transform="matrix(0.17731558,0,0,0.17731558,316.29919,1015.0441)"
+       id="g5174">
+      <g
+         id="g5176">
+        <rect
+           style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#afefda;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+           id="rect5178"
+           width="260.9035"
+           height="48.395565"
+           x="591.9704"
+           y="385.39523"
+           ry="14.314181" />
+        <flowRoot
+           xml:space="preserve"
+           id="flowRoot5180"
+           style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           transform="translate(522.99289,358.14708)"><flowRegion
+             id="flowRegion5182"><rect
+               id="rect5184"
+               width="301.25314"
+               height="43.523209"
+               x="87.378197"
+               y="31.936937" /></flowRegion><flowPara
+             id="flowPara5186"
+             style="font-size:15px">Kotlet schabowy z pieczarkami zapiekany żółtym serem</flowPara></flowRoot>      </g>
+      <g
+         id="g5188">
+        <rect
+           ry="9.2349634"
+           y="385.39523"
+           x="385.89929"
+           height="31.222971"
+           width="78.065903"
+           id="rect5190"
+           style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#afefda;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+        <flowRoot
+           transform="translate(305.8101,358.14708)"
+           style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           id="flowRoot5192"
+           xml:space="preserve"><flowRegion
+             id="flowRegion5194"><rect
+               y="31.936937"
+               x="87.378197"
+               height="22.310005"
+               width="302.26328"
+               id="rect5196" /></flowRegion><flowPara
+             style="font-size:15px"
+             id="flowPara5198">25,00 zł</flowPara></flowRoot>      </g>
+    </g>
+    <g
+       id="g5200"
+       transform="matrix(0.17731558,0,0,0.17731558,316.29919,1017.6413)">
+      <g
+         id="g5202">
+        <rect
+           ry="9.2349634"
+           y="420.75058"
+           x="592.98059"
+           height="31.222971"
+           width="259.89334"
+           id="rect5204"
+           style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#afefda;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+        <flowRoot
+           transform="translate(530.06396,393.50242)"
+           style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           id="flowRoot5206"
+           xml:space="preserve"><flowRegion
+             id="flowRegion5208"><rect
+               y="31.936937"
+               x="87.378197"
+               height="22.310005"
+               width="302.26328"
+               id="rect5210" /></flowRegion><flowPara
+             style="font-size:15px"
+             id="flowPara5212">Szaszłyk drobiowo-wieprzowy</flowPara></flowRoot>      </g>
+      <g
+         id="g5214">
+        <rect
+           style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#afefda;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+           id="rect5216"
+           width="78.065903"
+           height="31.222971"
+           x="385.89929"
+           y="420.75058"
+           ry="9.2349634" />
+        <flowRoot
+           xml:space="preserve"
+           id="flowRoot5218"
+           style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           transform="translate(305.8101,393.50242)"><flowRegion
+             id="flowRegion5220"><rect
+               id="rect5222"
+               width="302.26328"
+               height="22.310005"
+               x="87.378197"
+               y="31.936937" /></flowRegion><flowPara
+             id="flowPara5224"
+             style="font-size:15px">25,00 zł</flowPara></flowRoot>      </g>
+    </g>
+    <g
+       id="g5226"
+       transform="matrix(0.17731558,0,0,0.17731558,316.29919,1017.5517)">
+      <g
+         id="g5228">
+        <rect
+           style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#afefda;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+           id="rect5230"
+           width="123.52277"
+           height="31.222971"
+           x="729.3512"
+           y="454.0856"
+           ry="9.2349634" />
+        <flowRoot
+           xml:space="preserve"
+           id="flowRoot5232"
+           style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           transform="translate(660.37364,426.83745)"><flowRegion
+             id="flowRegion5234"><rect
+               id="rect5236"
+               width="302.26328"
+               height="22.310005"
+               x="87.378197"
+               y="31.936937" /></flowRegion><flowPara
+             id="flowPara5238"
+             style="font-size:15px">Flaki wołowe</flowPara></flowRoot>      </g>
+      <g
+         id="g5240">
+        <rect
+           ry="9.2349634"
+           y="454.0856"
+           x="385.89929"
+           height="31.222971"
+           width="78.065903"
+           id="rect5242"
+           style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#afefda;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+        <flowRoot
+           transform="translate(305.8101,426.83745)"
+           style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           id="flowRoot5244"
+           xml:space="preserve"><flowRegion
+             id="flowRegion5246"><rect
+               y="31.936937"
+               x="87.378197"
+               height="22.310005"
+               width="302.26328"
+               id="rect5248" /></flowRegion><flowPara
+             style="font-size:15px"
+             id="flowPara5250">25,00 zł</flowPara></flowRoot>      </g>
+    </g>
+    <rect
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#fbb8ff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="rect5252"
+       width="88.677238"
+       height="6.9855156"
+       x="381.67645"
+       y="1106.8921"
+       ry="0" />
+    <flowRoot
+       transform="matrix(0.17731558,0,0,0.17731558,405.42019,1102.8961)"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#412b8b;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       id="flowRoot5254"
+       xml:space="preserve"><flowRegion
+         id="flowRegion5256"><rect
+           y="31.936937"
+           x="87.378197"
+           height="23.738577"
+           width="239.40613"
+           id="rect5258"
+           style="fill:#412b8b;fill-opacity:1" /></flowRegion><flowPara
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;font-family:Calibri;-inkscape-font-specification:Calibri;fill:#412b8b;fill-opacity:1"
+         id="flowPara5260">Desery</flowPara><flowPara
+         id="flowPara5262"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;font-family:Calibri;-inkscape-font-specification:Calibri;fill:#412b8b;fill-opacity:1" /></flowRoot>    <rect
+       ry="0"
+       y="989.55212"
+       x="470.44489"
+       height="13.425323"
+       width="34.25222"
+       id="rect5276"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#afafef;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+    <flowRoot
+       transform="matrix(0.17731558,0,0,0.17731558,464.46779,988.76909)"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#412b8b;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       id="flowRoot5278"
+       xml:space="preserve"><flowRegion
+         id="flowRegion5280"><rect
+           y="31.936937"
+           x="87.378197"
+           height="23.738577"
+           width="239.40613"
+           id="rect5282"
+           style="fill:#412b8b;fill-opacity:1" /></flowRegion><flowPara
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;font-family:Calibri;-inkscape-font-specification:Calibri;fill:#412b8b;fill-opacity:1"
+         id="flowPara5284">Przystawki</flowPara></flowRoot>    <rect
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#afafef;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="rect5286"
+       width="34.25222"
+       height="13.425323"
+       x="470.44489"
+       y="1003.1201"
+       ry="0" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot5288"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#412b8b;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       transform="matrix(0.17731558,0,0,0.17731558,468.56649,1002.2514)"><flowRegion
+         id="flowRegion5290"><rect
+           style="fill:#412b8b;fill-opacity:1"
+           id="rect5292"
+           width="239.40613"
+           height="23.738577"
+           x="87.378197"
+           y="31.936937" /></flowRegion><flowPara
+         id="flowPara5294"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;font-family:Calibri;-inkscape-font-specification:Calibri;fill:#412b8b;fill-opacity:1">Zupy</flowPara></flowRoot>    <rect
+       ry="0"
+       y="1016.6882"
+       x="470.44489"
+       height="13.425323"
+       width="34.25222"
+       id="rect5296"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#afafef;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+    <flowRoot
+       transform="matrix(0.17731558,0,0,0.17731558,462.19939,1015.8194)"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#412b8b;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       id="flowRoot5298"
+       xml:space="preserve"><flowRegion
+         id="flowRegion5300"><rect
+           y="31.936937"
+           x="87.378197"
+           height="23.738577"
+           width="239.40613"
+           id="rect5302"
+           style="fill:#412b8b;fill-opacity:1" /></flowRegion><flowPara
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;font-family:Calibri;-inkscape-font-specification:Calibri;fill:#412b8b;fill-opacity:1"
+         id="flowPara5304">Dania główne</flowPara></flowRoot>    <rect
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#afafef;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="rect5306"
+       width="34.25222"
+       height="13.425323"
+       x="470.44489"
+       y="1030.2562"
+       ry="0" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot5308"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#412b8b;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       transform="matrix(0.17731558,0,0,0.17731558,466.97599,1029.3874)"><flowRegion
+         id="flowRegion5310"><rect
+           style="fill:#412b8b;fill-opacity:1"
+           id="rect5312"
+           width="239.40613"
+           height="23.738577"
+           x="87.378197"
+           y="31.936937" /></flowRegion><flowPara
+         id="flowPara5314"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;font-family:Calibri;-inkscape-font-specification:Calibri;fill:#412b8b;fill-opacity:1">Desery</flowPara></flowRoot>    <rect
+       ry="0"
+       y="1043.8242"
+       x="470.44489"
+       height="13.425323"
+       width="34.25222"
+       id="rect5316"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#afafef;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+    <flowRoot
+       transform="matrix(0.17731558,0,0,0.17731558,466.84349,1042.9555)"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#412b8b;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       id="flowRoot5318"
+       xml:space="preserve"><flowRegion
+         id="flowRegion5320"><rect
+           y="31.936937"
+           x="87.378197"
+           height="23.738577"
+           width="239.40613"
+           id="rect5322"
+           style="fill:#412b8b;fill-opacity:1" /></flowRegion><flowPara
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;font-family:Calibri;-inkscape-font-specification:Calibri;fill:#412b8b;fill-opacity:1"
+         id="flowPara5324">Napoje</flowPara></flowRoot>    <rect
+       ry="1.7964367"
+       y="1037.9749"
+       x="325.97528"
+       height="6.0736666"
+       width="47.444962"
+       id="rect5326"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+    <flowRoot
+       transform="matrix(0.17731558,0,0,0.17731558,313.38619,1033.0394)"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       id="flowRoot5328"
+       xml:space="preserve"><flowRegion
+         id="flowRegion5330"><rect
+           y="31.936937"
+           x="87.378197"
+           height="42.931477"
+           width="238.39598"
+           id="rect5332" /></flowRegion><flowPara
+         style="font-size:15px"
+         id="flowPara5334">Oczywiście. Co jeszcze podać?</flowPara></flowRoot>    <circle
+       r="2.8173451"
+       cy="1040.4849"
+       cx="321.67401"
+       id="circle5336"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#bcffaf;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+    <rect
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="rect5338"
+       width="47.444962"
+       height="12.163604"
+       x="325.97528"
+       y="1044.423"
+       ry="2.3438754" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot5340"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       transform="matrix(0.17731558,0,0,0.17731558,313.38619,1039.8602)"><flowRegion
+         id="flowRegion5342"><rect
+           id="rect5344"
+           width="239.40613"
+           height="61.114223"
+           x="87.378197"
+           y="31.936937" /></flowRegion><flowPara
+         id="flowPara5346"
+         style="font-size:15px">Jeżeli mogę coś zaproponować, klienci bardzo chwalą sobie nasz krem cebulowy!</flowPara></flowRoot>    <flowRoot
+       transform="matrix(0.17731558,0,0,0.17731558,310.24279,1059.7783)"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#e398c4;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       id="flowRoot5352"
+       xml:space="preserve"><flowRegion
+         id="flowRegion5354"><rect
+           style="text-align:center;text-anchor:middle;fill:#e398c4;fill-opacity:1"
+           y="31.936937"
+           x="87.378197"
+           height="46.67622"
+           width="267.60989"
+           id="rect5356" /></flowRegion><flowPara
+         style="font-size:15px;text-align:center;text-anchor:middle;fill:#e398c4;fill-opacity:1"
+         id="flowPara5358">Wybierz danie z menu lub kliknij &quot;zakończ zamówienie&quot;</flowPara></flowRoot>    <g
+       id="g5365"
+       transform="matrix(0.17731558,0,0,0.17731558,340.47309,1005.8059)">
+      <rect
+         style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#c745ff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+         id="rect5367"
+         width="270.59894"
+         height="35.652264"
+         x="-88.774475"
+         y="569.30603"
+         ry="6.5044336" />
+      <flowRoot
+         xml:space="preserve"
+         id="flowRoot5369"
+         style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         transform="translate(-118.77628,543.87337)"><flowRegion
+           id="flowRegion5371"><rect
+             id="rect5373"
+             width="261.54898"
+             height="24.452862"
+             x="87.378197"
+             y="31.936937"
+             style="fill:#ffffff;fill-opacity:1" /></flowRegion><flowPara
+           id="flowPara5375"
+           style="font-size:15px;fill:#ffffff;fill-opacity:1">Zakończ zamówienie</flowPara></flowRoot>    </g>
+    <g
+       id="g5377"
+       transform="matrix(0.17731558,0,0,0.17731558,340.07259,962.71504)">
+      <g
+         id="g5389"
+         transform="translate(25.530396,0)">
+        <g
+           id="g5396"
+           transform="translate(0,-37.142857)">
+          <rect
+             style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#c745ff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+             id="rect5379"
+             width="44.329868"
+             height="35.652264"
+             x="137.4946"
+             y="569.30603"
+             ry="10.545035" />
+          <flowRoot
+             xml:space="preserve"
+             id="flowRoot5381"
+             style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+             transform="translate(64.283738,543.87337)"><flowRegion
+               id="flowRegion5383"><rect
+                 id="rect5385"
+                 width="244.40614"
+                 height="38.024292"
+                 x="87.378197"
+                 y="31.936937"
+                 style="fill:#ffffff;fill-opacity:1" /></flowRegion><flowPara
+               id="flowPara5387"
+               style="font-size:15px;fill:#ffffff;fill-opacity:1">...</flowPara></flowRoot>        </g>
+      </g>
+    </g>
+  </g>
+</svg>
