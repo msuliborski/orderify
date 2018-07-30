@@ -6,6 +6,8 @@ import android.view.ActionMode;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import com.amm.orderify.helpers.JBDCDriver;
@@ -19,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
     String tmp;
     TextView RecordTextView;
+    public static String error = "";
 
 
     @Override
@@ -33,13 +36,21 @@ public class MainActivity extends AppCompatActivity {
 
         try
         {
-            JBDCDriver.Initiate();
+            //JBDCDriver.Initiate();
             //ResultSet results = JBDCDriver.ExecuteStatement("SELECT * FROM tab");
 
            // tmp=results.getString(0)+" "+ results.getString(1);
 
+            Connection con = JBDCDriver.CONN();
+            if (con == null)
+            {
+                RecordTextView.append(" " + error);
+            }
+            else
+                RecordTextView.setText("Polaczono");
 
-        } catch (SQLException e)
+
+        } catch (Exception e)
         {
            e.printStackTrace();
            RecordTextView.setText(e.getMessage());
