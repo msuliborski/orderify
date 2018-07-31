@@ -52,6 +52,9 @@ public class JBDCDriver {
     public static ResultSet ExecuteQuery(String query) throws SQLException {
         return myStatement.executeQuery(query);
     }
+    public static void ExecuteUpdate(String query) throws SQLException {
+        myStatement.executeUpdate(query);
+    }
 
     public static String getIp() {
         return ip;

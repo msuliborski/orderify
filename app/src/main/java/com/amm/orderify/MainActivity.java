@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import java.sql.ResultSet;
@@ -19,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
     String message;
     TextView RecordTextView;
-
+    EditText RecordGetText;
     ResultSet resultSet;
 
     @Override
@@ -28,35 +29,44 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         RecordTextView = findViewById(R.id.RecordTextView);
+        RecordGetText = findViewById(R.id.RecordGetText);
 
-        try {
-            InitiateConnection();
-            ConnectToDatabase();
-            resultSet = ExecuteQuery("SELECT * FROM dishes");
-
-            while (resultSet.next()) {
-                message += (resultSet.getString(1) + " " + resultSet.getString(2) + "\n\n");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            RecordTextView.setText(e.getMessage());
-        }
+        InitiateConnection();
+        ConnectToDatabase();
 
         Button GetButton = findViewById(R.id.GetButton);
         GetButton.setOnClickListener(e -> {
+            message = null;
+            try {
+                resultSet = ExecuteQuery("SELECT * FROM dishes");
+
+                while (resultSet.next()) {
+                    message += (resultSet.getString(1) + " " + resultSet.getString(2)) + "\n";
+                }
+            } catch (Exception e2) {
+                e2.printStackTrace();
+                RecordTextView.setText(e2.getMessage());
+            }
             RecordTextView.setText(message);
         });
 
         Button AddButton = findViewById(R.id.SendButton);
         AddButton.setOnClickListener(e -> {
+            message = null;
             try {
-                ExecuteQuery(
-                        "INSERT INTO `dishes` (`name`, `descS`, `descL`, `categoryID`)\n" +
-                        "VALUES (" + RecordTextView.getText() + ", 'short', 'long', 1);"
-                );
+                ExecuteUpdate(
+                        "INSERT INTO dishes (name, descS, descL, categoryID) " +
+                        "VALUES ('" + RecordGetText.getText().toString() + "', 'short', 'long', 1);");
+                resultSet = ExecuteQuery("SELECT * FROM dishes");
+                while (resultSet.next()) {
+                    message += (resultSet.getString(1) + " " + resultSet.getString(2)) + "\n";
+                }
+                //message = RecordGetText.getText().toString();
             } catch (SQLException e1) {
                 e1.printStackTrace();
+                RecordTextView.setText(e1.getMessage());
             }
+            if (message != null) RecordTextView.setText(message);
         });
 
         Button GoToMenuButton = findViewById(R.id.GoToMenuButton);
