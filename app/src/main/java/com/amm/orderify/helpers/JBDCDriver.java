@@ -1,10 +1,6 @@
 package com.amm.orderify.helpers;
 
-import android.annotation.SuppressLint;
 import android.os.StrictMode;
-import android.util.Log;
-
-import com.amm.orderify.MainActivity;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -13,53 +9,77 @@ import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-public class JBDCDriver
-{
+public class JBDCDriver {
 
-    public static Connection myConn;
-    public static Statement myStatement;
-    public static String ipAddress = "192.168.1.100";
-    //public static String classs = "net.sourceforge.jtds.jdbc.Driver";
-    public static String classs = "com.mysql.jdbc.Driver";
+    private static Connection myConn;
+    private static Statement myStatement;
 
-    public static void Initiate() throws SQLException
-    {
+    private static String ip;
+    private static String database;
+    private static String user;
+    private static String password;
 
-
-            myConn = DriverManager.getConnection("jdbc:mysql://"+ ipAddress +":3306/orderify", "root", "1234");
-            myStatement = myConn.createStatement();
-
+    public static void InitiateConnection(String _ip, String _database, String _user, String _password) {
+        ip = _ip;
+        database = _database;
+        user = _user;
+        password = _password;
     }
-    public static ResultSet ExecuteStatement(String query) throws SQLException
-    {
+
+    public static void InitiateConnection() {
+        ip = "192.168.1.100";
+        database = "orderify";
+        user = "root";
+        password = "1234";
+    }
+
+    public static void ConnectToDatabase() {
+        try {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+
+            Class.forName("com.mysql.jdbc.Driver");
+
+            myConn = DriverManager.getConnection("jdbc:mysql://" + ip + ":3306/" + database, user, password);
+            myStatement = myConn.createStatement();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static ResultSet ExecuteQuery(String query) throws SQLException {
         return myStatement.executeQuery(query);
     }
 
-    @SuppressLint("NewApi")
-    public static Connection CONN() {
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
-                .permitAll().build();
-        StrictMode.setThreadPolicy(policy);
-        Connection conn = null;
-        String ConnURL = null;
-        try {
+    public static String getIp() {
+        return ip;
+    }
 
-            Class.forName(classs);
-            //ConnURL = "jdbc:jtds:sqlserver://" + ipAddress + ";"
-            //        + "databaseName=" + "orderify" + ";user=" + "root" + ";password="
-            //        + "1234" + ";";
-            ConnURL = "jdbc:mysql://192.168.1.100:3306/orderify?autoReconnect=true&useSSL=false";
-            conn = DriverManager.getConnection(ConnURL, "root", "1234");
-        } catch (SQLException se) {
-            Log.e("ERRO", se.getMessage());
-            MainActivity.error = se.getMessage();
-        } catch (ClassNotFoundException e) {
-            Log.e("ERRO", e.getMessage());
-            MainActivity.error = e.getMessage();
-        } catch (Exception e) {
-            Log.e("ERRO", e.getMessage());
-            MainActivity.error = e.getMessage();
-        }
-        return conn;
+    public static void setIp(String ip) {
+        JBDCDriver.ip = ip;
+    }
+
+    public static String getDatabase() {
+        return database;
+    }
+
+    public static void setDatabase(String database) {
+        JBDCDriver.database = database;
+    }
+
+    public static String getUser() {
+        return user;
+    }
+
+    public static void setUser(String user) {
+        JBDCDriver.user = user;
+    }
+
+    public static String getPassword() {
+        return password;
+    }
+
+    public static void setPassword(String password) {
+        JBDCDriver.password = password;
     }
 }
