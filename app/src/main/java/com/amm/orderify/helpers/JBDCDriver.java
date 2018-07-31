@@ -27,10 +27,13 @@ public class JBDCDriver {
     }
 
     public static void InitiateConnection() {
-        ip = "192.168.1.100";
-        database = "orderify";
+        //ip = "192.168.1.100";
+        ip = "10.21.21.100";
+        //database = "orderify";
+        database = "test";
         user = "root";
-        password = "1234";
+        //password = "1234";
+        password = "michal";
     }
 
     public static void ConnectToDatabase() {

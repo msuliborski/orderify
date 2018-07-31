@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             InitiateConnection();
             ConnectToDatabase();
-            resultSet = ExecuteQuery("SELECT * FROM tab");
+            resultSet = ExecuteQuery("SELECT * FROM names");
 
             while (resultSet.next()) {
                 message += (resultSet.getString(1) + " " + resultSet.getString(2));

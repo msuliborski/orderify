@@ -8,10 +8,13 @@ collation_server=latin1_swedish_ci
 
 
 
-
-bind-address = 127.0.0.1
-
+/etc/mysql/mysql.d/mysql.conf
+bind-address = MY_IP
 
 
 CREATE USER 'root'@'%' IDENTIFIED BY 'some_pass';
 GRANT ALL PRIVILEGES ON . TO 'root'@'%';
+
+
+CREATE USER 'root'@'%' IDENTIFIED BY 'michal';
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'%';
