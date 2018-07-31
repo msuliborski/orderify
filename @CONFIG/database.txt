@@ -1,0 +1,17 @@
+W konfigu bazy:
+[mysql]
+default-character-set=latin1
+
+[mysqld]
+character_set_server=latin1
+collation_server=latin1_swedish_ci
+
+
+
+
+bind-address = 127.0.0.1
+
+
+
+CREATE USER 'root'@'%' IDENTIFIED BY 'some_pass';
+GRANT ALL PRIVILEGES ON . TO 'root'@'%';
