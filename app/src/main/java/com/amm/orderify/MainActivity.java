@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             InitiateConnection();
             ConnectToDatabase();
-            resultSet = ExecuteQuery("SELECT * FROM names");
+            resultSet = ExecuteQuery("SELECT * FROM tab");
 
             while (resultSet.next()) {
                 message += (resultSet.getString(1) + " " + resultSet.getString(2));
