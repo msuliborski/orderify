@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button GetButton = findViewById(R.id.GetButton);
         GetButton.setOnClickListener(e -> {
-            message = null;
+            message = "";
             try {
                 resultSet = ExecuteQuery("SELECT * FROM dishes");
 
