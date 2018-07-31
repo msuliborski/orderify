@@ -29,8 +29,7 @@ public class JBDCDriver {
     public static void InitiateConnection() {
         //ip = "192.168.1.100";
         ip = "10.21.21.100";
-        //database = "orderify";
-        database = "test";
+        database = "Orderify";
         user = "root";
         //password = "1234";
         password = "michal";
@@ -52,6 +51,9 @@ public class JBDCDriver {
 
     public static ResultSet ExecuteQuery(String query) throws SQLException {
         return myStatement.executeQuery(query);
+    }
+    public static void ExecuteUpdate(String query) throws SQLException {
+        myStatement.executeUpdate(query);
     }
 
     public static String getIp() {

@@ -19,6 +19,7 @@ DROP TABLE IF EXISTS `dishes`;
 CREATE TABLE `dishes` (
   `ID` INTEGER NOT NULL AUTO_INCREMENT, 
   `name` VARCHAR(255) NOT NULL, 
+  `price` INTEGER NOT NULL, 
   `descS` VARCHAR(255), 
   `descL` LONGTEXT, 
   `categoryID` INTEGER NOT NULL DEFAULT 0, 
@@ -33,6 +34,7 @@ DROP TABLE IF EXISTS `addons`;
 CREATE TABLE `addons` (
   `ID` INTEGER NOT NULL AUTO_INCREMENT, 
   `name` VARCHAR(255) NOT NULL, 
+  `price` INTEGER NOT NULL, 
   PRIMARY KEY (`ID`)
 ) ENGINE=myisam DEFAULT CHARSET=utf8;
 
@@ -103,17 +105,17 @@ CREATE TABLE `dishesToOrders` (
 
 
 INSERT INTO `dishesCategories` (`name`)
-VALUES ("Dania główne");
+VALUES ('Dania główne');
 
 INSERT INTO `dishes` (`name`, `descS`, `descL`, `categoryID`)
-VALUES ("Kurczak w cieście", "takie on jest dobry", "araby z południa będą przychodzić i oddawać swoje żony żeby spróbować tego wspaniałego dania", 1);
+VALUES ('Kurczak w cieście', 'takie on jest dobry', 'araby z południa będą przychodzić i oddawać swoje żony żeby spróbować tego wspaniałego dania', 1);
 
 
 INSERT INTO `addons` (`name`)
-VALUES ("Sałatka z kapusty"), ("Warzywa gotowane"), ("Sos tatarski"), ("Sos czosnkowy"), ("Sos a co cię to obchodzi");
+VALUES ('Sałatka z kapusty'), ('Warzywa gotowane'), ('Sos tatarski'), ('Sos czosnkowy'), ('Sos a co cię to obchodzi');
 
 INSERT INTO `addonsCategories` (`name`)
-VALUES ("Sałatki"), ("Sosy");
+VALUES ('Sałatki'), ('Sosy');
 
 INSERT INTO `addonsCategoriesToAddons` (`addonCategoryID`, `addonID`)
 VALUES (1, 1), (1, 2), (2, 3), (2, 4), (2, 5);
@@ -124,7 +126,7 @@ VALUES (1, 1), (1, 2);
 
 
 INSERT INTO `orders` (`tableNumber`, `order`, `comments`)
-VALUES (1, "opis zamówienia", "z lodem");
+VALUES (1, 'opis zamówienia', 'z lodem');
 
 INSERT INTO `dishesToOrders` (`dishID`, `orderID`)
 VALUES (1, 1);
