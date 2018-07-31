@@ -19,8 +19,8 @@ public class JBDCDriver
     public static Connection myConn;
     public static Statement myStatement;
     public static String ipAddress = "192.168.1.100";
-    public static String classs = "net.sourceforge.jtds.jdbc.Driver";
-    //public static String classs = "com.mysql.jdbc.Driver";
+    //public static String classs = "net.sourceforge.jtds.jdbc.Driver";
+    public static String classs = "com.mysql.jdbc.Driver";
 
     public static void Initiate() throws SQLException
     {
