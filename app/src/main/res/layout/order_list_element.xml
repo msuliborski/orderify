@@ -1,6 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/Row"
-    android:layout_width="fill_parent"
-    android:layout_height="50dp"
-    android:textSize="15sp"></TextView>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/orderPriceTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="57dp"
+        android:layout_alignTop="@+id/view"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="46dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center_vertical"
+        android:text="Price" />
+
+    <TextView
+        android:id="@+id/orderNameTextView"
+        android:layout_width="226dp"
+        android:layout_height="57dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/orderPriceTextView"
+        android:layout_marginEnd="20dp"
+        android:gravity="center_vertical"
+        android:text="Order Name" />
+
+</RelativeLayout>
