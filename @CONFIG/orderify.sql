@@ -74,11 +74,13 @@ CREATE TABLE `addonsCategorisToDishes` (
 
 CREATE TABLE `wishes` (
     `ID` INTEGER NOT NULL AUTO_INCREMENT, 
-    `amount` INTEGER DEFAULT 1, 
     `dishID` INTEGER DEFAULT 0, 
+    `amount` INTEGER DEFAULT 1, 
+    `orderID` INTEGER DEFAULT 0, 
     INDEX (`dishID`), 
     PRIMARY KEY (`ID`), 
-    FOREIGN KEY (dishID) REFERENCES dishes(ID) 
+    FOREIGN KEY (dishID) REFERENCES dishes(ID),
+    FOREIGN KEY (orderID) REFERENCES orders(ID)
 )   ENGINE=myisam DEFAULT CHARSET=utf8;
 
 
@@ -102,16 +104,6 @@ CREATE TABLE `orders` (
 )   ENGINE=myisam DEFAULT CHARSET=utf8;
 
 
-CREATE TABLE `wishesToOrders` (
-    `ID` INTEGER NOT NULL AUTO_INCREMENT, 
-    `orderID` INTEGER DEFAULT 0, 
-    `wishID` INTEGER DEFAULT 0, 
-    PRIMARY KEY (`ID`),
-    FOREIGN KEY (orderID) REFERENCES orders(ID),
-    FOREIGN KEY (wishID) REFERENCES wishes(ID)
-)   ENGINE=myisam DEFAULT CHARSET=utf8;
-
-
 
 
 INSERT INTO `tables` (`name`)
@@ -121,17 +113,17 @@ INSERT INTO `dishesCategories` (`name`)
 VALUES  ('Pizza'), ('Dania główne'), ('Zupy'), ('Napoje');
 
 INSERT INTO dishes (name, price, descS, descL, categoryID)
-VALUES  ('Margarita', 15, 'short', 'long', 1),                             #1
+VALUES  ('Margarita', 15, 'short', 'long', 1),                              #1
         ('Peperoni', 17, 'short', 'long', 1),                               #2
         ('Hawajska', 18, 'short', 'long', 1),                               #3
         ('Kurczak w cieście', 13, 'takie on jest dobry', 'araby z południa będą przychodzić i oddawać swoje żony żeby spróbować tego wspaniałego dania', 2),   #4
         ('Sznycel', 80, 'short', 'long', 2),                                #5
         ('Dewolaj', 15, 'short', 'long', 2),                                #6
-        ('Zupa pomidorowa', 5, 'short', 'long', 3),                        #7
-        ('Zupa ogórkowa', 5, 'short', 'long', 3),                          #8
-        ('Piwo', 5, 'short', 'long', 4),                                   #9
-        ('Cola', 4, 'short', 'long', 4),                                   #10
-        ('Sok pomarańczowy', 3, 'short', 'long', 4);                       #11
+        ('Zupa pomidorowa', 5, 'short', 'long', 3),                         #7
+        ('Zupa ogórkowa', 5, 'short', 'long', 3),                           #8
+        ('Piwo', 5, 'short', 'long', 4),                                    #9
+        ('Cola', 4, 'short', 'long', 4),                                    #10
+        ('Sok pomarańczowy', 3, 'short', 'long', 4);                        #11
 
 INSERT INTO `addonsCategories` (`name`)
 VALUES  ('Sosy'), 
@@ -141,7 +133,7 @@ VALUES  ('Sosy'),
         ('Do napojów'); 
 
 INSERT INTO `addons` (`name`, `price`, `addonCategoryID`)
-VALUES  ('Sos tatarski', 1, 1), ('Sos czosnkowy', 0, 1), ('Sos pomidorowy', 0, 1),       #1-3
+VALUES  ('Sos tatarski', 1, 1), ('Sos czosnkowy', 0, 1), ('Sos pomidorowy', 0, 1),              #1-3
         ('Mała', 0, 2), ('Średnia', 7, 2), ('Duża', 13, 2),                                     #4-6
         ('Sałatka z kapusty', 0, 3), ('Warzywa gotowane', 0, 3), ('Marchewka', 0, 3),           #7-9
         ('Ziemniaki', 0, 4), ('Pieczone ziemniaki', 0, 4), ('Frytki', 0, 4), ('Kluski', 0, 4),  #10-13
@@ -157,12 +149,12 @@ VALUES  (1, 1), (1, 2),
         (10, 5), (10, 5),
         (11, 5), (11, 5);
 
-INSERT INTO `wishes` (`dishID`, `amount`)
-VALUES  (1, 1), (9, 1),             #1-2
-        (5, 1), (11, 1),            #3-4
-        (7, 1),                     #5
-        (9, 5),                     #6
-        (6, 1), (5, 1), (10, 2);    #7-9
+INSERT INTO `wishes` (`dishID`, `amount`, `orderID`)
+VALUES  (1, 1, 1), (9, 1, 1),                #1-2
+        (5, 1, 2), (11, 1, 2),               #3-4
+        (7, 1, 3),                           #5
+        (9, 5, 4),                           #6
+        (6, 1, 5), (5, 1, 5), (10, 2, 5);    #7-9
 
 INSERT INTO `addonsToWish` (`wishID`, `addonID`)
 VALUES  (1, 2), (1, 3),
@@ -175,13 +167,6 @@ VALUES  (1, 2), (1, 3),
 INSERT INTO `orders` (`time`, `date`, `tableID`, `comments`)
 VALUES  ('21:37:00', '2018-07-31', 1, 'z lodem'),                                                                 #1
         ('21:38:11', '2018-07-31', 1, 'arek pedal'),                                                              #2
-        ('21:41:22', '2018-07-31', 2, 'to ja szukam czy ci chlopi maja proce'),                                 #3
+        ('21:41:22', '2018-07-31', 2, 'to ja szukam czy ci chlopi maja proce'),                                   #3
         ('21:49:22', '2018-07-31', 2, 'rzucam sobie na SQL'),                                                     #4
         ('21:49:33', '2018-07-31', 2, 'po co ja się w ogóle sile z tymi uwagami, nikt tego nie przeczyta :(');    #5
-
-INSERT INTO `wishesToOrders` (`orderID`, `wishID`)
-VALUES  (1, 1), (1, 2),
-        (2, 3), (2, 4),
-        (3, 5), 
-        (4, 6),
-        (5, 7), (5, 8), (5, 9);
