@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Orderify</string>
+    <string name="zamawiam_button_string">Zamawiam</string>
+    <string name="record_get_text_textview_string">Enter dish</string>
+    <string name="send_record_string">Send record</string>
+    <string name="get_records_button_string">Get some</string>
+    <string name="go_to_menu_button_string">Go to menu</string>
+    <string name="position_price_textview_string">Koszt zamówienia stanowiska:</string>
+    <string name="table_price_textview_string">Koszt zamówień z całego stołu:</string>
+    <string name="go_to_summary_button_string">Summary</string>
 </resources>
