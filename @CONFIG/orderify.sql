@@ -38,7 +38,7 @@ CREATE TABLE `dishesCategories` (
 CREATE TABLE `dishes` (
     `ID` INTEGER NOT NULL AUTO_INCREMENT, 
     `name` VARCHAR(255) NOT NULL, 
-    `price` INTEGER NOT NULL, 
+    `price` INTEGER NOT NULL DEFAULT 0, 
     `descS` VARCHAR(255), 
     `descL` LONGTEXT, 
     `categoryID` INTEGER NOT NULL DEFAULT 0, 
@@ -55,7 +55,7 @@ CREATE TABLE `addonsCategories` (
 CREATE TABLE `addons` (
     `ID` INTEGER NOT NULL AUTO_INCREMENT, 
     `name` VARCHAR(255) NOT NULL, 
-    `price` INTEGER NOT NULL, 
+    `price` INTEGER NOT NULL DEFAULT 0, 
     `addonCategoryID` INTEGER NOT NULL DEFAULT 0, 
     PRIMARY KEY (`ID`),
     FOREIGN KEY (addonCategoryID) REFERENCES addonsCategories(ID)
@@ -112,7 +112,7 @@ VALUES  ('Przy oknie'), ('Przy barze'), ('Na środku'), ('W kącie');
 INSERT INTO `dishesCategories` (`name`)
 VALUES  ('Pizza'), ('Dania główne'), ('Zupy'), ('Napoje');
 
-INSERT INTO dishes (name, price, descS, descL, categoryID)
+INSERT INTO `dishes` (name, price, descS, descL, categoryID)
 VALUES  ('Margarita', 15, 'short', 'long', 1),                              #1
         ('Peperoni', 17, 'short', 'long', 1),                               #2
         ('Hawajska', 18, 'short', 'long', 1),                               #3
