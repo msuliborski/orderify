@@ -171,3 +171,4 @@ VALUES  ('21:37:00', '2018-07-31', 1, 'z lodem'),                               
         ('21:41:22', '2018-07-31', 2, 'to ja szukam czy ci chlopi maja proce'),                                   #3
         ('21:49:22', '2018-07-31', 2, 'rzucam sobie na SQL'),                                                     #4
         ('21:49:33', '2018-07-31', 2, 'po co ja się w ogóle sile z tymi uwagami, nikt tego nie przeczyta :(');    #5
+ 

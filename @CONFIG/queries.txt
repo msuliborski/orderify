@@ -21,7 +21,6 @@ INSERT INTO tables
 VALUES
     ('table_name');
 
-
 -- Get tables array:
 SELECT *
 FROM tables;
@@ -114,16 +113,21 @@ FROM dishesCategories;
 --menu of dishes (we get name, price, description)
 SELECT *
 FROM dishes
-WHERE categoryID = 1;
---depends on the category we are in
+WHERE categoryID = x;--depends on the category we are in
 
 -- one dish (more details); this should get all dish categories to our particullar dish, along with their IDs
 SELECT *
 FROM addonsCategorisToDishes
     JOIN addonsCategories ON addonsCategories.ID = addonsCategorisToDishes.addonCategoryID
---not sure if THAT works
+    JOIN dishes ON dishes.ID = addonsCategorisToDishes.dishID
 WHERE dishID = x;
 --ID of the dish
+--OR--
+SELECT *
+FROM addonsToWishes --add aliases
+    JOIN addons ON addons.ID = addonsToWishes.addonID
+    JOIN wishes ON wishes.ID = addonsToWishes.wishID
+WHERE orderID = x;
 
 --this should get us addons in particullar category
 SELECT *
@@ -154,7 +158,6 @@ FROM addonsToWishes --add aliases
     JOIN addons ON addons.ID = addonsToWishes.addonID
     JOIN wishes ON wishes.ID = addonsToWishes.wishID
 WHERE orderID = x; 
---probably better that the one in row #121
 
 
 
