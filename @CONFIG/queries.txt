@@ -1,0 +1,179 @@
+--
+--
+-- HELPFULL
+--
+--
+
+-- Get ID of lastly insertet row (only, if you insert one element at a time!)
+SELECT LAST_INSERT_ID();
+
+
+
+--
+--
+-- INSERT DATA FEATURE
+--
+--
+
+-- Add a table:
+INSERT INTO tables
+    (name)
+VALUES
+    ('table_name');
+
+
+-- Get tables array:
+SELECT *
+FROM tables;
+
+
+
+
+-- Add a dish category:
+INSERT INTO dishesCategories
+    (name)
+VALUES
+    ('dish_category_name');
+
+-- Get dishesCategories array:
+SELECT *
+FROM dishesCategories;
+
+
+
+
+
+-- Add an addon category:
+INSERT INTO addonsCategories
+    (name, multiChoice)
+VALUES
+    ('addon_category_name', false);
+
+-- Add an addon
+INSERT INTO addons
+    (name, price, addonCategoryID)
+VALUES
+    ('addon_name', 1, 1);
+--addonCategoryID form query   
+
+
+
+
+
+--Add a dish
+INSERT INTO dishes
+    (name, price, descS, descL, categoryID)
+VALUES
+    ('name', 15, 'descS', 'descL', 1);
+--categoryID form query                           
+
+INSERT INTO addonsCategorisToDishes
+    (dishID, addonCategoryID)
+VALUES
+    (1, 1),
+    (1, 2);
+--dishID from LAST_INSERT_ID(), addonCategoryID from querie (visible select menu)
+
+
+
+-- Create order
+INSERT INTO orders
+    (time, date, tableID, comments)
+VALUES
+    (TIME(), DATE(), 1, 'comment');
+
+-- Add a wish
+INSERT INTO wishes
+    (dishID, amount, orderID)
+VALUES
+    (1, 1, 1),
+    (9, 1, 1);
+
+-- Connect addons to wish
+INSERT INTO addonsToWish
+    (wishID, addonID)
+VALUES
+    (1, 2),
+    (1, 3);
+
+
+
+
+
+
+--
+--
+-- FETCH DATA TO SHOW
+--       in the menu
+--
+
+--menu of categories
+SELECT *
+FROM dishesCategories;
+
+--menu of dishes (we get name, price, description)
+SELECT *
+FROM dishes
+WHERE categoryID = 1;
+--depends on the category we are in
+
+-- one dish (more details); this should get all dish categories to our particullar dish, along with their IDs
+SELECT *
+FROM addonsCategorisToDishes
+    JOIN addonsCategories ON addonsCategories.ID = addonsCategorisToDishes.addonCategoryID
+--not sure if THAT works
+WHERE dishID = x;
+--ID of the dish
+
+--this should get us addons in particullar category
+SELECT *
+FROM addonsCategories
+WHERE addonsCategories.ID = x;
+-- the ID we should get from query above
+
+
+
+
+
+
+
+--
+--
+-- FETCH DATA TO SHOW
+--       in the basket
+--
+
+--one session, should be one order. This order have a few wishes
+--first we should create order when user starts to assebly order
+--in that time we create wishes, me bind them to that order
+--when we place order, we simply update a date and set it ready start preparing it
+
+--tldr, we simply display wishes on the left
+SELECT *
+FROM addonsToWishes --add aliases
+    JOIN addons ON addons.ID = addonsToWishes.addonID
+    JOIN wishes ON wishes.ID = addonsToWishes.wishID
+WHERE orderID = x; 
+--probably better that the one in row #121
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
