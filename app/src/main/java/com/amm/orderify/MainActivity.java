@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button GoToMenuButton = findViewById(R.id.GoToMenuButton);
         GoToMenuButton.setOnClickListener(e -> {
-            Intent openMenuIntent = new Intent(MainActivity.this, MenuActivity.class);
+            Intent openMenuIntent = new Intent(MainActivity.this, MenuActivity2.class);
             this.startActivity(openMenuIntent);
         });
     }

@@ -22,10 +22,11 @@
         </activity>
         <activity
             android:name=".MenuActivity"
-            android:screenOrientation="landscape"></activity>
+            android:screenOrientation="landscape" />
         <activity
             android:name=".SummaryActivity"
-            android:screenOrientation="landscape"></activity>
+            android:screenOrientation="landscape" />
+        <activity android:name=".MenuActivity2"></activity>
     </application>
 
 </manifest>
