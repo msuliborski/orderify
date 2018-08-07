@@ -5,4 +5,5 @@
     <color name="colorAccent">#FF4081</color>
     <color name="backgroundPrimary">#f3f8e7</color>
     <color name="darkRed">#3c0b0b</color>
+    <color name="errorColor">#ff6c6c</color>
 </resources>

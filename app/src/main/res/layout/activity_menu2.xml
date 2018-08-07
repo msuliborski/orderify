@@ -207,6 +207,36 @@
         app:layout_constraintEnd_toEndOf="@+id/BasketBackground"
         app:srcCompat="@drawable/common_button_background" />
 
+    <ImageButton
+        android:id="@+id/CancelOrderButton"
+        android:layout_width="72dp"
+        android:layout_height="11dp"
+
+        android:layout_marginBottom="1dp"
+        android:layout_marginEnd="8dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:elevation="21dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:scaleType="fitStart"
+        app:layout_constraintBottom_toTopOf="@+id/AskWaiterButton"
+        app:layout_constraintEnd_toEndOf="@+id/BasketBackground"
+        app:srcCompat="@drawable/common_button_background" />
+
+    <ImageButton
+        android:id="@+id/GoToSummaryButton"
+        android:layout_width="72dp"
+        android:layout_height="11dp"
+
+        android:layout_marginBottom="1dp"
+        android:layout_marginEnd="8dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:elevation="21dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:scaleType="fitStart"
+        app:layout_constraintBottom_toTopOf="@+id/CancelOrderButton"
+        app:layout_constraintEnd_toEndOf="@+id/BasketBackground"
+        app:srcCompat="@drawable/common_button_background" />
+
     <TextView
         android:id="@+id/OrderButtonTextView"
         android:layout_width="wrap_content"
@@ -221,5 +251,67 @@
         app:layout_constraintEnd_toEndOf="@+id/OrderButton"
         app:layout_constraintStart_toStartOf="@+id/OrderButton"
         app:layout_constraintTop_toTopOf="@+id/OrderButton" />
+
+    <TextView
+        android:id="@+id/AskWaiterButtonTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:elevation="21dp"
+        android:text="@string/ask_waiter_button_textview_string"
+        android:textColor="@color/darkRed"
+        android:textSize="6sp"
+        app:layout_constraintBottom_toBottomOf="@+id/AskWaiterButton"
+        app:layout_constraintEnd_toEndOf="@+id/AskWaiterButton"
+        app:layout_constraintStart_toStartOf="@+id/AskWaiterButton"
+        app:layout_constraintTop_toTopOf="@+id/AskWaiterButton" />
+
+    <TextView
+        android:id="@+id/CancelOrderButtonTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:elevation="21dp"
+        android:text="@string/cancel_order_button_textview_string"
+        android:textColor="@color/darkRed"
+        android:textSize="6sp"
+        app:layout_constraintBottom_toBottomOf="@+id/CancelOrderButton"
+        app:layout_constraintEnd_toEndOf="@+id/AskWaiterButton"
+        app:layout_constraintStart_toStartOf="@+id/AskWaiterButton"
+        app:layout_constraintTop_toTopOf="@+id/CancelOrderButton" />
+
+    <TextView
+        android:id="@+id/GoToSummaryButtonTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:elevation="21dp"
+        android:text="@string/go_to_summary_button_string"
+        android:textColor="@color/darkRed"
+        android:textSize="6sp"
+        app:layout_constraintBottom_toBottomOf="@+id/GoToSummaryButton"
+        app:layout_constraintEnd_toEndOf="@+id/AskWaiterButton"
+        app:layout_constraintStart_toStartOf="@+id/AskWaiterButton"
+        app:layout_constraintTop_toTopOf="@+id/GoToSummaryButton" />
+
+    <TextView
+        android:id="@+id/ErrorsTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:elevation="21dp"
+        android:text="Tu się pojawiają chujowe errory"
+        android:textColor="@color/errorColor"
+        android:textSize="6sp"
+        app:layout_constraintBottom_toTopOf="@+id/GoToSummaryButton"
+        app:layout_constraintEnd_toEndOf="@+id/BasketBackground"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/OrderButton" />
 
 </android.support.constraint.ConstraintLayout>
