@@ -233,6 +233,7 @@
         android:elevation="21dp"
         android:foreground="?android:attr/selectableItemBackground"
         android:scaleType="fitStart"
+
         app:layout_constraintBottom_toTopOf="@+id/CancelOrderButton"
         app:layout_constraintEnd_toEndOf="@+id/BasketBackground"
         app:srcCompat="@drawable/common_button_background" />
