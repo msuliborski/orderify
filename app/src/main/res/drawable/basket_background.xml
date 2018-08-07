@@ -12,7 +12,7 @@
       android:centerY="0.5"
       android:endColor="#3c0b0b"
       android:gradientRadius="175dp"
-      android:startColor="#661212"
+      android:startColor="#4f2323"
       android:type="radial" />
 
   <!--If your shape requires only one solid color-->

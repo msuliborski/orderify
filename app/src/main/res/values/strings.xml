@@ -13,4 +13,7 @@
     <string name="sum_textview_string">Total:</string>
     <string name="enter_comments_textview_string">Comments:</string>
     <string name="order_button_textview_string">Order</string>
+    <string name="ask_waiter_button_textview_string">Ask waiter for help</string>
+    <string name="cancel_order_button_textview_string">Cancel your order</string>
+    <string name="go_to_summary_button_textview_string">Summary</string>
 </resources>

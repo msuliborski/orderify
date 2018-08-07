@@ -52,7 +52,7 @@ public class MenuActivity2 extends AppCompatActivity
 
 
         listView=(ListView)findViewById(R.id.OrderListView);
-        //listView.setAdapter(new customAdapter(names, prices));
+        listView.setAdapter(new customAdapter(names, prices));
 
 
     }
