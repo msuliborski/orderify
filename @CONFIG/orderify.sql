@@ -118,7 +118,7 @@ VALUES  ('Margarita', 15, 'short', 'long', 1),                              #1
         ('Peperoni', 17, 'short', 'long', 1),                               #2
         ('Hawajska', 18, 'short', 'long', 1),                               #3
         ('Kurczak w cieście', 13, 'takie on jest dobry', 'araby z południa będą przychodzić i oddawać swoje żony żeby spróbować tego wspaniałego dania', 2),   #4
-        ('Sznycel', 42.54, 'short', 'long', 2),                                #5
+        ('Sznycel taki, że kurwa mać, będą kutacy z cycków wylecieli', 42.54, 'short', 'long', 2),                                #5
         ('Dewolaj', 15, 'short', 'long', 2),                                #6
         ('Zupa pomidorowa', 5, 'short', 'long', 3),                         #7
         ('Zupa ogórkowa', 5, 'short', 'long', 3),                           #8
@@ -155,7 +155,7 @@ VALUES  (1, 1, 1), (9, 1, 1),                #1-2
         (5, 1, 2), (11, 1, 2),               #3-4
         (7, 1, 3),                           #5
         (9, 5, 4),                           #6
-        (6, 1, 5), (5, 1, 5), (10, 2, 5);    #7-9
+        (6, 1, 5), (5, 1, 5), (10, 2, 5), (7, 3, 5), (8, 1, 5);    #7-11
 
 INSERT INTO `addonsToWishes` (`wishID`, `addonID`)
 VALUES  (1, 2), (1, 3),

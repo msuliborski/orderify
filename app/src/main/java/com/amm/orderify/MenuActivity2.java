@@ -21,6 +21,9 @@ public class MenuActivity2 extends AppCompatActivity
 
     public List<String> names = new ArrayList<>();
     public List<String> prices = new ArrayList<>();
+    public List<String> amounts = new ArrayList<>();
+
+    public int orderID = 5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -30,23 +33,28 @@ public class MenuActivity2 extends AppCompatActivity
 
 
         try {
-            ResultSet resultSet = ExecuteQuery("SELECT dishes.name AS name, sum(dishes.price) AS dishPrice, sum(addons.price) AS addonsPrice " +
-                    "FROM addonsToWishes  " +
-                    "    JOIN addons ON addons.ID = addonsToWishes.addonID " +
-                    "    JOIN wishes ON wishes.ID = addonsToWishes.wishID " +
-                    "    JOIN dishes ON dishes.ID = wishes.dishID " +
-                    "WHERE orderID = 2 " +
+            ResultSet resultSet = ExecuteQuery("SELECT dishes.name AS name, max(wishes.amount) AS amount, sum(dishes.price) AS dishPrice, sum(addons.price) AS addonsPrice\n" +
+                    "FROM addonsToWishes\n" +
+                    "JOIN addons ON addons.ID = addonsToWishes.addonID\n" +
+                    "RIGHT JOIN wishes ON wishes.ID = addonsToWishes.wishID\n" +
+                    "JOIN dishes ON dishes.ID = wishes.dishID\n" +
+                    "WHERE orderID = " + orderID + "\n" +
                     "GROUP BY dishes.name;");
 
             while (resultSet.next()) {
                 names.add(resultSet.getString("name"));
-                prices.add(String.valueOf(resultSet.getFloat("dishPrice") + resultSet.getFloat("addonsPrice")) + " zł");
+                prices.add(String.valueOf(Math.round(resultSet.getFloat("dishPrice") + resultSet.getFloat("addonsPrice")*100)/100) + " zł");
+                amounts.add(resultSet.getString("amount"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
         listView = findViewById(R.id.OrderListView);
+        ViewGroup.LayoutParams lp = listView.getLayoutParams();
+        ViewGroup.LayoutParams lpb = lp;
+        if (names.size() <= 3) lp.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+        listView.setLayoutParams(lp);
         listView.setAdapter(new customAdapter(names, prices));
 
     }
@@ -59,6 +67,7 @@ public class MenuActivity2 extends AppCompatActivity
         customAdapter(List<String> val1, List<String> val2) {
             names = val1;
             prices = val2;
+
         }
 
         public int getCount() {

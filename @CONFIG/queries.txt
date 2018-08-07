@@ -153,29 +153,13 @@ WHERE addonsCategories.ID = x;
 --when we place order, we simply update a date and set it ready start preparing it
 
 --tldr, we simply display wishes on the left
-SELECT *
-FROM addonsToWishes --add aliases
-    JOIN addons ON addons.ID = addonsToWishes.addonID
-    JOIN wishes ON wishes.ID = addonsToWishes.wishID
-WHERE orderID = x; 
-
-
-SELECT * FROM wishes
+SELECT dishes.name AS name, max(wishes.amount) AS amount, sum(dishes.price) AS dishPrice, sum(addons.price) AS addonsPrice
+FROM addonsToWishes
+JOIN addons ON addons.ID = addonsToWishes.addonID
+RIGHT JOIN wishes ON wishes.ID = addonsToWishes.wishID
 JOIN dishes ON dishes.ID = wishes.dishID
-JOIN 
-WHERE wishes.orderID = 1; 
-
-
-SELECT dishes.name AS name, sum(dishes.price) AS dishPrice, sum(addons.price) AS addonsPrice
-FROM addonsToWishes 
-    JOIN addons ON addons.ID = addonsToWishes.addonID
-    JOIN wishes ON wishes.ID = addonsToWishes.wishID
-    JOIN dishes ON dishes.ID = wishes.dishID
-WHERE orderID = 1
+WHERE orderID = 5
 GROUP BY dishes.name;
-
-
-
 
 
 
