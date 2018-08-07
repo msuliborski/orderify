@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import static com.amm.orderify.helpers.JBDCDriver.*;
 
@@ -43,7 +44,7 @@ public class MenuActivity2 extends AppCompatActivity
 
             while (resultSet.next()) {
                 names.add(resultSet.getString("name"));
-                prices.add(String.valueOf(Math.round(resultSet.getFloat("dishPrice") + resultSet.getFloat("addonsPrice")*100)/100) + " zł");
+                prices.add(String.valueOf(String.format(Locale.FRANCE, "%.2f", resultSet.getFloat("dishPrice") + resultSet.getFloat("addonsPrice"))) + " zł");
                 amounts.add(resultSet.getString("amount"));
             }
         } catch (SQLException e) {
