@@ -101,6 +101,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:elevation="21dp"
+        android:scrollbars="none"
         app:layout_constraintEnd_toEndOf="@+id/BasketBackground"
         app:layout_constraintStart_toStartOf="@+id/BasketBackground"
         app:layout_constraintTop_toBottomOf="@+id/ArrowLight" />
@@ -113,6 +114,7 @@
         android:layout_marginStart="8dp"
         android:elevation="21dp"
         android:scaleType="fitStart"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="@+id/BasketBackground"
         app:layout_constraintStart_toStartOf="@+id/BasketBackground"
         app:layout_constraintTop_toBottomOf="@+id/OrderListView"
@@ -122,11 +124,12 @@
         android:id="@+id/SumTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:elevation="21dp"
         android:text="@string/sum_textview_string"
         android:textColor="@color/backgroundPrimary"
+        android:textSize="8sp"
         app:layout_constraintEnd_toStartOf="@id/SumNumberTextView"
         app:layout_constraintStart_toStartOf="@+id/BasketBackground"
         app:layout_constraintTop_toBottomOf="@+id/AfterListviewSeparator" />
@@ -148,12 +151,13 @@
         android:id="@+id/SumNumberTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="32dp"
         android:elevation="21dp"
         android:text="10,00 zł"
         android:textColor="@color/backgroundPrimary"
-        app:layout_constraintStart_toEndOf="@id/SumTextView"
+        android:textSize="8sp"
         app:layout_constraintEnd_toEndOf="@+id/BasketBackground"
+        app:layout_constraintStart_toEndOf="@id/SumTextView"
         app:layout_constraintTop_toTopOf="@+id/SumTextView" />
 
     <EditText
