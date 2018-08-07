@@ -54,7 +54,7 @@ public class MenuActivity2 extends AppCompatActivity
         listView=(ListView)findViewById(R.id.OrderListView);
         //listView.setAdapter(new customAdapter(names, prices));
 
-
+        TextView dupa = findViewById(R.id.Er)
     }
 
     class customAdapter extends BaseAdapter {
@@ -81,16 +81,14 @@ public class MenuActivity2 extends AppCompatActivity
 
         public View getView(int position, View convertView, ViewGroup parent) {
 
-            LayoutInflater inflater = getLayoutInflater();
-            View row;
-            row = inflater.inflate(R.layout.order_list_element, parent, false);
+            convertView = getLayoutInflater().inflate(R.layout.order_list_element, null);
             TextView title, price;
-            title = (TextView) row.findViewById(R.id.orderNameTextView);
-            price = (TextView) row.findViewById(R.id.orderPriceTextView);
+            title = (TextView) convertView.findViewById(R.id.orderNameTextView);
+            price = (TextView) convertView.findViewById(R.id.orderPriceTextView);
             title.setText(Title.get(position));
             price.setText((Prices.get(position)));
 
-            return (row);
+            return convertView;
         }
     }
 }
