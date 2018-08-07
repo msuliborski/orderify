@@ -118,7 +118,7 @@ VALUES  ('Margarita', 15, 'short', 'long', 1),                              #1
         ('Peperoni', 17, 'short', 'long', 1),                               #2
         ('Hawajska', 18, 'short', 'long', 1),                               #3
         ('Kurczak w cieście', 13, 'takie on jest dobry', 'araby z południa będą przychodzić i oddawać swoje żony żeby spróbować tego wspaniałego dania', 2),   #4
-        ('Sznycel', 80, 'short', 'long', 2),                                #5
+        ('Sznycel', 42.54, 'short', 'long', 2),                                #5
         ('Dewolaj', 15, 'short', 'long', 2),                                #6
         ('Zupa pomidorowa', 5, 'short', 'long', 3),                         #7
         ('Zupa ogórkowa', 5, 'short', 'long', 3),                           #8
@@ -134,7 +134,7 @@ VALUES  ('Sosy', true),
         ('Do napojów', false); 
 
 INSERT INTO `addons` (`name`, `price`, `addonCategoryID`)
-VALUES  ('Sos tatarski', 1, 1), ('Sos czosnkowy', 0, 1), ('Sos pomidorowy', 0, 1),              #1-3
+VALUES  ('Sos tatarski', 1, 1), ('Sos czosnkowy', 25, 1), ('Sos pomidorowy', 0, 1),              #1-3
         ('Mała', 0, 2), ('Średnia', 7, 2), ('Duża', 13, 2),                                     #4-6
         ('Sałatka z kapusty', 0, 3), ('Warzywa gotowane', 0, 3), ('Marchewka', 0, 3),           #7-9
         ('Ziemniaki', 0, 4), ('Pieczone ziemniaki', 0, 4), ('Frytki', 0, 4), ('Kluski', 0, 4),  #10-13

@@ -160,6 +160,21 @@ FROM addonsToWishes --add aliases
 WHERE orderID = x; 
 
 
+SELECT * FROM wishes
+JOIN dishes ON dishes.ID = wishes.dishID
+JOIN 
+WHERE wishes.orderID = 1; 
+
+
+SELECT *
+FROM addonsToWishes 
+    JOIN addons ON addons.ID = addonsToWishes.addonID
+    JOIN wishes ON wishes.ID = addonsToWishes.wishID
+    JOIN dishes ON dishes.ID = wishes.dishID
+WHERE orderID = 1
+GROUP BY dishes.name;
+
+
 
 
 
