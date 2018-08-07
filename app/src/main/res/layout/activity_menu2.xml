@@ -96,7 +96,7 @@
     <ListView
         android:id="@+id/OrderListView"
         android:layout_width="0dp"
-        android:layout_height="129dp"
+        android:layout_height="83dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
@@ -132,6 +132,19 @@
         app:layout_constraintTop_toBottomOf="@+id/AfterListviewSeparator" />
 
     <TextView
+        android:id="@+id/EnterCommentsTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp"
+        android:layout_marginStart="4dp"
+        android:elevation="21dp"
+        android:text="@string/enter_comments_textview_string"
+        android:textColor="@color/backgroundPrimary"
+        android:textSize="6sp"
+        app:layout_constraintBottom_toTopOf="@+id/EnterCommentsEditText"
+        app:layout_constraintStart_toStartOf="@+id/EnterCommentsEditText" />
+
+    <TextView
         android:id="@+id/SumNumberTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -142,5 +155,71 @@
         app:layout_constraintStart_toEndOf="@id/SumTextView"
         app:layout_constraintEnd_toEndOf="@+id/BasketBackground"
         app:layout_constraintTop_toTopOf="@+id/SumTextView" />
+
+    <EditText
+        android:id="@+id/EnterCommentsEditText"
+        android:layout_width="156dp"
+        android:layout_height="39dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/enter_comments_edittext_background"
+        android:elevation="21dp"
+        android:ems="10"
+        android:gravity="start"
+        android:inputType="textPersonName"
+        android:padding="5dp"
+        android:text="Name"
+        android:textSize="8sp"
+        app:layout_constraintEnd_toEndOf="@+id/BasketBackground"
+        app:layout_constraintStart_toStartOf="@+id/BasketBackground"
+        app:layout_constraintTop_toBottomOf="@+id/SumNumberTextView" />
+
+    <ImageButton
+        android:id="@+id/OrderButton"
+        android:layout_width="85dp"
+        android:layout_height="18dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+
+        android:elevation="21dp"
+        android:scaleType="fitStart"
+        app:layout_constraintEnd_toEndOf="@+id/BasketBackground"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/EnterCommentsEditText"
+        app:srcCompat="@drawable/order_button_background"
+        android:background="?android:attr/selectableItemBackground"
+        android:foreground="?android:attr/selectableItemBackground" />
+
+    <ImageButton
+        android:id="@+id/AskWaiterButton"
+        android:layout_width="72dp"
+        android:layout_height="11dp"
+
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:elevation="21dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:scaleType="fitStart"
+        app:layout_constraintBottom_toBottomOf="@+id/BasketBackground"
+        app:layout_constraintEnd_toEndOf="@+id/BasketBackground"
+        app:srcCompat="@drawable/common_button_background" />
+
+    <TextView
+        android:id="@+id/OrderButtonTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:elevation="21dp"
+        android:text="@string/order_textview_string"
+        android:textColor="@color/darkRed"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/OrderButton"
+        app:layout_constraintEnd_toEndOf="@+id/OrderButton"
+        app:layout_constraintStart_toStartOf="@+id/OrderButton"
+        app:layout_constraintTop_toTopOf="@+id/OrderButton" />
 
 </android.support.constraint.ConstraintLayout>

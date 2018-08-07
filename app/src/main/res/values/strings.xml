@@ -11,4 +11,6 @@
     <string name="order_textview_string">Order</string>
     <string name="menu_textview_string">Menu</string>
     <string name="sum_textview_string">Total:</string>
+    <string name="enter_comments_textview_string">Comments:</string>
+    <string name="order_button_textview_string">Order</string>
 </resources>
