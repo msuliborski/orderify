@@ -18,3 +18,10 @@ GRANT ALL PRIVILEGES ON . TO 'root'@'%';
 
 CREATE USER 'root'@'%' IDENTIFIED BY 'michal';
 GRANT ALL PRIVILEGES ON *.* TO 'root'@'%';
+
+
+
+
+
+
+mysql --host=10.21.21.100 --user=root --password=michal orderify
