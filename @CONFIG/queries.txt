@@ -166,7 +166,7 @@ JOIN
 WHERE wishes.orderID = 1; 
 
 
-SELECT *
+SELECT dishes.name AS name, sum(dishes.price) AS dishPrice, sum(addons.price) AS addonsPrice
 FROM addonsToWishes 
     JOIN addons ON addons.ID = addonsToWishes.addonID
     JOIN wishes ON wishes.ID = addonsToWishes.wishID

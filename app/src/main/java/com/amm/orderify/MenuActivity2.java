@@ -50,25 +50,33 @@ public class MenuActivity2 extends AppCompatActivity
             e.printStackTrace();
         }
 
-
+        String[] stadoKoz = {"mama koza", "siostra koza", "brat koza", "świania, ktora podszyla sie pod koze", "nfz"};
         listView=(ListView)findViewById(R.id.OrderListView);
-        //listView.setAdapter(new customAdapter(names, prices));
+        listView.setAdapter(new customAdapter(stadoKoz, 28));
 
-        TextView dupa = findViewById(R.id.Er)
+        //TextView dupa = findViewById(R.id.ErrorsTextView);
+        //dupa.setText(names.get(0));
     }
 
     class customAdapter extends BaseAdapter {
 
-        public ArrayList<String> Title = new ArrayList<>();
-        public ArrayList<Integer> Prices = new ArrayList<>();
+        //public ArrayList<String> Title = new ArrayList<>();
+        //public ArrayList<Integer> Prices = new ArrayList<>();
+        public String[] chuj;
+        public int vagina;
 
-        public customAdapter(ArrayList<String>  titles, ArrayList<Integer> prices) {
-            Title = titles;
-            Prices = prices;
+//        public customAdapter(ArrayList<String>  titles, ArrayList<Integer> prices) {
+//            Title = titles;
+//            Prices = prices;
+//        }
+        public customAdapter(String[] chujjj, int waginaaa) {
+            chuj = chujjj;
+            vagina = waginaaa;
         }
 
         public int getCount() {
-            return Title.size();
+            return chuj.length;
+            //return chuj.size();
         }
 
         public Object getItem(int arg0) {
@@ -84,10 +92,11 @@ public class MenuActivity2 extends AppCompatActivity
             convertView = getLayoutInflater().inflate(R.layout.order_list_element, null);
             TextView title, price;
             title = (TextView) convertView.findViewById(R.id.orderNameTextView);
-            price = (TextView) convertView.findViewById(R.id.orderPriceTextView);
-            title.setText(Title.get(position));
-            price.setText((Prices.get(position)));
-
+            //price = (TextView) convertView.findViewById(R.id.orderPriceTextView);
+//            title.setText(Title.get(position));
+//            price.setText((Prices.get(position)));
+            title.setText(chuj[position]);
+            //price.setText(toString);
             return convertView;
         }
     }
