@@ -27,10 +27,10 @@
         app:srcCompat="@drawable/basket_background" />
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/SeparatingLineDark"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="45dp"
+        android:layout_marginTop="38dp"
         android:elevation="20dp"
         android:scaleType="fitXY"
         app:layout_constraintEnd_toEndOf="@+id/BasketBackground"
@@ -39,13 +39,108 @@
         app:srcCompat="@drawable/separating_line_light" />
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/SeparatingLineLight"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:scaleType="fitXY"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageView4"
-        app:layout_constraintTop_toTopOf="@+id/imageView4"
+        app:layout_constraintStart_toEndOf="@+id/SeparatingLineDark"
+        app:layout_constraintTop_toTopOf="@+id/SeparatingLineDark"
         app:srcCompat="@drawable/separating_line_dark" />
+
+    <ImageView
+        android:id="@+id/ArrowDark"
+        android:layout_width="148dp"
+        android:layout_height="28dp"
+        app:layout_constraintBottom_toTopOf="@+id/SeparatingLineLight"
+        app:layout_constraintStart_toEndOf="@+id/BasketBackground"
+        app:srcCompat="@drawable/arrow_dark" />
+
+    <ImageView
+        android:id="@+id/ArrowLight"
+        android:layout_width="156dp"
+        android:layout_height="28dp"
+        android:elevation="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/SeparatingLineDark"
+        app:layout_constraintEnd_toStartOf="@+id/ArrowDark"
+        app:srcCompat="@drawable/arrow_light" />
+
+    <TextView
+        android:id="@+id/OrderTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:elevation="21dp"
+        android:textColor="@color/darkRed"
+        android:text="@string/order_textview_string"
+        app:layout_constraintBottom_toBottomOf="@+id/ArrowLight"
+        app:layout_constraintEnd_toEndOf="@+id/ArrowLight"
+        app:layout_constraintStart_toStartOf="@+id/ArrowLight"
+        app:layout_constraintTop_toTopOf="@+id/ArrowLight" />
+
+    <TextView
+        android:id="@+id/MenuTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:elevation="21dp"
+        android:text="@string/menu_textview_string"
+        android:textColor="@color/backgroundPrimary"
+        app:layout_constraintBottom_toBottomOf="@+id/ArrowDark"
+        app:layout_constraintEnd_toEndOf="@+id/ArrowDark"
+        app:layout_constraintStart_toEndOf="@+id/ArrowLight"
+        app:layout_constraintTop_toTopOf="@+id/ArrowDark" />
+
+    <ListView
+        android:id="@+id/OrderListView"
+        android:layout_width="0dp"
+        android:layout_height="129dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:elevation="21dp"
+        app:layout_constraintEnd_toEndOf="@+id/BasketBackground"
+        app:layout_constraintStart_toStartOf="@+id/BasketBackground"
+        app:layout_constraintTop_toBottomOf="@+id/ArrowLight" />
+
+    <ImageView
+        android:id="@+id/AfterListviewSeparator"
+        android:layout_width="218dp"
+        android:layout_height="3dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:elevation="21dp"
+        android:scaleType="fitStart"
+        app:layout_constraintEnd_toEndOf="@+id/BasketBackground"
+        app:layout_constraintStart_toStartOf="@+id/BasketBackground"
+        app:layout_constraintTop_toBottomOf="@+id/OrderListView"
+        app:srcCompat="@drawable/order_separator" />
+
+    <TextView
+        android:id="@+id/SumTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:elevation="21dp"
+        android:text="@string/sum_textview_string"
+        android:textColor="@color/backgroundPrimary"
+        app:layout_constraintEnd_toStartOf="@id/SumNumberTextView"
+        app:layout_constraintStart_toStartOf="@+id/BasketBackground"
+        app:layout_constraintTop_toBottomOf="@+id/AfterListviewSeparator" />
+
+    <TextView
+        android:id="@+id/SumNumberTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:elevation="21dp"
+        android:text="10,00 zł"
+        android:textColor="@color/backgroundPrimary"
+        app:layout_constraintStart_toEndOf="@id/SumTextView"
+        app:layout_constraintEnd_toEndOf="@+id/BasketBackground"
+        app:layout_constraintTop_toTopOf="@+id/SumTextView" />
 
 </android.support.constraint.ConstraintLayout>
