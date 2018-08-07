@@ -2,11 +2,9 @@ package com.amm.orderify;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -21,9 +19,8 @@ public class MenuActivity2 extends AppCompatActivity
 {
     public ListView listView;
 
-    public ArrayList<String> names = new ArrayList<>();
-    public ArrayList<Integer> prices = new ArrayList<>();
-    //public float[] prices;
+    public List<String> names = new ArrayList<>();
+    public List<String> prices = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -38,45 +35,34 @@ public class MenuActivity2 extends AppCompatActivity
                     "    JOIN addons ON addons.ID = addonsToWishes.addonID " +
                     "    JOIN wishes ON wishes.ID = addonsToWishes.wishID " +
                     "    JOIN dishes ON dishes.ID = wishes.dishID " +
-                    "WHERE orderID = 1 " +
+                    "WHERE orderID = 2 " +
                     "GROUP BY dishes.name;");
 
-            //ResultSet resultSet = ExecuteQuery("SELECT * FROM tables;");
             while (resultSet.next()) {
                 names.add(resultSet.getString("name"));
-                prices.add(resultSet.getInt("dishPrice") + resultSet.getInt("addonsPrice"));
+                prices.add(String.valueOf(resultSet.getFloat("dishPrice") + resultSet.getFloat("addonsPrice")) + " zł");
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        String[] stadoKoz = {"mama koza", "siostra koza", "brat koza", "świania, ktora podszyla sie pod koze", "nfz"};
-        listView=(ListView)findViewById(R.id.OrderListView);
-        listView.setAdapter(new customAdapter(stadoKoz, 28));
+        listView = findViewById(R.id.OrderListView);
+        listView.setAdapter(new customAdapter(names, prices));
 
-        //TextView dupa = findViewById(R.id.ErrorsTextView);
-        //dupa.setText(names.get(0));
     }
 
     class customAdapter extends BaseAdapter {
 
-        //public ArrayList<String> Title = new ArrayList<>();
-        //public ArrayList<Integer> Prices = new ArrayList<>();
-        public String[] chuj;
-        public int vagina;
+        List<String> names = null;
+        List<String> prices = null;
 
-//        public customAdapter(ArrayList<String>  titles, ArrayList<Integer> prices) {
-//            Title = titles;
-//            Prices = prices;
-//        }
-        public customAdapter(String[] chujjj, int waginaaa) {
-            chuj = chujjj;
-            vagina = waginaaa;
+        customAdapter(List<String> val1, List<String> val2) {
+            names = val1;
+            prices = val2;
         }
 
         public int getCount() {
-            return chuj.length;
-            //return chuj.size();
+            return names.size();
         }
 
         public Object getItem(int arg0) {
@@ -88,15 +74,11 @@ public class MenuActivity2 extends AppCompatActivity
         }
 
         public View getView(int position, View convertView, ViewGroup parent) {
-
             convertView = getLayoutInflater().inflate(R.layout.order_list_element, null);
-            TextView title, price;
-            title = (TextView) convertView.findViewById(R.id.orderNameTextView);
-            //price = (TextView) convertView.findViewById(R.id.orderPriceTextView);
-//            title.setText(Title.get(position));
-//            price.setText((Prices.get(position)));
-            title.setText(chuj[position]);
-            //price.setText(toString);
+            TextView nameTextView = convertView.findViewById(R.id.orderNameTextView);
+            TextView priceTextView = convertView.findViewById(R.id.orderPriceTextView);
+            nameTextView.setText(names.get(position));
+            priceTextView.setText(prices.get(position));
             return convertView;
         }
     }
