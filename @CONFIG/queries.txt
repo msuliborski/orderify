@@ -66,7 +66,7 @@ VALUES
     ('name', 15, 'descS', 'descL', 1);
 --categoryID form query                           
 
-INSERT INTO addonsCategorisToDishes
+INSERT INTO addonsCategoriesToDishes
     (dishID, addonCategoryID)
 VALUES
     (1, 1),
@@ -117,9 +117,9 @@ WHERE categoryID = x;--depends on the category we are in
 
 -- one dish (more details); this should get all dish categories to our particullar dish, along with their IDs
 SELECT *
-FROM addonsCategorisToDishes
-    JOIN addonsCategories ON addonsCategories.ID = addonsCategorisToDishes.addonCategoryID
-    JOIN dishes ON dishes.ID = addonsCategorisToDishes.dishID
+FROM addonsCategoriesToDishes
+    JOIN addonsCategories ON addonsCategories.ID = addonsCategoriesToDishes.addonCategoryID
+    JOIN dishes ON dishes.ID = addonsCategoriesToDishes.dishID
 WHERE dishID = x;
 --ID of the dish
 --OR--
@@ -153,16 +153,27 @@ WHERE addonsCategories.ID = x;
 --when we place order, we simply update a date and set it ready start preparing it
 
 --tldr, we simply display wishes on the left
-SELECT dishes.name AS name, max(wishes.amount) AS amount, sum(dishes.price) AS dishPrice, sum(addons.price) AS addonsPrice
+SELECT wishes.ID AS wishID, dishes.name AS name, max(wishes.amount) AS amount, sum(dishes.price) AS dishPrice, sum(addons.price) AS addonsPrice
 FROM addonsToWishes
-JOIN addons ON addons.ID = addonsToWishes.addonID
-RIGHT JOIN wishes ON wishes.ID = addonsToWishes.wishID
-JOIN dishes ON dishes.ID = wishes.dishID
+    JOIN addons ON addons.ID = addonsToWishes.addonID
+    RIGHT JOIN wishes ON wishes.ID = addonsToWishes.wishID
+    JOIN dishes ON dishes.ID = wishes.dishID
 WHERE orderID = 5
 GROUP BY dishes.name;
 
 
 
+--
+--
+-- FETCH DATA TO SHOW
+--       in the menu
+--
+SELECT *
+FROM addonsCategoriesToDishes
+    JOIN addons ON addons.addonCategoryID = addonsCategoriesToDishes.addonCategoryID
+    RIGHT JOIN dishes ON dishes.ID = addonsCategoriesToDishes.dishID
+    JOIN dishesCategories ON dishesCategories.ID = dishes.CategoryID
+WHERE dishes.ID = 3
 
 
 
@@ -172,6 +183,36 @@ GROUP BY dishes.name;
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+select *
+from dishesCategories
+    join dishes on dishes.categoryid = dishesCategories.id
+where dishes.id=1
+
+#SELECT addonsCategories.ID, addonsCategories.name FROM addonsCategorisToDishes
+#JOIN addons ON addons.addonCategoryID = addonsCategorisToDishes.addonCategoryID
+#RIGHT JOIN dishes ON dishes.ID = addonsCategorisToDishes.dishID
+#JOIN dishesCategories ON dishesCategories.ID = dishes.CategoryID
+#JOIN addonsCategories ON addonsCategories.ID = addons.addonCategoryID
+#WHERE dishes.ID = 1 
+
+
+#SELECT * FROM addonsCategorisToDishes
+
+#SELECT addons.ID, addons.name FROM addonsCategorisToDishes
+
+#SELECT addonsCategories.ID, addonsCategories.name FROM addonsCategorisToDishes
+#GROUP BY addonsCategories.name
 
 
 

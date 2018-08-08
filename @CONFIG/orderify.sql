@@ -8,6 +8,7 @@ DROP TABLE IF EXISTS `dishes`;
 DROP TABLE IF EXISTS `addonsCategories`;
 DROP TABLE IF EXISTS `addons`;
 DROP TABLE IF EXISTS `addonsCategorisToDishes`;
+DROP TABLE IF EXISTS `addonsCategoriesToDishes`;
 DROP TABLE IF EXISTS `wishes`;
 DROP TABLE IF EXISTS `addonsToWishes`;
 DROP TABLE IF EXISTS `orders`;
@@ -18,6 +19,7 @@ DROP TABLE IF EXISTS `addonsToOrder`;
 
 DROP TABLE IF EXISTS `addonsCategoriesToAddons`;
 DROP TABLE IF EXISTS `dishesToAddonsCategoris`;
+DROP TABLE IF EXISTS `dishesToAddonsCategories`;
 
 
 CREATE TABLE `tables` (
@@ -63,7 +65,7 @@ CREATE TABLE `addons` (
 )   ENGINE=myisam DEFAULT CHARSET=utf8;
 
 
-CREATE TABLE `addonsCategorisToDishes` (
+CREATE TABLE `addonsCategoriesToDishes` (
     `ID` INTEGER NOT NULL AUTO_INCREMENT, 
     `dishID` INTEGER NOT NULL DEFAULT 0, 
     `addonCategoryID` INTEGER NOT NULL DEFAULT 0, 
@@ -140,7 +142,7 @@ VALUES  ('Sos tatarski', 1, 1), ('Sos czosnkowy', 25, 1), ('Sos pomidorowy', 0, 
         ('Ziemniaki', 0, 4), ('Pieczone ziemniaki', 0, 4), ('Frytki', 0, 4), ('Kluski', 0, 4),  #10-13
         ('Lód', 0, 5);                                                                          #14
 
-INSERT INTO `addonsCategorisToDishes` (`dishID`, `addonCategoryID`)
+INSERT INTO `addonsCategoriesToDishes` (`dishID`, `addonCategoryID`)
 VALUES  (1, 1), (1, 2),
         (2, 1), (2, 2),
         (3, 1), (3, 2),
