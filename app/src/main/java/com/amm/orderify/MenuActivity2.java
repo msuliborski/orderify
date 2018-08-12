@@ -12,8 +12,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+//import com.amm.orderify.helpers.GridAdapter;
+//import com.amm.orderify.helpers.ListViewInGridAdapter;
+
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -28,6 +33,7 @@ public class MenuActivity2 extends AppCompatActivity
 {
     public ListView orderListView;
     public ListView menuListView;
+    public GridView addonCategoriesGridView;
     public int marginCopy;
 
     public List<String> names = new ArrayList<>();
@@ -42,7 +48,40 @@ public class MenuActivity2 extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu2);
 
+        List<String> SaucesList = new ArrayList<>();
+        SaucesList.add("Czosnkowy");
+        SaucesList.add("Koperkowy");
+        SaucesList.add("Ostry");
+        SaucesList.add("Pomidorowy");
 
+        List<String> SizesList = new ArrayList<>();
+        SaucesList.add("Duży");
+        SaucesList.add("Mały");
+        SaucesList.add("Średni");
+
+        List<String> MeatsList = new ArrayList<>();
+        MeatsList.add("Surowe");
+        MeatsList.add("Słabo wysmażone");
+        MeatsList.add("Średnio wysmażone");
+        MeatsList.add("Mocno wysmażone");
+
+        List<String> SaladsList = new ArrayList<>();
+        SaladsList.add("Z ogórka");
+        SaladsList.add("Z kapusty");
+        SaladsList.add("Z małych dzieci");
+        SaladsList.add("Z chuj wie czego");
+
+        List<List<String>> AddonsLists = new ArrayList<>();
+        AddonsLists.add(SaucesList);
+        AddonsLists.add(SaladsList);
+        AddonsLists.add(MeatsList);
+        AddonsLists.add(SizesList);
+
+        List<String> CategoryNames = new ArrayList<>();
+        CategoryNames.add("Sosy");
+        CategoryNames.add("Sałatki");
+        CategoryNames.add("Mięsa");
+        CategoryNames.add("Rozmiar");
 
 
         try {
@@ -84,6 +123,12 @@ public class MenuActivity2 extends AppCompatActivity
         menuList.add(new WishItem("Rosół", "10,00 zł"));
 
 
+        // podgląd - GridAdapter (Context context, List<ListView> listViews, List<String> categoryNames, List<List<String>> listViewsLists)
+
+
+
+
+
         menuListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
             @Override
@@ -111,7 +156,7 @@ public class MenuActivity2 extends AppCompatActivity
             }
         });
 
-        menuListView.setAdapter(new customMenuAdapter(this, menuList));
+        menuListView.setAdapter(new customMenuAdapter(this, menuList, AddonsLists, CategoryNames));
 
 
 
@@ -158,12 +203,16 @@ public class MenuActivity2 extends AppCompatActivity
         private static final int MENU_ITEM = 0;
         private static final int HEADER = 1;
         private LayoutInflater inflater;
+        private List<List<String>> ListViewLists;
+        private List<String> AddonsCategoryList;
 
 
-        customMenuAdapter(Context context, List<Object> menuList)
+        customMenuAdapter(Context context, List<Object> menuList, List<List<String>> ListViewsLists, List<String> AddonCategoryList)
         {
             this.menuList = menuList;
             inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            this.ListViewLists = ListViewsLists;
+            this.AddonsCategoryList = AddonCategoryList;
         }
 
         @Override
@@ -228,6 +277,9 @@ public class MenuActivity2 extends AppCompatActivity
                     TextView nameTextView = view.findViewById(R.id.NameTextView);
                     TextView priceTextView = view.findViewById(R.id.PriceTextView);
 
+                    GridAdapter gridAdapter = new GridAdapter(MenuActivity2.this, AddonsCategoryList, ListViewLists);
+                    addonCategoriesGridView = (GridView) view.findViewById(R.id.AddonCategoriesGridView);
+                    addonCategoriesGridView.setAdapter(gridAdapter);
 
 
                     priceTextView.setText( ( (WishItem)menuList.get(i) ).getWishPrice()  );
@@ -270,4 +322,112 @@ public class MenuActivity2 extends AppCompatActivity
     }
 
 
+}
+class GridAdapter extends BaseAdapter
+{
+
+    private List<String> categoryNames;
+    private List<List<String>> listViewsLists;
+    private Context context;
+    private LayoutInflater inflater;
+
+    public GridAdapter (Context context, List<String> categoryNames, List<List<String>> listViewsLists)
+    {
+
+        this.categoryNames = categoryNames;
+        this.listViewsLists = listViewsLists;
+        this.context = context;
+        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    }
+
+    @Override
+    public int getCount()
+    {
+        return listViewsLists.size();
+    }
+
+    @Override
+    public Object getItem(int i)
+    {
+        return listViewsLists.get(i);
+    }
+
+    @Override
+    public long getItemId(int position)
+    {
+        return 1;
+    }
+
+    @Override
+    public View getView(int i, View view, ViewGroup viewGroup)
+    {
+        View gridView = view;
+
+        if (view == null)
+        {
+            inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            if (inflater != null)
+            {
+                gridView = inflater.inflate(R.layout.expand_grid_element, null);
+            }
+        }
+
+        ListView addonsListView = (ListView) gridView.findViewById(R.id.AddonsListView);
+        TextView categoryNameTextView = (TextView) gridView.findViewById(R.id.CategoryNameTextView);
+
+        addonsListView.setAdapter(new ListViewInGridAdapter(context, listViewsLists.get(i)));
+        categoryNameTextView.setText(categoryNames.get(i));
+
+
+
+        return gridView;
+    }
+}
+class ListViewInGridAdapter extends BaseAdapter
+{
+    List<String> addonsList = null;
+
+    private LayoutInflater inflater;
+
+
+    ListViewInGridAdapter(Context context, List<String> addonsList)
+    {
+        this.addonsList = addonsList;
+        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    }
+
+    @Override
+    public int getCount()
+    {
+        return addonsList.size();
+    }
+
+    @Override
+    public Object getItem(int i)
+    {
+        return addonsList.get(i);
+    }
+
+    @Override
+    public long getItemId(int i)
+    {
+        return 1;
+    }
+
+    @Override
+    public View getView(int i, View view, ViewGroup viewGroup)
+    {
+
+        if (view == null)
+        {
+            view = inflater.inflate(R.layout.expand_addon_list_element, null);
+        }
+
+
+        TextView addonNameTextView = view.findViewById(R.id.AddonNameTextView);
+
+        addonNameTextView.setText(addonsList.get(i));
+
+        return view;
+    }
 }
