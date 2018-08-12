@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TextView
+        android:id="@+id/PriceTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/tw_cen"
+        android:text="Price"
+        android:textColor="@color/darkRed" />
+
+    <TextView
+        android:id="@+id/NameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/PriceTextView"
+        android:layout_marginStart="99dp"
+        android:fontFamily="@font/tw_cen"
+        android:text="Name"
+        android:textColor="@color/darkRed" />
+
+    <ImageView
+        android:id="@+id/AddButton"
+        android:layout_width="100dp"
+        android:layout_height="22dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="73dp"
+        android:scaleType="fitStart"
+        app:srcCompat="@drawable/add_button_background" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/AddButton"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:fontFamily="@font/tw_cen"
+        android:text="@string/add_to_order_textview_string"
+        android:textColor="@color/backgroundPrimary"
+        android:layout_alignBottom="@+id/AddButton"
+        android:textSize="12sp" />
+
+    <ImageView
+        android:id="@+id/SeparatingLineMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="119dp"
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/separating_line_menu" />
+</RelativeLayout>

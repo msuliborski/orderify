@@ -1,7 +1,11 @@
 package com.amm.orderify;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.view.menu.MenuAdapter;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -18,7 +22,8 @@ import static com.amm.orderify.helpers.JBDCDriver.*;
 
 public class MenuActivity2 extends AppCompatActivity
 {
-    public ListView listView;
+    public ListView orderListView;
+    public ListView menuListView;
 
     public List<String> names = new ArrayList<>();
     public List<String> prices = new ArrayList<>();
@@ -51,12 +56,27 @@ public class MenuActivity2 extends AppCompatActivity
             e.printStackTrace();
         }
 
-        listView = findViewById(R.id.OrderListView);
-        ViewGroup.LayoutParams lp = listView.getLayoutParams();
+        //====================ORDER LIST=================================
+        orderListView = findViewById(R.id.OrderListView);
+        ViewGroup.LayoutParams lp = orderListView.getLayoutParams();
         ViewGroup.LayoutParams lpb = lp;
         if (names.size() <= 3) lp.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-        listView.setLayoutParams(lp);
-        listView.setAdapter(new customAdapter(names, prices));
+        orderListView.setLayoutParams(lp);
+        orderListView.setAdapter(new customAdapter(names, prices));
+
+        //=====================MENU LIST====================================
+        menuListView = findViewById(R.id.MenuListView);
+
+        List<Object> menuList = new ArrayList<>();
+        menuList.add(new String ("Dania główne"));
+        menuList.add(new WishItem("Szparagi", "25,00 zł"));
+        menuList.add(new WishItem("Kotlet schabowy", "18,00 zł"));
+        menuList.add(new WishItem("Kurczak w cieście", "20,00 zł"));
+        menuList.add(new String ("Zupy"));
+        menuList.add(new WishItem("Ogórkowa", "12,00 zł"));
+        menuList.add(new WishItem("Rosół", "10,00 zł"));
+
+        menuListView.setAdapter(new customMenuAdapter(this, menuList));
 
     }
 
@@ -92,4 +112,122 @@ public class MenuActivity2 extends AppCompatActivity
             return convertView;
         }
     }
+
+
+    class customMenuAdapter extends BaseAdapter
+    {
+        List<Object> menuList = null;
+
+        private static final int MENU_ITEM = 0;
+        private static final int HEADER = 1;
+        private LayoutInflater inflater;
+
+
+        customMenuAdapter(Context context, List<Object> menuList)
+        {
+            this.menuList = menuList;
+            inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        }
+
+        @Override
+        public int getItemViewType(int i)
+        {
+            if (menuList.get(i) instanceof WishItem)
+            {
+                return MENU_ITEM;
+            }
+            else
+            {
+                return HEADER;
+            }
+        }
+
+        @Override
+        public int getViewTypeCount()
+        {
+            return 2;
+        }
+
+        @Override
+        public int getCount()
+        {
+            return menuList.size();
+        }
+
+        @Override
+        public Object getItem(int i)
+        {
+            return menuList.get(i);
+        }
+
+        @Override
+        public long getItemId(int i)
+        {
+            return 1;
+        }
+
+        @Override
+        public View getView(int i, View view, ViewGroup viewGroup)
+        {
+
+            if (view == null)
+            {
+                switch (getItemViewType(i))
+                {
+                    case MENU_ITEM:
+                        view = inflater.inflate(R.layout.menu_list_element, null);
+                        break;
+
+                    case HEADER:
+                        view = inflater.inflate(R.layout.menu_list_header, null);
+                        break;
+
+                }
+            }
+
+            switch (getItemViewType(i))
+            {
+                case MENU_ITEM:
+                    TextView nameTextView = view.findViewById(R.id.NameTextView);
+                    TextView priceTextView = view.findViewById(R.id.PriceTextView);
+
+
+
+                    priceTextView.setText( ( (WishItem)menuList.get(i) ).getWishPrice()  );
+                    nameTextView.setText( ( (WishItem)menuList.get(i) ).getWishName()  );
+                    break;
+
+                case HEADER:
+                    TextView headerTextView = view.findViewById(R.id.HeaderTextView);
+
+                    headerTextView.setText( (String)menuList.get(i) );
+                    break;
+
+            }
+            return view;
+        }
+    }
+    public class WishItem
+    {
+        private String name;
+        private String price;
+
+        public WishItem (String name, String price)
+        {
+            this.name = name;
+            this.price = price;
+
+        }
+        public String getWishName()
+        {
+            return this.name;
+        }
+        public String getWishPrice()
+        {
+            return this.price;
+        }
+
+
+    }
+
 }
