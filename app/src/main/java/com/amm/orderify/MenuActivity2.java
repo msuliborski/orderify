@@ -89,19 +89,25 @@ public class MenuActivity2 extends AppCompatActivity
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
-                ConstraintLayout menuExpand = view.findViewById(R.id.MenuExpand);
+                try
+                {
+                    ConstraintLayout menuExpand = view.findViewById(R.id.MenuExpand);
 
-                ConstraintLayout.MarginLayoutParams params = (ConstraintLayout.MarginLayoutParams)menuExpand.getLayoutParams();
-                if (params.bottomMargin == 0)
-                {
-                    params.bottomMargin = marginCopy;
+                    ConstraintLayout.MarginLayoutParams params = (ConstraintLayout.MarginLayoutParams) menuExpand.getLayoutParams();
+                    if (params.bottomMargin == 0)
+                    {
+                        params.bottomMargin = marginCopy;
+                    } else
+                    {
+                        marginCopy = params.bottomMargin;
+                        params.bottomMargin = 0;
+                    }
+                    menuExpand.setLayoutParams(params);
                 }
-                else
+                catch(Exception e)
                 {
-                    marginCopy = params.bottomMargin;
-                    params.bottomMargin = 0;
+
                 }
-                menuExpand.setLayoutParams(params);
             }
         });
 
