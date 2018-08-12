@@ -1,6 +1,8 @@
 package com.amm.orderify;
 
 import android.content.Context;
+import android.support.constraint.ConstraintLayout;
+import android.support.constraint.ConstraintSet;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.view.menu.MenuAdapter;
@@ -8,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -17,6 +20,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Vector;
 
 import static com.amm.orderify.helpers.JBDCDriver.*;
 
@@ -24,6 +28,7 @@ public class MenuActivity2 extends AppCompatActivity
 {
     public ListView orderListView;
     public ListView menuListView;
+    public int marginCopy;
 
     public List<String> names = new ArrayList<>();
     public List<String> prices = new ArrayList<>();
@@ -36,6 +41,8 @@ public class MenuActivity2 extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu2);
+
+
 
 
         try {
@@ -76,7 +83,31 @@ public class MenuActivity2 extends AppCompatActivity
         menuList.add(new WishItem("Ogórkowa", "12,00 zł"));
         menuList.add(new WishItem("Rosół", "10,00 zł"));
 
+
+        menuListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            {
+                ConstraintLayout menuExpand = view.findViewById(R.id.MenuExpand);
+
+                ConstraintLayout.MarginLayoutParams params = (ConstraintLayout.MarginLayoutParams)menuExpand.getLayoutParams();
+                if (params.bottomMargin == 0)
+                {
+                    params.bottomMargin = marginCopy;
+                }
+                else
+                {
+                    marginCopy = params.bottomMargin;
+                    params.bottomMargin = 0;
+                }
+                menuExpand.setLayoutParams(params);
+            }
+        });
+
         menuListView.setAdapter(new customMenuAdapter(this, menuList));
+
+
 
     }
 
@@ -203,6 +234,8 @@ public class MenuActivity2 extends AppCompatActivity
                     headerTextView.setText( (String)menuList.get(i) );
                     break;
 
+
+
             }
             return view;
         }
@@ -229,5 +262,6 @@ public class MenuActivity2 extends AppCompatActivity
 
 
     }
+
 
 }

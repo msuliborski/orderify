@@ -30,36 +30,48 @@
         android:text="Name"
         android:textColor="@color/darkRed" />
 
-    <ImageView
-        android:id="@+id/AddButton"
-        android:layout_width="100dp"
-        android:layout_height="22dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="73dp"
-        android:scaleType="fitStart"
-        app:srcCompat="@drawable/add_button_background" />
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/AddButton"
-        android:layout_centerHorizontal="true"
-        android:gravity="center"
-        android:fontFamily="@font/tw_cen"
-        android:text="@string/add_to_order_textview_string"
-        android:textColor="@color/backgroundPrimary"
-        android:layout_alignBottom="@+id/AddButton"
-        android:textSize="12sp" />
-
-    <ImageView
-        android:id="@+id/SeparatingLineMenu"
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/MenuExpand"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="41dp"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="119dp"
-        android:scaleType="fitXY"
-        app:srcCompat="@drawable/separating_line_menu" />
+        android:layout_marginBottom="-41dp"
+        android:layout_marginTop="56dp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/AddButton"
+            android:layout_width="100dp"
+            android:layout_height="22dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:scaleType="fitStart"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/add_button_background" />
+
+        <TextView
+            android:id="@+id/AddButtonTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/tw_cen"
+            android:gravity="center"
+            android:text="@string/add_to_order_textview_string"
+            android:textColor="@color/backgroundPrimary"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/AddButton"
+            app:layout_constraintEnd_toEndOf="@+id/AddButton"
+            app:layout_constraintStart_toStartOf="@+id/AddButton"
+            app:layout_constraintTop_toTopOf="@+id/AddButton" />
+
+    </android.support.constraint.ConstraintLayout>
 </RelativeLayout>
