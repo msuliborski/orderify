@@ -2,25 +2,22 @@ package com.amm.orderify;
 
 import android.content.Context;
 import android.support.constraint.ConstraintLayout;
-import android.support.constraint.ConstraintSet;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.view.menu.MenuAdapter;
+import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Vector;
 
 import static com.amm.orderify.helpers.JBDCDriver.*;
 
@@ -41,9 +38,6 @@ public class MenuActivity2 extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu2);
-
-
-
 
         try {
             ResultSet resultSet = ExecuteQuery("SELECT dishes.name AS name, max(wishes.amount) AS amount, sum(dishes.price) AS dishPrice, sum(addons.price) AS addonsPrice\n" +
@@ -66,7 +60,7 @@ public class MenuActivity2 extends AppCompatActivity
         //====================ORDER LIST=================================
         orderListView = findViewById(R.id.OrderListView);
         ViewGroup.LayoutParams lp = orderListView.getLayoutParams();
-        ViewGroup.LayoutParams lpb = lp;
+        //ViewGroup.LayoutParams lpb = lp;
         if (names.size() <= 3) lp.height = ViewGroup.LayoutParams.WRAP_CONTENT;
         orderListView.setLayoutParams(lp);
         orderListView.setAdapter(new customAdapter(names, prices));
@@ -74,46 +68,73 @@ public class MenuActivity2 extends AppCompatActivity
         //=====================MENU LIST====================================
         menuListView = findViewById(R.id.MenuListView);
 
-        List<Object> menuList = new ArrayList<>();
-        menuList.add(new String ("Dania główne"));
-        menuList.add(new WishItem("Szparagi", "25,00 zł"));
-        menuList.add(new WishItem("Kotlet schabowy", "18,00 zł"));
-        menuList.add(new WishItem("Kurczak w cieście", "20,00 zł"));
-        menuList.add(new String ("Zupy"));
-        menuList.add(new WishItem("Ogórkowa", "12,00 zł"));
-        menuList.add(new WishItem("Rosół", "10,00 zł"));
+        List<Addon> addons = new ArrayList<>();
+        List<Dish> dishes = new ArrayList<>();
+        List<dishCategory> dishCategories = new ArrayList<>();
 
+        try {
+            Statement dishCategoriesS = getConnection().createStatement();
+            ResultSet dishCategoriesRS = dishCategoriesS.executeQuery("SELECT * FROM dishesCategories");
+            while (dishCategoriesRS.next()) {
 
-        menuListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
-        {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-            {
-                try
-                {
-                    ConstraintLayout menuExpand = view.findViewById(R.id.MenuExpand);
+                Statement dishesS = getConnection().createStatement();
+                ResultSet dishesRS = dishesS.executeQuery("SELECT * FROM dishes \n" +
+                        "WHERE categoryID = " + dishCategoriesRS.getInt("ID"));
 
-                    ConstraintLayout.MarginLayoutParams params = (ConstraintLayout.MarginLayoutParams) menuExpand.getLayoutParams();
-                    if (params.bottomMargin == 0)
-                    {
-                        params.bottomMargin = marginCopy;
-                    } else
-                    {
-                        marginCopy = params.bottomMargin;
-                        params.bottomMargin = 0;
+                while (dishesRS.next()) {
+                    Statement addonsS = getConnection().createStatement();
+                    ResultSet addonsRS = addonsS.executeQuery("SELECT addons.* FROM addonsCategoriesToDishes\n" +
+                            "JOIN addons ON addons.addonCategoryID = addonsCategoriesToDishes.addonCategoryID\n" +
+                            "RIGHT JOIN dishes ON dishes.ID = addonsCategoriesToDishes.dishID\n" +
+                            "WHERE dishes.ID = " + dishesRS.getInt("ID"));
+                    while (addonsRS.next()) {
+                        addons.add(new Addon( addonsRS.getInt("ID"), addonsRS.getString("name"), addonsRS.getFloat("price")));
                     }
-                    menuExpand.setLayoutParams(params);
+                    dishes.add(new Dish(dishesRS.getInt("ID"), dishesRS.getString("name"),
+                            dishesRS.getFloat("price"), dishesRS.getString("descS"),
+                            dishesRS.getString("descL"), null));//@@@@
+                    addons = new ArrayList<>();
                 }
-                catch(Exception e)
-                {
+                dishCategories.add(new dishCategory(dishCategoriesRS.getInt("ID"), dishCategoriesRS.getString("name"), dishes));
 
-                }
+                dishes = new ArrayList<>();
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+
+        List<Object> menuList = new ArrayList<>();
+        for(int i = 0; i < dishCategories.size(); i++){
+            menuList.add(dishCategories.get(i));//send just category
+            menuList.addAll(dishCategories.get(i).dishes); //send item on category one by one
+        }
+
+//        menuList.add("Dania główne");
+//        menuList.add(new WishItem("Szparagi", "25,00 zł"));
+//        menuList.add(new WishItem("Kotlet schabowy", "18,00 zł"));
+//        menuList.add(new WishItem("Kurczak w cieście", "20,00 zł"));
+//        menuList.add("Zupy");
+//        menuList.add(new WishItem("Ogórkowa", "12,00 zł"));
+//        menuList.add(new WishItem("Rosół", "10,00 zł"));
+
+
+
+
+        menuListView.setOnItemClickListener((parent, view, position, id) -> {
+            ConstraintLayout menuExpand = view.findViewById(R.id.MenuExpand);
+            ConstraintLayout.MarginLayoutParams params = (ConstraintLayout.MarginLayoutParams) menuExpand.getLayoutParams();
+            if (params.bottomMargin == 0) {
+                params.bottomMargin = marginCopy;
+            } else {
+                marginCopy = params.bottomMargin;
+                params.bottomMargin = 0;
+            }
+            menuExpand.setLayoutParams(params);
         });
 
         menuListView.setAdapter(new customMenuAdapter(this, menuList));
-
-
 
     }
 
@@ -169,14 +190,9 @@ public class MenuActivity2 extends AppCompatActivity
         @Override
         public int getItemViewType(int i)
         {
-            if (menuList.get(i) instanceof WishItem)
-            {
-                return MENU_ITEM;
-            }
-            else
-            {
-                return HEADER;
-            }
+            if (menuList.get(i) instanceof dishCategory) return HEADER;
+            else return MENU_ITEM;
+
         }
 
         @Override
@@ -230,14 +246,14 @@ public class MenuActivity2 extends AppCompatActivity
 
 
 
-                    priceTextView.setText( ( (WishItem)menuList.get(i) ).getWishPrice()  );
-                    nameTextView.setText( ( (WishItem)menuList.get(i) ).getWishName()  );
+                    priceTextView.setText(String.valueOf(((Dish)(menuList.get(i))).price));
+                    nameTextView.setText(((Dish)menuList.get(i)).name);
                     break;
 
                 case HEADER:
                     TextView headerTextView = view.findViewById(R.id.HeaderTextView);
 
-                    headerTextView.setText( (String)menuList.get(i) );
+                    headerTextView.setText(((dishCategory)menuList.get(i)).name);
                     break;
 
 
@@ -246,8 +262,9 @@ public class MenuActivity2 extends AppCompatActivity
             return view;
         }
     }
-    public class WishItem
-    {
+
+
+    public class WishItem {
         private String name;
         private String price;
 
@@ -267,6 +284,58 @@ public class MenuActivity2 extends AppCompatActivity
         }
 
 
+    }
+
+    public class Addon {
+        public int id;
+        public String name;
+        public float price;
+
+        public Addon(int id, String name, float price) {
+            this.id = id;
+            this.name = name;
+            this.price = price;
+        }
+    }
+    public class Dish {
+
+        public int id;
+        public String name;
+        public float price;
+        public String descS;
+        public String descL;
+        //pulic int categoryID;
+
+        public List<Addon> addons;
+
+        public Dish(int id, String name, float price, String descS, String descL, List<Addon> addons) {
+            this.id = id;
+            this.name = name;
+            this.price = price;
+            this.descS = descS;
+            this.descL = descL;
+            this.addons = addons;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+    }
+
+    public class dishCategory {
+        public int id;
+        public String name;
+        public List<Dish> dishes;
+
+        dishCategory(int id, String name, List<Dish> items){
+            this.id = id;
+            this.name = name;
+            dishes = items;
+        }
     }
 
 
