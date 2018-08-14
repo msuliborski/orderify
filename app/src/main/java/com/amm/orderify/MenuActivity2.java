@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridLayout;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -35,6 +37,7 @@ public class MenuActivity2 extends AppCompatActivity {
     public ListView menuListView;
     public android.support.v7.widget.GridLayout addonCategoriesGridLayout;
     public int marginCopy;
+    public int activeMenuElementNumber = -1;
 
     public List<String> names = new ArrayList<>();
     public List<String> prices = new ArrayList<>();
@@ -162,17 +165,17 @@ public class MenuActivity2 extends AppCompatActivity {
 
 
 
-        menuListView.setOnItemClickListener((parent, view, position, id) -> {
-            ConstraintLayout menuExpand = view.findViewById(R.id.MenuExpand);
-            ConstraintLayout.MarginLayoutParams params = (ConstraintLayout.MarginLayoutParams) menuExpand.getLayoutParams();
-            if (params.bottomMargin == 0) {
-                params.bottomMargin = marginCopy;
-            } else {
-                marginCopy = params.bottomMargin;
-                params.bottomMargin = 0;
-            }
-            menuExpand.setLayoutParams(params);
-        });
+//        menuListView.setOnItemClickListener((parent, view, position, id) -> {
+//            ConstraintLayout menuExpand = view.findViewById(R.id.MenuExpand);
+//            ConstraintLayout.MarginLayoutParams params = (ConstraintLayout.MarginLayoutParams) menuExpand.getLayoutParams();
+//            if (params.bottomMargin == 0) {
+//                params.bottomMargin = marginCopy;
+//            } else {
+//                marginCopy = params.bottomMargin;
+//                params.bottomMargin = 0;
+//            }
+//            menuExpand.setLayoutParams(params);
+//        });
 
         menuListView.setAdapter(new customMenuAdapter(this, menuList, AddonsLists, CategoryNames));
 
@@ -298,33 +301,77 @@ public class MenuActivity2 extends AppCompatActivity {
                     TextView nameTextView = view.findViewById(R.id.NameTextView);
                     TextView priceTextView = view.findViewById(R.id.PriceTextView);
 
-                    //GridAdapter gridAdapter = new GridAdapter(MenuActivity2.this, AddonsCategoryList, ListViewLists);
-
-                    addonCategoriesGridLayout = view.findViewById(R.id.AddonCategoriesGridLayout);
-                    LayoutInflater gridInflater = getLayoutInflater();
-                    addonCategoriesGridLayout.removeAllViews();
-
-                    for (int gridNumber = 0; gridNumber < ListViewLists.size(); gridNumber++)
-                    {
-                        View v = gridInflater.inflate(R.layout.expand_grid_element, null);
-                        TextView CategoryNameTextView = v.findViewById(R.id.CategoryNameTextView);
-                        LinearLayout AddonsLinearLayout = v.findViewById(R.id.AddonsLinearLayout);
-                        CategoryNameTextView.setText(AddonsCategoryList.get(gridNumber));
-                        for (int listNumber = 0; listNumber < (ListViewLists.get(gridNumber)).size(); listNumber++ )
-                        {
-                            View x = gridInflater.inflate(R.layout.expand_addon_list_element, null);
-                            TextView AddonNameTextView = x.findViewById(R.id.AddonNameTextView);
-                            AddonNameTextView.setText(ListViewLists.get(gridNumber).get(listNumber));
-                            AddonsLinearLayout.addView(x);
-
-                        }
-                        addonCategoriesGridLayout.addView(v);
-
-                    }
-
-
                     priceTextView.setText(String.valueOf(((Dish)(menuList.get(i))).price));
                     nameTextView.setText(((Dish)menuList.get(i)).name);
+
+                    ImageButton MenuBackgroundButton = view.findViewById(R.id.MenuBackgroundButton);
+                    ConstraintLayout MenuExpand = view.findViewById(R.id.MenuExpand);
+
+                    MenuBackgroundButton.setOnClickListener(v -> {
+                        if(MenuExpand.getVisibility() == View.GONE)
+                        {
+//                                if (activeMenuElementNumber != -1)
+//                                {
+//                                    View vw = menuListView.getChildAt(activeMenuElementNumber);
+//                                    ConstraintLayout cl = vw.findViewById(R.id.MenuExpand);
+//                                    cl.setVisibility(View.GONE);
+//                                    notifyDataSetChanged();
+//
+//                                }
+//                            for (int ii = 0; i < menuList.size(); ii++)
+//                            {
+//                                if (getItemViewType(ii) == MENU_ITEM)
+//                                {
+//                                    View vw = menuListView.getChildAt(ii);
+//                                    ConstraintLayout cl = vw.findViewById(R.id.MenuExpand);
+//                                    cl.setVisibility(View.GONE);
+//                                }
+//
+//                            }
+                            MenuExpand.setVisibility(View.VISIBLE);
+                            //activeMenuElementNumber = i;
+
+
+                            notifyDataSetChanged();
+
+                        }
+                        else if (MenuExpand.getVisibility() == View.VISIBLE)
+                        {
+                            MenuExpand.setVisibility(View.GONE);
+                            //activeMenuElementNumber = -1;
+                        }
+                        Log.wtf("Active element", activeMenuElementNumber + "");
+                    });
+
+
+
+                    if(MenuExpand.getVisibility() != View.GONE)
+                    {
+
+                        addonCategoriesGridLayout = view.findViewById(R.id.AddonCategoriesGridLayout);
+                        LayoutInflater gridInflater = getLayoutInflater();
+                        addonCategoriesGridLayout.removeAllViews();
+
+                        for (int gridNumber = 0; gridNumber < ListViewLists.size(); gridNumber++)
+                        {
+                            View v = gridInflater.inflate(R.layout.expand_grid_element, null);
+                            TextView CategoryNameTextView = v.findViewById(R.id.CategoryNameTextView);
+                            LinearLayout AddonsLinearLayout = v.findViewById(R.id.AddonsLinearLayout);
+                            CategoryNameTextView.setText(AddonsCategoryList.get(gridNumber));
+                            for (int listNumber = 0; listNumber < (ListViewLists.get(gridNumber)).size(); listNumber++)
+                            {
+                                View x = gridInflater.inflate(R.layout.expand_addon_list_element, null);
+                                TextView AddonNameTextView = x.findViewById(R.id.AddonNameTextView);
+                                AddonNameTextView.setText(ListViewLists.get(gridNumber).get(listNumber));
+                                AddonsLinearLayout.addView(x);
+
+                            }
+                            addonCategoriesGridLayout.addView(v);
+
+                        }
+
+
+                    }
                     break;
 
                 case HEADER:
