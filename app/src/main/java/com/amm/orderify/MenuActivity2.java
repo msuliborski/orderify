@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -79,6 +80,22 @@ public class MenuActivity2 extends AppCompatActivity {
         //=====================MENU LIST====================================
         menuListView = findViewById(R.id.MenuListView);
 
+        //DODANE NR 1 POCZĄTEK !!!!!!!!!!!!!!!!!!!!!!!
+//        menuListView.setRecyclerListener(new AbsListView.RecyclerListener() {
+//            @Override
+//            public void onMovedToScrapHeap(View view) {
+//                try
+//                {
+//                    ConstraintLayout cl = view.findViewById(R.id.MenuExpand);
+//                    cl.setVisibility(View.GONE);
+//                }
+//                catch(Exception e)
+//                {
+//                    Log.wtf("Error", "Cos nie tak");
+//                }
+//            }
+//        });
+        //DODANE NR 1 KONIEC !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
         List<Addon> addonsMENU = new ArrayList<>();
         List<AddonCategory> addonCategoryMENU = new ArrayList<>();
@@ -155,15 +172,20 @@ public class MenuActivity2 extends AppCompatActivity {
         @Override
         public int getItemViewType(int i)
         {
+            return i;
+
+        }
+
+        public int getItemType(int i)
+        {
             if (menuList.get(i) instanceof DishCategory) return HEADER;
             else return MENU_ITEM;
-
         }
 
         @Override
         public int getViewTypeCount()
         {
-            return 2;
+            return getCount();
         }
 
         @Override
@@ -187,9 +209,8 @@ public class MenuActivity2 extends AppCompatActivity {
         @Override
         public View getView(int i, View view, ViewGroup viewGroup)
         {
-
             if (view == null) {
-                switch (getItemViewType(i)) {
+                switch (getItemType(i)) {
                     case MENU_ITEM:
                         view = menuInflater.inflate(R.layout.menu_list_element, null);
                         break;
@@ -200,7 +221,7 @@ public class MenuActivity2 extends AppCompatActivity {
                 }
             }
 
-            switch (getItemViewType(i))
+            switch (getItemType(i))
             {
                 case MENU_ITEM:
                     TextView nameTextView = view.findViewById(R.id.NameTextView);
