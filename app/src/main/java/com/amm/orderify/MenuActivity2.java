@@ -2,30 +2,28 @@ package com.amm.orderify;
 
 import android.content.Context;
 import android.support.constraint.ConstraintLayout;
-import android.support.constraint.ConstraintSet;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.view.menu.MenuAdapter;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.GridView;
+import android.widget.GridLayout;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-//import com.amm.orderify.helpers.GridAdapter;
-//import com.amm.orderify.helpers.ListViewInGridAdapter;
+import com.amm.orderify.helpers.*;
 
+
+import org.w3c.dom.Text;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Vector;
 
 import static com.amm.orderify.helpers.JBDCDriver.*;
 
@@ -33,7 +31,7 @@ public class MenuActivity2 extends AppCompatActivity
 {
     public ListView orderListView;
     public ListView menuListView;
-    public GridView addonCategoriesGridView;
+    public android.support.v7.widget.GridLayout addonCategoriesGridLayout;
     public int marginCopy;
 
     public List<String> names = new ArrayList<>();
@@ -55,9 +53,9 @@ public class MenuActivity2 extends AppCompatActivity
         SaucesList.add("Pomidorowy");
 
         List<String> SizesList = new ArrayList<>();
-        SaucesList.add("Duży");
-        SaucesList.add("Mały");
-        SaucesList.add("Średni");
+        SizesList.add("Duży");
+        SizesList.add("Mały");
+        SizesList.add("Średni");
 
         List<String> MeatsList = new ArrayList<>();
         MeatsList.add("Surowe");
@@ -202,7 +200,7 @@ public class MenuActivity2 extends AppCompatActivity
 
         private static final int MENU_ITEM = 0;
         private static final int HEADER = 1;
-        private LayoutInflater inflater;
+        private LayoutInflater menuInflater;
         private List<List<String>> ListViewLists;
         private List<String> AddonsCategoryList;
 
@@ -210,7 +208,7 @@ public class MenuActivity2 extends AppCompatActivity
         customMenuAdapter(Context context, List<Object> menuList, List<List<String>> ListViewsLists, List<String> AddonCategoryList)
         {
             this.menuList = menuList;
-            inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            menuInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             this.ListViewLists = ListViewsLists;
             this.AddonsCategoryList = AddonCategoryList;
         }
@@ -261,11 +259,11 @@ public class MenuActivity2 extends AppCompatActivity
                 switch (getItemViewType(i))
                 {
                     case MENU_ITEM:
-                        view = inflater.inflate(R.layout.menu_list_element, null);
+                        view = menuInflater.inflate(R.layout.menu_list_element, null);
                         break;
 
                     case HEADER:
-                        view = inflater.inflate(R.layout.menu_list_header, null);
+                        view = menuInflater.inflate(R.layout.menu_list_header, null);
                         break;
 
                 }
@@ -277,9 +275,29 @@ public class MenuActivity2 extends AppCompatActivity
                     TextView nameTextView = view.findViewById(R.id.NameTextView);
                     TextView priceTextView = view.findViewById(R.id.PriceTextView);
 
-                    GridAdapter gridAdapter = new GridAdapter(MenuActivity2.this, AddonsCategoryList, ListViewLists);
-                    addonCategoriesGridView = (GridView) view.findViewById(R.id.AddonCategoriesGridView);
-                    addonCategoriesGridView.setAdapter(gridAdapter);
+                    //GridAdapter gridAdapter = new GridAdapter(MenuActivity2.this, AddonsCategoryList, ListViewLists);
+
+                    addonCategoriesGridLayout = view.findViewById(R.id.AddonCategoriesGridLayout);
+                    LayoutInflater gridInflater = getLayoutInflater();
+                    addonCategoriesGridLayout.removeAllViews();
+
+                    for (int gridNumber = 0; gridNumber < ListViewLists.size(); gridNumber++)
+                    {
+                        View v = gridInflater.inflate(R.layout.expand_grid_element, null);
+                        TextView CategoryNameTextView = v.findViewById(R.id.CategoryNameTextView);
+                        LinearLayout AddonsLinearLayout = v.findViewById(R.id.AddonsLinearLayout);
+                        CategoryNameTextView.setText(AddonsCategoryList.get(gridNumber));
+                        for (int listNumber = 0; listNumber < (ListViewLists.get(gridNumber)).size(); listNumber++ )
+                        {
+                            View x = gridInflater.inflate(R.layout.expand_addon_list_element, null);
+                            TextView AddonNameTextView = x.findViewById(R.id.AddonNameTextView);
+                            AddonNameTextView.setText(ListViewLists.get(gridNumber).get(listNumber));
+                            AddonsLinearLayout.addView(x);
+
+                        }
+                        addonCategoriesGridLayout.addView(v);
+
+                    }
 
 
                     priceTextView.setText( ( (WishItem)menuList.get(i) ).getWishPrice()  );
@@ -323,111 +341,4 @@ public class MenuActivity2 extends AppCompatActivity
 
 
 }
-class GridAdapter extends BaseAdapter
-{
 
-    private List<String> categoryNames;
-    private List<List<String>> listViewsLists;
-    private Context context;
-    private LayoutInflater inflater;
-
-    public GridAdapter (Context context, List<String> categoryNames, List<List<String>> listViewsLists)
-    {
-
-        this.categoryNames = categoryNames;
-        this.listViewsLists = listViewsLists;
-        this.context = context;
-        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    }
-
-    @Override
-    public int getCount()
-    {
-        return listViewsLists.size();
-    }
-
-    @Override
-    public Object getItem(int i)
-    {
-        return listViewsLists.get(i);
-    }
-
-    @Override
-    public long getItemId(int position)
-    {
-        return 1;
-    }
-
-    @Override
-    public View getView(int i, View view, ViewGroup viewGroup)
-    {
-        View gridView = view;
-
-        if (view == null)
-        {
-            inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            if (inflater != null)
-            {
-                gridView = inflater.inflate(R.layout.expand_grid_element, null);
-            }
-        }
-
-        ListView addonsListView = (ListView) gridView.findViewById(R.id.AddonsListView);
-        TextView categoryNameTextView = (TextView) gridView.findViewById(R.id.CategoryNameTextView);
-
-        addonsListView.setAdapter(new ListViewInGridAdapter(context, listViewsLists.get(i)));
-        categoryNameTextView.setText(categoryNames.get(i));
-
-
-
-        return gridView;
-    }
-}
-class ListViewInGridAdapter extends BaseAdapter
-{
-    List<String> addonsList = null;
-
-    private LayoutInflater inflater;
-
-
-    ListViewInGridAdapter(Context context, List<String> addonsList)
-    {
-        this.addonsList = addonsList;
-        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    }
-
-    @Override
-    public int getCount()
-    {
-        return addonsList.size();
-    }
-
-    @Override
-    public Object getItem(int i)
-    {
-        return addonsList.get(i);
-    }
-
-    @Override
-    public long getItemId(int i)
-    {
-        return 1;
-    }
-
-    @Override
-    public View getView(int i, View view, ViewGroup viewGroup)
-    {
-
-        if (view == null)
-        {
-            view = inflater.inflate(R.layout.expand_addon_list_element, null);
-        }
-
-
-        TextView addonNameTextView = view.findViewById(R.id.AddonNameTextView);
-
-        addonNameTextView.setText(addonsList.get(i));
-
-        return view;
-    }
-}
