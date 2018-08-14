@@ -218,5 +218,16 @@ where dishes.id=1
 
 
 
+SELECT addons.ID as addonID, addons.name as name, addons.price AS price FROM addonsToWishes
+JOIN addons ON addons.ID = addonsToWishes.addonID
+WHERE wishID = 1;
+
+SELECT dishes.ID AS dishID, dishes.name AS dishName, dishes.price AS dishPrice, wishes.ID as wishID, wishes.amount as amount
+FROM wishes
+JOIN dishes ON dishes.ID = wishes.dishID
+WHERE orderID = 1
+
+
+
 
 
