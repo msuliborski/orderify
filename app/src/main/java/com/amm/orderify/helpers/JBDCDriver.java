@@ -26,6 +26,7 @@ public class JBDCDriver {
     }
 
     public static void InitiateConnection() {
+
         database = "Orderify";
         user = "root";
 

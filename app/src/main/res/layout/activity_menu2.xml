@@ -375,6 +375,6 @@
         app:layout_constraintBottom_toTopOf="@id/SeparatingLineBottom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/BasketBackground"
-        app:layout_constraintTop_toBottomOf="@+id/SeparatingLineLight" />
+        app:layout_constraintTop_toBottomOf="@+id/ArrowDark" />
 
 </android.support.constraint.ConstraintLayout>
