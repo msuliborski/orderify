@@ -11,15 +11,15 @@ public class Dish {
     public String descL;
     //pulic int categoryID;
 
-    public List<Addon> addons;
+    public List<AddonCategory> addonCategories;
 
-    public Dish(int id, String name, float price, String descS, String descL, List<Addon> addons) {
+    public Dish(int id, String name, float price, String descS, String descL, List<AddonCategory> addonCategories) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.descS = descS;
         this.descL = descL;
-        this.addons = addons;
+        this.addonCategories = addonCategories;
     }
 
     public String getName() {

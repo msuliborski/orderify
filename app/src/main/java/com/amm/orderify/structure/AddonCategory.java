@@ -2,14 +2,14 @@ package com.amm.orderify.structure;
 
 import java.util.List;
 
-public class dishCategory {
+public class AddonCategory {
     public int id;
     public String name;
-    public List<Dish> dishes;
+    public List<Addon> addons;
 
-    public dishCategory(int id, String name, List<Dish> items){
+    public AddonCategory(int id, String name, List<Addon> addons){
         this.id = id;
         this.name = name;
-        dishes = items;
+        this.addons = addons;
     }
 }
