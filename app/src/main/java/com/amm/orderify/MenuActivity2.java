@@ -208,19 +208,19 @@ public class MenuActivity2 extends AppCompatActivity {
 
             TextView nameTextView = convertView.findViewById(R.id.orderNameTextView);
             TextView priceTextView = convertView.findViewById(R.id.orderPriceTextView);
-            Button orderCancelButton = convertView.findViewById(R.id.OrderCancelButton);
+            //Button orderCancelButton = convertView.findViewById(R.id.OrderCancelButton);
 
             nameTextView.setText(names.get(position));
             priceTextView.setText(prices.get(position));
-            orderCancelButton.setOnClickListener(e -> {
-                try {
-                    ExecuteUpdate("DELETE FROM wishes \n" +
-                            "WHERE wishID = " + orderID + "\n" +
-                            "GROUP BY dishes.name;");
-                } catch (SQLException e1) {
-                    e1.printStackTrace();
-                }
-            });
+//            orderCancelButton.setOnClickListener(e -> {
+//                try {
+//                    ExecuteUpdate("DELETE FROM wishes \n" +
+//                            "WHERE wishID = " + orderID + "\n" +
+//                            "GROUP BY dishes.name;");
+//                } catch (SQLException e1) {
+//                    e1.printStackTrace();
+//                }
+//            });
             return convertView;
         }
     }
