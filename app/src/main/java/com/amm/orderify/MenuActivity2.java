@@ -4,11 +4,11 @@ import android.content.Context;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -39,6 +39,9 @@ public class MenuActivity2 extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu2);
 
+        List<Addon> addonsOLIST = new ArrayList<>();
+        List<Wish> wishesOLIST = new ArrayList<>();
+
         try {
             ResultSet resultSet = ExecuteQuery("SELECT dishes.name AS name, max(wishes.amount) AS amount, sum(dishes.price) AS dishPrice, sum(addons.price) AS addonsPrice\n" +
                     "FROM addonsToWishes\n" +
@@ -57,6 +60,9 @@ public class MenuActivity2 extends AppCompatActivity
             e.printStackTrace();
         }
 
+
+        addonsOLIST = new ArrayList<>();
+
         //====================ORDER LIST=================================
         orderListView = findViewById(R.id.OrderListView);
         ViewGroup.LayoutParams lp = orderListView.getLayoutParams();
@@ -68,9 +74,9 @@ public class MenuActivity2 extends AppCompatActivity
         //=====================MENU LIST====================================
         menuListView = findViewById(R.id.MenuListView);
 
-        List<Addon> addons = new ArrayList<>();
-        List<Dish> dishes = new ArrayList<>();
-        List<dishCategory> dishCategories = new ArrayList<>();
+        List<Addon> addonsMENU = new ArrayList<>();
+        List<Dish> dishesMENU = new ArrayList<>();
+        List<dishCategory> dishCategoriesMENU = new ArrayList<>();
 
         try {
             Statement dishCategoriesS = getConnection().createStatement();
@@ -88,16 +94,16 @@ public class MenuActivity2 extends AppCompatActivity
                             "RIGHT JOIN dishes ON dishes.ID = addonsCategoriesToDishes.dishID\n" +
                             "WHERE dishes.ID = " + dishesRS.getInt("ID"));
                     while (addonsRS.next()) {
-                        addons.add(new Addon( addonsRS.getInt("ID"), addonsRS.getString("name"), addonsRS.getFloat("price")));
+                        addonsMENU.add(new Addon( addonsRS.getInt("ID"), addonsRS.getString("name"), addonsRS.getFloat("price")));
                     }
-                    dishes.add(new Dish(dishesRS.getInt("ID"), dishesRS.getString("name"),
+                    dishesMENU.add(new Dish(dishesRS.getInt("ID"), dishesRS.getString("name"),
                             dishesRS.getFloat("price"), dishesRS.getString("descS"),
                             dishesRS.getString("descL"), null));//@@@@
-                    addons = new ArrayList<>();
+                    addonsMENU = new ArrayList<>();
                 }
-                dishCategories.add(new dishCategory(dishCategoriesRS.getInt("ID"), dishCategoriesRS.getString("name"), dishes));
+                dishCategoriesMENU.add(new dishCategory(dishCategoriesRS.getInt("ID"), dishCategoriesRS.getString("name"), dishesMENU));
 
-                dishes = new ArrayList<>();
+                dishesMENU = new ArrayList<>();
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -106,19 +112,10 @@ public class MenuActivity2 extends AppCompatActivity
 
 
         List<Object> menuList = new ArrayList<>();
-        for(int i = 0; i < dishCategories.size(); i++){
-            menuList.add(dishCategories.get(i));//send just category
-            menuList.addAll(dishCategories.get(i).dishes); //send item on category one by one
+        for(int i = 0; i < dishCategoriesMENU.size(); i++){
+            menuList.add(dishCategoriesMENU.get(i));//send just category
+            menuList.addAll(dishCategoriesMENU.get(i).dishes); //send item on category one by one
         }
-
-//        menuList.add("Dania główne");
-//        menuList.add(new WishItem("Szparagi", "25,00 zł"));
-//        menuList.add(new WishItem("Kotlet schabowy", "18,00 zł"));
-//        menuList.add(new WishItem("Kurczak w cieście", "20,00 zł"));
-//        menuList.add("Zupy");
-//        menuList.add(new WishItem("Ogórkowa", "12,00 zł"));
-//        menuList.add(new WishItem("Rosół", "10,00 zł"));
-
 
 
 
@@ -163,10 +160,22 @@ public class MenuActivity2 extends AppCompatActivity
 
         public View getView(int position, View convertView, ViewGroup parent) {
             convertView = getLayoutInflater().inflate(R.layout.order_list_element, null);
+
             TextView nameTextView = convertView.findViewById(R.id.orderNameTextView);
             TextView priceTextView = convertView.findViewById(R.id.orderPriceTextView);
+            Button orderCancelButton = convertView.findViewById(R.id.OrderCancelButton);
+
             nameTextView.setText(names.get(position));
             priceTextView.setText(prices.get(position));
+            orderCancelButton.setOnClickListener(e -> {
+                try {
+                    ExecuteUpdate("DELETE FROM wishes \n" +
+                            "WHERE wishID = " + orderID + "\n" +
+                            "GROUP BY dishes.name;");
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
+            });
             return convertView;
         }
     }
@@ -264,28 +273,6 @@ public class MenuActivity2 extends AppCompatActivity
     }
 
 
-    public class WishItem {
-        private String name;
-        private String price;
-
-        public WishItem (String name, String price)
-        {
-            this.name = name;
-            this.price = price;
-
-        }
-        public String getWishName()
-        {
-            return this.name;
-        }
-        public String getWishPrice()
-        {
-            return this.price;
-        }
-
-
-    }
-
     public class Addon {
         public int id;
         public String name;
@@ -337,6 +324,35 @@ public class MenuActivity2 extends AppCompatActivity
             dishes = items;
         }
     }
+
+    public class Wish {
+
+        public int id;
+        public String name;
+        public float price;
+        public int amount;
+        public int dishID;
+        public List<Addon> addons;
+
+        public Wish(int id, String name, float price, int amount, int dishID, List<Addon> addons) {
+            this.id = id;
+            this.name = name;
+            this.price = price;
+            this.amount = amount;
+            this.dishID = dishID;
+            this.addons = addons;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+    }
+
+
 
 
 }
