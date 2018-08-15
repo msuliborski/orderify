@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -40,6 +39,8 @@ public class MenuActivity2 extends AppCompatActivity {
     public List<String> amounts = new ArrayList<>();
 
     public int orderID = 5;
+    List<Addon> addonsORDER = new ArrayList<>();
+    List<Wish> wishesORDER = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +48,6 @@ public class MenuActivity2 extends AppCompatActivity {
         setContentView(R.layout.activity_menu2);
 
 
-//        List<Addon> addonsOLIST = new ArrayList<>();
-//        List<Wish> wishesOLIST = new ArrayList<>();
 
         try {
             ResultSet resultSet = ExecuteQuery("SELECT dishes.name AS name, max(wishes.amount) AS amount, sum(dishes.price) AS dishPrice, sum(addons.price) AS addonsPrice\n" +
@@ -156,7 +155,8 @@ public class MenuActivity2 extends AppCompatActivity {
 
 
     class customMenuAdapter extends BaseAdapter {
-        List<Object> menuList = null;
+        List<Object> menuList;
+        List<Addon> checkedDishAddons;
 
         private static final int MENU_ITEM = 0;
         private static final int HEADER = 1;
@@ -224,17 +224,15 @@ public class MenuActivity2 extends AppCompatActivity {
             switch (getItemType(i))
             {
                 case MENU_ITEM:
-                    TextView nameTextView = view.findViewById(R.id.NameTextView);
-                    TextView priceTextView = view.findViewById(R.id.PriceTextView);
-
-                    priceTextView.setText(String.valueOf(((Dish)(menuList.get(i))).price));
-                    nameTextView.setText(((Dish)menuList.get(i)).name);
-
-                    ImageButton MenuBackgroundButton = view.findViewById(R.id.MenuBackgroundButton);
                     ConstraintLayout MenuExpand = view.findViewById(R.id.MenuExpand);
 
+                    TextView nameTextView = view.findViewById(R.id.NameTextView);
+                    nameTextView.setText(((Dish)menuList.get(i)).name);
 
+                    TextView priceTextView = view.findViewById(R.id.PriceTextView);
+                    priceTextView.setText(String.valueOf(((Dish)(menuList.get(i))).price));
 
+                    ImageButton MenuBackgroundButton = view.findViewById(R.id.MenuBackgroundButton);
                     MenuBackgroundButton.setOnClickListener(v -> {
                         if(MenuExpand.getVisibility() == View.GONE)
                         {
@@ -271,28 +269,40 @@ public class MenuActivity2 extends AppCompatActivity {
                         Log.wtf("Active element", activeMenuElementNumber + "");
                     });
 
-
                     if(MenuExpand.getVisibility() != View.GONE) {
 
                         addonCategoriesGridLayout = view.findViewById(R.id.AddonCategoriesGridLayout);
                         LayoutInflater gridInflater = getLayoutInflater();
                         addonCategoriesGridLayout.removeAllViews();
 
-                        Dish d = (Dish)menuList.get(i);
-                        AddonCategory ac = null;
-                        Addon a = null;
 
-                        for (int categoryIterator = 0; categoryIterator < d.addonCategories.size(); categoryIterator++) {
-                            ac = d.addonCategories.get(categoryIterator);
+                        Dish dish = (Dish)menuList.get(i);
+                        AddonCategory addonCategory;
+                        Addon addon;
+
+                        android.support.v7.widget.AppCompatImageView AddOrderButton = view.findViewById(R.id.AddOrderButton);
+                        AddOrderButton.setOnClickListener(e -> {
+                            Wish newWish = new Wish(dish, 1, checkedDishAddons);
+                            for(int wishI = 0; wishI < wishesORDER.size(); wishI++){
+                                if (wishesORDER.get(wishI).addons == newWish.addons && wishesORDER.get(wishI).dish == newWish.dish) {wishesORDER.get(wishI).amount++; break;}
+                                if (wishI == wishesORDER.size()-1) wishesORDER.add(newWish);
+                            }
+                            if (wishesORDER.size() == 0) wishesORDER.add(newWish);
+                            Log.wtf("dupa", wishesORDER.size() + "");
+                        });
+
+
+                        for (int categoryIterator = 0; categoryIterator < dish.addonCategories.size(); categoryIterator++) {
+                            addonCategory = dish.addonCategories.get(categoryIterator);
                             View v = gridInflater.inflate(R.layout.expand_grid_element, null);
                             TextView CategoryNameTextView = v.findViewById(R.id.CategoryNameTextView);
                             LinearLayout AddonsLinearLayout = v.findViewById(R.id.AddonsLinearLayout);
-                            CategoryNameTextView.setText(ac.name); //cat name
-                            for (int addonIterator = 0; addonIterator < ac.addons.size(); addonIterator++ ) {
-                                a = ac.addons.get(addonIterator);
+                            CategoryNameTextView.setText(addonCategory.name); //cat name
+                            for (int addonIterator = 0; addonIterator < addonCategory.addons.size(); addonIterator++ ) {
+                                addon = addonCategory.addons.get(addonIterator);
                                 View x = gridInflater.inflate(R.layout.expand_addon_list_element, null);
                                 TextView AddonNameTextView = x.findViewById(R.id.AddonNameTextView);
-                                AddonNameTextView.setText(a.name); //addon
+                                AddonNameTextView.setText(addon.name); //addon
                                 AddonsLinearLayout.addView(x);
                             }
                             addonCategoriesGridLayout.addView(v);
