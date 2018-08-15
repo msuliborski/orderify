@@ -1,6 +1,7 @@
 package com.amm.orderify;
 
 import android.content.Context;
+import android.media.Image;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -300,6 +302,19 @@ public class MenuActivity2 extends AppCompatActivity {
                                 addon = addonCategory.addons.get(addonIterator);
                                 View x = gridInflater.inflate(R.layout.expand_addon_list_element, null);
                                 TextView AddonNameTextView = x.findViewById(R.id.AddonNameTextView);
+                                ImageView CheckboxCheckImage = x.findViewById(R.id.CheckboxCheckImage);
+                                x.setOnClickListener(e -> {
+                                   if(CheckboxCheckImage.getVisibility() == View.INVISIBLE)
+                                   {
+                                       CheckboxCheckImage.setVisibility(View.VISIBLE);
+                                   }
+                                   else
+                                   {
+                                       CheckboxCheckImage.setVisibility(View.INVISIBLE);
+                                   }
+
+                                });
+
                                 AddonNameTextView.setText(addon.name); //addon
                                 AddonsLinearLayout.addView(x);
                             }
