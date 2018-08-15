@@ -255,61 +255,80 @@ public class MenuActivity2 extends AppCompatActivity {
                         clickedAddons = new ArrayList<>();
                     });
 
-                    //if(MenuExpand.getVisibility() != View.GONE) {
+                    if(MenuExpand.getVisibility() != View.GONE) {
 
-                    addonCategoriesGridLayout = view.findViewById(R.id.AddonCategoriesGridLayout);
-                    LayoutInflater gridInflater = getLayoutInflater();
-                    addonCategoriesGridLayout.removeAllViews();
-
-
-                    Dish dish = (Dish)menuList.get(i);
+                        addonCategoriesGridLayout = view.findViewById(R.id.AddonCategoriesGridLayout);
+                        LayoutInflater gridInflater = getLayoutInflater();
+                        addonCategoriesGridLayout.removeAllViews();
 
 
+                        Dish dish = (Dish)menuList.get(i);
 
-                    android.support.v7.widget.AppCompatImageView AddOrderButton = view.findViewById(R.id.AddOrderButton);
-                    AddOrderButton.setOnClickListener(e -> {
-                        Wish newWish = new Wish(dish, 1, clickedAddons);
-                        for(int wishI = 0; wishI < wishesORDER.size(); wishI++){
-                            Log.wtf("dupa", wishesORDER.get(wishI).addons.size() + "    kurwa    " + newWish.addons.size());
-                            if (checkIfTheSame(wishesORDER.get(wishI), newWish)) {wishesORDER.get(wishI).amount++; break;}
-                            if (wishI == wishesORDER.size()-1) {wishesORDER.add(newWish); break;}
-                        }
-                        if (wishesORDER.size() == 0) wishesORDER.add(newWish);
-                        refreshOrderList();
-                        MenuExpand.setVisibility(View.GONE);
-                        activeMenuElementNumber = -1;
-                        clickedAddons = new ArrayList<>();
-                    });
-                    //wishesORDER.get(wishI).addons.equals(newWish.addons) && wishesORDER.get(wishI).dish.equals(newWish.dish)
 
-                    for (int categoryIterator = 0; categoryIterator < dish.addonCategories.size(); categoryIterator++) {
-                        AddonCategory addonCategory = dish.addonCategories.get(categoryIterator);
-                        View v = gridInflater.inflate(R.layout.expand_grid_element, null);
-                        TextView CategoryNameTextView = v.findViewById(R.id.CategoryNameTextView);
-                        LinearLayout AddonsLinearLayout = v.findViewById(R.id.AddonsLinearLayout);
-                        CategoryNameTextView.setText(addonCategory.name); //cat name
-                        for (int addonIterator = 0; addonIterator < addonCategory.addons.size(); addonIterator++ ) {
-                            Addon addon = addonCategory.addons.get(addonIterator);
-                            View x = gridInflater.inflate(R.layout.expand_addon_list_element, null);
-                            TextView AddonNameTextView = x.findViewById(R.id.AddonNameTextView);
-                            ImageView CheckboxCheckImage = x.findViewById(R.id.CheckboxCheckImage);
-                            x.setOnClickListener(e -> {
-                                if(CheckboxCheckImage.getVisibility() == View.INVISIBLE) {
-                                    CheckboxCheckImage.setVisibility(View.VISIBLE);
-                                    clickedAddons.add(addon);
-                                } else {
-                                    CheckboxCheckImage.setVisibility(View.INVISIBLE);
-                                    clickedAddons.remove(addon);
+
+                        android.support.v7.widget.AppCompatImageView AddOrderButton = view.findViewById(R.id.AddOrderButton);
+                        AddOrderButton.setOnClickListener(e -> {
+                            Wish newWish = new Wish(dish, 1, clickedAddons);
+                            for(int wishI = 0; wishI < wishesORDER.size(); wishI++){
+                                Log.wtf("dupa", wishesORDER.get(wishI).addons.size() + "    kurwa    " + newWish.addons.size());
+                                if (checkIfTheSame(wishesORDER.get(wishI), newWish)) {wishesORDER.get(wishI).amount++; break;}
+                                if (wishI == wishesORDER.size()-1) {wishesORDER.add(newWish); break;}
+                            }
+                            if (wishesORDER.size() == 0) wishesORDER.add(newWish);
+                            refreshOrderList();
+                            MenuExpand.setVisibility(View.GONE);
+                            activeMenuElementNumber = -1;
+                            clickedAddons = new ArrayList<>();
+                        });
+
+                        for (int categoryI = 0; categoryI < dish.addonCategories.size(); categoryI++) {
+                            AddonCategory addonCategory = dish.addonCategories.get(categoryI);
+                            View v = gridInflater.inflate(R.layout.expand_grid_element, null);
+                            TextView CategoryNameTextView = v.findViewById(R.id.CategoryNameTextView);
+                            LinearLayout AddonsLinearLayout = v.findViewById(R.id.AddonsLinearLayout);
+                            CategoryNameTextView.setText(addonCategory.name); //cat name
+                            for (int addonI = 0; addonI < addonCategory.addons.size(); addonI++ ) {
+
+                                Addon addon = addonCategory.addons.get(addonI);
+                                View x = gridInflater.inflate(R.layout.expand_addon_list_element, null);
+
+                                TextView AddonNameTextView = x.findViewById(R.id.AddonNameTextView);
+                                ImageView CheckboxCheckImage = x.findViewById(R.id.CheckboxCheckImage);
+
+                                if (addonCategory.multiChoice){
+                                    x.setOnClickListener(e -> {
+                                        if(CheckboxCheckImage.getVisibility() == View.INVISIBLE) {
+                                            CheckboxCheckImage.setVisibility(View.VISIBLE);
+                                            clickedAddons.add(addon);
+                                        } else {
+                                            CheckboxCheckImage.setVisibility(View.INVISIBLE);
+                                            clickedAddons.remove(addon);
+                                        }
+
+                                    });
+                                } else{
+                                    if (addonI == 0){
+                                        CheckboxCheckImage.setVisibility(View.VISIBLE);
+                                        clickedAddons.add(addon); }
+
+                                    x.setOnClickListener(e -> {
+                                        for(int j = 0; j < addonCategory.addons.size(); j++){
+                                            //all to invisible
+                                            clickedAddons.remove(addonCategory.addons.get(j));
+                                        }
+                                        CheckboxCheckImage.setVisibility(View.VISIBLE);
+                                        clickedAddons.add(addon);
+                                    });
+
+
+
                                 }
-
-                                Log.wtf("addon", ""+clickedAddons.size());
-                            });
-                            AddonNameTextView.setText(addon.name); //addon
-                            AddonsLinearLayout.addView(x);
+                                AddonNameTextView.setText(addon.name); //addon
+                                AddonsLinearLayout.addView(x);
+                            }
+                            addonCategoriesGridLayout.addView(v);
                         }
-                        addonCategoriesGridLayout.addView(v);
                     }
-                    //}
                     break;
 
                 case HEADER:
