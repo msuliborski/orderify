@@ -312,10 +312,16 @@ public class MenuActivity2 extends AppCompatActivity {
                                         clickedAddons.add(addon); }
 
                                     x.setOnClickListener(e -> {
-                                        for(int j = 0; j < addonCategory.addons.size(); j++){
-                                            //all to invisible
-                                            clickedAddons.remove(addonCategory.addons.get(j));
+
+                                        final int childCount = AddonsLinearLayout.getChildCount();
+                                        for (int ii = 0; ii < childCount; ii++) {
+                                            View vv = AddonsLinearLayout.getChildAt(ii);
+                                            ImageView iv = vv.findViewById(R.id.CheckboxCheckImage);
+                                            iv.setVisibility(View.INVISIBLE);
+                                            clickedAddons.remove(addonCategory.addons.get(ii));
                                         }
+
+
                                         CheckboxCheckImage.setVisibility(View.VISIBLE);
                                         clickedAddons.add(addon);
                                     });
