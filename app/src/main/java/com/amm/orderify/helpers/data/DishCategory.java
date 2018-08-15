@@ -1,4 +1,4 @@
-package com.amm.orderify.structure;
+package com.amm.orderify.helpers.data;
 
 import java.util.List;
 
