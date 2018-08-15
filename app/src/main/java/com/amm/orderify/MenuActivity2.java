@@ -321,7 +321,6 @@ public class MenuActivity2 extends AppCompatActivity {
                                             clickedAddons.remove(addonCategory.addons.get(ii));
                                         }
 
-
                                         CheckboxCheckImage.setVisibility(View.VISIBLE);
                                         clickedAddons.add(addon);
                                     });
