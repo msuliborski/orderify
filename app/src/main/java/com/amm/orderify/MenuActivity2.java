@@ -1,6 +1,7 @@
 package com.amm.orderify;
 
 import android.content.Context;
+import android.os.Build;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,7 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -21,10 +24,11 @@ import com.amm.orderify.structure.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.zip.Inflater;
 
 import static com.amm.orderify.helpers.JBDCDriver.*;
 
@@ -35,13 +39,11 @@ public class MenuActivity2 extends AppCompatActivity {
     public int marginCopy;
     public int activeMenuElementNumber = -1;
 
-    public List<String> names = new ArrayList<>();
-    public List<String> prices = new ArrayList<>();
-    public List<String> amounts = new ArrayList<>();
 
     public int orderID = 5;
-    List<Addon> addonsORDER = new ArrayList<>();
+    public int wishID = 0;
     List<Wish> wishesORDER = new ArrayList<>();
+    private EditText EnterCommentsEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,48 +52,12 @@ public class MenuActivity2 extends AppCompatActivity {
 
 
 
-        try {
-            ResultSet resultSet = ExecuteQuery("SELECT dishes.name AS name, max(wishes.amount) AS amount, sum(dishes.price) AS dishPrice, sum(addons.price) AS addonsPrice\n" +
-                    "FROM addonsToWishes\n" +
-                    "JOIN addons ON addons.ID = addonsToWishes.addonID\n" +
-                    "RIGHT JOIN wishes ON wishes.ID = addonsToWishes.wishID\n" +
-                    "JOIN dishes ON dishes.ID = wishes.dishID\n" +
-                    "WHERE orderID = " + orderID + "\n" +
-                    "GROUP BY dishes.name;");
-
-            while (resultSet.next()) {
-                names.add(resultSet.getString("name"));
-                prices.add(String.valueOf(String.format(Locale.FRANCE, "%.2f", resultSet.getFloat("dishPrice") + resultSet.getFloat("addonsPrice"))) + " zł");
-                amounts.add(resultSet.getString("amount"));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-
         //====================ORDER LIST=================================
         orderListLinearLayout = findViewById(R.id.OrderListLinearLayout);
 
 
         //=====================MENU LIST====================================
         menuListView = findViewById(R.id.MenuListView);
-
-        //DODANE NR 1 POCZĄTEK !!!!!!!!!!!!!!!!!!!!!!!
-//        menuListView.setRecyclerListener(new AbsListView.RecyclerListener() {
-//            @Override
-//            public void onMovedToScrapHeap(View view) {
-//                try
-//                {
-//                    ConstraintLayout cl = view.findViewById(R.id.MenuExpand);
-//                    cl.setVisibility(View.GONE);
-//                }
-//                catch(Exception e)
-//                {
-//                    Log.wtf("Error", "Cos nie tak");
-//                }
-//            }
-//        });
-        //DODANE NR 1 KONIEC !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
         List<Addon> addonsMENU = new ArrayList<>();
         List<AddonCategory> addonCategoryMENU = new ArrayList<>();
@@ -143,17 +109,50 @@ public class MenuActivity2 extends AppCompatActivity {
         }
 
 
-
         menuListView.setAdapter(new customMenuAdapter(this, menuList));
 
+        EnterCommentsEditText = findViewById(R.id.EnterCommentsEditText);
 
+        ImageButton orderButton = findViewById(R.id.OrderButton);
+        orderButton.setOnClickListener((View e) -> {
+            try {
+            ExecuteUpdate("INSERT INTO `orders` (`time`, `date`, `tableID`, `comments`)\n" +
+                    "VALUES  ('21:32:22', '2018-07-31', 1, '" + EnterCommentsEditText.getText() + "');");
+
+            ResultSet orderIDRS = ExecuteQuery("SELECT LAST_INSERT_ID();");
+            while (orderIDRS.next()){
+                orderID = orderIDRS.getInt(1);
+            }
+
+            for(int wishI = 0; wishI < wishesORDER.size(); wishI++){
+                    ExecuteUpdate("INSERT INTO `wishes` (`dishID`, `amount`, `orderID`)\n" +
+                                        "VALUES  ("+ wishesORDER.get(wishI).dish.id + ", " + wishesORDER.get(wishI).amount + ", " + orderID + ");");
+
+                    ResultSet wishIDRS = ExecuteQuery("SELECT LAST_INSERT_ID();");
+                    while (wishIDRS.next()){
+                        wishID = wishIDRS.getInt(1);
+                    }
+
+                    for(int addonI = 0; addonI < wishesORDER.get(wishI).addons.size(); addonI++){
+                        ExecuteUpdate("INSERT INTO `addonsToWishes` (`wishID`, `addonID`)\n" +
+                                            "VALUES  (" + wishID + ", " + wishesORDER.get(wishI).addons.get(addonI).id + ");");
+                    }
+                }
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+
+            wishesORDER = new ArrayList<>();
+            refreshOrderList();
+
+        });
     }
 
 
 
     class customMenuAdapter extends BaseAdapter {
         List<Object> menuList;
-        List<Addon> checkedDishAddons;
+        List<Addon> clickedAddons = new ArrayList<>();
 
         private static final int MENU_ITEM = 0;
         private static final int HEADER = 1;
@@ -218,8 +217,7 @@ public class MenuActivity2 extends AppCompatActivity {
                 }
             }
 
-            switch (getItemType(i))
-            {
+            switch (getItemType(i)) {
                 case MENU_ITEM:
                     ConstraintLayout MenuExpand = view.findViewById(R.id.MenuExpand);
 
@@ -231,81 +229,83 @@ public class MenuActivity2 extends AppCompatActivity {
 
                     ImageButton MenuBackgroundButton = view.findViewById(R.id.MenuBackgroundButton);
                     MenuBackgroundButton.setOnClickListener(v -> {
-                        if(MenuExpand.getVisibility() == View.GONE)
-                        {
-//                                if (activeMenuElementNumber != -1)
-//                                {
+                        if(MenuExpand.getVisibility() == View.GONE) {
+//                                if (activeMenuElementNumber != -1){
 //                                    View vw = menuListView.getChildAt(activeMenuElementNumber);
 //                                    ConstraintLayout cl = vw.findViewById(R.id.MenuExpand);
 //                                    cl.setVisibility(View.GONE);
 //                                    notifyDataSetChanged();
-//
 //                                }
-//                            for (int ii = 0; i < menuList.size(); ii++)
-//                            {
-//                                if (getItemViewType(ii) == MENU_ITEM)
-//                                {
+//                            for (int ii = 0; i < menuList.size(); ii++){
+//                                if (getItemViewType(ii) == MENU_ITEM){
 //                                    View vw = menuListView.getChildAt(ii);
 //                                    ConstraintLayout cl = vw.findViewById(R.id.MenuExpand);
 //                                    cl.setVisibility(View.GONE);
 //                                }
-//
 //                            }
                             MenuExpand.setVisibility(View.VISIBLE);
                             //activeMenuElementNumber = i;
-
-
                             notifyDataSetChanged();
-
-                        }
-                        else if (MenuExpand.getVisibility() == View.VISIBLE)
-                        {
+                        } else if (MenuExpand.getVisibility() == View.VISIBLE) {
                             MenuExpand.setVisibility(View.GONE);
                             //activeMenuElementNumber = -1;
                         }
-                        Log.wtf("Active element", activeMenuElementNumber + "");
+
+                        clickedAddons = new ArrayList<>();
                     });
 
-                    if(MenuExpand.getVisibility() != View.GONE) {
+                    //if(MenuExpand.getVisibility() != View.GONE) {
 
-                        addonCategoriesGridLayout = view.findViewById(R.id.AddonCategoriesGridLayout);
-                        LayoutInflater gridInflater = getLayoutInflater();
-                        addonCategoriesGridLayout.removeAllViews();
-
-
-                        Dish dish = (Dish)menuList.get(i);
-                        AddonCategory addonCategory;
-                        Addon addon;
-
-                        android.support.v7.widget.AppCompatImageView AddOrderButton = view.findViewById(R.id.AddOrderButton);
-                        AddOrderButton.setOnClickListener(e -> {
-                            Wish newWish = new Wish(dish, 1, checkedDishAddons);
-                            for(int wishI = 0; wishI < wishesORDER.size(); wishI++){
-                                if (wishesORDER.get(wishI).addons == newWish.addons && wishesORDER.get(wishI).dish == newWish.dish) {wishesORDER.get(wishI).amount++; break;}
-                                if (wishI == wishesORDER.size()-1) wishesORDER.add(newWish);
-                            }
-                            if (wishesORDER.size() == 0) wishesORDER.add(newWish);
-                            Log.wtf("dupa", wishesORDER.size() + "");
-                            refreshOrderList();
-                        });
+                    addonCategoriesGridLayout = view.findViewById(R.id.AddonCategoriesGridLayout);
+                    LayoutInflater gridInflater = getLayoutInflater();
+                    addonCategoriesGridLayout.removeAllViews();
 
 
-                        for (int categoryIterator = 0; categoryIterator < dish.addonCategories.size(); categoryIterator++) {
-                            addonCategory = dish.addonCategories.get(categoryIterator);
-                            View v = gridInflater.inflate(R.layout.expand_grid_element, null);
-                            TextView CategoryNameTextView = v.findViewById(R.id.CategoryNameTextView);
-                            LinearLayout AddonsLinearLayout = v.findViewById(R.id.AddonsLinearLayout);
-                            CategoryNameTextView.setText(addonCategory.name); //cat name
-                            for (int addonIterator = 0; addonIterator < addonCategory.addons.size(); addonIterator++ ) {
-                                addon = addonCategory.addons.get(addonIterator);
-                                View x = gridInflater.inflate(R.layout.expand_addon_list_element, null);
-                                TextView AddonNameTextView = x.findViewById(R.id.AddonNameTextView);
-                                AddonNameTextView.setText(addon.name); //addon
-                                AddonsLinearLayout.addView(x);
-                            }
-                            addonCategoriesGridLayout.addView(v);
+                    Dish dish = (Dish)menuList.get(i);
+
+
+
+                    android.support.v7.widget.AppCompatImageView AddOrderButton = view.findViewById(R.id.AddOrderButton);
+                    AddOrderButton.setOnClickListener(e -> {
+                        Wish newWish = new Wish(dish, 1, clickedAddons);
+                        for(int wishI = 0; wishI < wishesORDER.size(); wishI++){
+                            Log.wtf("dupa", wishesORDER.get(wishI).addons.size() + "    kurwa    " + newWish.addons.size());
+                            if (checkIfTheSame(wishesORDER.get(wishI), newWish)) {wishesORDER.get(wishI).amount++; break;}
+                            if (wishI == wishesORDER.size()-1) {wishesORDER.add(newWish); break;}
                         }
+                        if (wishesORDER.size() == 0) wishesORDER.add(newWish);
+                        refreshOrderList();
+                    });
+                    //wishesORDER.get(wishI).addons.equals(newWish.addons) && wishesORDER.get(wishI).dish.equals(newWish.dish)
+
+                    for (int categoryIterator = 0; categoryIterator < dish.addonCategories.size(); categoryIterator++) {
+                        AddonCategory addonCategory = dish.addonCategories.get(categoryIterator);
+                        View v = gridInflater.inflate(R.layout.expand_grid_element, null);
+                        TextView CategoryNameTextView = v.findViewById(R.id.CategoryNameTextView);
+                        LinearLayout AddonsLinearLayout = v.findViewById(R.id.AddonsLinearLayout);
+                        CategoryNameTextView.setText(addonCategory.name); //cat name
+                        for (int addonIterator = 0; addonIterator < addonCategory.addons.size(); addonIterator++ ) {
+                            Addon addon = addonCategory.addons.get(addonIterator);
+                            View x = gridInflater.inflate(R.layout.expand_addon_list_element, null);
+                            TextView AddonNameTextView = x.findViewById(R.id.AddonNameTextView);
+                            ImageView CheckboxCheckImage = x.findViewById(R.id.CheckboxCheckImage);
+                            x.setOnClickListener(e -> {
+                                if(CheckboxCheckImage.getVisibility() == View.INVISIBLE) {
+                                    CheckboxCheckImage.setVisibility(View.VISIBLE);
+                                    clickedAddons.add(addon);
+                                } else {
+                                    CheckboxCheckImage.setVisibility(View.INVISIBLE);
+                                    clickedAddons.remove(addon);
+                                }
+
+                                Log.wtf("addon", ""+clickedAddons.size());
+                            });
+                            AddonNameTextView.setText(addon.name); //addon
+                            AddonsLinearLayout.addView(x);
+                        }
+                        addonCategoriesGridLayout.addView(v);
                     }
+                    //}
                     break;
 
                 case HEADER:
@@ -319,6 +319,25 @@ public class MenuActivity2 extends AppCompatActivity {
             }
             return view;
         }
+    }
+
+    boolean checkIfTheSame(Wish w1, Wish w2){
+        try {
+            for (int i = 0; i < w1.addons.size(); i++) {
+                if (!(w1.addons.get(i).id == w2.addons.get(i).id)) return false;
+            }
+            for (int i = 0; i < w2.addons.size(); i++) {
+                if (!(w1.addons.get(i).id == w2.addons.get(i).id)) return false;
+            }
+            if (!(w1.dish.id == w2.dish.id)) return false;
+            if (!(w1.addons.size() == w2.addons.size())) return false;
+        }
+        catch(Exception e){
+            return false;
+        }
+
+        return true;
+
     }
 
     void refreshOrderList ()
