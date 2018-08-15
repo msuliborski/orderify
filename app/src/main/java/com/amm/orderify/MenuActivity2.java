@@ -229,26 +229,27 @@ public class MenuActivity2 extends AppCompatActivity {
 
                     ImageButton MenuBackgroundButton = view.findViewById(R.id.MenuBackgroundButton);
                     MenuBackgroundButton.setOnClickListener(v -> {
-                        if(MenuExpand.getVisibility() == View.GONE) {
-//                                if (activeMenuElementNumber != -1){
-//                                    View vw = menuListView.getChildAt(activeMenuElementNumber);
-//                                    ConstraintLayout cl = vw.findViewById(R.id.MenuExpand);
-//                                    cl.setVisibility(View.GONE);
-//                                    notifyDataSetChanged();
-//                                }
-//                            for (int ii = 0; i < menuList.size(); ii++){
-//                                if (getItemViewType(ii) == MENU_ITEM){
-//                                    View vw = menuListView.getChildAt(ii);
-//                                    ConstraintLayout cl = vw.findViewById(R.id.MenuExpand);
-//                                    cl.setVisibility(View.GONE);
-//                                }
-//                            }
+
+                        if(MenuExpand.getVisibility() == View.GONE)
+                        {
+                                if (activeMenuElementNumber != -1)
+                                {   try
+                                    {
+                                        View vw = menuListView.getChildAt(activeMenuElementNumber - menuListView.getFirstVisiblePosition());
+                                        ConstraintLayout cl = vw.findViewById(R.id.MenuExpand);
+                                        cl.setVisibility(View.GONE);
+                                        notifyDataSetChanged();
+                                    } catch (Exception e) {}
+
+                                }
+
                             MenuExpand.setVisibility(View.VISIBLE);
-                            //activeMenuElementNumber = i;
+                            activeMenuElementNumber = i;
+
                             notifyDataSetChanged();
                         } else if (MenuExpand.getVisibility() == View.VISIBLE) {
                             MenuExpand.setVisibility(View.GONE);
-                            //activeMenuElementNumber = -1;
+                            activeMenuElementNumber = -1;
                         }
 
                         clickedAddons = new ArrayList<>();
@@ -275,6 +276,9 @@ public class MenuActivity2 extends AppCompatActivity {
                         }
                         if (wishesORDER.size() == 0) wishesORDER.add(newWish);
                         refreshOrderList();
+                        MenuExpand.setVisibility(View.GONE);
+                        activeMenuElementNumber = -1;
+                        clickedAddons = new ArrayList<>();
                     });
                     //wishesORDER.get(wishI).addons.equals(newWish.addons) && wishesORDER.get(wishI).dish.equals(newWish.dish)
 
@@ -350,28 +354,42 @@ public class MenuActivity2 extends AppCompatActivity {
             View x = orderListInflater.inflate(R.layout.order_list_element, null);
             TextView orderPriceTextView = x.findViewById(R.id.orderPriceTextView);
             TextView orderNameTextView = x.findViewById(R.id.orderNameTextView);
+            TextView QuantityTextView = x.findViewById(R.id.QuantityTextView);
             ImageButton OrderCancelButton = x.findViewById(R.id.OrderCancelButton);
+            ImageButton QuantityUpButton = x.findViewById(R.id.QuantityUpButton);
+            ImageButton QuantityDownButton = x.findViewById(R.id.QuantityDownButton);
+
+            QuantityTextView.setText(wishesORDER.get(wishNumber).amount + "");
 
             final int finalWishNumber = wishNumber;
+
+            QuantityUpButton.setOnClickListener(e -> {
+                wishesORDER.get(finalWishNumber).amount++;
+                refreshOrderList();
+            });
+
+            QuantityDownButton.setOnClickListener(e -> {
+                if (wishesORDER.get(finalWishNumber).amount > 1)
+                {
+                    wishesORDER.get(finalWishNumber).amount--;
+                    refreshOrderList();
+                }
+            });
+
+
             OrderCancelButton.setOnClickListener(v -> {
                 wishesORDER.remove(finalWishNumber);
                 refreshOrderList();
             }
             );
 
-            orderPriceTextView.setText(wishesORDER.get(wishNumber).dish.price + " zł" + "  " + wishesORDER.get(wishNumber).amount);
+            orderPriceTextView.setText(wishesORDER.get(wishNumber).dish.price + " zł");
             orderNameTextView.setText(wishesORDER.get(wishNumber).dish.name);
             orderListLinearLayout.addView(x);
 
         }
 
     }
-
-
-
-
-
-
 
 }
 
