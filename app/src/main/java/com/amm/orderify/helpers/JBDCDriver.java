@@ -11,14 +11,13 @@ import java.sql.Statement;
 
 public class JBDCDriver {
 
-    private static Connection myConn;
+    public static Connection connection;
     private static Statement myStatement;
 
     private static String ip;
     private static String database;
     private static String user;
     private static String password;
-
     public static void InitiateConnection(String _ip, String _database, String _user, String _password) {
         ip = _ip;
         database = _database;
@@ -27,12 +26,15 @@ public class JBDCDriver {
     }
 
     public static void InitiateConnection() {
-        ip = "192.168.1.100";
-        //ip = "10.21.21.100";
+
         database = "Orderify";
         user = "root";
+
+        ip = "192.168.1.100";
         password = "1234";
-        //password = "michal";
+
+//        ip = "10.21.21.100";
+//        password = "michal";
     }
 
     public static void ConnectToDatabase() {
@@ -42,8 +44,8 @@ public class JBDCDriver {
 
             Class.forName("com.mysql.jdbc.Driver");
 
-            myConn = DriverManager.getConnection("jdbc:mysql://" + ip + ":3306/" + database, user, password);
-            myStatement = myConn.createStatement();
+            connection = DriverManager.getConnection("jdbc:mysql://" + ip + ":3306/" + database, user, password);
+            myStatement = connection.createStatement();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -54,6 +56,10 @@ public class JBDCDriver {
     }
     public static void ExecuteUpdate(String query) throws SQLException {
         myStatement.executeUpdate(query);
+    }
+
+    public static Connection getConnection() {
+        return connection;
     }
 
     public static String getIp() {

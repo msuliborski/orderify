@@ -8,8 +8,9 @@ DROP TABLE IF EXISTS `dishes`;
 DROP TABLE IF EXISTS `addonsCategories`;
 DROP TABLE IF EXISTS `addons`;
 DROP TABLE IF EXISTS `addonsCategorisToDishes`;
+DROP TABLE IF EXISTS `addonsCategoriesToDishes`;
 DROP TABLE IF EXISTS `wishes`;
-DROP TABLE IF EXISTS `addonsToWish`;
+DROP TABLE IF EXISTS `addonsToWishes`;
 DROP TABLE IF EXISTS `orders`;
 DROP TABLE IF EXISTS `wishesToOrders`;
 
@@ -18,6 +19,7 @@ DROP TABLE IF EXISTS `addonsToOrder`;
 
 DROP TABLE IF EXISTS `addonsCategoriesToAddons`;
 DROP TABLE IF EXISTS `dishesToAddonsCategoris`;
+DROP TABLE IF EXISTS `dishesToAddonsCategories`;
 
 
 CREATE TABLE `tables` (
@@ -49,6 +51,7 @@ CREATE TABLE `dishes` (
 CREATE TABLE `addonsCategories` (
     `ID` INTEGER NOT NULL AUTO_INCREMENT, 
     `name` VARCHAR(255) NOT NULL, 
+    `multiChoice` BOOLEAN DEFAULT false, 
     PRIMARY KEY (`ID`)
 )   ENGINE=myisam DEFAULT CHARSET=utf8;
 
@@ -62,7 +65,7 @@ CREATE TABLE `addons` (
 )   ENGINE=myisam DEFAULT CHARSET=utf8;
 
 
-CREATE TABLE `addonsCategorisToDishes` (
+CREATE TABLE `addonsCategoriesToDishes` (
     `ID` INTEGER NOT NULL AUTO_INCREMENT, 
     `dishID` INTEGER NOT NULL DEFAULT 0, 
     `addonCategoryID` INTEGER NOT NULL DEFAULT 0, 
@@ -84,7 +87,7 @@ CREATE TABLE `wishes` (
 )   ENGINE=myisam DEFAULT CHARSET=utf8;
 
 
-CREATE TABLE `addonsToWish` (
+CREATE TABLE `addonsToWishes` (
     `ID` INTEGER NOT NULL AUTO_INCREMENT, 
     `wishID` INTEGER NOT NULL DEFAULT 0, 
     `addonID` INTEGER NOT NULL DEFAULT 0, 
@@ -117,7 +120,7 @@ VALUES  ('Margarita', 15, 'short', 'long', 1),                              #1
         ('Peperoni', 17, 'short', 'long', 1),                               #2
         ('Hawajska', 18, 'short', 'long', 1),                               #3
         ('Kurczak w cieście', 13, 'takie on jest dobry', 'araby z południa będą przychodzić i oddawać swoje żony żeby spróbować tego wspaniałego dania', 2),   #4
-        ('Sznycel', 80, 'short', 'long', 2),                                #5
+        ('Sznycel taki, że kurwa mać, będą kutacy z cycków wylecieli', 42.54, 'short', 'long', 2),                                #5
         ('Dewolaj', 15, 'short', 'long', 2),                                #6
         ('Zupa pomidorowa', 5, 'short', 'long', 3),                         #7
         ('Zupa ogórkowa', 5, 'short', 'long', 3),                           #8
@@ -125,38 +128,38 @@ VALUES  ('Margarita', 15, 'short', 'long', 1),                              #1
         ('Cola', 4, 'short', 'long', 4),                                    #10
         ('Sok pomarańczowy', 3, 'short', 'long', 4);                        #11
 
-INSERT INTO `addonsCategories` (`name`)
-VALUES  ('Sosy'), 
-        ('Rozmiary'), 
-        ('Sałatki'), 
-        ('Zapychacze'), 
-        ('Do napojów'); 
+INSERT INTO `addonsCategories` (`name`, `multiChoice`) 
+VALUES  ('Sosy', true), 
+        ('Rozmiary', false), 
+        ('Sałatki', false), 
+        ('Zapychacze', false), 
+        ('Do napojów', false); 
 
 INSERT INTO `addons` (`name`, `price`, `addonCategoryID`)
-VALUES  ('Sos tatarski', 1, 1), ('Sos czosnkowy', 0, 1), ('Sos pomidorowy', 0, 1),              #1-3
+VALUES  ('Sos tatarski', 1, 1), ('Sos czosnkowy', 25, 1), ('Sos pomidorowy', 0, 1),              #1-3
         ('Mała', 0, 2), ('Średnia', 7, 2), ('Duża', 13, 2),                                     #4-6
         ('Sałatka z kapusty', 0, 3), ('Warzywa gotowane', 0, 3), ('Marchewka', 0, 3),           #7-9
         ('Ziemniaki', 0, 4), ('Pieczone ziemniaki', 0, 4), ('Frytki', 0, 4), ('Kluski', 0, 4),  #10-13
         ('Lód', 0, 5);                                                                          #14
 
-INSERT INTO `addonsCategorisToDishes` (`dishID`, `addonCategoryID`)
+INSERT INTO `addonsCategoriesToDishes` (`dishID`, `addonCategoryID`)
 VALUES  (1, 1), (1, 2),
         (2, 1), (2, 2),
         (3, 1), (3, 2),
         (4, 3), (4, 4),
         (5, 3), (5, 4),
         (6, 3), (6, 4),
-        (10, 5), (10, 5),
-        (11, 5), (11, 5);
+        (10, 5),
+        (11, 5);
 
 INSERT INTO `wishes` (`dishID`, `amount`, `orderID`)
 VALUES  (1, 1, 1), (9, 1, 1),                #1-2
         (5, 1, 2), (11, 1, 2),               #3-4
         (7, 1, 3),                           #5
         (9, 5, 4),                           #6
-        (6, 1, 5), (5, 1, 5), (10, 2, 5);    #7-9
+        (6, 1, 5), (5, 1, 5), (10, 2, 5), (7, 3, 5), (8, 1, 5);    #7-11
 
-INSERT INTO `addonsToWish` (`wishID`, `addonID`)
+INSERT INTO `addonsToWishes` (`wishID`, `addonID`)
 VALUES  (1, 2), (1, 3),
         (3, 7), (3, 10),
         (4, 14),
@@ -170,3 +173,4 @@ VALUES  ('21:37:00', '2018-07-31', 1, 'z lodem'),                               
         ('21:41:22', '2018-07-31', 2, 'to ja szukam czy ci chlopi maja proce'),                                   #3
         ('21:49:22', '2018-07-31', 2, 'rzucam sobie na SQL'),                                                     #4
         ('21:49:33', '2018-07-31', 2, 'po co ja się w ogóle sile z tymi uwagami, nikt tego nie przeczyta :(');    #5
+ 

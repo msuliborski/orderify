@@ -8,4 +8,14 @@
     <string name="position_price_textview_string">Koszt zamówienia stanowiska:</string>
     <string name="table_price_textview_string">Koszt zamówień z całego stołu:</string>
     <string name="go_to_summary_button_string">Summary</string>
+    <string name="order_textview_string">Order</string>
+    <string name="menu_textview_string">Menu</string>
+    <string name="sum_textview_string">Total:</string>
+    <string name="enter_comments_textview_string">Comments:</string>
+    <string name="order_button_textview_string">Order</string>
+    <string name="ask_waiter_button_textview_string">Ask waiter for help</string>
+    <string name="cancel_order_button_textview_string">Cancel your order</string>
+    <string name="go_to_summary_button_textview_string">Summary</string>
+    <string name="messages_textview_string">Messages</string>
+    <string name="add_to_order_textview_string">Add to order</string>
 </resources>

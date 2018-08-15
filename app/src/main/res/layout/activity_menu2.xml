@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundPrimary"
+    android:clipToPadding="false"
+    tools:context=".MenuActivity2">
+
+
+    <ImageView
+
+        android:id="@+id/BasketBackground"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="350dp"
+        android:clipToPadding="false"
+        android:elevation="10dp"
+        android:outlineProvider="bounds"
+        android:padding="0dp"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/basket_background" />
+
+    <ImageView
+        android:id="@+id/SeparatingLineDark"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="38dp"
+        android:elevation="20dp"
+        android:scaleType="fitXY"
+        app:layout_constraintEnd_toEndOf="@+id/BasketBackground"
+        app:layout_constraintStart_toStartOf="@+id/BasketBackground"
+        app:layout_constraintTop_toTopOf="@+id/BasketBackground"
+        app:srcCompat="@drawable/separating_line_light" />
+
+    <ImageView
+        android:id="@+id/SeparatingLineLight"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/SeparatingLineDark"
+        app:layout_constraintTop_toTopOf="@+id/SeparatingLineDark"
+        app:srcCompat="@drawable/separating_line_dark" />
+
+    <ImageView
+        android:id="@+id/SeparatingLineBottom"
+        android:layout_width="0dp"
+        android:layout_height="1.5dp"
+        android:layout_marginBottom="32dp"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/SeparatingLineDark"
+        app:srcCompat="@drawable/separating_line_dark" />
+
+    <ImageView
+        android:id="@+id/ArrowDark"
+        android:layout_width="148dp"
+        android:layout_height="28dp"
+        app:layout_constraintBottom_toTopOf="@+id/SeparatingLineLight"
+        app:layout_constraintStart_toEndOf="@+id/BasketBackground"
+        app:srcCompat="@drawable/arrow_dark" />
+
+    <ImageView
+        android:id="@+id/ArrowLight"
+        android:layout_width="156dp"
+        android:layout_height="28dp"
+        android:elevation="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/SeparatingLineDark"
+        app:layout_constraintEnd_toStartOf="@+id/ArrowDark"
+        app:srcCompat="@drawable/arrow_light" />
+
+    <TextView
+        android:id="@+id/OrderTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:elevation="21dp"
+        android:textColor="@color/darkRed"
+        android:text="@string/order_textview_string"
+        android:fontFamily="@font/tw_cen"
+        app:layout_constraintBottom_toBottomOf="@+id/ArrowLight"
+        app:layout_constraintEnd_toEndOf="@+id/ArrowLight"
+        app:layout_constraintStart_toStartOf="@+id/ArrowLight"
+        app:layout_constraintTop_toTopOf="@+id/ArrowLight" />
+
+    <TextView
+        android:id="@+id/MenuTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:elevation="21dp"
+        android:text="@string/menu_textview_string"
+        android:fontFamily="@font/tw_cen"
+        android:textColor="@color/backgroundPrimary"
+        app:layout_constraintBottom_toBottomOf="@+id/ArrowDark"
+        app:layout_constraintEnd_toEndOf="@+id/ArrowDark"
+        app:layout_constraintStart_toEndOf="@+id/ArrowLight"
+        app:layout_constraintTop_toTopOf="@+id/ArrowDark" />
+
+    <LinearLayout
+        android:id="@+id/OrderListLinearLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:elevation="21dp"
+        android:orientation="vertical"
+        android:scrollbars="none"
+        app:layout_constraintEnd_toEndOf="@+id/BasketBackground"
+        app:layout_constraintStart_toStartOf="@+id/BasketBackground"
+        app:layout_constraintTop_toBottomOf="@+id/ArrowLight" />
+
+    <ImageView
+        android:id="@+id/AfterListviewSeparator"
+        android:layout_width="218dp"
+        android:layout_height="3dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:elevation="21dp"
+        android:scaleType="fitStart"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/BasketBackground"
+        app:layout_constraintStart_toStartOf="@+id/BasketBackground"
+        app:layout_constraintTop_toBottomOf="@+id/OrderListLinearLayout"
+        app:srcCompat="@drawable/order_separator" />
+
+    <TextView
+        android:id="@+id/SumTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:elevation="21dp"
+        android:text="@string/sum_textview_string"
+        android:fontFamily="@font/tw_cen"
+        android:textColor="@color/backgroundPrimary"
+        android:textSize="8sp"
+        app:layout_constraintEnd_toStartOf="@id/SumNumberTextView"
+        app:layout_constraintStart_toStartOf="@+id/BasketBackground"
+        app:layout_constraintTop_toBottomOf="@+id/AfterListviewSeparator" />
+
+    <TextView
+        android:id="@+id/EnterCommentsTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp"
+        android:layout_marginStart="4dp"
+        android:elevation="21dp"
+        android:fontFamily="@font/tw_cen"
+        android:text="@string/enter_comments_textview_string"
+        android:textColor="@color/backgroundPrimary"
+        android:textSize="6sp"
+        app:layout_constraintBottom_toTopOf="@+id/EnterCommentsEditText"
+        app:layout_constraintStart_toStartOf="@+id/EnterCommentsEditText" />
+
+    <TextView
+        android:id="@+id/SumNumberTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:elevation="21dp"
+        android:fontFamily="@font/tw_cen"
+        android:text="10,00 zł"
+        android:textColor="@color/backgroundPrimary"
+        android:textSize="8sp"
+        app:layout_constraintEnd_toEndOf="@+id/BasketBackground"
+        app:layout_constraintStart_toEndOf="@id/SumTextView"
+        app:layout_constraintTop_toTopOf="@+id/SumTextView" />
+
+    <EditText
+        android:id="@+id/EnterCommentsEditText"
+        android:layout_width="156dp"
+        android:layout_height="39dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/enter_comments_edittext_background"
+        android:elevation="21dp"
+        android:ems="10"
+        android:gravity="start"
+        android:inputType="textPersonName"
+        android:padding="5dp"
+        android:text="Name"
+        android:textSize="8sp"
+        app:layout_constraintEnd_toEndOf="@+id/BasketBackground"
+        app:layout_constraintStart_toStartOf="@+id/BasketBackground"
+        app:layout_constraintTop_toBottomOf="@+id/SumNumberTextView" />
+
+    <ImageButton
+        android:id="@+id/OrderButton"
+        android:layout_width="85dp"
+        android:layout_height="18dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+
+        android:elevation="21dp"
+        android:scaleType="fitStart"
+        app:layout_constraintEnd_toEndOf="@+id/BasketBackground"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/EnterCommentsEditText"
+        app:srcCompat="@drawable/order_button_background"
+        android:background="?android:attr/selectableItemBackground"
+        android:foreground="?android:attr/selectableItemBackground" />
+
+    <ImageButton
+        android:id="@+id/AskWaiterButton"
+        android:layout_width="72dp"
+        android:layout_height="11dp"
+
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:elevation="21dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:scaleType="fitStart"
+        app:layout_constraintBottom_toBottomOf="@+id/BasketBackground"
+        app:layout_constraintEnd_toEndOf="@+id/BasketBackground"
+        app:srcCompat="@drawable/common_button_background" />
+
+    <ImageButton
+        android:id="@+id/CancelOrderButton"
+        android:layout_width="72dp"
+        android:layout_height="11dp"
+
+        android:layout_marginBottom="1dp"
+        android:layout_marginEnd="8dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:elevation="21dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:scaleType="fitStart"
+        app:layout_constraintBottom_toTopOf="@+id/AskWaiterButton"
+        app:layout_constraintEnd_toEndOf="@+id/BasketBackground"
+        app:srcCompat="@drawable/common_button_background" />
+
+    <ImageButton
+        android:id="@+id/GoToSummaryButton"
+        android:layout_width="72dp"
+        android:layout_height="11dp"
+
+        android:layout_marginBottom="1dp"
+        android:layout_marginEnd="8dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:elevation="21dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:scaleType="fitStart"
+
+        app:layout_constraintBottom_toTopOf="@+id/CancelOrderButton"
+        app:layout_constraintEnd_toEndOf="@+id/BasketBackground"
+        app:srcCompat="@drawable/common_button_background" />
+
+    <TextView
+        android:id="@+id/OrderButtonTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:elevation="21dp"
+        android:text="@string/order_textview_string"
+        android:textColor="@color/darkRed"
+        android:fontFamily="@font/tw_cen"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/OrderButton"
+        app:layout_constraintEnd_toEndOf="@+id/OrderButton"
+        app:layout_constraintStart_toStartOf="@+id/OrderButton"
+        app:layout_constraintTop_toTopOf="@+id/OrderButton" />
+
+    <TextView
+        android:id="@+id/AskWaiterButtonTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:elevation="21dp"
+        android:text="@string/ask_waiter_button_textview_string"
+        android:fontFamily="@font/tw_cen"
+        android:textColor="@color/darkRed"
+        android:textSize="6sp"
+        app:layout_constraintBottom_toBottomOf="@+id/AskWaiterButton"
+        app:layout_constraintEnd_toEndOf="@+id/AskWaiterButton"
+        app:layout_constraintStart_toStartOf="@+id/AskWaiterButton"
+        app:layout_constraintTop_toTopOf="@+id/AskWaiterButton" />
+
+    <TextView
+        android:id="@+id/CancelOrderButtonTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:elevation="21dp"
+        android:text="@string/cancel_order_button_textview_string"
+        android:fontFamily="@font/tw_cen"
+        android:textColor="@color/darkRed"
+        android:textSize="6sp"
+        app:layout_constraintBottom_toBottomOf="@+id/CancelOrderButton"
+        app:layout_constraintEnd_toEndOf="@+id/AskWaiterButton"
+        app:layout_constraintStart_toStartOf="@+id/AskWaiterButton"
+        app:layout_constraintTop_toTopOf="@+id/CancelOrderButton" />
+
+    <TextView
+        android:id="@+id/GoToSummaryButtonTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:elevation="21dp"
+        android:fontFamily="@font/tw_cen"
+        android:text="@string/go_to_summary_button_string"
+        android:textColor="@color/darkRed"
+        android:textSize="6sp"
+        app:layout_constraintBottom_toBottomOf="@+id/GoToSummaryButton"
+        app:layout_constraintEnd_toEndOf="@+id/AskWaiterButton"
+        app:layout_constraintStart_toStartOf="@+id/AskWaiterButton"
+        app:layout_constraintTop_toTopOf="@+id/GoToSummaryButton" />
+
+    <TextView
+        android:id="@+id/MessagesTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp"
+        android:elevation="21dp"
+        android:fontFamily="@font/tw_cen"
+        android:text="@string/messages_textview_string"
+        android:textColor="@color/backgroundPrimary"
+        android:textSize="8sp"
+        app:layout_constraintBottom_toBottomOf="@id/BottomSeparatorArrow"
+        app:layout_constraintEnd_toEndOf="@id/BottomSeparatorArrow"
+        app:layout_constraintStart_toStartOf="@id/BottomSeparatorArrow"
+        app:layout_constraintTop_toTopOf="@id/BottomSeparatorArrow" />
+
+    <TextView
+        android:id="@+id/ErrorsTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/tw_cen"
+        android:elevation="21dp"
+        android:text="Tu się pojawiają chujowe errory"
+        android:textColor="@color/errorColor"
+        android:textSize="6sp"
+        app:layout_constraintBottom_toTopOf="@+id/GoToSummaryButton"
+        app:layout_constraintEnd_toEndOf="@+id/BasketBackground"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/OrderButton" />
+
+    <ImageView
+        android:id="@+id/BottomSeparatorArrow"
+        android:layout_width="122dp"
+        android:layout_height="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:scaleType="fitStart"
+        app:layout_constraintBottom_toBottomOf="@+id/SeparatingLineBottom"
+        app:layout_constraintEnd_toEndOf="@+id/SeparatingLineBottom"
+        app:layout_constraintStart_toEndOf="@+id/BasketBackground"
+        app:layout_constraintTop_toTopOf="@+id/SeparatingLineBottom"
+        app:srcCompat="@drawable/bottom_separator_arrow" />
+
+    <ListView
+        android:id="@+id/MenuListView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/SeparatingLineBottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/BasketBackground"
+        app:layout_constraintTop_toBottomOf="@+id/ArrowDark" />
+
+</android.support.constraint.ConstraintLayout>
