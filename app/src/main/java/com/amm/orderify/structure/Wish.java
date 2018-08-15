@@ -4,27 +4,14 @@ import java.util.List;
 
 public class Wish {
 
-    public int id;
-    public String name;
-    public float price;
+    public Dish dish;
     public int amount;
-    public int dishID;
     public List<Addon> addons;
 
-    public Wish(int id, String name, float price, int amount, int dishID, List<Addon> addons) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
+    public Wish(Dish dish, int amount, List<Addon> addons) {
+        this.dish = dish;
         this.amount = amount;
-        this.dishID = dishID;
         this.addons = addons;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }

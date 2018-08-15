@@ -25,11 +25,12 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.zip.Inflater;
 
 import static com.amm.orderify.helpers.JBDCDriver.*;
 
 public class MenuActivity2 extends AppCompatActivity {
-    public ListView orderListView;
+    public LinearLayout orderListLinearLayout;
     public ListView menuListView;
     public android.support.v7.widget.GridLayout addonCategoriesGridLayout;
     public int marginCopy;
@@ -70,12 +71,8 @@ public class MenuActivity2 extends AppCompatActivity {
 
 
         //====================ORDER LIST=================================
-        orderListView = findViewById(R.id.OrderListView);
-        ViewGroup.LayoutParams lp = orderListView.getLayoutParams();
-        //ViewGroup.LayoutParams lpb = lp;
-        if (names.size() <= 3) lp.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-        orderListView.setLayoutParams(lp);
-        orderListView.setAdapter(new customAdapter(names, prices));
+        orderListLinearLayout = findViewById(R.id.OrderListLinearLayout);
+
 
         //=====================MENU LIST====================================
         menuListView = findViewById(R.id.MenuListView);
@@ -313,52 +310,32 @@ public class MenuActivity2 extends AppCompatActivity {
         }
     }
 
+    void refreshOrderList (List<Wish> wishList)
+    {
+        orderListLinearLayout.removeAllViews();
+
+        for (int wishNumber = 0; wishNumber < wishList.size(); wishNumber++)
+        {
+            LayoutInflater orderListInflater = getLayoutInflater();
+            View x = orderListInflater.inflate(R.layout.order_list_element, null);
+            TextView orderPriceTextView = x.findViewById(R.id.orderPriceTextView);
+            TextView orderNameTextView = x.findViewById(R.id.orderNameTextView);
+            ImageButton OrderCancelButton = x.findViewById(R.id.OrderCancelButton);
+
+            OrderCancelButton.setOnClickListener(e -> {
 
 
-    class customAdapter extends BaseAdapter {
+            });
 
-        List<String> names = null;
-        List<String> prices = null;
-
-        customAdapter(List<String> val1, List<String> val2) {
-            names = val1;
-            prices = val2;
-
+            orderPriceTextView.setText(wishList.get(wishNumber).dish.price + " zł");
+            orderNameTextView.setText(wishList.get(wishNumber).dish.name);
+            orderListLinearLayout.addView(x);
         }
 
-        public int getCount() {
-            return names.size();
-        }
-
-        public Object getItem(int arg0) {
-            return null;
-        }
-
-        public long getItemId(int position) {
-            return position;
-        }
-
-        public View getView(int position, View convertView, ViewGroup parent) {
-            convertView = getLayoutInflater().inflate(R.layout.order_list_element, null);
-
-            TextView nameTextView = convertView.findViewById(R.id.orderNameTextView);
-            TextView priceTextView = convertView.findViewById(R.id.orderPriceTextView);
-            //Button orderCancelButton = convertView.findViewById(R.id.OrderCancelButton);
-
-            nameTextView.setText(names.get(position));
-            priceTextView.setText(prices.get(position));
-//            orderCancelButton.setOnClickListener(e -> {
-//                try {
-//                    ExecuteUpdate("DELETE FROM wishes \n" +
-//                            "WHERE wishID = " + orderID + "\n" +
-//                            "GROUP BY dishes.name;");
-//                } catch (SQLException e1) {
-//                    e1.printStackTrace();
-//                }
-//            });
-            return convertView;
-        }
     }
+
+
+
 
 
 
