@@ -286,6 +286,7 @@ public class MenuActivity2 extends AppCompatActivity {
                             }
                             if (wishesORDER.size() == 0) wishesORDER.add(newWish);
                             Log.wtf("dupa", wishesORDER.size() + "");
+                            refreshOrderList();
                         });
 
 
@@ -320,11 +321,11 @@ public class MenuActivity2 extends AppCompatActivity {
         }
     }
 
-    void refreshOrderList (List<Wish> wishList)
+    void refreshOrderList ()
     {
         orderListLinearLayout.removeAllViews();
 
-        for (int wishNumber = 0; wishNumber < wishList.size(); wishNumber++)
+        for (int wishNumber = 0; wishNumber < wishesORDER.size(); wishNumber++)
         {
             LayoutInflater orderListInflater = getLayoutInflater();
             View x = orderListInflater.inflate(R.layout.order_list_element, null);
@@ -337,8 +338,8 @@ public class MenuActivity2 extends AppCompatActivity {
 
             });
 
-            orderPriceTextView.setText(wishList.get(wishNumber).dish.price + " zł");
-            orderNameTextView.setText(wishList.get(wishNumber).dish.name);
+            orderPriceTextView.setText(wishesORDER.get(wishNumber).dish.price + " zł");
+            orderNameTextView.setText(wishesORDER.get(wishNumber).dish.name);
             orderListLinearLayout.addView(x);
         }
 
