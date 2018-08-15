@@ -118,7 +118,7 @@ public class MenuActivity2 extends AppCompatActivity {
                         while (addonsRS.next()) {
                             addonsMENU.add(new Addon(addonsRS.getInt("ID"), addonsRS.getString("name"), addonsRS.getFloat("price")));
                         }
-                        addonCategoryMENU.add(new AddonCategory(addonCategoriesRS.getInt("ID"), addonCategoriesRS.getString("name"), addonsMENU));
+                        addonCategoryMENU.add(new AddonCategory(addonCategoriesRS.getInt("ID"), addonCategoriesRS.getString("name"), addonCategoriesRS.getBoolean("multiChoice"), addonsMENU));
                         addonsMENU = new ArrayList<>();
                     }
                     dishesMENU.add(new Dish(dishesRS.getInt("ID"), dishesRS.getString("name"),
@@ -333,14 +333,17 @@ public class MenuActivity2 extends AppCompatActivity {
             TextView orderNameTextView = x.findViewById(R.id.orderNameTextView);
             ImageButton OrderCancelButton = x.findViewById(R.id.OrderCancelButton);
 
-            OrderCancelButton.setOnClickListener(e -> {
+            final int finalWishNumber = wishNumber;
+            OrderCancelButton.setOnClickListener(v -> {
+                wishesORDER.remove(finalWishNumber);
+                refreshOrderList();
+            }
+            );
 
-
-            });
-
-            orderPriceTextView.setText(wishesORDER.get(wishNumber).dish.price + " zł");
+            orderPriceTextView.setText(wishesORDER.get(wishNumber).dish.price + " zł" + "  " + wishesORDER.get(wishNumber).amount);
             orderNameTextView.setText(wishesORDER.get(wishNumber).dish.name);
             orderListLinearLayout.addView(x);
+
         }
 
     }
