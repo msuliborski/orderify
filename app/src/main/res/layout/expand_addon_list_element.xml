@@ -21,7 +21,7 @@
         android:layout_width="9dp"
         android:layout_height="10dp"
         android:scaleType="fitStart"
-        android:visibility="visible"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/CheckboxBackgroundImage"
         app:layout_constraintEnd_toEndOf="@+id/CheckboxBackgroundImage"
         app:layout_constraintStart_toStartOf="@+id/CheckboxBackgroundImage"
