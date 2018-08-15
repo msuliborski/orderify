@@ -1,15 +1,13 @@
 package com.amm.orderify;
 
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.amm.orderify.client.MenuActivity;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -71,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button GoToMenuButton = findViewById(R.id.GoToMenuButton);
         GoToMenuButton.setOnClickListener(e -> {
-            Intent openMenuIntent = new Intent(MainActivity.this, MenuActivity2.class);
+            Intent openMenuIntent = new Intent(MainActivity.this, MenuActivity.class);
             this.startActivity(openMenuIntent);
         });
     }

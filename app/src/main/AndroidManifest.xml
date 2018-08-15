@@ -21,13 +21,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MenuActivity"
+            android:name=".client.MenuActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".MenuActivity2"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".SummaryActivity"
+            android:name=".client.SummaryActivity"
             android:screenOrientation="landscape" />
     </application>
 
