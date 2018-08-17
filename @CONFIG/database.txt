@@ -1,29 +1,14 @@
-W konfigu bazy:
-[mysql]
-default-character-set=latin1
-
-[mysqld]
-character_set_server=latin1
-collation_server=latin1_swedish_ci
-
-
-
 /etc/mysql/mysql.d/mysql.conf
-bind-address = MY_IP
+bind-address = MY_IP (local address, not 'localhost')
 
 
-CREATE USER 'root'@'%' IDENTIFIED BY 'some_pass';
-GRANT ALL PRIVILEGES ON . TO 'root'@'%';
-
-
-CREATE USER 'root'@'%' IDENTIFIED BY 'michal';
+CREATE USER 'root'@'%' IDENTIFIED BY '1234';
 GRANT ALL PRIVILEGES ON *.* TO 'root'@'%';
-
 flush privileges;
 
+To access MySQL:
+local:
+mysql -p -u root
+remote:
+mysql -h 192.168.1.100 -u root -p Orderify
 
-
-
-mysql --host=10.21.21.100 --user=root --password=michal orderify
-
-mysql -h localhost -u myname -p mydb
