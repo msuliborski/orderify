@@ -10,13 +10,12 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme.Fullscreen">
+        android:theme="@style/AppTheme.Fullscreen" >
         <activity
             android:name=".MainActivity"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -27,7 +26,7 @@
             android:name=".client.SummaryActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".staff.OrdersActivity"
+            android:name=".bar.OrdersActivity"
             android:screenOrientation="landscape" />
     </application>
 

@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.app_main_activity);
 
         RecordTextView = findViewById(R.id.RecordTextView);
         RecordGetText = findViewById(R.id.RecordGetText);

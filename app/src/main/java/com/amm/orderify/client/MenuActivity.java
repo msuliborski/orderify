@@ -43,7 +43,7 @@ public class MenuActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_menu2);
+        setContentView(R.layout.client_menu_activity);
 
         //=====================================MENU LIST=============================================
         menuListView = findViewById(R.id.MenuListView);
@@ -60,7 +60,7 @@ public class MenuActivity extends AppCompatActivity {
             while (dishCategoriesRS.next()) {
                 Statement dishesS = getConnection().createStatement();
                 ResultSet dishesRS = dishesS.executeQuery("SELECT * FROM dishes \n" +
-                        "WHERE categoryID = " + dishCategoriesRS.getInt("ID"));
+                        "WHERE dishCategoryID = " + dishCategoriesRS.getInt("ID"));
                 while (dishesRS.next()) {
                     Statement addonCategoriesS = getConnection().createStatement();
                     ResultSet addonCategoriesRS = addonCategoriesS.executeQuery("SELECT * FROM addonCategoriesToDishes\n" +
@@ -95,8 +95,6 @@ public class MenuActivity extends AppCompatActivity {
 
         menuListView.setAdapter(new customMenuAdapter(this, menuList));
 
-
-
         //==========================================ORDER LIST===============================================
         orderListLinearLayout = findViewById(R.id.OrderListLinearLayout);
 
@@ -105,21 +103,21 @@ public class MenuActivity extends AppCompatActivity {
         ImageButton orderButton = findViewById(R.id.OrderButton);
         orderButton.setOnClickListener((View e) -> {
             try {
-            ExecuteUpdate("INSERT INTO `orders` (`time`, `date`, `tableID`, `comments`)\n" +
-                    "VALUES  ('21:32:22', '2018-07-31', 1, '" + EnterCommentsEditText.getText() + "');"); //add current data
+            ExecuteUpdate("INSERT INTO orders (time, date, tableID, comments, state)\n" +
+                    "VALUES  ('21:32:22', '2018-07-31', 1, '" + EnterCommentsEditText.getText() + "', 1);"); //add current data
 
             ResultSet orderIDRS = ExecuteQuery("SELECT LAST_INSERT_ID();");
             while (orderIDRS.next()) orderID = orderIDRS.getInt(1);
 
             for(int wishI = 0; wishI < wishes.size(); wishI++){
-                    ExecuteUpdate("INSERT INTO `wishes` (`dishID`, `amount`, `orderID`)\n" +
+                    ExecuteUpdate("INSERT INTO wishes (dishID, amount, orderID)\n" +
                                         "VALUES  ("+ wishes.get(wishI).dish.id + ", " + wishes.get(wishI).amount + ", " + orderID + ");");
 
                     ResultSet wishIDRS = ExecuteQuery("SELECT LAST_INSERT_ID();");
                     while (wishIDRS.next()) wishID = wishIDRS.getInt(1);
 
                     for(int addonI = 0; addonI < wishes.get(wishI).addons.size(); addonI++){
-                        ExecuteUpdate("INSERT INTO `addonsToWishes` (`wishID`, `addonID`)\n" +
+                        ExecuteUpdate("INSERT INTO addonsToWishes (wishID, addonID)\n" +
                                             "VALUES  (" + wishID + ", " + wishes.get(wishI).addons.get(addonI).id + ");");
                     }
                 }

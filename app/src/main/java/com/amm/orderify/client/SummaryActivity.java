@@ -21,7 +21,7 @@ public class SummaryActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_summary);
+        setContentView(R.layout.client_summary_activity);
 
         int tableID = 1;
 

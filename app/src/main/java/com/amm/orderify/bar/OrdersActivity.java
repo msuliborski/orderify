@@ -1,4 +1,4 @@
-package com.amm.orderify.staff;
+package com.amm.orderify.bar;
 
         import android.support.v7.app.AppCompatActivity;
         import android.os.Bundle;
@@ -21,7 +21,7 @@ public class OrdersActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_summary);
+        setContentView(R.layout.client_summary_activity);
 
         List<Order> orders = new ArrayList<>();
         List<Wish> wishes = new ArrayList<>();
