@@ -1,20 +1,20 @@
-package com.amm.orderify.client;
+package com.amm.orderify.staff;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+        import android.support.v7.app.AppCompatActivity;
+        import android.os.Bundle;
 
-import com.amm.orderify.R;
-import com.amm.orderify.helpers.data.*;
+        import com.amm.orderify.R;
+        import com.amm.orderify.helpers.data.*;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
+        import java.sql.ResultSet;
+        import java.sql.SQLException;
+        import java.sql.Statement;
+        import java.util.ArrayList;
+        import java.util.List;
 
-import static com.amm.orderify.helpers.JBDCDriver.getConnection;
+        import static com.amm.orderify.helpers.JBDCDriver.getConnection;
 
-public class SummaryActivity extends AppCompatActivity
+public class OrdersActivity extends AppCompatActivity
 {
 
     @Override
@@ -23,21 +23,18 @@ public class SummaryActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_summary);
 
-        int tableID = 1;
-
         List<Order> orders = new ArrayList<>();
         List<Wish> wishes = new ArrayList<>();
         List<Addon> addons = new ArrayList<>();
 
         try {
             Statement ordersS = getConnection().createStatement();
-            ResultSet ordersRS = ordersS.executeQuery("SELECT * FROM orders\n" +
-                    "WHERE tableID = " + tableID);
+            ResultSet ordersRS = ordersS.executeQuery("SELECT * FROM orders");
             while (ordersRS.next()){
                 Statement wishesS = getConnection().createStatement();
                 ResultSet wishesRS = wishesS.executeQuery("SELECT dishID, name, price, amount, orderID FROM wishes\n" +
-                                                               "JOIN dishes ON dishes.ID = wishes.dishID\n" +
-                                                               "WHERE orderID = " + ordersRS.getInt("ID"));
+                        "JOIN dishes ON dishes.ID = wishes.dishID\n" +
+                        "WHERE orderID = " + ordersRS.getInt("ID"));
                 while (wishesRS.next()){
                     Statement addonsS = getConnection().createStatement();
                     ResultSet addonsRS = addonsS.executeQuery("SELECT addonID, name, price FROM addonsToWishes\n" +
