@@ -10,7 +10,6 @@
 
 
     <ImageView
-
         android:id="@+id/BasketBackground"
         android:layout_width="0dp"
         android:layout_height="0dp"

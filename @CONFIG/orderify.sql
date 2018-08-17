@@ -3,29 +3,15 @@ CREATE DATABASE IF NOT EXISTS Orderify;
 USE Orderify;
 
 DROP TABLE IF EXISTS addonsToWishes;            #proper
-DROP TABLE IF EXISTS wishesToOrders;
 DROP TABLE IF EXISTS wishes;                    #proper
 DROP TABLE IF EXISTS orders;                    #proper
 DROP TABLE IF EXISTS addonCategoriesToDishes;   #proper
-DROP TABLE IF EXISTS addonsCategorisToDishes;
-DROP TABLE IF EXISTS addonsCategoriesToDishes;
-DROP TABLE IF EXISTS dishesToAddonsCategoris;
-DROP TABLE IF EXISTS dishesToAddonsCategories;
-DROP TABLE IF EXISTS dishesToAddonCategories;
-DROP TABLE IF EXISTS dishesToOrders;
 DROP TABLE IF EXISTS addons;                    #proper
 DROP TABLE IF EXISTS addonCategories;           #proper
-DROP TABLE IF EXISTS addonsCategories;
 DROP TABLE IF EXISTS dishes;                    #proper
 DROP TABLE IF EXISTS dishCategories;            #proper
-DROP TABLE IF EXISTS dishesCategories;
 DROP TABLE IF EXISTS tables;                    #proper 
 DROP TABLE IF EXISTS messages;                  #proper
-
-DROP TABLE IF EXISTS addonsToOrder;
-DROP TABLE IF EXISTS addonsCategoriesToAddons;
-DROP TABLE IF EXISTS addonCategoriesToAddons;
-
 
 CREATE TABLE tables (
     ID INTEGER NOT NULL AUTO_INCREMENT, 
@@ -147,7 +133,7 @@ VALUES  ('Sosy', true),
         ('Rozmiary', false), 
         ('Sałatki', false), 
         ('Zapychacze', false), 
-        ('Do napojów', false); 
+        ('Do napojów', true); 
 
 INSERT INTO addons (name, price, addonCategoryID)
 VALUES  ('Sos tatarski', 1, 1), ('Sos czosnkowy', 1, 1), ('Sos pomidorowy', 1, 1),              #1-3
