@@ -276,7 +276,36 @@ public class MenuActivity extends AppCompatActivity {
                         activeMenuElementNumber = -1;
                         clickedAddons = new ArrayList<>();
                     });
+
+                    int titleH = 20;
+                    int addonsH = 5;
+                    int buttonH = 30;
+                    int categoryMargin = 4;
+                    int categoryMarginAmount = 0;
+
+                    int categoriesAmount = dish.addonCategories.size();
+                    int tmp = 1; //zakaldam ze jets co najmniej jeden
+                    int addonsAmount = 0;
+
+                    for(int g = 0; g < categoriesAmount; g++) {
+                        if (dish.addonCategories.get(g).addons.size() > tmp) tmp = dish.addonCategories.get(g).addons.size();
+                        if (g % 3 == 2){ //i ta linijka, ten mastermind tutaj    arek, wpisz na sztywno te wartości
+                            addonsAmount += tmp;
+                            categoryMarginAmount++;
+                            tmp = 1;
+                        }
+                        else if (g % 3 == (categoriesAmount-1) % 3 && g == categoriesAmount-1) {
+                            addonsAmount += tmp;
+                            categoryMarginAmount++;
+                        }
+                    }
+
+                    int totalHeight = titleH + addonsH * addonsAmount + categoryMargin * categoryMarginAmount + buttonH;
+
+
+
                 }
+
             }
             return view;
         }
