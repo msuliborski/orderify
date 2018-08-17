@@ -26,6 +26,9 @@
         <activity
             android:name=".client.SummaryActivity"
             android:screenOrientation="landscape" />
+        <activity
+            android:name=".staff.OrdersActivity"
+            android:screenOrientation="landscape" />
     </application>
 
 </manifest>
