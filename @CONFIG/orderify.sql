@@ -48,6 +48,7 @@ CREATE TABLE dishes (
 CREATE TABLE addonCategories (
     ID INTEGER NOT NULL AUTO_INCREMENT, 
     name VARCHAR(255) NOT NULL, 
+    description VARCHAR(100), 
     multiChoice BOOLEAN DEFAULT false, 
     PRIMARY KEY (ID)
 )   CHARSET=utf8;
@@ -128,12 +129,12 @@ VALUES  ('Margarita', 15, 'short', 'long', 1),                              #1
         ('Cola', 4, 'short', 'long', 4),                                    #10
         ('Sok pomarańczowy', 3, 'short', 'long', 4);                        #11
 
-INSERT INTO addonCategories (name, multiChoice) 
-VALUES  ('Sosy', true), 
-        ('Rozmiary', false), 
-        ('Sałatki', false), 
-        ('Zapychacze', false), 
-        ('Do napojów', true); 
+INSERT INTO addonCategories (name, description, multiChoice) 
+VALUES  ('Sosy', null, true), 
+        ('Rozmiary', null, false), 
+        ('Sałatki', null, false), 
+        ('Zapychacze', null, false), 
+        ('Do napojów', null, true); 
 
 INSERT INTO addons (name, price, addonCategoryID)
 VALUES  ('Sos tatarski', 1, 1), ('Sos czosnkowy', 1, 1), ('Sos pomidorowy', 1, 1),              #1-3
