@@ -9,4 +9,6 @@
     <color name="barBackground">#e7f8f8</color>
     <color name="addonBackground">#69398c</color>
     <color name="barDishTextColor">#69398c</color>
+    <color name="barOrderNumberBackgroundColor">#d6e0e0</color>
+    <color name="barOrderStateButtonBackgroundColor">#00d000</color>
 </resources>

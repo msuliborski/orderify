@@ -20,4 +20,5 @@
     <string name="add_to_order_textview_string">Add to order</string>
     <string name="edit_messages_textview_string">Add or edit messages</string>
     <string name="edit_menu_textview_string">Edit menu</string>
+    <string name="bar_order_state_button_string">zrealizowane</string>
 </resources>
