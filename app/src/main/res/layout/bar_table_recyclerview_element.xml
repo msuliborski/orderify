@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/TableNumberBackground"
+        android:layout_width="0dp"
+        android:layout_height="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/bar_table_number_background" />
+
+    <TextView
+        android:id="@+id/TableNumberTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/tw_cen"
+        android:text="Table 13"
+        android:textColor="@android:color/white"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/TableNumberBackground"
+        app:layout_constraintEnd_toEndOf="@+id/TableNumberBackground"
+        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintStart_toStartOf="@+id/TableNumberBackground"
+        app:layout_constraintTop_toTopOf="@+id/TableNumberBackground" />
+
+    <TextView
+        android:id="@+id/OverallPriceTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/tw_cen"
+        android:text="85,00 zł"
+        android:textColor="@android:color/white"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/TableNumberBackground"
+        app:layout_constraintEnd_toEndOf="@+id/TableNumberBackground"
+        app:layout_constraintHorizontal_bias="0.25"
+        app:layout_constraintStart_toStartOf="@+id/TableNumberBackground"
+        app:layout_constraintTop_toTopOf="@+id/TableNumberBackground" />
+
+    <TextView
+        android:id="@+id/RequestNameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/tw_cen"
+        android:text="Wzywa kelnera"
+        android:textColor="@android:color/holo_blue_bright"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/TableNumberBackground"
+        app:layout_constraintEnd_toEndOf="@+id/TableNumberBackground"
+        app:layout_constraintStart_toStartOf="@+id/TableNumberBackground"
+        app:layout_constraintTop_toTopOf="@+id/TableNumberBackground" />
+
+    <Button
+        android:id="@+id/AcceptRequestButton"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/bar_accept_request_button"
+        app:layout_constraintBottom_toBottomOf="@+id/TableNumberBackground"
+        app:layout_constraintStart_toEndOf="@+id/RequestNameTextView"
+        app:layout_constraintTop_toTopOf="@+id/TableNumberBackground" />
+
+    <Button
+        android:id="@+id/ExpandCollapseButton"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/bar_expand_collapse_button"
+        app:layout_constraintBottom_toBottomOf="@+id/TableNumberBackground"
+        app:layout_constraintEnd_toEndOf="@+id/TableNumberBackground"
+        app:layout_constraintHorizontal_bias="0.98"
+        app:layout_constraintStart_toStartOf="@+id/TableNumberBackground"
+        app:layout_constraintTop_toTopOf="@+id/TableNumberBackground" />
+
+    <Button
+        android:id="@+id/FreezeStateButton"
+        android:layout_width="wrap_content"
+        android:layout_height="15dp"
+        android:background="@drawable/bar_freeze_button_background"
+        android:fontFamily="@font/tw_cen"
+        android:text="@string/bar_freeze_table_button_string"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/TableNumberBackground"
+        app:layout_constraintEnd_toEndOf="@+id/TableNumberBackground"
+        app:layout_constraintHorizontal_bias="0.87"
+        app:layout_constraintStart_toStartOf="@+id/TableNumberBackground"
+        app:layout_constraintTop_toTopOf="@+id/TableNumberBackground" />
+
+    <LinearLayout
+        android:id="@+id/OrdersLinearLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TableNumberBackground"></LinearLayout>
+</android.support.constraint.ConstraintLayout>

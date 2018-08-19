@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:background="@color/backgroundPrimary"
     android:clipToPadding="false"
-    tools:context=".client.MenuActivity">
+    tools:context=".client.MenuActivity"
+    android:animateLayoutChanges="true">
 
 
     <ImageView

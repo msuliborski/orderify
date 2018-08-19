@@ -2,11 +2,10 @@
     android:shape="rectangle">
 
     <corners
-        android:radius="5dp" />
+        android:radius="4dp"/>
 
 
-<solid
-        android:color="@color/backgroundPrimary" />
-
+    <solid
+        android:color="@color/barOrderStateButtonBackgroundColor" />
 
 </shape>
