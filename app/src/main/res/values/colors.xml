@@ -11,4 +11,6 @@
     <color name="barDishTextColor">#69398c</color>
     <color name="barOrderNumberBackgroundColor">#d6e0e0</color>
     <color name="barOrderStateButtonBackgroundColor">#00d000</color>
+    <color name="barUnfreezeButtonBackgroundColor">#8db8c4</color>
+    <color name="barFreezeButtonBackgroundColor">#00bff4</color>
 </resources>
