@@ -3,12 +3,14 @@ package com.amm.orderify.bar.helpers;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.GridLayout;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
@@ -54,25 +56,31 @@ public class TablesRecyclerViewAdapter extends RecyclerView.Adapter<TablesRecycl
             orderNumberTextView.setText(tables.get(position).orders.get(orderNumber).id + "");
             commentsTextView.setText(tables.get(position).orders.get(orderNumber).comments);
 
-            GridLayout wishesGridLayout = orderElement.findViewById(R.id.WishesGridLayout);
+            LinearLayout wishesLinearLayout = orderElement.findViewById(R.id.WishesLinearLayout);
+
 
             for (int wishNumber = 0; wishNumber < tables.get(position).orders.get(orderNumber).wishes.size(); wishNumber++)
             {
                 View wishElement = LayoutInflater.from(context).inflate(R.layout.bar_wish_element, null, false);
 
+
                 TextView dishNameTextView = wishElement.findViewById(R.id.DishNameTextView);
 
                 dishNameTextView.setText(tables.get(position).orders.get(orderNumber).wishes.get(wishNumber).dish.name);
 
-                TableLayout addonsTableLayout = wishElement.findViewById(R.id.AddonsTableLayout);
+                LinearLayout addonsLinearLayout = wishElement.findViewById(R.id.AddonsLinearLayout);
                 for(int addonNumber = 0; addonNumber < tables.get(position).orders.get(orderNumber).wishes.get(wishNumber).addons.size(); addonNumber++)
                 {
                     View addonElement = LayoutInflater.from(context).inflate(R.layout.bar_addon_element, null, false);
                     TextView addonNameTextView = addonElement.findViewById(R.id.AddonNameTextView);
                     addonNameTextView.setText(tables.get(position).orders.get(orderNumber).wishes.get(wishNumber).addons.get(addonNumber).name);
-                    addonsTableLayout.addView(addonElement);
+                    addonsLinearLayout.addView(addonElement);
                 }
-                wishesGridLayout.addView(wishElement);
+//                GridLayout.LayoutParams params = (GridLayout.LayoutParams) wishElement.getLayoutParams();
+//                params.width = (wishesGridLayout.getWidth()/wishesGridLayout.getColumnCount());
+//                wishElement.setLayoutParams(params);
+
+                wishesLinearLayout.addView(wishElement);
             }
             holder.ordersLinearLayout.addView(orderElement);
         }
