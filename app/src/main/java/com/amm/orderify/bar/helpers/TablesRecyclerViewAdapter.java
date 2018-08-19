@@ -70,11 +70,11 @@ public class TablesRecyclerViewAdapter extends RecyclerView.Adapter<TablesRecycl
                     View addonElement = LayoutInflater.from(context).inflate(R.layout.bar_addon_element, null, false);
                     TextView addonNameTextView = addonElement.findViewById(R.id.AddonNameTextView);
                     addonNameTextView.setText(tables.get(position).orders.get(orderNumber).wishes.get(wishNumber).addons.get(addonNumber).name);
-
+                    addonsTableLayout.addView(addonElement);
                 }
-
+                wishesGridLayout.addView(wishElement);
             }
-
+            holder.ordersLinearLayout.addView(orderElement);
         }
 
     }
