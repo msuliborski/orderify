@@ -9,7 +9,6 @@ public class Dish {
     public float price;
     public String descS;
     public String descL;
-    //pulic int categoryID;
 
     public List<AddonCategory> addonCategories;
 
