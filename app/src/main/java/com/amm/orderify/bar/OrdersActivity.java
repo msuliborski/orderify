@@ -21,7 +21,7 @@ public class OrdersActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.client_summary_activity);
+        setContentView(R.layout.bar_orders_activity);
 
         List<Order> orders = new ArrayList<>();
         List<Wish> wishes = new ArrayList<>();

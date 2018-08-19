@@ -7,6 +7,7 @@ import android.widget.Button;
 
 import com.amm.orderify.bar.OrdersActivity;
 import com.amm.orderify.client.MenuActivity;
+import com.amm.orderify.client.SummaryActivity;
 
 import static com.amm.orderify.helpers.JBDCDriver.*;
 
@@ -21,17 +22,15 @@ public class MainActivity extends AppCompatActivity {
         InitiateConnection();
         ConnectToDatabase();
 
-        Button GetButton = findViewById(R.id.BarButton);
-        GetButton.setOnClickListener(e -> {
-            Intent openMenuIntent = new Intent(MainActivity.this, OrdersActivity.class);
-            this.startActivity(openMenuIntent);
+        Button BarButton = findViewById(R.id.BarButton);
+        BarButton.setOnClickListener(e -> {
+            this.startActivity(new Intent(MainActivity.this, OrdersActivity.class));
 
         });
 
-        Button AddButton = findViewById(R.id.ClientButton);
-        AddButton.setOnClickListener(e -> {
-            Intent openMenuIntent = new Intent(MainActivity.this, MenuActivity.class);
-            this.startActivity(openMenuIntent);
+        Button ClientButton = findViewById(R.id.ClientButton);
+        ClientButton.setOnClickListener(e -> {
+            this.startActivity(new Intent(MainActivity.this, MenuActivity.class));
         });
 
     }
