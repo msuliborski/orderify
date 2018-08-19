@@ -1,11 +1,15 @@
 package com.amm.orderify.bar.helpers;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.GridLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.amm.orderify.R;
@@ -17,21 +21,58 @@ import java.util.List;
 public class TablesRecyclerViewAdapter extends RecyclerView.Adapter<TablesRecyclerViewAdapter.ViewHolder> {
 
     List<Table> tables;
-    TablesRecyclerViewAdapter(List<Table> tables){
+    Context context;
+    TablesRecyclerViewAdapter(Context context, List<Table> tables){
         this.tables = tables;
+        this.context = context;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.bar_order_element, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.bar_table_recyclerview_element, parent, false);
         ViewHolder holder = new ViewHolder(view);
         return holder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        TextView tableNumberTextView =
+        holder.tableNumberTextView.setText(tables.get(position).id);
+
+
+        for(int orderNumber = 0; orderNumber < tables.get(position).orders.size(); orderNumber++)
+        {
+            View orderElement = LayoutInflater.from(context).inflate(R.layout.bar_order_element, null, false);
+            TextView orderNumberTextView = orderElement.findViewById(R.id.OrderNumberTextView);
+            TextView orderWaitingTimeTextView = orderElement.findViewById(R.id.OrderWaitingTimeTextView);
+            TextView orderPriceTextView = orderElement.findViewById(R.id.OrderPriceTextView);
+            TextView commentsTextView = orderElement.findViewById(R.id.CommentsTextView);
+
+            orderNumberTextView.setText(tables.get(position).orders.get(orderNumber).id + "");
+            commentsTextView.setText(tables.get(position).orders.get(orderNumber).comments);
+
+            GridLayout wishesGridLayout = orderElement.findViewById(R.id.WishesGridLayout);
+
+            for (int wishNumber = 0; wishNumber < tables.get(position).orders.get(orderNumber).wishes.size(); wishNumber++)
+            {
+                View wishElement = LayoutInflater.from(context).inflate(R.layout.bar_wish_element, null, false);
+
+                TextView dishNameTextView = wishElement.findViewById(R.id.DishNameTextView);
+
+                dishNameTextView.setText(tables.get(position).orders.get(orderNumber).wishes.get(wishNumber).dish.name);
+
+                TableLayout addonsTableLayout = wishElement.findViewById(R.id.AddonsTableLayout);
+                for(int addonNumber = 0; addonNumber < tables.get(position).orders.get(orderNumber).wishes.get(wishNumber).addons.size(); addonNumber++)
+                {
+                    View addonElement = LayoutInflater.from(context).inflate(R.layout.bar_addon_element, null, false);
+                    TextView addonNameTextView = addonElement.findViewById(R.id.AddonNameTextView);
+                    addonNameTextView.setText(tables.get(position).orders.get(orderNumber).wishes.get(wishNumber).addons.get(addonNumber).name);
+
+                }
+
+            }
+
+        }
 
     }
 
@@ -41,8 +82,20 @@ public class TablesRecyclerViewAdapter extends RecyclerView.Adapter<TablesRecycl
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
+
+
+        TextView tableNumberTextView;
+        TextView overallPriceTextView;
+        LinearLayout ordersLinearLayout;
+
+
         public ViewHolder(View itemView) {
             super(itemView);
+
+            tableNumberTextView = itemView.findViewById(R.id.TableNumberTextView);
+            overallPriceTextView = itemView.findViewById(R.id.OverallPriceTextView);
+            ordersLinearLayout = itemView.findViewById(R.id.OrdersLinearLayout);
+
         }
     }
 }

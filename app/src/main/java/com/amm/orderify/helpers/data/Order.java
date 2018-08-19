@@ -3,11 +3,11 @@ package com.amm.orderify.helpers.data;
 import java.util.List;
 
 public class Order {
-    int id;
-    String time;
-    String date;
-    int tableID;
-    String comments;
+    public int id;
+    public String time;
+    public String date;
+    public int tableID;
+    public String comments;
     public List<Wish> wishes;
 
     public Order(int id, String time, String date, int tableID, String comments, List<Wish> wishes) {
