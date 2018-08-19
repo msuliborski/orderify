@@ -22,7 +22,7 @@ public class TablesRecyclerViewAdapter extends RecyclerView.Adapter<TablesRecycl
 
     List<Table> tables;
     Context context;
-    TablesRecyclerViewAdapter(Context context, List<Table> tables){
+    public TablesRecyclerViewAdapter(Context context, List<Table> tables){
         this.tables = tables;
         this.context = context;
     }
