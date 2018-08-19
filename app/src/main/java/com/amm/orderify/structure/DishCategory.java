@@ -1,5 +1,7 @@
 package com.amm.orderify.structure;
 
+import com.amm.orderify.helpers.data.Dish;
+
 import java.util.List;
 
 public class DishCategory {

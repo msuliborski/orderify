@@ -21,7 +21,7 @@ public class OrdersActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.client_summary_activity);
+        setContentView(R.layout.bar_orders_activity);
 
         List<Order> orders = new ArrayList<>();
         List<Wish> wishes = new ArrayList<>();
@@ -57,7 +57,6 @@ public class OrdersActivity extends AppCompatActivity
         //do adaptera wysyłam ci listę orderów, z nich wyciągniesz potrzebne dane (znaczy, ja to okoduję bez problemu, ale jak już będzie .xme :D)
         //i w pracy nie miałem jak sprawdzić czy działa, więc nie gwarantuje niczego
         //orders
-
 
     }
 }
