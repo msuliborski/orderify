@@ -5,9 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
 
-import com.amm.orderify.bar.OrdersActivity;
+import com.amm.orderify.bar.TablesActivity;
 import com.amm.orderify.client.MenuActivity;
-import com.amm.orderify.client.SummaryActivity;
 
 import static com.amm.orderify.helpers.JBDCDriver.*;
 
@@ -24,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button BarButton = findViewById(R.id.BarButton);
         BarButton.setOnClickListener(e -> {
-            this.startActivity(new Intent(MainActivity.this, OrdersActivity.class));
+            this.startActivity(new Intent(MainActivity.this, TablesActivity.class));
 
         });
 

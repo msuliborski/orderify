@@ -14,14 +14,14 @@ package com.amm.orderify.bar;
 
         import static com.amm.orderify.helpers.JBDCDriver.getConnection;
 
-public class OrdersActivity extends AppCompatActivity
+public class TablesActivity extends AppCompatActivity
 {
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.bar_orders_activity);
+        setContentView(R.layout.bar_tables_activity);
 
         List<Order> orders = new ArrayList<>();
         List<Wish> wishes = new ArrayList<>();
