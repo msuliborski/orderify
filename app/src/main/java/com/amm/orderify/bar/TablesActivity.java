@@ -4,6 +4,7 @@ package com.amm.orderify.bar;
         import android.os.Bundle;
         import android.support.v7.widget.LinearLayoutManager;
         import android.support.v7.widget.RecyclerView;
+        import android.util.Log;
 
         import com.amm.orderify.R;
         import com.amm.orderify.bar.helpers.TablesRecyclerViewAdapter;
@@ -15,7 +16,7 @@ package com.amm.orderify.bar;
         import java.util.ArrayList;
         import java.util.List;
 
-        import static com.amm.orderify.helpers.JBDCDriver.getConnection;
+        import static com.amm.orderify.helpers.JBDCDriver.*;
 
 public class TablesActivity extends AppCompatActivity
 {
@@ -32,17 +33,15 @@ public class TablesActivity extends AppCompatActivity
         List<Addon> addons = new ArrayList<>();
 
         try {
-
             Statement tablesS = getConnection().createStatement();
             ResultSet tablesRS = tablesS.executeQuery("SELECT * FROM tables");
-
             while (tablesRS.next()) {
-
                 Statement ordersS = getConnection().createStatement();
-                ResultSet ordersRS = ordersS.executeQuery("SELECT * FROM orders");
+                ResultSet ordersRS = ordersS.executeQuery("SELECT * FROM orders " +
+                                                              "WHERE tableID = " + tablesRS.getInt("ID"));
                 while (ordersRS.next()) {
                     Statement wishesS = getConnection().createStatement();
-                    ResultSet wishesRS = wishesS.executeQuery("SELECT dishID, name, price, amount, orderID FROM wishes\n" +
+                    ResultSet wishesRS = wishesS.executeQuery("SELECT wishes.ID, dishID, name, price, amount, orderID FROM wishes\n" +
                             "JOIN dishes ON dishes.ID = wishes.dishID\n" +
                             "WHERE orderID = " + ordersRS.getInt("ID"));
                     while (wishesRS.next()) {
@@ -60,8 +59,8 @@ public class TablesActivity extends AppCompatActivity
                     orders.add(new Order(ordersRS.getInt("ID"), null, null, ordersRS.getInt("tableID"), ordersRS.getString("comments"), wishes));
                     wishes = new ArrayList<>();
                 }
-
                 tables.add(new Table(tablesRS.getInt("ID"), tablesRS.getString("name"), orders));
+                orders = new ArrayList<>();
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -71,6 +70,5 @@ public class TablesActivity extends AppCompatActivity
         TablesRecyclerViewAdapter adapter = new TablesRecyclerViewAdapter(this, tables);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
     }
 }

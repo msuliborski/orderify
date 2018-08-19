@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayout;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,9 +38,11 @@ public class TablesRecyclerViewAdapter extends RecyclerView.Adapter<TablesRecycl
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.tableNumberTextView.setText(tables.get(position).id);
+        holder.tableNumberTextView.setText(tables.get(position).id + "");
 
-
+        for(int i = 0; i < tables.get(position).orders.size(); i++){
+            Log.wtf("fae", tables.get(position).orders.get(i).comments + "");
+        }
         for(int orderNumber = 0; orderNumber < tables.get(position).orders.size(); orderNumber++)
         {
             View orderElement = LayoutInflater.from(context).inflate(R.layout.bar_order_element, null, false);
