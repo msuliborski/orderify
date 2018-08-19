@@ -47,6 +47,8 @@ public class JBDCDriver {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+
     }
 
     public static ResultSet ExecuteQuery(String query) throws SQLException {
