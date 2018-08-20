@@ -56,6 +56,7 @@ public class MenuActivity extends AppCompatActivity {
         List<AddonCategory> addonCategories = new ArrayList<>();
         List<Dish> dishes = new ArrayList<>();
         List<DishCategory> dishCategories = new ArrayList<>();
+        List<Object> menuList = new ArrayList<>();
 
         try {
             Statement dishCategoriesS = getConnection().createStatement();
@@ -91,10 +92,14 @@ public class MenuActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        for(int i = 0; i < dishCategories.size(); i++){
+            menuList.add(dishCategories.get(i));//send just category
+            menuList.addAll(dishCategories.get(i).dishes); //send item on category one by one
+        }
         //menuListView.setAdapter(new customMenuAdapter(this, menuList));
         Log.wtf("dd", dishCategories.size()+"");
         RecyclerView recyclerView = findViewById(R.id.MenuRecyclerView);
-        MenuRecyclerViewAdapter adapter = new MenuRecyclerViewAdapter(this, dishCategories);
+        MenuRecyclerViewAdapter adapter = new MenuRecyclerViewAdapter(this, menuList);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
