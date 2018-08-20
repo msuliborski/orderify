@@ -33,15 +33,16 @@ import java.util.List;
 import static com.amm.orderify.helpers.JBDCDriver.*;
 
 public class MenuActivity extends AppCompatActivity {
-    public LinearLayout orderListLinearLayout;
+    public static LinearLayout orderListLinearLayout;
     public ListView menuListView;
     public android.support.v7.widget.GridLayout addonCategoriesGridLayout;
     public int activeMenuElementNumber = -1;
+    static LayoutInflater orderListInflater;
 
 
     public int orderID = 0;
     public int wishID = 0;
-    List<Wish> wishes = new ArrayList<>();
+    public static List<Wish> wishes = new ArrayList<>();
     private EditText EnterCommentsEditText;
 
     @Override
@@ -57,6 +58,8 @@ public class MenuActivity extends AppCompatActivity {
         List<Dish> dishes = new ArrayList<>();
         List<DishCategory> dishCategories = new ArrayList<>();
         List<Object> menuList = new ArrayList<>();
+
+        orderListInflater = getLayoutInflater();
 
         try {
             Statement dishCategoriesS = getConnection().createStatement();
@@ -267,7 +270,7 @@ public class MenuActivity extends AppCompatActivity {
                         addonCategoriesGridLayout.addView(v);
                     }
 
-                    android.support.v7.widget.AppCompatImageView AddOrderButton = view.findViewById(R.id.AddOrderButton);
+                    android.support.v7.widget.AppCompatImageView AddOrderButton = view.findViewById(R.id.AddToOrderButton);
                     AddOrderButton.setOnClickListener(e -> {
                         Wish newWish = new Wish(dish, 1, clickedAddons);
                         for(int wishI = 0; wishI < wishes.size(); wishI++){
@@ -290,6 +293,7 @@ public class MenuActivity extends AppCompatActivity {
         }
     }
 
+
     boolean checkIfTheSame(Wish w1, Wish w2){
         try {
             for (int i = 0; i < w1.addons.size(); i++) if (!(w1.addons.get(i).id == w2.addons.get(i).id)) return false;
@@ -304,11 +308,10 @@ public class MenuActivity extends AppCompatActivity {
         return true;
     }
 
-    void updateOrderList() {
+    public static void updateOrderList() {
         orderListLinearLayout.removeAllViews();
 
         for (int wishNumber = 0; wishNumber < wishes.size(); wishNumber++) {
-            LayoutInflater orderListInflater = getLayoutInflater();
             View x = orderListInflater.inflate(R.layout.order_list_element, null);
 
             TextView orderPriceTextView = x.findViewById(R.id.orderPriceTextView);

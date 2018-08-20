@@ -48,7 +48,7 @@
         app:layout_constraintTop_toBottomOf="@+id/MenuBackgroundButton">
 
         <ImageView
-            android:id="@+id/AddOrderButton"
+            android:id="@+id/AddToOrderButton"
             android:layout_width="100dp"
             android:layout_height="22dp"
             android:layout_marginBottom="8dp"
@@ -75,10 +75,10 @@
             android:text="@string/add_to_order_textview_string"
             android:textColor="@color/backgroundPrimary"
             android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="@+id/AddOrderButton"
-            app:layout_constraintEnd_toEndOf="@+id/AddOrderButton"
-            app:layout_constraintStart_toStartOf="@+id/AddOrderButton"
-            app:layout_constraintTop_toTopOf="@+id/AddOrderButton" />
+            app:layout_constraintBottom_toBottomOf="@+id/AddToOrderButton"
+            app:layout_constraintEnd_toEndOf="@+id/AddToOrderButton"
+            app:layout_constraintStart_toStartOf="@+id/AddToOrderButton"
+            app:layout_constraintTop_toTopOf="@+id/AddToOrderButton" />
 
         <android.support.v7.widget.GridLayout
             android:id="@+id/AddonCategoriesGridLayout"
