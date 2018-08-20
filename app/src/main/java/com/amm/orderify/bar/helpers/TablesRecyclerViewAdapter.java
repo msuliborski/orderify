@@ -41,7 +41,7 @@ public class TablesRecyclerViewAdapter extends RecyclerView.Adapter<TablesRecycl
 
         holder.tableNumberTextView.setText(table.number + "");
         holder.overallPriceTextView.setText(table.getTotalPrice() + " zł");
-        holder.tableStateTextView.setText(table.state + " - numberOfState");
+        holder.tableStateTextView.setText(table.state + " - tableState");
 
         holder.acceptRequestButton.setOnClickListener(v -> {
         });
@@ -52,16 +52,23 @@ public class TablesRecyclerViewAdapter extends RecyclerView.Adapter<TablesRecycl
 
         for(int orderNumber = 0; orderNumber < table.orders.size(); orderNumber++) {
             Order order = table.orders.get(orderNumber);
-            View orderElement = LayoutInflater.from(context).inflate(R.layout.bar_order_element, null, false);
+            View orderElement = holder.orderElement;
 
-            TextView orderNumberTextView = orderElement.findViewById(R.id.OrderNumberTextView);
+            TextView orderNumberTextView = holder.orderNumberTextView;
             orderNumberTextView.setText(order.id + "");
 
             TextView orderWaitingTimeTextView = orderElement.findViewById(R.id.OrderWaitingTimeTextView);
-            orderWaitingTimeTextView.setText("12:21");
+            orderWaitingTimeTextView.setText("04:21");
 
             TextView orderPriceTextView = orderElement.findViewById(R.id.OrderPriceTextView);
-            orderPriceTextView.setText("12 zł");
+            orderPriceTextView.setText(order.getTotalPrice() + " zł");
+
+            TextView orderStateTextView = orderElement.findViewById(R.id.OrderStateTextView);
+            orderStateTextView.setText(order.state + " - orderState");
+
+            Button changeOrderStateButton = orderElement.findViewById(R.id.ChangeOrderStateButton);
+            changeOrderStateButton.setOnClickListener(v -> {
+            });
 
             TextView commentsTextView = orderElement.findViewById(R.id.CommentsTextView);
             commentsTextView.setText(order.comments);
@@ -73,7 +80,6 @@ public class TablesRecyclerViewAdapter extends RecyclerView.Adapter<TablesRecycl
 
                 TextView dishNameTextView = wishElement.findViewById(R.id.DishNameTextView);
                 dishNameTextView.setText(wish.dish.name);
-
 
                 LinearLayout addonsLinearLayout = wishElement.findViewById(R.id.AddonsLinearLayout);
                 for(int addonNumber = 0; addonNumber < wish.addons.size(); addonNumber++) {
@@ -107,6 +113,11 @@ public class TablesRecyclerViewAdapter extends RecyclerView.Adapter<TablesRecycl
         Button freezeStateButton;
 
         LinearLayout ordersLinearLayout;
+
+        View orderElement;
+        TextView orderNumberTextView;
+
+
         public ViewHolder(View itemView) {
             super(itemView);
             tableNumberTextView = itemView.findViewById(R.id.TableNumberTextView);
@@ -118,6 +129,9 @@ public class TablesRecyclerViewAdapter extends RecyclerView.Adapter<TablesRecycl
             freezeStateButton = itemView.findViewById(R.id.FreezeStateButton);
 
             ordersLinearLayout = itemView.findViewById(R.id.OrdersLinearLayout);
+
+            orderElement = LayoutInflater.from(itemView.getContext()).inflate(R.layout.bar_order_element, null, false);
+            orderNumberTextView = orderElement.findViewById(R.id.OrderNumberTextView);
         }
     }
 }

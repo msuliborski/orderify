@@ -56,7 +56,7 @@ public class TablesActivity extends AppCompatActivity
                         wishes.add(new Wish(dish, wishesRS.getInt("amount"), addons));
                         addons = new ArrayList<>();
                     }
-                    orders.add(new Order(ordersRS.getInt("ID"), null, null, ordersRS.getInt("tableID"), ordersRS.getString("comments"), wishes));
+                    orders.add(new Order(ordersRS.getInt("ID"), null, null, ordersRS.getInt("tableID"), ordersRS.getString("comments"), ordersRS.getInt("state"), wishes));
                     wishes = new ArrayList<>();
                 }
                 tables.add(new Table(tablesRS.getInt("ID"), tablesRS.getInt("number"), tablesRS.getString("description"), tablesRS.getInt("state"), orders));

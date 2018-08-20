@@ -8,14 +8,16 @@ public class Order {
     public String date;
     public int tableID;
     public String comments;
+    public int state;
     public List<Wish> wishes;
 
-    public Order(int id, String time, String date, int tableID, String comments, List<Wish> wishes) {
+    public Order(int id, String time, String date, int tableID, String comments, int state, List<Wish> wishes) {
         this.id = id;
         this.time = time;
         this.date = date;
         this.tableID = tableID;
         this.comments = comments;
+        this.state = state;
         this.wishes = wishes;
     }
 
