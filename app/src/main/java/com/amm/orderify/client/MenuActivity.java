@@ -141,172 +141,172 @@ public class MenuActivity extends AppCompatActivity {
         });
     }
 
-
-    class customMenuAdapter extends BaseAdapter {
-        List<Object> menuList;
-        List<Addon> clickedAddons = new ArrayList<>();
-
-        private LayoutInflater menuInflater;
-
-        customMenuAdapter(Context context, List<Object> menuList) {
-            this.menuList = menuList;
-            menuInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        }
-
-        @Override
-        public int getItemViewType(int i) {
-            return i;
-        }
-
-        @Override
-        public int getViewTypeCount() {
-            return getCount();
-        }
-
-        @Override
-        public int getCount() {
-            return menuList.size();
-        }
-
-        @Override
-        public Object getItem(int i) {
-            return menuList.get(i);
-        }
-
-        @Override
-        public long getItemId(int i) {
-            return 1;
-        }
-
-        @Override
-        public View getView(int i, View view, ViewGroup viewGroup)
-        {
-            if(menuList.get(i) instanceof DishCategory){ //=============HEADER
-                if (view == null) view = menuInflater.inflate(R.layout.menu_list_header, null);
-                TextView headerTextView = view.findViewById(R.id.HeaderTextView);
-                headerTextView.setText(((DishCategory)menuList.get(i)).name);
-            } else { //===============MENU_ITEM
-                if (view == null) view = menuInflater.inflate(R.layout.menu_list_element, null);
-                ConstraintLayout MenuExpand = view.findViewById(R.id.MenuExpand);
-
-                TextView nameTextView = view.findViewById(R.id.NameTextView);
-                nameTextView.setText(((Dish)menuList.get(i)).name);
-
-                TextView priceTextView = view.findViewById(R.id.PriceTextView);
-                priceTextView.setText(String.valueOf(((Dish)(menuList.get(i))).price));
-
-                ImageButton MenuBackgroundButton = view.findViewById(R.id.MenuBackgroundButton);
-                MenuBackgroundButton.setOnClickListener(v -> {
-
-                    if(MenuExpand.getVisibility() == View.GONE)
-                    {
-                        if (activeMenuElementNumber != -1) {
-                            try {
-                                View vw = menuListView.getChildAt(activeMenuElementNumber - menuListView.getFirstVisiblePosition());
-                                ConstraintLayout cl = vw.findViewById(R.id.MenuExpand);
-                                cl.setVisibility(View.GONE);
-                                notifyDataSetChanged();
-                            } catch (Exception ignored) {}
-                        }
-                        MenuExpand.setVisibility(View.VISIBLE);
-                        activeMenuElementNumber = i;
-                        notifyDataSetChanged();
-                    } else if (MenuExpand.getVisibility() == View.VISIBLE) {
-                        MenuExpand.setVisibility(View.GONE);
-                        activeMenuElementNumber = -1;
-                    }
-                });
-
-                if(MenuExpand.getVisibility() != View.GONE) {
-
-                    addonCategoriesGridLayout = view.findViewById(R.id.AddonCategoriesGridLayout);
-                    LayoutInflater gridInflater = getLayoutInflater();
-                    addonCategoriesGridLayout.removeAllViews();
-
-                    Dish dish = (Dish)menuList.get(i);
-
-                    for (int categoryI = 0; categoryI < dish.addonCategories.size(); categoryI++) {
-                        AddonCategory addonCategory = dish.addonCategories.get(categoryI);
-                        View v = gridInflater.inflate(R.layout.expand_grid_element, null);
-                        TextView CategoryNameTextView = v.findViewById(R.id.CategoryNameTextView);
-                        LinearLayout AddonsLinearLayout = v.findViewById(R.id.AddonsLinearLayout);
-                        CategoryNameTextView.setText(addonCategory.name); //cat name
-                        for (int addonI = 0; addonI < addonCategory.addons.size(); addonI++ ) {
-                            Addon addon = addonCategory.addons.get(addonI);
-                            View x = gridInflater.inflate(R.layout.expand_addon_list_element, null);
-                            TextView AddonNameTextView = x.findViewById(R.id.AddonNameTextView);
-                            AddonNameTextView.setText(addon.name);
-                            ImageView CheckboxCheckImage = x.findViewById(R.id.CheckboxCheckImage);
-
-                            if (addonCategory.multiChoice){
-                                x.setOnClickListener(e -> {
-                                    if(CheckboxCheckImage.getVisibility() == View.INVISIBLE) {
-                                        CheckboxCheckImage.setVisibility(View.VISIBLE);
-                                        clickedAddons.add(addon);
-                                    } else {
-                                        CheckboxCheckImage.setVisibility(View.INVISIBLE);
-                                        clickedAddons.remove(addon);
-                                    }
-                                });
-                            } else {
-                                if (addonI == 0 && addonCategory.addons.size() > 1){ //czy działa?
-                                    CheckboxCheckImage.setVisibility(View.VISIBLE);
-                                    clickedAddons.add(addon); }
-
-                                x.setOnClickListener(e -> {
-                                    final int childCount = AddonsLinearLayout.getChildCount();
-                                    for (int ii = 0; ii < childCount; ii++) {
-                                        View vv = AddonsLinearLayout.getChildAt(ii);
-                                        ImageView iv = vv.findViewById(R.id.CheckboxCheckImage);
-                                        iv.setVisibility(View.INVISIBLE);
-                                        clickedAddons.remove(addonCategory.addons.get(ii));
-                                    }
-                                    CheckboxCheckImage.setVisibility(View.VISIBLE);
-                                    clickedAddons.add(addon);
-                                });
-                            }
-                            AddonsLinearLayout.addView(x);
-                        }
-                        addonCategoriesGridLayout.addView(v);
-                    }
-
-                    android.support.v7.widget.AppCompatImageView AddOrderButton = view.findViewById(R.id.AddToOrderButton);
-                    AddOrderButton.setOnClickListener(e -> {
-                        Wish newWish = new Wish(dish, 1, clickedAddons);
-                        for(int wishI = 0; wishI < wishes.size(); wishI++){
-                            if (checkIfTheSame(wishes.get(wishI), newWish)) {
-                                wishes.get(wishI).amount++; break;}
-                            if (wishI == wishes.size()-1) {
-                                wishes.add(newWish); break;}
-                        }
-                        if (wishes.size() == 0) wishes.add(newWish);
-                        updateOrderList();
-                        MenuExpand.setVisibility(View.GONE);
-                        activeMenuElementNumber = -1;
-                        clickedAddons = new ArrayList<>();
-                    });
-
-                }
-
-            }
-            return view;
-        }
-    }
-
-
-    boolean checkIfTheSame(Wish w1, Wish w2){
-        try {
-            for (int i = 0; i < w1.addons.size(); i++) if (!(w1.addons.get(i).id == w2.addons.get(i).id)) return false;
-            for (int i = 0; i < w2.addons.size(); i++) if (!(w1.addons.get(i).id == w2.addons.get(i).id)) return false;
-            if (!(w1.dish.id == w2.dish.id)) return false;
-            if (!(w1.addons.size() == w2.addons.size())) return false;
-        }
-        catch(Exception e){
-            return false;
-        }
-
-        return true;
-    }
+//
+//    class customMenuAdapter extends BaseAdapter {
+//        List<Object> menuList;
+//        List<Addon> clickedAddons = new ArrayList<>();
+//
+//        private LayoutInflater menuInflater;
+//
+//        customMenuAdapter(Context context, List<Object> menuList) {
+//            this.menuList = menuList;
+//            menuInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//        }
+//
+//        @Override
+//        public int getItemViewType(int i) {
+//            return i;
+//        }
+//
+//        @Override
+//        public int getViewTypeCount() {
+//            return getCount();
+//        }
+//
+//        @Override
+//        public int getCount() {
+//            return menuList.size();
+//        }
+//
+//        @Override
+//        public Object getItem(int i) {
+//            return menuList.get(i);
+//        }
+//
+//        @Override
+//        public long getItemId(int i) {
+//            return 1;
+//        }
+//
+//        @Override
+//        public View getView(int i, View view, ViewGroup viewGroup)
+//        {
+//            if(menuList.get(i) instanceof DishCategory){ //=============HEADER
+//                if (view == null) view = menuInflater.inflate(R.layout.menu_list_header, null);
+//                TextView headerTextView = view.findViewById(R.id.HeaderTextView);
+//                headerTextView.setText(((DishCategory)menuList.get(i)).name);
+//            } else { //===============MENU_ITEM
+//                if (view == null) view = menuInflater.inflate(R.layout.menu_list_element, null);
+//                ConstraintLayout MenuExpand = view.findViewById(R.id.MenuExpand);
+//
+//                TextView nameTextView = view.findViewById(R.id.NameTextView);
+//                nameTextView.setText(((Dish)menuList.get(i)).name);
+//
+//                TextView priceTextView = view.findViewById(R.id.PriceTextView);
+//                priceTextView.setText(String.valueOf(((Dish)(menuList.get(i))).price));
+//
+//                ImageButton MenuBackgroundButton = view.findViewById(R.id.MenuBackgroundButton);
+//                MenuBackgroundButton.setOnClickListener(v -> {
+//
+//                    if(MenuExpand.getVisibility() == View.GONE)
+//                    {
+//                        if (activeMenuElementNumber != -1) {
+//                            try {
+//                                View vw = menuListView.getChildAt(activeMenuElementNumber - menuListView.getFirstVisiblePosition());
+//                                ConstraintLayout cl = vw.findViewById(R.id.MenuExpand);
+//                                cl.setVisibility(View.GONE);
+//                                notifyDataSetChanged();
+//                            } catch (Exception ignored) {}
+//                        }
+//                        MenuExpand.setVisibility(View.VISIBLE);
+//                        activeMenuElementNumber = i;
+//                        notifyDataSetChanged();
+//                    } else if (MenuExpand.getVisibility() == View.VISIBLE) {
+//                        MenuExpand.setVisibility(View.GONE);
+//                        activeMenuElementNumber = -1;
+//                    }
+//                });
+//
+//                if(MenuExpand.getVisibility() != View.GONE) {
+//
+//                    addonCategoriesGridLayout = view.findViewById(R.id.AddonCategoriesGridLayout);
+//                    LayoutInflater gridInflater = getLayoutInflater();
+//                    addonCategoriesGridLayout.removeAllViews();
+//
+//                    Dish dish = (Dish)menuList.get(i);
+//
+//                    for (int categoryI = 0; categoryI < dish.addonCategories.size(); categoryI++) {
+//                        AddonCategory addonCategory = dish.addonCategories.get(categoryI);
+//                        View v = gridInflater.inflate(R.layout.expand_grid_element, null);
+//                        TextView CategoryNameTextView = v.findViewById(R.id.CategoryNameTextView);
+//                        LinearLayout AddonsLinearLayout = v.findViewById(R.id.AddonsLinearLayout);
+//                        CategoryNameTextView.setText(addonCategory.name); //cat name
+//                        for (int addonI = 0; addonI < addonCategory.addons.size(); addonI++ ) {
+//                            Addon addon = addonCategory.addons.get(addonI);
+//                            View x = gridInflater.inflate(R.layout.expand_addon_list_element, null);
+//                            TextView AddonNameTextView = x.findViewById(R.id.AddonNameTextView);
+//                            AddonNameTextView.setText(addon.name);
+//                            ImageView CheckboxCheckImage = x.findViewById(R.id.CheckboxCheckImage);
+//
+//                            if (addonCategory.multiChoice){
+//                                x.setOnClickListener(e -> {
+//                                    if(CheckboxCheckImage.getVisibility() == View.INVISIBLE) {
+//                                        CheckboxCheckImage.setVisibility(View.VISIBLE);
+//                                        clickedAddons.add(addon);
+//                                    } else {
+//                                        CheckboxCheckImage.setVisibility(View.INVISIBLE);
+//                                        clickedAddons.remove(addon);
+//                                    }
+//                                });
+//                            } else {
+//                                if (addonI == 0 && addonCategory.addons.size() > 1){ //czy działa?
+//                                    CheckboxCheckImage.setVisibility(View.VISIBLE);
+//                                    clickedAddons.add(addon); }
+//
+//                                x.setOnClickListener(e -> {
+//                                    final int childCount = AddonsLinearLayout.getChildCount();
+//                                    for (int ii = 0; ii < childCount; ii++) {
+//                                        View vv = AddonsLinearLayout.getChildAt(ii);
+//                                        ImageView iv = vv.findViewById(R.id.CheckboxCheckImage);
+//                                        iv.setVisibility(View.INVISIBLE);
+//                                        clickedAddons.remove(addonCategory.addons.get(ii));
+//                                    }
+//                                    CheckboxCheckImage.setVisibility(View.VISIBLE);
+//                                    clickedAddons.add(addon);
+//                                });
+//                            }
+//                            AddonsLinearLayout.addView(x);
+//                        }
+//                        addonCategoriesGridLayout.addView(v);
+//                    }
+//
+//                    android.support.v7.widget.AppCompatImageView AddOrderButton = view.findViewById(R.id.AddToOrderButton);
+//                    AddOrderButton.setOnClickListener(e -> {
+//                        Wish newWish = new Wish(dish, 1, clickedAddons);
+//                        for(int wishI = 0; wishI < wishes.size(); wishI++){
+//                            if (checkIfTheSame(wishes.get(wishI), newWish)) {
+//                                wishes.get(wishI).amount++; break;}
+//                            if (wishI == wishes.size()-1) {
+//                                wishes.add(newWish); break;}
+//                        }
+//                        if (wishes.size() == 0) wishes.add(newWish);
+//                        updateOrderList();
+//                        MenuExpand.setVisibility(View.GONE);
+//                        activeMenuElementNumber = -1;
+//                        clickedAddons = new ArrayList<>();
+//                    });
+//
+//                }
+//
+//            }
+//            return view;
+//        }
+//    }
+//
+//
+//    boolean checkIfTheSame(Wish w1, Wish w2){
+//        try {
+//            for (int i = 0; i < w1.addons.size(); i++) if (!(w1.addons.get(i).id == w2.addons.get(i).id)) return false;
+//            for (int i = 0; i < w2.addons.size(); i++) if (!(w1.addons.get(i).id == w2.addons.get(i).id)) return false;
+//            if (!(w1.dish.id == w2.dish.id)) return false;
+//            if (!(w1.addons.size() == w2.addons.size())) return false;
+//        }
+//        catch(Exception e){
+//            return false;
+//        }
+//
+//        return true;
+//    }
 
     public static void updateOrderList() {
         orderListLinearLayout.removeAllViews();
