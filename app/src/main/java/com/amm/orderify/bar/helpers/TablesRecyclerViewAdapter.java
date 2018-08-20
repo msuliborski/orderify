@@ -39,7 +39,7 @@ public class TablesRecyclerViewAdapter extends RecyclerView.Adapter<TablesRecycl
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Table table = tables.get(position);
 
-        holder.tableNumberTextView.setText(table.number);
+        holder.tableNumberTextView.setText(table.number + "");
         holder.overallPriceTextView.setText(table.getTotalPrice() + " zł");
         holder.tableStateTextView.setText(table.state + " - numberOfState");
 
@@ -55,7 +55,7 @@ public class TablesRecyclerViewAdapter extends RecyclerView.Adapter<TablesRecycl
             View orderElement = LayoutInflater.from(context).inflate(R.layout.bar_order_element, null, false);
 
             TextView orderNumberTextView = orderElement.findViewById(R.id.OrderNumberTextView);
-            orderNumberTextView.setText(order.id);
+            orderNumberTextView.setText(order.id + "");
 
             TextView orderWaitingTimeTextView = orderElement.findViewById(R.id.OrderWaitingTimeTextView);
             orderWaitingTimeTextView.setText("12:21");
