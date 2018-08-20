@@ -15,7 +15,9 @@ DROP TABLE IF EXISTS messages;                  #proper
 
 CREATE TABLE tables (
     ID INTEGER NOT NULL AUTO_INCREMENT, 
-    name VARCHAR(255) NOT NULL, 
+    number INTEGER, 
+    description VARCHAR(50), 
+    state INTEGER NOT NULL DEFAULT 1, 
     PRIMARY KEY (ID)
 )   CHARSET=utf8;
 
@@ -106,9 +108,8 @@ CREATE TABLE addonsToWishes (
 )   CHARSET=utf8;
 
 
-
-INSERT INTO tables (name)
-VALUES  ('Przy oknie'), ('Przy barze'), ('Na środku'), ('W kącie');
+INSERT INTO tables (number, description, state)
+VALUES  (1, 'Przy oknie', 1), (2, 'Przy barze', 1), (3, 'Na środku', 1), (4, 'W kącie', 1);
 
 INSERT INTO messages (content)
 VALUES  ('Tylko dzisiaj, kurczak w cieście bez kurczaka!'), ('Such design, big wow!');
