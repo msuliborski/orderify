@@ -50,7 +50,7 @@ public class SummaryActivity extends AppCompatActivity
                     wishes.add(new Wish(dish, wishesRS.getInt("amount"), addons));
                     addons = new ArrayList<>();
                 }
-                orders.add(new Order(ordersRS.getInt("ID"), null, null, ordersRS.getInt("tableID"), ordersRS.getString("comments"), wishes));
+                orders.add(new Order(ordersRS.getInt("ID"), null, null, ordersRS.getInt("tableID"), ordersRS.getString("comments"), ordersRS.getInt("state"), wishes));
                 wishes = new ArrayList<>();
             }
         } catch (SQLException e) {

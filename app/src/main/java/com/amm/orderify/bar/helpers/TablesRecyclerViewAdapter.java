@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -15,15 +16,22 @@ import com.amm.orderify.R;
 import com.amm.orderify.helpers.data.*;
 
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.amm.orderify.helpers.JBDCDriver.*;
+
 public class TablesRecyclerViewAdapter extends RecyclerView.Adapter<TablesRecyclerViewAdapter.ViewHolder> {
 
-    List<Table> tables;
-    Context context;
+    private List<Table> tables;
+    private Context context;
     public TablesRecyclerViewAdapter(Context context, List<Table> tables){
         this.context = context;
+        this.tables = tables;
+    }
+
+    public void setTables(List<Table> tables){
         this.tables = tables;
     }
 
@@ -43,18 +51,39 @@ public class TablesRecyclerViewAdapter extends RecyclerView.Adapter<TablesRecycl
         holder.overallPriceTextView.setText(table.getTotalPrice() + " zł");
         holder.tableStateTextView.setText(table.state + " - tableState");
 
+        //states: 1-unfreezed, 2-freezed, 3-wantsHelp =============================================================
         holder.acceptRequestButton.setOnClickListener(v -> {
+            if(table.state == 3) {
+                table.state = 1;
+                try {
+                    ExecuteUpdate("UPDATE tables SET state = " + table.state +  " WHERE ID = " + table.id);
+                } catch (SQLException ignored) {}
+            }
         });
+
         holder.expandCollapseButton.setOnClickListener(v -> {
+            if(holder.ordersLinearLayout.getVisibility() == View.GONE) holder.ordersLinearLayout.setVisibility(View.VISIBLE);
+            else holder.ordersLinearLayout.setVisibility(View.GONE);
         });
+
         holder.freezeStateButton.setOnClickListener(v -> {
+            if(table.state == 1) {
+                table.state = 2;
+                holder.freezeStateButton.setText("Unfreez table");
+            } else {
+                table.state = 1;
+                holder.freezeStateButton.setText("Freez table");
+            }
+            try {
+                ExecuteUpdate("UPDATE tables SET state = " + table.state +  " WHERE ID = " + table.id);
+            } catch (SQLException ignored) {}
         });
 
         for(int orderNumber = 0; orderNumber < table.orders.size(); orderNumber++) {
             Order order = table.orders.get(orderNumber);
-            View orderElement = holder.orderElement;
+            View orderElement = LayoutInflater.from(context).inflate(R.layout.bar_order_element, null, false);
 
-            TextView orderNumberTextView = holder.orderNumberTextView;
+            TextView orderNumberTextView = orderElement.findViewById(R.id.OrderNumberTextView);
             orderNumberTextView.setText(order.id + "");
 
             TextView orderWaitingTimeTextView = orderElement.findViewById(R.id.OrderWaitingTimeTextView);
@@ -66,8 +95,24 @@ public class TablesRecyclerViewAdapter extends RecyclerView.Adapter<TablesRecycl
             TextView orderStateTextView = orderElement.findViewById(R.id.OrderStateTextView);
             orderStateTextView.setText(order.state + " - orderState");
 
+            //states: 1-inPreparation, 2-doneAndDelivered =========================================================================
             Button changeOrderStateButton = orderElement.findViewById(R.id.ChangeOrderStateButton);
             changeOrderStateButton.setOnClickListener(v -> {
+                if(order.state == 1) {
+                    order.state = 2;
+                    changeOrderStateButton.setVisibility(View.GONE);
+                    orderStateTextView.setText(order.state + " - orderState");
+                }
+                try {
+                    ExecuteUpdate("UPDATE orders SET state = " + order.state +  " WHERE ID = " + order.id);
+                } catch (SQLException ignored) {}
+            });
+
+            ImageButton deleteOrderButton = orderElement.findViewById(R.id.DeleteOrderButton);
+            deleteOrderButton.setOnClickListener(v -> {
+                try {
+                    ExecuteUpdate("DELETE FROM orders WHERE ID = " + order.id);
+                } catch (SQLException ignored) {}
             });
 
             TextView commentsTextView = orderElement.findViewById(R.id.CommentsTextView);
@@ -103,7 +148,7 @@ public class TablesRecyclerViewAdapter extends RecyclerView.Adapter<TablesRecycl
         return tables.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
         TextView tableNumberTextView;
         TextView overallPriceTextView;
         TextView tableStateTextView;
@@ -113,12 +158,7 @@ public class TablesRecyclerViewAdapter extends RecyclerView.Adapter<TablesRecycl
         Button freezeStateButton;
 
         LinearLayout ordersLinearLayout;
-
-        View orderElement;
-        TextView orderNumberTextView;
-
-
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
             tableNumberTextView = itemView.findViewById(R.id.TableNumberTextView);
             overallPriceTextView = itemView.findViewById(R.id.OverallPriceTextView);
@@ -129,9 +169,6 @@ public class TablesRecyclerViewAdapter extends RecyclerView.Adapter<TablesRecycl
             freezeStateButton = itemView.findViewById(R.id.FreezeStateButton);
 
             ordersLinearLayout = itemView.findViewById(R.id.OrdersLinearLayout);
-
-            orderElement = LayoutInflater.from(itemView.getContext()).inflate(R.layout.bar_order_element, null, false);
-            orderNumberTextView = orderElement.findViewById(R.id.OrderNumberTextView);
         }
     }
 }

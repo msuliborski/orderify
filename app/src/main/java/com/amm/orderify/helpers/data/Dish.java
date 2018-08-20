@@ -9,7 +9,6 @@ public class Dish {
     public float price;
     public String descS;
     public String descL;
-
     public List<AddonCategory> addonCategories;
 
     public Dish(int id, String name, float price, String descS, String descL, List<AddonCategory> addonCategories) {
@@ -21,11 +20,4 @@ public class Dish {
         this.addonCategories = addonCategories;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }
