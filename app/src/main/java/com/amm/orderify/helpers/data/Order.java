@@ -18,4 +18,13 @@ public class Order {
         this.comments = comments;
         this.wishes = wishes;
     }
+
+    public float getTotalPrice(){
+        float totalPrice = 0;
+
+        for (int wishNumber = 0; wishNumber < wishes.size(); wishNumber++)
+            totalPrice += wishes.get(wishNumber).getTotalPrice();
+
+        return totalPrice;
+    }
 }

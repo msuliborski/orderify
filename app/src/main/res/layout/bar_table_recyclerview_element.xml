@@ -44,7 +44,7 @@
         app:layout_constraintTop_toTopOf="@+id/TableNumberBackground" />
 
     <TextView
-        android:id="@+id/RequestNameTextView"
+        android:id="@+id/TableStateTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/tw_cen"
@@ -63,7 +63,7 @@
         android:layout_marginStart="8dp"
         android:background="@drawable/bar_accept_request_button"
         app:layout_constraintBottom_toBottomOf="@+id/TableNumberBackground"
-        app:layout_constraintStart_toEndOf="@+id/RequestNameTextView"
+        app:layout_constraintStart_toEndOf="@+id/TableStateTextView"
         app:layout_constraintTop_toTopOf="@+id/TableNumberBackground" />
 
     <Button
@@ -101,5 +101,5 @@
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TableNumberBackground"></LinearLayout>
+        app:layout_constraintTop_toBottomOf="@+id/TableNumberBackground" />
 </android.support.constraint.ConstraintLayout>

@@ -57,9 +57,7 @@ public class SummaryActivity extends AppCompatActivity
             e.printStackTrace();
         }
 
-        //do adaptera wysyłam ci listę orderów, z nich wyciągniesz potrzebne dane (znaczy, ja to okoduję bez problemu, ale jak już będzie .xme :D)
-        //i w pracy nie miałem jak sprawdzić czy działa, więc nie gwarantuje niczego
-        //orders
+        //do przerobienia!!!!!!!!!!!
 
 
     }
