@@ -97,6 +97,8 @@ public class TablesRecyclerViewAdapter extends RecyclerView.Adapter<TablesRecycl
 
             //states: 1-inPreparation, 2-doneAndDelivered =========================================================================
             Button changeOrderStateButton = orderElement.findViewById(R.id.ChangeOrderStateButton);
+            if (order.state == 1) changeOrderStateButton.setVisibility(View.VISIBLE);
+            else changeOrderStateButton.setVisibility(View.GONE);
             changeOrderStateButton.setOnClickListener(v -> {
                 if(order.state == 1) {
                     order.state = 2;
