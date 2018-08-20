@@ -17,50 +17,64 @@ import com.amm.orderify.helpers.data.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MenuRecyclerViewAdapter extends RecyclerView.Adapter<MenuRecyclerViewAdapter.ViewHolder> {
+public class MenuRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+    private static final int TYPE_HEADER = 0;
+    private static final int TYPE_ITEM = 1;
 
     Context context;
-    List<DishCategory> dishCategories;
+    List<Object> dishCategories;
     List<Addon> clickedAddons = new ArrayList<>();
-    public MenuRecyclerViewAdapter(Context context, List<DishCategory> dishCategories){
+    public MenuRecyclerViewAdapter(Context context, List<Object> dishCategories){
         this.dishCategories = dishCategories;
         this.context = context;
     }
     
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.menu_list_header, parent, false);
-        ViewHolder holder = new ViewHolder(view);
-        return holder;
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+
+        if (viewType == TYPE_ITEM) {
+            //inflate your layout and pass it to view holder
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.menu_list_header, parent, false);
+            return new ViewHolderDish(view);
+        } else if (viewType == TYPE_HEADER) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.menu_list_header, parent, false);
+            return new ViewHolderHeader(view);
+        }
+
+        throw new RuntimeException("there is no type that matches the type " + viewType + " + make sure your using types correctly");
+
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.HeaderTextView.setText(dishCategories.get(position).name);
-        DishCategory dishCategory = dishCategories.get(position);
-        for(int dishNumber = 0; dishNumber < dishCategory.dishes.size(); dishNumber++) {
-            Dish dish = dishCategory.dishes.get(dishNumber);
-            View dishElement = LayoutInflater.from(context).inflate(R.layout.menu_list_element, null, false);
-            TextView NameTextView = dishElement.findViewById(R.id.NameTextView);
-            TextView PriceTextView = dishElement.findViewById(R.id.PriceTextView);
-            NameTextView.setText(dish.name);
-            PriceTextView.setText(dish.price+"");
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        if (holder instanceof ViewHolderHeader)
+        {
+            ((ViewHolderHeader) holder).HeaderTextView.setText(((DishCategory)dishCategories.get(position)).name);
+        }
+        else if (holder instanceof ViewHolderDish)
+        {
+            ((ViewHolderDish) holder).NameTextView.setText(((Dish)dishCategories.get(position)).name);
+            ((ViewHolderDish) holder).PriceTextView.setText(((Dish)dishCategories.get(position)).price + "");
 
-            ConstraintLayout addonCategoriesConstraintLayout = dishElement.findViewById(R.id.MenuExpand);
-            for (int addonCategoriesNumber = 0; addonCategoriesNumber < dish.addonCategories.size(); addonCategoriesNumber++) {
-                AddonCategory addonCategory = dish.addonCategories.get(addonCategoriesNumber);
-                View addonCategoryElement = LayoutInflater.from(context).inflate(R.layout.expand_grid_element, null);
-                TextView CategoryNameTextView = addonCategoryElement.findViewById(R.id.CategoryNameTextView);
 
-                CategoryNameTextView.setText(addonCategory.name); //cat name
+                for (int addonCategoriesNumber = 0; addonCategoriesNumber < ((Dish)dishCategories.get(position)).addonCategories.size(); addonCategoriesNumber++)
+                {
+                    AddonCategory addonCategory = ((Dish)dishCategories.get(position)).addonCategories.get(addonCategoriesNumber);
+                    View addonCategoryElement = LayoutInflater.from(context).inflate(R.layout.expand_grid_element, null);
+                    TextView CategoryNameTextView = addonCategoryElement.findViewById(R.id.CategoryNameTextView);
 
-                LinearLayout AddonsLinearLayout = addonCategoryElement.findViewById(R.id.AddonsLinearLayout);
-                for (int addonNumber = 0; addonNumber < addonCategory.addons.size(); addonNumber++ ) {
-                    Addon addon = addonCategory.addons.get(addonNumber);
-                    View addonElement = LayoutInflater.from(context).inflate(R.layout.expand_addon_list_element, null);
-                    TextView AddonNameTextView = addonElement.findViewById(R.id.AddonNameTextView);
-                    AddonNameTextView.setText(addon.name);
+                    CategoryNameTextView.setText(addonCategory.name); //cat name
+
+                    LinearLayout AddonsLinearLayout = addonCategoryElement.findViewById(R.id.AddonsLinearLayout);
+                    for (int addonNumber = 0; addonNumber < addonCategory.addons.size(); addonNumber++)
+                    {
+                        Addon addon = addonCategory.addons.get(addonNumber);
+                        View addonElement = LayoutInflater.from(context).inflate(R.layout.expand_addon_list_element, null);
+                        TextView AddonNameTextView = addonElement.findViewById(R.id.AddonNameTextView);
+                        AddonNameTextView.setText(addon.name);
 //                    ImageView CheckboxCheckImage = addonElement.findViewById(R.id.CheckboxCheckImage);
 //                    if (addonCategory.multiChoice){
 //                        addonElement.setOnClickListener(e -> {
@@ -89,11 +103,12 @@ public class MenuRecyclerViewAdapter extends RecyclerView.Adapter<MenuRecyclerVi
 //                            clickedAddons.add(addon);
 //                        });
 //                    }
-                    AddonsLinearLayout.addView(addonElement);
+                        AddonsLinearLayout.addView(addonElement);
+                    }
+                    ((ViewHolderDish) holder).MenuExpand.addView(addonCategoryElement);
                 }
-                addonCategoriesConstraintLayout.addView(addonCategoryElement);
-            }
-            holder.DishesLinearLayout.addView(dishElement);
+
+
         }
 
 
@@ -104,14 +119,34 @@ public class MenuRecyclerViewAdapter extends RecyclerView.Adapter<MenuRecyclerVi
         return dishCategories.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView HeaderTextView;
-        LinearLayout DishesLinearLayout;
+    @Override
+    public int getItemViewType(int position)
+    {
+        if (dishCategories.get(position) instanceof DishCategory)
+            return TYPE_HEADER;
 
-        public ViewHolder(View itemView) {
+        return TYPE_ITEM;
+    }
+
+    public static class ViewHolderHeader extends RecyclerView.ViewHolder {
+        TextView HeaderTextView;
+
+        public ViewHolderHeader(View itemView) {
             super(itemView);
             HeaderTextView = itemView.findViewById(R.id.HeaderTextView);
-            DishesLinearLayout = itemView.findViewById(R.id.DishesLinearLayout);
+
+        }
+    }
+    public static class ViewHolderDish extends RecyclerView.ViewHolder {
+        TextView PriceTextView;
+        TextView NameTextView;
+        ConstraintLayout MenuExpand;
+
+        public ViewHolderDish(View itemView) {
+            super(itemView);
+            PriceTextView = itemView.findViewById(R.id.PriceTextView);
+            NameTextView = itemView.findViewById(R.id.NameTextView);
+            MenuExpand = itemView.findViewById(R.id.MenuExpand);
 
         }
     }
