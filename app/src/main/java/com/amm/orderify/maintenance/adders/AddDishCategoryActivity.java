@@ -3,7 +3,6 @@ package com.amm.orderify.maintenance.adders;
 import android.annotation.SuppressLint;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -40,7 +39,7 @@ public class AddDishCategoryActivity extends AppCompatActivity {
             while (dishCategoriesRS.next()) dishCategories.add(new DishCategory(dishCategoriesRS.getInt("ID"), dishCategoriesRS.getString("name"), null));
         } catch (SQLException ignored) {}
 
-        dishCategoriesLinearLayout = findViewById(R.id.DishCategoryLinearLayout);
+        dishCategoriesLinearLayout = findViewById(R.id.DishesLinearLayout);
         dishCategoriesListInflater = getLayoutInflater();
 
 

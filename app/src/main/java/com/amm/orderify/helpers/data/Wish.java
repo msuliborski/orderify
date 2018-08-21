@@ -20,7 +20,7 @@ public class Wish {
         for (int addonNumber = 0; addonNumber < addons.size(); addonNumber++)
             totalPrice += addons.get(addonNumber).price;
 
-        return totalPrice + dish.price;
+        return (totalPrice + dish.price) * amount;
     }
 
 }

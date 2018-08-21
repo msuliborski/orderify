@@ -1,26 +1,23 @@
 package com.amm.orderify.client;
 
-import android.content.Context;
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.support.v7.widget.GridLayout;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 
+import com.amm.orderify.MainActivity;
 import com.amm.orderify.R;
-import com.amm.orderify.client.helpers.MenuRecyclerViewAdapter;
 import com.amm.orderify.helpers.data.*;
 
 
@@ -33,33 +30,238 @@ import java.util.List;
 import static com.amm.orderify.helpers.JBDCDriver.*;
 
 public class MenuActivity extends AppCompatActivity {
-    public static LinearLayout orderListLinearLayout;
-    public ListView menuListView;
-    public android.support.v7.widget.GridLayout addonCategoriesGridLayout;
-    public int activeMenuElementNumber = -1;
-    static LayoutInflater orderListInflater;
 
+    List<DishCategory> dishCategories;
 
-    public int orderID = 0;
-    public int wishID = 0;
-    public static List<Wish> wishes = new ArrayList<>();
-    private EditText EnterCommentsEditText;
+    LinearLayout ordersLinearLayout;
+    LinearLayout dishCategoriesLinearLayout;
 
+    EditText enterCommentsEditText;
+
+    TextView totalPriceTextView;
+
+    List<Wish> wishes = new ArrayList<>();
+    List<Addon> addons = new ArrayList<>();
+
+    int thisTableID = 1;
+    Table table;
+
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.client_menu_activity);
 
-        //=====================================MENU LIST=============================================
-        //menuListView = findViewById(R.id.MenuListView);
+        try {
+            ResultSet tableRS = ExecuteQuery("SELECT * FROM tables " +
+                                             "WHERE ID = " + thisTableID);
+            if(tableRS.next()) table = new Table(thisTableID, tableRS.getInt("number"), tableRS.getString("description"), tableRS.getInt("state"), null);
+        } catch (SQLException ignore) {}
+
+        dishCategories = getDishCategories();
+        updateMenu();
+
+        enterCommentsEditText = findViewById(R.id.EnterCommentsEditText);
+
+        totalPriceTextView = findViewById(R.id.TotalPriceTextView);
+        updateTotalPrice();
+
+        ImageButton orderButton = findViewById(R.id.OrderButton);
+        orderButton.setOnClickListener((View e) -> {
+            addOrder();
+        });
+
+        ImageButton goToSummaryButton = findViewById(R.id.GoToSummaryButton);
+        goToSummaryButton.setOnClickListener(e -> {
+            this.startActivity(new Intent(this, SummaryActivity.class));
+        });
+
+        ImageButton cancelOrderButton = findViewById(R.id.CancelOrderButton);
+        cancelOrderButton.setOnClickListener(e -> {
+            this.startActivity(new Intent(this, MainActivity.class));
+        });
+
+        ImageButton askWaiterButton = findViewById(R.id.AskWaiterButton);
+        askWaiterButton.setOnClickListener(e -> {
+            if(table.state == 1) {
+                table.state = 3;
+                try {
+                    ExecuteUpdate("UPDATE tables SET state = " + table.state +  " WHERE ID = " + table.id);
+                } catch (SQLException ignored) {}
+            }
+        });
+
+
+    }
+
+    void updateTotalPrice(){
+        float totalPrice = 0;
+        for (int wishNumber = 0; wishNumber < wishes.size(); wishNumber++) totalPrice += wishes.get(wishNumber).getTotalPrice();
+        totalPriceTextView.setText(totalPrice + " zł");
+    }
+
+
+    boolean checkIfTheSame(Wish w1, Wish w2){
+        try {
+            for (int i = 0; i < w1.addons.size(); i++) if (!(w1.addons.get(i).id == w2.addons.get(i).id)) return false;
+            for (int i = 0; i < w2.addons.size(); i++) if (!(w1.addons.get(i).id == w2.addons.get(i).id)) return false;
+            if (!(w1.dish.id == w2.dish.id)) return false;
+            if (!(w1.addons.size() == w2.addons.size())) return false;
+        }
+        catch(Exception e){
+            return false;
+        }
+
+        return true;
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void updateMenu() {
+        if(dishCategoriesLinearLayout != null) dishCategoriesLinearLayout.removeAllViews();
+        dishCategoriesLinearLayout = findViewById(R.id.DishCategoriesLinearLayout);
+        for (int dishCategoryNumber = 0; dishCategoryNumber < dishCategories.size(); dishCategoryNumber++){
+
+            DishCategory dishCategory = dishCategories.get(dishCategoryNumber);
+            View dishCategoryElement = getLayoutInflater().inflate(R.layout.client_menu_dishcategory_element, null);
+
+            TextView dishCategoryTextView = dishCategoryElement.findViewById(R.id.DishCategoryTextView);
+            dishCategoryTextView.setText(dishCategory.name);
+
+            LinearLayout dishesLinearLayout = dishCategoryElement.findViewById(R.id.DishesLinearLayout);
+            for (int dishNumber = 0; dishNumber < dishCategory.dishes.size(); dishNumber++){
+                Dish dish = dishCategory.dishes.get(dishNumber);
+                View dishElement = getLayoutInflater().inflate(R.layout.client_menu_dish_element, null);
+
+                TextView nameTextView = dishElement.findViewById(R.id.NameTextView);
+                nameTextView.setText(dish.name);
+
+                TextView priceTextView = dishElement.findViewById(R.id.PriceTextView);
+                priceTextView.setText(dish.price + "");
+
+                ConstraintLayout menuExpand = dishElement.findViewById(R.id.MenuExpand);
+
+                ImageButton menuBackgroundButton = dishElement.findViewById(R.id.MenuBackgroundButton);
+                menuBackgroundButton.setOnClickListener(v -> {
+                    if(menuExpand.getVisibility() == View.GONE) menuExpand.setVisibility(View.VISIBLE);
+                    else menuExpand.setVisibility(View.GONE);
+                    addons = new ArrayList<>();
+                });
+
+                ImageView addToOrderButton = dishElement.findViewById(R.id.AddToOrderButton);
+                addToOrderButton.setOnClickListener(e -> {
+                    Wish newWish = new Wish(dish, 1, addons);
+                    for(int wishI = 0; wishI < wishes.size(); wishI++){
+                        if (checkIfTheSame(wishes.get(wishI), newWish)) {
+                            wishes.get(wishI).amount++; break;}
+                        if (wishI == wishes.size()-1) {
+                            wishes.add(newWish); break;}
+                    }
+                    if (wishes.size() == 0) wishes.add(newWish);
+                    updateOrders();
+                    menuExpand.setVisibility(View.GONE);
+                    addons = new ArrayList<>();
+                });
+
+                GridLayout addonCategoriesGridLayout = dishElement.findViewById(R.id.AddonCategoriesGridLayout);
+                for (int addonCategoriesNumber = 0; addonCategoriesNumber < dish.addonCategories.size(); addonCategoriesNumber++) {
+                    AddonCategory addonCategory = dish.addonCategories.get(addonCategoriesNumber);
+
+                    View addonCategoryElement = getLayoutInflater().inflate(R.layout.client_menu_addoncategory_element, null);
+
+                    TextView CategoryNameTextView = addonCategoryElement.findViewById(R.id.AddonCategoryNameTextView);
+                    CategoryNameTextView.setText(addonCategory.name);
+
+                    LinearLayout AddonsLinearLayout = addonCategoryElement.findViewById(R.id.AddonsLinearLayout);
+                    for (int addonNumber = 0; addonNumber < addonCategory.addons.size(); addonNumber++) {
+                        Addon addon = addonCategory.addons.get(addonNumber);
+                        View addonElement = getLayoutInflater().inflate(R.layout.client_menu_addon_element, null);
+                        TextView AddonNameTextView = addonElement.findViewById(R.id.AddonNameTextView);
+                        AddonNameTextView.setText(addon.name);
+                        ImageView CheckboxCheckImage = addonElement.findViewById(R.id.CheckboxCheckImage);
+                        if (addonCategory.multiChoice){
+                            addonElement.setOnClickListener(e -> {
+                                if(CheckboxCheckImage.getVisibility() == View.INVISIBLE) {
+                                    CheckboxCheckImage.setVisibility(View.VISIBLE);
+                                    addons.add(addon);
+                                } else {
+                                    CheckboxCheckImage.setVisibility(View.INVISIBLE);
+                                    addons.remove(addon);
+                                }
+                            });
+                        } else {
+                            if (addonNumber == 0 && addonCategory.addons.size() > 1){ //czy działa?
+                                CheckboxCheckImage.setVisibility(View.VISIBLE);
+                                addons.add(addon); }
+                            addonElement.setOnClickListener(e -> {
+                                final int childCount = AddonsLinearLayout.getChildCount();
+                                for(int ii = 0; ii < childCount; ii++) {
+                                    View vv = AddonsLinearLayout.getChildAt(ii);
+                                    ImageView iv = vv.findViewById(R.id.CheckboxCheckImage);
+                                    iv.setVisibility(View.INVISIBLE);
+                                    addons.remove(addonCategory.addons.get(ii));
+                                }
+                                CheckboxCheckImage.setVisibility(View.VISIBLE);
+                                addons.add(addon);
+                            });
+                        }
+                        AddonsLinearLayout.addView(addonElement);
+                    }
+                    addonCategoriesGridLayout.addView(addonCategoryElement);
+                }
+                dishesLinearLayout.addView(dishElement);
+            }
+            dishCategoriesLinearLayout.addView(dishCategoryElement);
+        }
+    }
+
+
+
+    @SuppressLint("SetTextI18n")
+    private void updateOrders() {
+        if(ordersLinearLayout != null) ordersLinearLayout.removeAllViews();
+        ordersLinearLayout = findViewById(R.id.OrdersLinearLayout);
+        for (int wishNumber = 0; wishNumber < wishes.size(); wishNumber++) {
+            View orderElement = getLayoutInflater().inflate(R.layout.order_list_element, null);
+
+            TextView orderPriceTextView = orderElement.findViewById(R.id.orderPriceTextView);
+            orderPriceTextView.setText(wishes.get(wishNumber).getTotalPrice() + " zł");
+
+            TextView orderNameTextView = orderElement.findViewById(R.id.orderNameTextView);
+            orderNameTextView.setText(wishes.get(wishNumber).dish.name);
+
+            TextView QuantityTextView = orderElement.findViewById(R.id.QuantityTextView);
+            QuantityTextView.setText(wishes.get(wishNumber).amount + "");
+
+            final int finalWishNumber = wishNumber;
+            ImageButton QuantityUpButton = orderElement.findViewById(R.id.QuantityUpButton);
+            QuantityUpButton.setOnClickListener(e -> {
+                wishes.get(finalWishNumber).amount++;
+                updateOrders();
+            });
+            ImageButton QuantityDownButton = orderElement.findViewById(R.id.QuantityDownButton);
+            QuantityDownButton.setOnClickListener(e -> {
+                if (wishes.get(finalWishNumber).amount > 1) {
+                    wishes.get(finalWishNumber).amount--;
+                    updateOrders();
+                }
+            });
+            ImageButton OrderCancelButton = orderElement.findViewById(R.id.OrderCancelButton);
+            OrderCancelButton.setOnClickListener(v -> {
+                wishes.remove(finalWishNumber);
+                updateOrders();
+            });
+            ordersLinearLayout.addView(orderElement);
+        }
+        updateTotalPrice();
+
+    }
+
+    private List<DishCategory> getDishCategories() {
 
         List<Addon> addons = new ArrayList<>();
         List<AddonCategory> addonCategories = new ArrayList<>();
         List<Dish> dishes = new ArrayList<>();
         List<DishCategory> dishCategories = new ArrayList<>();
-        List<Object> menuList = new ArrayList<>();
-
-        orderListInflater = getLayoutInflater();
 
         try {
             Statement dishCategoriesS = getConnection().createStatement();
@@ -91,259 +293,37 @@ public class MenuActivity extends AppCompatActivity {
                 dishCategories.add(new DishCategory(dishCategoriesRS.getInt("ID"), dishCategoriesRS.getString("name"), dishes));
                 dishes = new ArrayList<>();
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        } catch(SQLException ignore) { }
+        return dishCategories;
+    }
 
-        for(int i = 0; i < dishCategories.size(); i++){
-            menuList.add(dishCategories.get(i));//send just category
-            menuList.addAll(dishCategories.get(i).dishes); //send item on category one by one
-        }
-        //menuListView.setAdapter(new customMenuAdapter(this, menuList));
-        Log.wtf("dd", dishCategories.size()+"");
-        RecyclerView recyclerView = findViewById(R.id.MenuRecyclerView);
-        MenuRecyclerViewAdapter adapter = new MenuRecyclerViewAdapter(this, menuList);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        //==========================================ORDER LIST===============================================
-        orderListLinearLayout = findViewById(R.id.OrderListLinearLayout);
-
-        EnterCommentsEditText = findViewById(R.id.EnterCommentsEditText);
-
-        ImageButton orderButton = findViewById(R.id.OrderButton);
-        orderButton.setOnClickListener((View e) -> {
-            try {
+    private void addOrder(){
+        try {
             ExecuteUpdate("INSERT INTO orders (time, date, tableID, comments, state)\n" +
-                    "VALUES  ('21:32:22', '2018-07-31', 3, '" + EnterCommentsEditText.getText() + "', 1);"); //add current data
-
+                    "VALUES  ('21:32:22', '2018-07-31', " + table.id + ", '" + enterCommentsEditText.getText() + "', 1);"); //add current data
+            int newOrderID = 0;
             ResultSet orderIDRS = ExecuteQuery("SELECT LAST_INSERT_ID();");
-            while (orderIDRS.next()) orderID = orderIDRS.getInt(1);
+            if(orderIDRS.next()) newOrderID = orderIDRS.getInt(1);
 
             for(int wishI = 0; wishI < wishes.size(); wishI++){
-                    ExecuteUpdate("INSERT INTO wishes (dishID, amount, orderID)\n" +
-                                        "VALUES  ("+ wishes.get(wishI).dish.id + ", " + wishes.get(wishI).amount + ", " + orderID + ");");
+                ExecuteUpdate("INSERT INTO wishes (dishID, amount, orderID)\n" +
+                        "VALUES  ("+ wishes.get(wishI).dish.id + ", " + wishes.get(wishI).amount + ", " + newOrderID + ");");
 
-                    ResultSet wishIDRS = ExecuteQuery("SELECT LAST_INSERT_ID();");
-                    while (wishIDRS.next()) wishID = wishIDRS.getInt(1);
+                int newWishID = 0;
+                ResultSet wishIDRS = ExecuteQuery("SELECT LAST_INSERT_ID();");
+                if(wishIDRS.next()) newWishID = wishIDRS.getInt(1);
 
-                    for(int addonI = 0; addonI < wishes.get(wishI).addons.size(); addonI++){
-                        ExecuteUpdate("INSERT INTO addonsToWishes (wishID, addonID)\n" +
-                                            "VALUES  (" + wishID + ", " + wishes.get(wishI).addons.get(addonI).id + ");");
-                    }
+                for(int addonI = 0; addonI < wishes.get(wishI).addons.size(); addonI++){
+                    ExecuteUpdate("INSERT INTO addonsToWishes (wishID, addonID)\n" +
+                            "VALUES  (" + newWishID + ", " + wishes.get(wishI).addons.get(addonI).id + ");");
                 }
-            } catch (Exception e1) {
-                e1.printStackTrace();
             }
-
-            wishes = new ArrayList<>();
-            updateOrderList();
-        });
-    }
-
-//
-//    class customMenuAdapter extends BaseAdapter {
-//        List<Object> menuList;
-//        List<Addon> clickedAddons = new ArrayList<>();
-//
-//        private LayoutInflater menuInflater;
-//
-//        customMenuAdapter(Context context, List<Object> menuList) {
-//            this.menuList = menuList;
-//            menuInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//        }
-//
-//        @Override
-//        public int getItemViewType(int i) {
-//            return i;
-//        }
-//
-//        @Override
-//        public int getViewTypeCount() {
-//            return getCount();
-//        }
-//
-//        @Override
-//        public int getCount() {
-//            return menuList.size();
-//        }
-//
-//        @Override
-//        public Object getItem(int i) {
-//            return menuList.get(i);
-//        }
-//
-//        @Override
-//        public long getItemId(int i) {
-//            return 1;
-//        }
-//
-//        @Override
-//        public View getView(int i, View view, ViewGroup viewGroup)
-//        {
-//            if(menuList.get(i) instanceof DishCategory){ //=============HEADER
-//                if (view == null) view = menuInflater.inflate(R.layout.menu_list_header, null);
-//                TextView headerTextView = view.findViewById(R.id.HeaderTextView);
-//                headerTextView.setText(((DishCategory)menuList.get(i)).name);
-//            } else { //===============MENU_ITEM
-//                if (view == null) view = menuInflater.inflate(R.layout.menu_list_element, null);
-//                ConstraintLayout MenuExpand = view.findViewById(R.id.MenuExpand);
-//
-//                TextView nameTextView = view.findViewById(R.id.NameTextView);
-//                nameTextView.setText(((Dish)menuList.get(i)).name);
-//
-//                TextView priceTextView = view.findViewById(R.id.PriceTextView);
-//                priceTextView.setText(String.valueOf(((Dish)(menuList.get(i))).price));
-//
-//                ImageButton MenuBackgroundButton = view.findViewById(R.id.MenuBackgroundButton);
-//                MenuBackgroundButton.setOnClickListener(v -> {
-//
-//                    if(MenuExpand.getVisibility() == View.GONE)
-//                    {
-//                        if (activeMenuElementNumber != -1) {
-//                            try {
-//                                View vw = menuListView.getChildAt(activeMenuElementNumber - menuListView.getFirstVisiblePosition());
-//                                ConstraintLayout cl = vw.findViewById(R.id.MenuExpand);
-//                                cl.setVisibility(View.GONE);
-//                                notifyDataSetChanged();
-//                            } catch (Exception ignored) {}
-//                        }
-//                        MenuExpand.setVisibility(View.VISIBLE);
-//                        activeMenuElementNumber = i;
-//                        notifyDataSetChanged();
-//                    } else if (MenuExpand.getVisibility() == View.VISIBLE) {
-//                        MenuExpand.setVisibility(View.GONE);
-//                        activeMenuElementNumber = -1;
-//                    }
-//                });
-//
-//                if(MenuExpand.getVisibility() != View.GONE) {
-//
-//                    addonCategoriesGridLayout = view.findViewById(R.id.AddonCategoriesGridLayout);
-//                    LayoutInflater gridInflater = getLayoutInflater();
-//                    addonCategoriesGridLayout.removeAllViews();
-//
-//                    Dish dish = (Dish)menuList.get(i);
-//
-//                    for (int categoryI = 0; categoryI < dish.addonCategories.size(); categoryI++) {
-//                        AddonCategory addonCategory = dish.addonCategories.get(categoryI);
-//                        View v = gridInflater.inflate(R.layout.expand_grid_element, null);
-//                        TextView CategoryNameTextView = v.findViewById(R.id.CategoryNameTextView);
-//                        LinearLayout AddonsLinearLayout = v.findViewById(R.id.AddonsLinearLayout);
-//                        CategoryNameTextView.setText(addonCategory.name); //cat name
-//                        for (int addonI = 0; addonI < addonCategory.addons.size(); addonI++ ) {
-//                            Addon addon = addonCategory.addons.get(addonI);
-//                            View x = gridInflater.inflate(R.layout.expand_addon_list_element, null);
-//                            TextView AddonNameTextView = x.findViewById(R.id.AddonNameTextView);
-//                            AddonNameTextView.setText(addon.name);
-//                            ImageView CheckboxCheckImage = x.findViewById(R.id.CheckboxCheckImage);
-//
-//                            if (addonCategory.multiChoice){
-//                                x.setOnClickListener(e -> {
-//                                    if(CheckboxCheckImage.getVisibility() == View.INVISIBLE) {
-//                                        CheckboxCheckImage.setVisibility(View.VISIBLE);
-//                                        clickedAddons.add(addon);
-//                                    } else {
-//                                        CheckboxCheckImage.setVisibility(View.INVISIBLE);
-//                                        clickedAddons.remove(addon);
-//                                    }
-//                                });
-//                            } else {
-//                                if (addonI == 0 && addonCategory.addons.size() > 1){ //czy działa?
-//                                    CheckboxCheckImage.setVisibility(View.VISIBLE);
-//                                    clickedAddons.add(addon); }
-//
-//                                x.setOnClickListener(e -> {
-//                                    final int childCount = AddonsLinearLayout.getChildCount();
-//                                    for (int ii = 0; ii < childCount; ii++) {
-//                                        View vv = AddonsLinearLayout.getChildAt(ii);
-//                                        ImageView iv = vv.findViewById(R.id.CheckboxCheckImage);
-//                                        iv.setVisibility(View.INVISIBLE);
-//                                        clickedAddons.remove(addonCategory.addons.get(ii));
-//                                    }
-//                                    CheckboxCheckImage.setVisibility(View.VISIBLE);
-//                                    clickedAddons.add(addon);
-//                                });
-//                            }
-//                            AddonsLinearLayout.addView(x);
-//                        }
-//                        addonCategoriesGridLayout.addView(v);
-//                    }
-//
-//                    android.support.v7.widget.AppCompatImageView AddOrderButton = view.findViewById(R.id.AddToOrderButton);
-//                    AddOrderButton.setOnClickListener(e -> {
-//                        Wish newWish = new Wish(dish, 1, clickedAddons);
-//                        for(int wishI = 0; wishI < wishes.size(); wishI++){
-//                            if (checkIfTheSame(wishes.get(wishI), newWish)) {
-//                                wishes.get(wishI).amount++; break;}
-//                            if (wishI == wishes.size()-1) {
-//                                wishes.add(newWish); break;}
-//                        }
-//                        if (wishes.size() == 0) wishes.add(newWish);
-//                        updateOrderList();
-//                        MenuExpand.setVisibility(View.GONE);
-//                        activeMenuElementNumber = -1;
-//                        clickedAddons = new ArrayList<>();
-//                    });
-//
-//                }
-//
-//            }
-//            return view;
-//        }
-//    }
-//
-//
-//    boolean checkIfTheSame(Wish w1, Wish w2){
-//        try {
-//            for (int i = 0; i < w1.addons.size(); i++) if (!(w1.addons.get(i).id == w2.addons.get(i).id)) return false;
-//            for (int i = 0; i < w2.addons.size(); i++) if (!(w1.addons.get(i).id == w2.addons.get(i).id)) return false;
-//            if (!(w1.dish.id == w2.dish.id)) return false;
-//            if (!(w1.addons.size() == w2.addons.size())) return false;
-//        }
-//        catch(Exception e){
-//            return false;
-//        }
-//
-//        return true;
-//    }
-
-    public static void updateOrderList() {
-        orderListLinearLayout.removeAllViews();
-
-        for (int wishNumber = 0; wishNumber < wishes.size(); wishNumber++) {
-            View x = orderListInflater.inflate(R.layout.order_list_element, null);
-
-            TextView orderPriceTextView = x.findViewById(R.id.orderPriceTextView);
-            orderPriceTextView.setText(wishes.get(wishNumber).dish.price + " zł");
-
-            TextView orderNameTextView = x.findViewById(R.id.orderNameTextView);
-            orderNameTextView.setText(wishes.get(wishNumber).dish.name);
-
-            TextView QuantityTextView = x.findViewById(R.id.QuantityTextView);
-            QuantityTextView.setText(wishes.get(wishNumber).amount + "");
-
-            final int finalWishNumber = wishNumber;
-            ImageButton QuantityUpButton = x.findViewById(R.id.QuantityUpButton);
-            QuantityUpButton.setOnClickListener(e -> {
-                wishes.get(finalWishNumber).amount++;
-                updateOrderList();
-            });
-            ImageButton QuantityDownButton = x.findViewById(R.id.QuantityDownButton);
-            QuantityDownButton.setOnClickListener(e -> {
-                if (wishes.get(finalWishNumber).amount > 1) {
-                    wishes.get(finalWishNumber).amount--;
-                    updateOrderList();
-                }
-            });
-            ImageButton OrderCancelButton = x.findViewById(R.id.OrderCancelButton);
-            OrderCancelButton.setOnClickListener(v -> {
-                wishes.remove(finalWishNumber);
-                updateOrderList();
-            });
-
-            orderListLinearLayout.addView(x);
+        } catch (Exception e1) {
+            e1.printStackTrace();
         }
+        wishes = new ArrayList<>();
+        updateOrders();
     }
+
 }
 
