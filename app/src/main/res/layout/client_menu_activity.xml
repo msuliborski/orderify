@@ -190,7 +190,6 @@
         android:gravity="start"
         android:inputType="textPersonName"
         android:padding="5dp"
-        android:text="Name"
         android:textSize="8sp"
         app:layout_constraintEnd_toEndOf="@+id/BasketBackground"
         app:layout_constraintStart_toStartOf="@+id/BasketBackground"

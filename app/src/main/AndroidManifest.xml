@@ -20,14 +20,40 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".client.MenuActivity"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".client.SummaryActivity"
-            android:screenOrientation="landscape" />
-        <activity
             android:name=".bar.TablesActivity"
             android:screenOrientation="landscape" />
+        <activity
+            android:name=".client.MenuActivity"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity
+            android:name=".client.SummaryActivity"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".maintenance.ChoseActivity"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".maintenance.adders.AddTableActivity"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".maintenance.adders.AddDishCategoryActivity"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".maintenance.adders.AddDishActivity"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".maintenance.adders.AddAddonCategoryActivity"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".maintenance.adders.AddAddonActivity"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="stateHidden" />
     </application>
 
 </manifest>
