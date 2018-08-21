@@ -50,16 +50,14 @@ public class SummaryActivity extends AppCompatActivity
                     wishes.add(new Wish(dish, wishesRS.getInt("amount"), addons));
                     addons = new ArrayList<>();
                 }
-                orders.add(new Order(ordersRS.getInt("ID"), null, null, ordersRS.getInt("tableID"), ordersRS.getString("comments"), wishes));
+                orders.add(new Order(ordersRS.getInt("ID"), null, null, ordersRS.getInt("tableID"), ordersRS.getString("comments"), ordersRS.getInt("state"), wishes));
                 wishes = new ArrayList<>();
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        //do adaptera wysyłam ci listę orderów, z nich wyciągniesz potrzebne dane (znaczy, ja to okoduję bez problemu, ale jak już będzie .xme :D)
-        //i w pracy nie miałem jak sprawdzić czy działa, więc nie gwarantuje niczego
-        //orders
+        //do przerobienia!!!!!!!!!!!
 
 
     }

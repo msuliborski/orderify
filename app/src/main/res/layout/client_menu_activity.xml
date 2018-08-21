@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:background="@color/backgroundPrimary"
     android:clipToPadding="false"
-    tools:context=".client.MenuActivity">
+    tools:context=".client.MenuActivity"
+    android:animateLayoutChanges="true">
 
 
     <ImageView
@@ -189,7 +190,6 @@
         android:gravity="start"
         android:inputType="textPersonName"
         android:padding="5dp"
-        android:text="Name"
         android:textSize="8sp"
         app:layout_constraintEnd_toEndOf="@+id/BasketBackground"
         app:layout_constraintStart_toStartOf="@+id/BasketBackground"
@@ -368,8 +368,8 @@
         app:layout_constraintTop_toTopOf="@+id/SeparatingLineBottom"
         app:srcCompat="@drawable/bottom_separator_arrow" />
 
-    <ListView
-        android:id="@+id/MenuListView"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/MenuRecyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@id/SeparatingLineBottom"

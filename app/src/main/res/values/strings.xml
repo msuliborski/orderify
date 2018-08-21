@@ -18,4 +18,10 @@
     <string name="go_to_summary_button_textview_string">Summary</string>
     <string name="messages_textview_string">Messages</string>
     <string name="add_to_order_textview_string">Add to order</string>
+    <string name="edit_messages_textview_string">Add or edit messages</string>
+    <string name="edit_menu_textview_string">Edit menu</string>
+    <string name="bar_order_state_button_string">zrealizowane</string>
+    <string name="bar_freeze_table_button_string">freeze table</string>
+    <string name="bar_unfreeze_table_button_string">unfreeze table</string>
+
 </resources>

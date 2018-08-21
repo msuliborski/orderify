@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/OrderNumberBackgroundImageView"
+        android:layout_width="0dp"
+        android:layout_height="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/bar_order_number_background" />
+
+    <ImageButton
+        android:id="@+id/DeleteOrderButton"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_marginStart="50dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:scaleType="fitStart"
+        app:layout_constraintBottom_toBottomOf="@+id/OrderNumberBackgroundImageView"
+        app:layout_constraintStart_toStartOf="@+id/OrderNumberBackgroundImageView"
+        app:layout_constraintTop_toTopOf="@+id/OrderNumberBackgroundImageView"
+        app:srcCompat="@drawable/bar_delete_order_button" />
+
+    <TextView
+        android:id="@+id/OrderNumberTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:fontFamily="@font/tw_cen"
+        android:text="25"
+        android:textColor="@android:color/black"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/DeleteOrderButton"
+        app:layout_constraintStart_toEndOf="@+id/DeleteOrderButton"
+        app:layout_constraintTop_toTopOf="@+id/DeleteOrderButton" />
+
+    <TextView
+        android:id="@+id/OrderPriceTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:fontFamily="@font/tw_cen"
+        android:text="44,00 zł"
+        android:textColor="@android:color/black"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/OrderNumberBackgroundImageView"
+        app:layout_constraintEnd_toEndOf="@+id/OrderNumberBackgroundImageView"
+        app:layout_constraintHorizontal_bias="0.48"
+        app:layout_constraintStart_toStartOf="@+id/OrderNumberBackgroundImageView"
+        app:layout_constraintTop_toTopOf="@+id/OrderNumberBackgroundImageView" />
+
+    <TextView
+        android:id="@+id/OrderWaitingTimeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:fontFamily="@font/tw_cen"
+        android:text="4:00 min"
+        android:textColor="@android:color/black"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/OrderNumberBackgroundImageView"
+        app:layout_constraintEnd_toEndOf="@+id/OrderNumberBackgroundImageView"
+        app:layout_constraintHorizontal_bias="0.27"
+        app:layout_constraintStart_toStartOf="@+id/OrderNumberBackgroundImageView"
+        app:layout_constraintTop_toTopOf="@+id/OrderNumberBackgroundImageView" />
+
+    <TextView
+        android:id="@+id/OrderStateTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:fontFamily="@font/tw_cen"
+        android:text="w realizacji"
+        android:textColor="@android:color/black"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/OrderNumberBackgroundImageView"
+        app:layout_constraintEnd_toEndOf="@+id/OrderNumberBackgroundImageView"
+        app:layout_constraintHorizontal_bias="0.7"
+        app:layout_constraintStart_toStartOf="@+id/OrderNumberBackgroundImageView"
+        app:layout_constraintTop_toTopOf="@+id/OrderNumberBackgroundImageView" />
+
+    <Button
+        android:id="@+id/ChangeOrderStateButton"
+        android:layout_width="wrap_content"
+        android:layout_height="15dp"
+        android:background="@drawable/bar_order_state_button_background"
+        android:fontFamily="@font/tw_cen"
+        android:text="@string/bar_order_state_button_string"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/OrderNumberBackgroundImageView"
+        app:layout_constraintEnd_toEndOf="@+id/OrderNumberBackgroundImageView"
+        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintStart_toStartOf="@+id/OrderNumberBackgroundImageView"
+        app:layout_constraintTop_toTopOf="@+id/OrderNumberBackgroundImageView" />
+
+    <LinearLayout
+        android:id="@+id/WishesLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="16dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/OrderNumberBackgroundImageView">
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/CommentsTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="2dp"
+        android:fontFamily="@font/tw_cen"
+        android:text="Uwagi: Poproszę bez mięsa"
+        android:textColor="@android:color/holo_red_dark"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/WishesLinearLayout" />
+</android.support.constraint.ConstraintLayout>

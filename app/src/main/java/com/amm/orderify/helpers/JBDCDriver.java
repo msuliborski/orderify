@@ -30,8 +30,8 @@ public class JBDCDriver {
         database = "Orderify";
         user = "root";
 
-        ip = "192.168.1.100";
-        password = "1234";
+        ip = "10.0.2.2";
+        password = "";
 
     }
 
@@ -47,6 +47,8 @@ public class JBDCDriver {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+
     }
 
     public static ResultSet ExecuteQuery(String query) throws SQLException {

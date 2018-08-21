@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/barBackground"
+    tools:context=".bar.TablesActivity">
+
+    <ImageView
+        android:id="@+id/TopBarBackground"
+        android:layout_width="0dp"
+        android:layout_height="20dp"
+        android:scaleType="fitXY"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/basket_background" />
+
+    <ImageView
+        android:id="@+id/BottomBarBackground"
+        android:layout_width="0dp"
+        android:layout_height="33dp"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/basket_background" />
+
+    <TextView
+        android:id="@+id/StandNumberTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/tw_cen"
+        android:text="Numer stanowiska"
+        android:textColor="@color/backgroundPrimary"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/TopBarBackground"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/EditMessagesButton"
+        android:layout_width="250dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="1dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="2dp"
+        android:background="@color/backgroundPrimary"
+        android:fontFamily="@font/tw_cen"
+        android:text="@string/edit_messages_textview_string"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/RefreshButton"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/RefreshButton"
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="1dp"
+        android:background="@color/backgroundPrimary"
+        android:fontFamily="@font/tw_cen"
+        android:text="REFRESH"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/EditMenuButton"
+        app:layout_constraintEnd_toStartOf="@+id/EditMessagesButton"
+        tools:layout_editor_absoluteX="256dp"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/EditMenuButton"
+        android:layout_width="250dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="1dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginStart="8dp"
+        android:background="@color/backgroundPrimary"
+        android:fontFamily="@font/tw_cen"
+        android:text="@string/edit_menu_textview_string"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/BottomBarBackground"
+        app:layout_constraintStart_toEndOf="@+id/RefreshButton" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/TablesRecycleView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/BottomBarBackground"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TopBarBackground" />
+
+</android.support.constraint.ConstraintLayout>
