@@ -64,6 +64,7 @@ public class MenuActivity extends AppCompatActivity {
         enterCommentsEditText = findViewById(R.id.EnterCommentsEditText);
 
         totalPriceTextView = findViewById(R.id.TotalPriceTextView);
+        updateTotalPrice();
 
         ImageButton orderButton = findViewById(R.id.OrderButton);
         orderButton.setOnClickListener((View e) -> {
