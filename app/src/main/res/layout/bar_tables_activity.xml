@@ -84,13 +84,20 @@
         app:layout_constraintEnd_toEndOf="@+id/BottomBarBackground"
         app:layout_constraintStart_toEndOf="@+id/RefreshButton" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/TablesRecycleView"
+    <ScrollView
+        android:id="@+id/TablesScrollView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/BottomBarBackground"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TopBarBackground" />
+        app:layout_constraintTop_toBottomOf="@+id/TopBarBackground">
+
+        <LinearLayout
+            android:id="@+id/TablesLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
 
 </android.support.constraint.ConstraintLayout>

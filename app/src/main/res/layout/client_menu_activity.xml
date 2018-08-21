@@ -107,7 +107,7 @@
         app:layout_constraintTop_toTopOf="@+id/ArrowDark" />
 
     <LinearLayout
-        android:id="@+id/OrderListLinearLayout"
+        android:id="@+id/OrdersLinearLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -131,7 +131,7 @@
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="@+id/BasketBackground"
         app:layout_constraintStart_toStartOf="@+id/BasketBackground"
-        app:layout_constraintTop_toBottomOf="@+id/OrderListLinearLayout"
+        app:layout_constraintTop_toBottomOf="@+id/OrdersLinearLayout"
         app:srcCompat="@drawable/order_separator" />
 
     <TextView
@@ -145,7 +145,7 @@
         android:fontFamily="@font/tw_cen"
         android:textColor="@color/backgroundPrimary"
         android:textSize="8sp"
-        app:layout_constraintEnd_toStartOf="@id/SumNumberTextView"
+        app:layout_constraintEnd_toStartOf="@id/TotalPriceTextView"
         app:layout_constraintStart_toStartOf="@+id/BasketBackground"
         app:layout_constraintTop_toBottomOf="@+id/AfterListviewSeparator" />
 
@@ -164,7 +164,7 @@
         app:layout_constraintStart_toStartOf="@+id/EnterCommentsEditText" />
 
     <TextView
-        android:id="@+id/SumNumberTextView"
+        android:id="@+id/TotalPriceTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
@@ -193,7 +193,7 @@
         android:textSize="8sp"
         app:layout_constraintEnd_toEndOf="@+id/BasketBackground"
         app:layout_constraintStart_toStartOf="@+id/BasketBackground"
-        app:layout_constraintTop_toBottomOf="@+id/SumNumberTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/TotalPriceTextView" />
 
     <ImageButton
         android:id="@+id/OrderButton"
@@ -366,15 +366,23 @@
         app:layout_constraintEnd_toEndOf="@+id/SeparatingLineBottom"
         app:layout_constraintStart_toEndOf="@+id/BasketBackground"
         app:layout_constraintTop_toTopOf="@+id/SeparatingLineBottom"
-        app:srcCompat="@drawable/bottom_separator_arrow" />
+        app:srcCompat="@drawable/bottom_separator_arrow"
+        tools:ignore="ContentDescription" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/MenuRecyclerView"
+    <ScrollView
+        android:id="@+id/DishCategoriesScrollView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@id/SeparatingLineBottom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/BasketBackground"
-        app:layout_constraintTop_toBottomOf="@+id/ArrowDark" />
+        app:layout_constraintTop_toBottomOf="@+id/ArrowDark" >
+
+        <LinearLayout
+            android:id="@+id/DishCategoriesLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"></LinearLayout>
+    </ScrollView>
 
 </android.support.constraint.ConstraintLayout>
