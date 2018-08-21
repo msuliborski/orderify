@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
+import android.support.v7.widget.GridLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,8 +41,7 @@ public class MenuRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (viewType == TYPE_ITEM) {
-            //inflate your layout and pass it to view holder
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.menu_list_header, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.menu_list_element, parent, false);
             return new ViewHolderDish(view);
         } else if (viewType == TYPE_HEADER) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.menu_list_header, parent, false);
@@ -56,13 +56,12 @@ public class MenuRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
         if (unknownHolder instanceof ViewHolderHeader) {
             ((ViewHolderHeader) unknownHolder).HeaderTextView.setText(((DishCategory)dishCategories.get(position)).name);
         } else if (unknownHolder instanceof ViewHolderDish) {
-            Dish dish = (Dish)dishCategories.get(position);
+            final Dish dish = (Dish)dishCategories.get(position);
             ViewHolderDish holder = (ViewHolderDish)unknownHolder;
-            holder.NameTextView.setText(dish.name);
-            holder.PriceTextView.setText(dish.price + "");
+            holder.nameTextView.setText(dish.name);
+            holder.priceTextView.setText(dish.price + "");
 
-            if(holder.MenuExpand.getVisibility() == View.GONE) holder.MenuExpand.setVisibility(View.VISIBLE);
-            else holder.MenuExpand.setVisibility(View.GONE);
+            holder.addonCategoriesGridLayout.removeAllViews();
 
             for (int addonCategoriesNumber = 0; addonCategoriesNumber < ((Dish)dishCategories.get(position)).addonCategories.size(); addonCategoriesNumber++) {
                 AddonCategory addonCategory = ((Dish)dishCategories.get(position)).addonCategories.get(addonCategoriesNumber);
@@ -107,9 +106,9 @@ public class MenuRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
                     }
                     AddonsLinearLayout.addView(addonElement);
                 }
-                holder.MenuExpand.addView(addonCategoryElement);
+                holder.addonCategoriesGridLayout.addView(addonCategoryElement);
 
-                ImageButton addToOrderButton = holder.addToOrderButton;
+                android.support.v7.widget.AppCompatImageView addToOrderButton = holder.addToOrderButton;
                 addToOrderButton.setOnClickListener(e -> {
                     Wish newWish = new Wish(dish, 1, clickedAddons);
                     for(int wishI = 0; wishI < wishes.size(); wishI++){
@@ -120,10 +119,12 @@ public class MenuRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
                     }
                     if (wishes.size() == 0) wishes.add(newWish);
                     updateOrderList();
-                    holder.MenuExpand.setVisibility(View.GONE);
+                    holder.menuExpand.setVisibility(View.GONE);
                     clickedAddons = new ArrayList<>();
                 });
+
             }
+
         }
     }
 
@@ -149,17 +150,19 @@ public class MenuRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
         }
     }
     public static class ViewHolderDish extends RecyclerView.ViewHolder {
-        TextView PriceTextView;
-        TextView NameTextView;
-        ConstraintLayout MenuExpand;
-        ImageButton addToOrderButton;
+        TextView priceTextView;
+        TextView nameTextView;
+        ConstraintLayout menuExpand;
+        GridLayout addonCategoriesGridLayout;
+        android.support.v7.widget.AppCompatImageView addToOrderButton;
 
         ViewHolderDish(View itemView) {
             super(itemView);
-            PriceTextView = itemView.findViewById(R.id.PriceTextView);
-            NameTextView = itemView.findViewById(R.id.NameTextView);
-            MenuExpand = itemView.findViewById(R.id.MenuExpand);
+            priceTextView = itemView.findViewById(R.id.PriceTextView);
+            nameTextView = itemView.findViewById(R.id.NameTextView);
+            menuExpand = itemView.findViewById(R.id.MenuExpand);
             addToOrderButton = itemView.findViewById(R.id.AddToOrderButton);
+            addonCategoriesGridLayout = itemView.findViewById(R.id.AddonCategoriesGridLayout);
         }
     }
     boolean checkIfTheSame(Wish w1, Wish w2){

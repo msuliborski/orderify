@@ -65,6 +65,8 @@
         android:fontFamily="@font/tw_cen"
         android:text="REFRESH"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/EditMenuButton"
+        app:layout_constraintEnd_toStartOf="@+id/EditMessagesButton"
         tools:layout_editor_absoluteX="256dp"
         tools:ignore="MissingConstraints" />
 

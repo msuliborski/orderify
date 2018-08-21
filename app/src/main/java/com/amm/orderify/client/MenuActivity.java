@@ -115,7 +115,7 @@ public class MenuActivity extends AppCompatActivity {
         orderButton.setOnClickListener((View e) -> {
             try {
             ExecuteUpdate("INSERT INTO orders (time, date, tableID, comments, state)\n" +
-                    "VALUES  ('21:32:22', '2018-07-31', 1, '" + EnterCommentsEditText.getText() + "', 1);"); //add current data
+                    "VALUES  ('21:32:22', '2018-07-31', 3, '" + EnterCommentsEditText.getText() + "', 1);"); //add current data
 
             ResultSet orderIDRS = ExecuteQuery("SELECT LAST_INSERT_ID();");
             while (orderIDRS.next()) orderID = orderIDRS.getInt(1);

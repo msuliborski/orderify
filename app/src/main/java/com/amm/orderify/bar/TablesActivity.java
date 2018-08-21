@@ -44,12 +44,12 @@ public class TablesActivity extends AppCompatActivity
             updateAdapter();
         });
 
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable(){
-            public void run(){
-                updateAdapter();
-                handler.postDelayed(this, 1000);
-            }}, 1000);
+//        Handler handler = new Handler();
+//        handler.postDelayed(new Runnable(){
+//            public void run(){
+//                updateAdapter();
+//                handler.postDelayed(this, 1000);
+//            }}, 1000);
     }
 
     private void updateAdapter(){
