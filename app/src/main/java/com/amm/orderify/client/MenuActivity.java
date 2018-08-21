@@ -94,6 +94,7 @@ public class MenuActivity extends AppCompatActivity {
 
     }
 
+    @SuppressLint("SetTextI18n")
     void updateTotalPrice(){
         float totalPrice = 0;
         for (int wishNumber = 0; wishNumber < wishes.size(); wishNumber++) totalPrice += wishes.get(wishNumber).getTotalPrice();

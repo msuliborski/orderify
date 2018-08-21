@@ -202,7 +202,7 @@ public class TablesActivity extends AppCompatActivity {
                 tables.add(new Table(tablesRS.getInt("ID"), tablesRS.getInt("number"), tablesRS.getString("description"), tablesRS.getInt("state"), orders));
                 orders = new ArrayList<>();
             }
-        } catch (SQLException e) {}
+        } catch (SQLException ignored) {}
         return tables;
     }
 }
