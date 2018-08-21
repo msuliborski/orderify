@@ -251,8 +251,9 @@ public class MenuActivity extends AppCompatActivity {
                 updateOrders();
             });
             ordersLinearLayout.addView(orderElement);
-            updateTotalPrice();
         }
+        updateTotalPrice();
+
     }
 
     private List<DishCategory> getDishCategories() {
