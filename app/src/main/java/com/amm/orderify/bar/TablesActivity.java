@@ -1,6 +1,8 @@
 package com.amm.orderify.bar;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +12,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.amm.orderify.R;
 import com.amm.orderify.helpers.data.*;
@@ -18,6 +21,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -42,10 +46,14 @@ public class TablesActivity extends AppCompatActivity {
         tables = getTables();
         updateTables();
 
+        UpdateTableTask task = new UpdateTableTask(TablesActivity.this);
+        task.execute();
+
 //        Handler handler = new Handler();
 //        handler.postDelayed(new Runnable(){
 //            public void run(){
-//                updateTables();
+//                updateTableStates();
+//
 //                handler.postDelayed(this, 1000);
 //            }}, 1000);
     }
@@ -181,6 +189,9 @@ public class TablesActivity extends AppCompatActivity {
             tablesLinearLayout.addView(tableElement);
         }
     }
+
+
+
     private List<Table> getTables(){
         List<Table> tables = new ArrayList<>();
         List<Order> orders = new ArrayList<>();
@@ -218,5 +229,87 @@ public class TablesActivity extends AppCompatActivity {
             }
         } catch (SQLException ignored) {}
         return tables;
+    }
+    protected class UpdateTableTask extends AsyncTask<Void, Void, Void>
+    {
+        Context context;
+
+        UpdateTableTask(Context context)
+        {
+            this.context = context;
+        }
+
+        @Override
+        protected void onPreExecute() {
+
+
+
+        }
+
+        @Override
+        protected Void doInBackground(Void... params)
+        {
+            int i = 0;
+            while(true)
+            {
+                for (int tableNumber = 0; tableNumber < tablesLinearLayout.getChildCount(); tableNumber++)
+                {
+                    final View table = tablesLinearLayout.getChildAt(tableNumber);
+                    final int TNr = tableNumber;
+                    TextView state = table.findViewById(R.id.TableStateTextView);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            state.setText(tables.get(TNr).state + "");
+                        }
+                    });
+
+
+                    final LinearLayout ordersLinearLayout = table.findViewById(R.id.OrdersLinearLayout);
+                    for (int orderNumber = 0; orderNumber < ordersLinearLayout.getChildCount(); orderNumber++)
+                    {
+                        final View order = ordersLinearLayout.getChildAt(orderNumber);
+                        TextView time = order.findViewById(R.id.OrderWaitingTimeTextView);
+                        Date curr = new Date();
+                        int hours = curr.getHours();
+                        int minutes = curr.getMinutes();
+                        int seconds = curr.getSeconds();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                time.setText(hours + ":" + minutes +":" + seconds);
+                            }
+                        });
+
+                    }
+                }
+
+
+                try
+                {
+
+                    Log.wtf("i", i + "");
+                    i++;
+                    Thread.sleep(1000);
+                    tables = getTables();
+                } catch (InterruptedException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Void v)
+        {
+            super.onPostExecute(v);
+
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values)
+        {
+            super.onProgressUpdate(values);
+        }
     }
 }
