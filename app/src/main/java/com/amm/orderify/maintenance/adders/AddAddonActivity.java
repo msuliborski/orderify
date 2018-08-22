@@ -11,7 +11,7 @@ public class AddAddonActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.maintenance_add_addon_activity);
+        setContentView(R.layout.maintenance_addon_activity);
 
 
     }

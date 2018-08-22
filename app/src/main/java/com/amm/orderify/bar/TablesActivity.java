@@ -114,6 +114,7 @@ public class TablesActivity extends AppCompatActivity {
                         ExecuteUpdate("DELETE FROM orders WHERE ID = " + order.id);
                     } catch (SQLException ignored) {}
                     table.orders.remove(order);
+                    //ordersLinearLayout.removeView(orderElement);
                     updateTables();
                 });
 

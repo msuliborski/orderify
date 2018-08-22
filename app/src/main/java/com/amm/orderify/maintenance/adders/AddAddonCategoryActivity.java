@@ -6,14 +6,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import com.amm.orderify.R;
 import com.amm.orderify.helpers.data.AddonCategory;
@@ -34,7 +32,7 @@ public class AddAddonCategoryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.maintenance_add_addoncategory_activity);
+        setContentView(R.layout.maintenance_addoncategory_activity);
 
 
         try {
@@ -73,7 +71,6 @@ public class AddAddonCategoryActivity extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
     public void updateAddonCategoryList() {
         addonCategoriesLinearLayout.removeAllViews();
-
         for (int addonCategoryNumber = 0; addonCategoryNumber < addonCategories.size(); addonCategoryNumber++){
             View addonCategoryElement = addonCategoriesListInflater.inflate(R.layout.maintenance_addoncategory_element, null);
 
@@ -87,7 +84,7 @@ public class AddAddonCategoryActivity extends AppCompatActivity {
             if (addonCategories.get(addonCategoryNumber).multiChoice) multiChoiceTextView.setText("YES");
             else multiChoiceTextView.setText("NO");
 
-            ImageButton deleteButton = addonCategoryElement.findViewById(R.id.DeleteButton);
+            ImageButton deleteButton = addonCategoryElement.findViewById(R.id.ActionButton);
             final int finaladdonCategoryNumber = addonCategoryNumber;
             deleteButton.setOnClickListener(v -> {
                 try {
