@@ -1,17 +1,18 @@
 package com.amm.orderify.helpers.data;
 
+import java.util.Date;
 import java.util.List;
 
 public class Order {
     public int id;
-    public String time;
-    public String date;
+    public Date time;
+    public Date date;
     public int tableID;
     public String comments;
     public int state;
     public List<Wish> wishes;
 
-    public Order(int id, String time, String date, int tableID, String comments, int state, List<Wish> wishes) {
+    public Order(int id, Date time, Date date, int tableID, String comments, int state, List<Wish> wishes) {
         this.id = id;
         this.time = time;
         this.date = date;

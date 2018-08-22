@@ -1,8 +1,10 @@
 package com.amm.orderify.bar;
 
 import android.annotation.SuppressLint;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -16,6 +18,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static com.amm.orderify.helpers.JBDCDriver.*;
@@ -33,22 +36,22 @@ public class TablesActivity extends AppCompatActivity {
 
         Button refreshButton = findViewById(R.id.RefreshButton);
         refreshButton.setOnClickListener(v -> {
-            updateMenu();
+            updateTables();
         });
 
         tables = getTables();
-        updateMenu();
+        updateTables();
 
 //        Handler handler = new Handler();
 //        handler.postDelayed(new Runnable(){
 //            public void run(){
-//                updateAdapter();
+//                updateTables();
 //                handler.postDelayed(this, 1000);
 //            }}, 1000);
     }
 
     @SuppressLint("SetTextI18n")
-    private void updateMenu() {
+    private void updateTables() {
         if(tablesLinearLayout != null) tablesLinearLayout.removeAllViews();
         tablesLinearLayout = findViewById(R.id.TablesLinearLayout);
 
@@ -57,22 +60,17 @@ public class TablesActivity extends AppCompatActivity {
             View tableElement = getLayoutInflater().inflate(R.layout.bar_table_element, null);
 
             TextView tableNumberTextView = tableElement.findViewById(R.id.TableNumberTextView);
-            TextView overallPriceTextView = tableElement.findViewById(R.id.OverallPriceTextView);
-            TextView tableStateTextView = tableElement.findViewById(R.id.TableStateTextView);
-
-            Button acceptRequestButton = tableElement.findViewById(R.id.AcceptRequestButton);
-            Button expandCollapseButton = tableElement.findViewById(R.id.ExpandCollapseButton);
-            Button freezeStateButton = tableElement.findViewById(R.id.FreezeStateButton);
-
-            LinearLayout ordersLinearLayout = tableElement.findViewById(R.id.OrdersLinearLayout);
             tableNumberTextView.setText(table.number + "");
+
+            TextView overallPriceTextView = tableElement.findViewById(R.id.OverallPriceTextView);
             overallPriceTextView.setText(table.getTotalPrice() + " zł");
+
+            TextView tableStateTextView = tableElement.findViewById(R.id.TableStateTextView);
             tableStateTextView.setText(table.state + " - tableState");
 
-            if(table.state == 1) freezeStateButton.setText("freeze table");
-            else freezeStateButton.setText("unfreeze table");
 
             //states: 1-unfreezed, 2-freezed, 3-wantsHelp =============================================================
+            Button acceptRequestButton = tableElement.findViewById(R.id.AcceptRequestButton);
             acceptRequestButton.setOnClickListener(v -> {
                 if(table.state == 3) {
                     table.state = 1;
@@ -80,13 +78,10 @@ public class TablesActivity extends AppCompatActivity {
                         ExecuteUpdate("UPDATE tables SET state = " + table.state +  " WHERE ID = " + table.id);
                     } catch (SQLException ignored) {}
                 }
+                updateTables();
             });
 
-            expandCollapseButton.setOnClickListener(v -> {
-                if(ordersLinearLayout.getVisibility() == View.GONE) ordersLinearLayout.setVisibility(View.VISIBLE);
-                else ordersLinearLayout.setVisibility(View.GONE);
-            });
-
+            Button freezeStateButton = tableElement.findViewById(R.id.FreezeStateButton);
             freezeStateButton.setOnClickListener(v -> {
                 if(table.state == 1) {
                     table.state = 2;
@@ -98,17 +93,42 @@ public class TablesActivity extends AppCompatActivity {
                 try {
                     ExecuteUpdate("UPDATE tables SET state = " + table.state +  " WHERE ID = " + table.id);
                 } catch (SQLException ignored) {}
+                updateTables();
             });
+            if(table.state == 1) freezeStateButton.setText("freeze table");
+            else freezeStateButton.setText("unfreeze table");
 
+            LinearLayout ordersLinearLayout = tableElement.findViewById(R.id.OrdersLinearLayout);
+            Button expandCollapseButton = tableElement.findViewById(R.id.ExpandCollapseButton);
+            expandCollapseButton.setOnClickListener(v -> {
+                if(ordersLinearLayout.getVisibility() == View.GONE) ordersLinearLayout.setVisibility(View.VISIBLE);
+                else ordersLinearLayout.setVisibility(View.GONE);
+            });
             for(int orderNumber = 0; orderNumber < table.orders.size(); orderNumber++) {
                 Order order = table.orders.get(orderNumber);
                 View orderElement = getLayoutInflater().inflate(R.layout.bar_order_element, null);
+
+                ImageButton deleteOrderButton = orderElement.findViewById(R.id.DeleteOrderButton);
+                deleteOrderButton.setOnClickListener(v -> {
+                    try {
+                        ExecuteUpdate("DELETE FROM orders WHERE ID = " + order.id);
+                    } catch (SQLException ignored) {}
+                    table.orders.remove(order);
+                    updateTables();
+                });
 
                 TextView orderNumberTextView = orderElement.findViewById(R.id.OrderNumberTextView);
                 orderNumberTextView.setText(order.id + "");
 
                 TextView orderWaitingTimeTextView = orderElement.findViewById(R.id.OrderWaitingTimeTextView);
-                orderWaitingTimeTextView.setText("04:21");
+                Date curr = new Date();
+                Date orderTime = new Date(order.date.getTime() + order.time.getTime());
+                Date diff = new Date(curr.getTime() - orderTime.getTime());
+                String seconds = String.format("%02d", (int) (diff.getTime() / 1000) % 60);
+                String minutes = String.format("%02d", (int) ((diff.getTime() / (1000*60)) % 60));
+                String hours = String.format("%02d", (int) ((diff.getTime() / (1000*60*60)) % 24));
+                String days = String.valueOf((int) ((diff.getTime() / (1000*60*60*24))));
+                orderWaitingTimeTextView.setText(days + " days, " + hours + ":" + minutes + ":" + seconds);
 
                 TextView orderPriceTextView = orderElement.findViewById(R.id.OrderPriceTextView);
                 orderPriceTextView.setText(order.getTotalPrice() + " zł");
@@ -128,13 +148,6 @@ public class TablesActivity extends AppCompatActivity {
                     }
                     try {
                         ExecuteUpdate("UPDATE orders SET state = " + order.state +  " WHERE ID = " + order.id);
-                    } catch (SQLException ignored) {}
-                });
-
-                ImageButton deleteOrderButton = orderElement.findViewById(R.id.DeleteOrderButton);
-                deleteOrderButton.setOnClickListener(v -> {
-                    try {
-                        ExecuteUpdate("DELETE FROM orders WHERE ID = " + order.id);
                     } catch (SQLException ignored) {}
                 });
 
@@ -196,7 +209,7 @@ public class TablesActivity extends AppCompatActivity {
                         wishes.add(new Wish(dish, wishesRS.getInt("amount"), addons));
                         addons = new ArrayList<>();
                     }
-                    orders.add(new Order(ordersRS.getInt("ID"), null, null, ordersRS.getInt("tableID"), ordersRS.getString("comments"), ordersRS.getInt("state"), wishes));
+                    orders.add(new Order(ordersRS.getInt("ID"), ordersRS.getTime("time"), ordersRS.getDate("date"), ordersRS.getInt("tableID"), ordersRS.getString("comments"), ordersRS.getInt("state"), wishes));
                     wishes = new ArrayList<>();
                 }
                 tables.add(new Table(tablesRS.getInt("ID"), tablesRS.getInt("number"), tablesRS.getString("description"), tablesRS.getInt("state"), orders));

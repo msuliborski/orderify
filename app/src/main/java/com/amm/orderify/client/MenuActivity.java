@@ -6,9 +6,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayout;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -28,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.amm.orderify.helpers.JBDCDriver.*;
+import static com.amm.orderify.helpers.TimeAndDate.*;
 
 public class MenuActivity extends AppCompatActivity {
 
@@ -301,7 +300,7 @@ public class MenuActivity extends AppCompatActivity {
     private void addOrder(){
         try {
             ExecuteUpdate("INSERT INTO orders (time, date, tableID, comments, state)\n" +
-                    "VALUES  ('21:32:22', '2018-07-31', " + table.id + ", '" + enterCommentsEditText.getText() + "', 1);"); //add current data
+                    "VALUES  ('" + getCurrentTime() +"', '" + getCurrentDate() +"', " + table.id + ", '" + enterCommentsEditText.getText() + "', 1);"); //add current data
             int newOrderID = 0;
             ResultSet orderIDRS = ExecuteQuery("SELECT LAST_INSERT_ID();");
             if(orderIDRS.next()) newOrderID = orderIDRS.getInt(1);
