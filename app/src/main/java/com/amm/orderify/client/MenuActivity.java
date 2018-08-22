@@ -3,6 +3,7 @@ package com.amm.orderify.client;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
+import android.support.constraint.ConstraintSet;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayout;
@@ -138,12 +139,35 @@ public class MenuActivity extends AppCompatActivity {
                 TextView priceTextView = dishElement.findViewById(R.id.PriceTextView);
                 priceTextView.setText(dish.price + "");
 
+                TextView shortDescriptionTextView = dishElement.findViewById(R.id.ShortDescriptionTextView);
+                shortDescriptionTextView.setText(dish.descS);
+
+                TextView longDescriptionTextView = dishElement.findViewById(R.id.LongDescriptionTextView);
+                longDescriptionTextView.setText(dish.descL);
+
+                ConstraintLayout cl = dishElement.findViewById(R.id.cl);
+                ConstraintSet constraintSetCopy = new ConstraintSet();
+                constraintSetCopy.clone(cl);
+
+
                 ConstraintLayout menuExpand = dishElement.findViewById(R.id.MenuExpand);
 
                 ImageButton menuBackgroundButton = dishElement.findViewById(R.id.MenuBackgroundButton);
                 menuBackgroundButton.setOnClickListener(v -> {
-                    if(menuExpand.getVisibility() == View.GONE) menuExpand.setVisibility(View.VISIBLE);
-                    else menuExpand.setVisibility(View.GONE);
+                    if(menuExpand.getVisibility() == View.GONE) {
+                        menuExpand.setVisibility(View.VISIBLE);
+                        shortDescriptionTextView.setVisibility(View.GONE);
+                        ConstraintSet constraintSet = new ConstraintSet();
+                        constraintSet.clone(cl);
+                        constraintSet.connect(R.id.PriceTextView,ConstraintSet.BOTTOM,R.id.MenuBackgroundButton,ConstraintSet.BOTTOM,0);
+                        constraintSet.connect(R.id.PriceTextView,ConstraintSet.TOP,R.id.MenuBackgroundButton,ConstraintSet.TOP,0);
+                        constraintSet.applyTo(cl);
+                    }
+                    else  {
+                        menuExpand.setVisibility(View.GONE);
+                        constraintSetCopy.applyTo(cl);
+                        shortDescriptionTextView.setVisibility(View.VISIBLE);
+                    }
                     addons = new ArrayList<>();
                 });
 

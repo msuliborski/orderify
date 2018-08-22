@@ -2,6 +2,10 @@ package com.amm.orderify.client;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.amm.orderify.R;
 import com.amm.orderify.helpers.data.*;
@@ -16,6 +20,11 @@ import static com.amm.orderify.helpers.JBDCDriver.getConnection;
 
 public class SummaryActivity extends AppCompatActivity
 {
+    LinearLayout orderListLinearLayout;
+    List<Order> orders = new ArrayList<>();
+    List<Wish> wishes = new ArrayList<>();
+    List<Addon> addons = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -25,9 +34,6 @@ public class SummaryActivity extends AppCompatActivity
 
         int tableID = 1;
 
-        List<Order> orders = new ArrayList<>();
-        List<Wish> wishes = new ArrayList<>();
-        List<Addon> addons = new ArrayList<>();
 
         try {
             Statement ordersS = getConnection().createStatement();
@@ -57,6 +63,8 @@ public class SummaryActivity extends AppCompatActivity
             e.printStackTrace();
         }
 
+        createOrderList();
+
 
 
         //====================================================================
@@ -69,6 +77,44 @@ public class SummaryActivity extends AppCompatActivity
 
         //====================================================================
 
+
+    }
+    public void createOrderList()
+    {
+        if(orderListLinearLayout != null) orderListLinearLayout.removeAllViews();
+        orderListLinearLayout = findViewById(R.id.WishListLinearLayout);
+
+        for (int orderNumber = 0; orderNumber < orders.size(); orderNumber++)
+        {
+            final Order order = orders.get(orderNumber);
+            View orderElement = getLayoutInflater().inflate(R.layout.client_summary_order_element, null);
+
+            TextView orderNumberTextView = orderElement.findViewById(R.id.OrderNumberTextView);
+            orderNumberTextView.setText(order.id + "");
+
+            TextView orderStateTextView = orderElement.findViewById(R.id.OrderStateTextView);
+            orderStateTextView.setText(order.state + "");
+
+            TextView orderSumNumberTextView = orderElement.findViewById(R.id.OrderSumNumberTextView);
+            orderSumNumberTextView.setText(order.getTotalPrice() + "");
+
+            LinearLayout wishListLinearLayout = orderElement.findViewById(R.id.WishListLinearLayout);
+
+            for (int wishNumber = 0; wishNumber < order.wishes.size(); wishNumber++)
+            {
+                final Wish wish = order.wishes.get(wishNumber);
+
+                View wishElement = getLayoutInflater().inflate(R.layout.client_summary_wish_element, null);
+                TextView wishNameTextView = wishElement.findViewById(R.id.WishNameTextView);
+                TextView wishPriceTextView = wishElement.findViewById(R.id.WishPriceTextView);
+
+                wishNameTextView.setText(wish.dish.name);
+                wishPriceTextView.setText(wish.getTotalPrice() + "");
+
+                wishListLinearLayout.addView(wishElement);
+            }
+            orderListLinearLayout.addView(orderElement);
+        }
 
     }
 }
