@@ -221,7 +221,7 @@ public class MenuActivity extends AppCompatActivity {
         if(ordersLinearLayout != null) ordersLinearLayout.removeAllViews();
         ordersLinearLayout = findViewById(R.id.OrdersLinearLayout);
         for (int wishNumber = 0; wishNumber < wishes.size(); wishNumber++) {
-            View orderElement = getLayoutInflater().inflate(R.layout.order_list_element, null);
+            View orderElement = getLayoutInflater().inflate(R.layout.client_menu_wish_element, null);
 
             TextView orderPriceTextView = orderElement.findViewById(R.id.orderPriceTextView);
             orderPriceTextView.setText(wishes.get(wishNumber).getTotalPrice() + " zł");

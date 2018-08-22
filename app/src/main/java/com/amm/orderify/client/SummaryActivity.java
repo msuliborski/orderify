@@ -57,7 +57,17 @@ public class SummaryActivity extends AppCompatActivity
             e.printStackTrace();
         }
 
+
+
+        //====================================================================
+
         //do przerobienia!!!!!!!!!!!
+
+        //====================================================================
+        //update z 22/08/16:00
+        //nie gwarantuje ze dane sa poprawne, przejrzę w wolnej chwili
+
+        //====================================================================
 
 
     }
