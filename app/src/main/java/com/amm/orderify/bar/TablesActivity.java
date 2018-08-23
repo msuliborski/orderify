@@ -24,7 +24,6 @@ import java.util.List;
 import static com.amm.orderify.helpers.JBDCDriver.*;
 
 public class TablesActivity extends AppCompatActivity {
-    List<Table> tables = new ArrayList<>();
 
     boolean blMyAsyncTask;
     boolean cancelTask;
@@ -43,35 +42,9 @@ public class TablesActivity extends AppCompatActivity {
             generateTablesView();
         });
 
-        tables = getTables();
-        generateTablesView();
-
-
-//        List<Table> oldTables = new ArrayList<>(tables);
-//        List<Table> newTables = new ArrayList<>(tables);
-//        newTables.add(new Table(12, 12, "nin", 1, null));
-//        newTables.add(tables.get(1));
-//        List<Table> diff = getDifferenceFromTableLists(oldTables, newTables);
-//        Log.wtf("diff.size() ", diff.size() + "");
-//        Log.wtf("oldTables.size() ", oldTables.size() + "");
-//        Log.wtf("newTables.size() ", newTables.size() + "");
-//        Log.wtf("tables.size() ", tables.size() + "");
-//        Dish dish = new Dish(wishesRS.getInt("dishID"), wishesRS.getString("name"), wishesRS.getFloat("price"), null, null, null);
-//        wishes.add(new Wish(dish, wishesRS.getInt("amount"), addons));
-//        addons = new ArrayList<>();
-//    }
-//                    orders.add(new Order(ordersRS.getInt("ID"), ordersRS.getTime("time"), ordersRS.getDate("date"), ordersRS.getString("comments"), ordersRS.getInt("state"), clientRS.getInt("ID"), tablesRS.getInt("ID"), wishes));
-//    wishes = new ArrayList<>();
-//}
-//                    clients.add(new Client(clientRS.getInt("ID"), clientRS.getInt("number"), clientRS.getInt("state"), orders));
-//                            orders = new ArrayList<>();
-//        }
-//        tables.add(new Table(tablesRS.getInt("ID"), tablesRS.getInt("number"), tablesRS.getString("description"), tablesRS.getInt("state"), clients));
-//        clients = new ArrayList<>();
-//
-
-
-
+        runOnUiThread(() -> {
+            generateTablesView();
+        });
 
 //        Handler handler = new Handler();
 //        handler.postDelayed(new Runnable(){
@@ -99,6 +72,9 @@ public class TablesActivity extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     private void generateTablesView() {
+
+        List<Table> tables = getFullTablesData();
+
         if(tablesLinearLayout != null) tablesLinearLayout.removeAllViews();
         tablesLinearLayout = findViewById(R.id.TablesLinearLayout);
 
@@ -115,18 +91,13 @@ public class TablesActivity extends AppCompatActivity {
             TextView tableStateTextView = tableElement.findViewById(R.id.TableStateTextView);
             tableStateTextView.setText(table.getState());
 
-
-
             Button acceptRequestButton = tableElement.findViewById(R.id.AcceptRequestButton);
             acceptRequestButton.setOnClickListener(v -> {
                 if (table.state == 3) {
                     table.state = 1;
-                    try {
-                        ExecuteUpdate("UPDATE tables SET state = " + table.state + " WHERE ID = " + table.id);
-                    } catch (SQLException ignored) {
-                    }
+                    try { ExecuteUpdate("UPDATE tables SET state = " + table.state + " WHERE ID = " + table.id);
+                    } catch (SQLException ignored) {}
                 }
-                generateTablesView();
             });
 
             Button freezeStateButton = tableElement.findViewById(R.id.FreezeStateButton);
@@ -138,11 +109,8 @@ public class TablesActivity extends AppCompatActivity {
                     table.state = 1;
                     freezeStateButton.setText(R.string.bar_freeze_table_button_string);
                 }
-                try {
-                    ExecuteUpdate("UPDATE tables SET state = " + table.state + " WHERE ID = " + table.id);
-                } catch (SQLException ignored) {
-                }
-                //generateTablesView();
+                try { ExecuteUpdate("UPDATE tables SET state = " + table.state + " WHERE ID = " + table.id);
+                } catch (SQLException ignored) { }
             });
             if (table.state == 1) {
                 table.state = 2;
@@ -158,54 +126,138 @@ public class TablesActivity extends AppCompatActivity {
             else freezeStateButton.setText(R.string.bar_freeze_table_button_string);
 
             LinearLayout ordersLinearLayout = tableElement.findViewById(R.id.OrdersLinearLayout);
+            for (int clientNumber = 0; clientNumber < table.clients.size(); clientNumber++) {
+                Client client = table.clients.get(clientNumber);
+                for (int orderNumber = 0; orderNumber < client.orders.size(); orderNumber++) {
+                    Order order = client.orders.get(orderNumber);
+                    View orderElement = getLayoutInflater().inflate(R.layout.bar_order_element, null);
+
+                    ImageButton deleteOrderButton = orderElement.findViewById(R.id.DeleteOrderButton);
+                    deleteOrderButton.setOnClickListener(v -> {
+                        try {
+                            ExecuteUpdate("DELETE FROM orders WHERE ID = " + order.id);
+                        } catch (SQLException ignored) { }
+                        client.orders.remove(order);
+                        //ordersLinearLayout.removeView(orderElement);
+                        //updateTablesView();
+                    });
+
+                    TextView orderNumberTextView = orderElement.findViewById(R.id.OrderNumberTextView);
+                    orderNumberTextView.setText(order.id + "");
+
+                    TextView orderWaitingTimeTextView = orderElement.findViewById(R.id.OrderWaitingTimeTextView);
+                    orderWaitingTimeTextView.setText(order.getWaitingTime());
+
+                    TextView orderPriceTextView = orderElement.findViewById(R.id.OrderPriceTextView);
+                    orderPriceTextView.setText(order.getTotalPrice() + " zł");
+
+                    TextView orderStateTextView = orderElement.findViewById(R.id.OrderStateTextView);
+                    orderStateTextView.setText(order.getState());
+
+                    Button changeOrderStateButton = orderElement.findViewById(R.id.ChangeOrderStateButton);
+                    if (order.state == 1) changeOrderStateButton.setVisibility(View.VISIBLE);
+                    else changeOrderStateButton.setVisibility(View.GONE);
+                    changeOrderStateButton.setOnClickListener(v -> {
+                        if (order.state == 1) {
+                            order.state = 2;
+                            changeOrderStateButton.setVisibility(View.GONE);
+                        }
+                        try {
+                            ExecuteUpdate("UPDATE orders SET state = " + order.state + " WHERE ID = " + order.id);
+                        } catch (SQLException ignored) {
+                        }
+                    });
+
+                    TextView commentsTextView = orderElement.findViewById(R.id.CommentsTextView);
+                    commentsTextView.setText(order.comments);
+
+                    LinearLayout wishesLinearLayout = orderElement.findViewById(R.id.WishesLinearLayout);
+                    for (int wishNumber = 0; wishNumber < order.wishes.size(); wishNumber++) {
+                        Wish wish = order.wishes.get(wishNumber);
+                        View wishElement = getLayoutInflater().inflate(R.layout.bar_wish_element, null);
+
+                        TextView dishNameTextView = wishElement.findViewById(R.id.DishNameTextView);
+                        dishNameTextView.setText(wish.dish.name + " x" + wish.amount);
+
+                        LinearLayout addonsLinearLayout = wishElement.findViewById(R.id.AddonsLinearLayout);
+                        for (int addonNumber = 0; addonNumber < wish.addons.size(); addonNumber++) {
+                            Addon addon = wish.addons.get(addonNumber);
+
+                            View addonElement = getLayoutInflater().inflate(R.layout.bar_addon_element, null);
+
+                            TextView addonNameTextView = addonElement.findViewById(R.id.AddonNameTextView);
+                            addonNameTextView.setText(addon.name);
+
+                            addonsLinearLayout.addView(addonElement);
+                        }
+                        wishesLinearLayout.addView(wishElement);
+                    }
+                    ordersLinearLayout.addView(orderElement);
+                }
+            }
+            tablesLinearLayout.addView(tableElement);
+
+
             Button expandCollapseButton = tableElement.findViewById(R.id.ExpandCollapseButton);
             expandCollapseButton.setOnClickListener(v -> {
                 if (ordersLinearLayout.getVisibility() == View.GONE)
                     ordersLinearLayout.setVisibility(View.VISIBLE);
                 else ordersLinearLayout.setVisibility(View.GONE);
             });
-
-            tablesLinearLayout.addView(tableElement);
         }
-
-
-
-
     }
 
-    private void updateTable()
-    {
-        List<Order> newOrders = new ArrayList<>();
-        newOrders = getNewOrders();
-        Log.wtf("newOrders.size", newOrders.size() + "");
-        for (int orderNumber = 0; orderNumber < newOrders.size(); orderNumber++)
-        {
+    private void updateTablesView() {
+        List<Table> tables = getTablesData();
+        for(int tableNumber = 0; tableNumber < tables.size(); tableNumber++) {
+            Table table = tables.get(tableNumber);
+            try {
+                View tableElement = findTable(table.id);
+                TextView tableStateTextView = tableElement.findViewById(R.id.TableStateTextView);
+                String tableState = table.getState();
+                Thread.sleep(10);
+                runOnUiThread(() -> {
+                    tableStateTextView.setText(tableState);
+                });
+            } catch (Exception ignored) { }
+
+            for (int clientNumber = 0; clientNumber < table.clients.size(); clientNumber++) {
+                Client client = table.clients.get(clientNumber);
+                for (int orderNumber = 0; orderNumber < client.orders.size(); orderNumber++) {
+                    Order order = client.orders.get(orderNumber);
+                    try{
+                        View orderElement = findOrder(order.id).orderElement;
+                        TextView orderWaitingTimeTextView = orderElement.findViewById(R.id.OrderWaitingTimeTextView);
+                        String waitingTime = order.getWaitingTime();
+
+                        TextView orderStateTextView = orderElement.findViewById(R.id.OrderStateTextView);
+                        String orderState = order.getState();
+
+                        Thread.sleep(10);
+                        runOnUiThread(() -> {
+                            orderWaitingTimeTextView.setText(waitingTime);
+                            orderStateTextView.setText(orderState);
+                        });
+                    } catch(Exception ignore){}
+                }
+            }
+        }
+    }
+    private void addNewOrdersView() throws Exception{
+        List<Order> newOrders = getNewOrders();
+        for (int orderNumber = 0; orderNumber < newOrders.size(); orderNumber++) {
             Order order = newOrders.get(orderNumber);
+
             View tableElement = findTable(order.tableID);
-
             LinearLayout ordersLinearLayout = tableElement.findViewById(R.id.OrdersLinearLayout);
-            View orderElement = getLayoutInflater().inflate(R.layout.bar_order_element, null);
 
-//            ImageButton deleteOrderButton = orderElement.findViewById(R.id.DeleteOrderButton);
-//            deleteOrderButton.setOnClickListener(v -> {
-//                try {
-//                    ExecuteUpdate("DELETE FROM orders WHERE ID = " + order.id);
-//                } catch (SQLException ignored) {
-//                }
-//                for(int tableNumber = 0; tableNumber < tables.size(); tableNumber++)
-//                client.orders.remove(order);
-//                tables.get(order.tableID)
-//                //ordersLinearLayout.removeView(orderElement);
-//                generateTablesView();
-//            });
+            View orderElement = getLayoutInflater().inflate(R.layout.bar_order_element, null);
 
             TextView orderNumberTextView = orderElement.findViewById(R.id.OrderNumberTextView);
             TextView orderWaitingTimeTextView = orderElement.findViewById(R.id.OrderWaitingTimeTextView);
             TextView orderPriceTextView = orderElement.findViewById(R.id.OrderPriceTextView);
             TextView orderStateTextView = orderElement.findViewById(R.id.OrderStateTextView);
             TextView commentsTextView = orderElement.findViewById(R.id.CommentsTextView);
-
-
             runOnUiThread(() -> {
                 orderNumberTextView.setText(order.id + "");
                 orderWaitingTimeTextView.setText(order.getWaitingTime());
@@ -214,19 +266,29 @@ public class TablesActivity extends AppCompatActivity {
                 commentsTextView.setText(order.comments);
             });
 
+//            ImageButton deleteOrderButton = orderElement.findViewById(R.id.DeleteOrderButton);
+//            deleteOrderButton.setOnClickListener(v -> {
+//                try {
+//                    ExecuteUpdate("DELETE FROM orders WHERE ID = " + order.id);
+//                } catch (SQLException ignored) { }
+//                for(int tableNumber = 0; tableNumber < tables.size(); tableNumber++)
+//                client.orders.remove(order);
+//                tables.get(order.tableID)
+//                //ordersLinearLayout.removeView(orderElement);
+//                generateTablesView();
+//            });
+
+
+
             Button changeOrderStateButton = orderElement.findViewById(R.id.ChangeOrderStateButton);
-            if (order.state == 1)
-            {
+            if (order.state == 1) {
                 runOnUiThread(() -> {
                     changeOrderStateButton.setVisibility(View.VISIBLE);
                 });
-            }
-            else
-            {
+            } else {
                 runOnUiThread(() -> {
                     changeOrderStateButton.setVisibility(View.GONE);
                 });
-
             }
             changeOrderStateButton.setOnClickListener(v -> {
                 if (order.state == 1) {
@@ -237,10 +299,8 @@ public class TablesActivity extends AppCompatActivity {
                 }
                 try {
                     ExecuteUpdate("UPDATE orders SET state = " + order.state + " WHERE ID = " + order.id);
-                } catch (SQLException ignored) {
-                }
+                } catch (SQLException ignored) { }
             });
-
 
 
             LinearLayout wishesLinearLayout = orderElement.findViewById(R.id.WishesLinearLayout);
@@ -250,7 +310,7 @@ public class TablesActivity extends AppCompatActivity {
 
                 TextView dishNameTextView = wishElement.findViewById(R.id.DishNameTextView);
                 runOnUiThread(() -> {
-                    dishNameTextView.setText(wish.dish.name);
+                    dishNameTextView.setText(wish.dish.name + " x" + wish.amount);
                 });
 
                 LinearLayout addonsLinearLayout = wishElement.findViewById(R.id.AddonsLinearLayout);
@@ -274,15 +334,11 @@ public class TablesActivity extends AppCompatActivity {
             runOnUiThread(() -> {
                 ordersLinearLayout.addView(orderElement);
             });
-
-
-
         }
-
     }
 
 
-    private List<Table> getTables(){
+    private List<Table> getFullTablesData(){
         List<Table> tables = new ArrayList<>();
         List<Client> clients = new ArrayList<>();
         List<Order> orders = new ArrayList<>();
@@ -324,6 +380,38 @@ public class TablesActivity extends AppCompatActivity {
                 }
                 tables.add(new Table(tablesRS.getInt("ID"), tablesRS.getInt("number"), tablesRS.getString("description"), tablesRS.getInt("state"), clients));
                 clients = new ArrayList<>();
+
+                ExecuteUpdate("DELETE FROM newAddonsToWishes");
+                ExecuteUpdate("DELETE FROM newWishes");
+                ExecuteUpdate("DELETE FROM newOrders");
+            }
+        } catch (SQLException ignored) {}
+        return tables;
+    }
+
+    private List<Table> getTablesData(){
+        List<Table> tables = new ArrayList<>();
+        List<Client> clients = new ArrayList<>();
+        List<Order> orders = new ArrayList<>();
+        try {
+            Statement tablesS = getConnection().createStatement();
+            ResultSet tablesRS = tablesS.executeQuery("SELECT * FROM tables");
+            while (tablesRS.next()) {
+                Statement clientS = getConnection().createStatement();
+                ResultSet clientRS = clientS.executeQuery("SELECT * FROM clients \n" +
+                        "WHERE tableID = " + tablesRS.getInt("ID"));
+                while (clientRS.next()) {
+                    Statement ordersS = getConnection().createStatement();
+                    ResultSet ordersRS = ordersS.executeQuery("SELECT * FROM orders \n" +
+                            "WHERE clientID = " + clientRS.getInt("ID"));
+                    while (ordersRS.next()) {
+                        orders.add(new Order(ordersRS.getInt("ID"), ordersRS.getTime("time"), ordersRS.getDate("date"), ordersRS.getString("comments"), ordersRS.getInt("state"), clientRS.getInt("ID"), tablesRS.getInt("ID"), null));
+                    }
+                    clients.add(new Client(clientRS.getInt("ID"), clientRS.getInt("number"), clientRS.getInt("state"), orders));
+                    orders = new ArrayList<>();
+                }
+                tables.add(new Table(tablesRS.getInt("ID"), tablesRS.getInt("number"), tablesRS.getString("description"), tablesRS.getInt("state"), clients));
+                clients = new ArrayList<>();
             }
         } catch (SQLException ignored) {}
         return tables;
@@ -332,10 +420,10 @@ public class TablesActivity extends AppCompatActivity {
     private List<Order> getNewOrders(){
         List<Order> newOrders = new ArrayList<>();
         List<Wish> newWishes = new ArrayList<>();
-        List<Addon> addons = new ArrayList<>();
+        List<Addon> newAddons = new ArrayList<>();
         try {
             Statement newOrdersS = getConnection().createStatement();
-            ResultSet newOrdersRS = newOrdersS.executeQuery("SELECT newOrders.*, clients.ID AS clientID, " +
+            ResultSet newOrdersRS = newOrdersS.executeQuery("SELECT newOrders.*, " +
                                                                 "(SELECT ID FROM tables WHERE ID = clients.tableID) AS tableID FROM newOrders\n" +
                                                                 "JOIN clients ON clients.ID = newOrders.clientID\n" +
                                                                 "GROUP BY newOrders.ID");
@@ -350,20 +438,18 @@ public class TablesActivity extends AppCompatActivity {
                             "JOIN addons ON addons.ID = newAddonsToWishes.addonID\n" +
                             "WHERE wishID = " + newWishesRS.getInt("ID"));
                     while (addonsRS.next()) {
-                        addons.add(new Addon(addonsRS.getInt("addonID"), addonsRS.getString("name"), addonsRS.getFloat("price")));
+                        newAddons.add(new Addon(addonsRS.getInt("addonID"), addonsRS.getString("name"), addonsRS.getFloat("price")));
                     }
                     Dish dish = new Dish(newWishesRS.getInt("dishID"), newWishesRS.getString("name"), newWishesRS.getFloat("price"), null, null, null);
-                    newWishes.add(new Wish(dish, newWishesRS.getInt("amount"), addons));
-                    addons = new ArrayList<>();
+                    newWishes.add(new Wish(dish, newWishesRS.getInt("amount"), newAddons));
+                    newAddons = new ArrayList<>();
                 }
                 newOrders.add(new Order(newOrdersRS.getInt("ID"), newOrdersRS.getTime("time"), newOrdersRS.getDate("date"), newOrdersRS.getString("comments"), newOrdersRS.getInt("state"), newOrdersRS.getInt("clientID"), newOrdersRS.getInt("tableID"), newWishes));
                 newWishes = new ArrayList<>();
             }
-
             ExecuteUpdate("DELETE FROM newAddonsToWishes");
             ExecuteUpdate("DELETE FROM newWishes");
             ExecuteUpdate("DELETE FROM newOrders");
-
         } catch (SQLException e) {Log.wtf("!!!!!!!!!!!!!!EXCEPTION", e.getMessage()); }
         return newOrders;
     }
@@ -384,43 +470,15 @@ public class TablesActivity extends AppCompatActivity {
         @SuppressLint("SetTextI18n")
         @Override
         protected Void doInBackground(Void... params) {
+
             while(true) {
                 try {
-                    tables = getTables();
-                    updateTable();
                     Thread.sleep(10);
-                    for(int tableNumber = 0; tableNumber < tables.size(); tableNumber++) {
-                        final Table table = tables.get(tableNumber);
-                        View tableElement = findTable(table.id);
-                        TextView tableStateTextView = tableElement.findViewById(R.id.TableStateTextView);
-                        String tableState = table.getState();
-                        Thread.sleep(10);
-                        runOnUiThread(() -> {
-                            tableStateTextView.setText(tableState);
-                        });
-
-                        for (int clientNumber = 0; clientNumber < table.clients.size(); clientNumber++) {
-                            final Client client = table.clients.get(clientNumber);
-                            for (int orderNumber = 0; orderNumber < client.orders.size(); orderNumber++) {
-                                Order order = client.orders.get(orderNumber);
-                                View orderElement = findOrder(order.id).orderElement;
-
-                                TextView orderWaitingTimeTextView = orderElement.findViewById(R.id.OrderWaitingTimeTextView);
-                                String waitingTime = order.getWaitingTime();
-
-                                TextView orderStateTextView = orderElement.findViewById(R.id.OrderStateTextView);
-                                String orderState = order.getState();
-
-                                Thread.sleep(10);
-                                runOnUiThread(() -> {
-                                    orderWaitingTimeTextView.setText(waitingTime);
-                                    orderStateTextView.setText(orderState);
-                                });
-                            }
-                        }
-                    }
-                } catch (InterruptedException ignored) {}
-
+                    updateTablesView();
+                    addNewOrdersView();
+                    } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 if(Thread.interrupted()) break;
                 if (!blMyAsyncTask) break;
             }
@@ -439,29 +497,27 @@ public class TablesActivity extends AppCompatActivity {
         }
     }
 
-    View findTable (int tableNumber) {
-        for (int tableI = 0; tableI < tablesLinearLayout.getChildCount(); tableI++) {
-            final View tableElement = tablesLinearLayout.getChildAt(tableI);
+    View findTable (int tableID) throws Exception {
+        for (int tableNumber = 0; tableNumber < tablesLinearLayout.getChildCount(); tableNumber++) {
+            View tableElement = tablesLinearLayout.getChildAt(tableNumber);
             TextView tableNumberTextView = tableElement.findViewById(R.id.TableNumberTextView);
-            if (tableNumberTextView.getText().equals(String.valueOf(tableNumber))) {
+            if (tableNumberTextView.getText().equals(String.valueOf(tableID))) {
                 return tableElement;
             }
         }
         return null;
     }
 
-    OrderAndTableView findOrder (int orderNumber) {
+    OrderAndTableView findOrder (int orderID) throws Exception {
         for (int tableI = 0; tableI < tablesLinearLayout.getChildCount(); tableI++) {
-            final View tableElement = tablesLinearLayout.getChildAt(tableI);
-                final LinearLayout ordersLinearLayout = tableElement.findViewById(R.id.OrdersLinearLayout);
-                for (int orderI = 0; orderI < ordersLinearLayout.getChildCount(); orderI++) {
-                    final View orderElement = ordersLinearLayout.getChildAt(orderI);
+            View tableElement = tablesLinearLayout.getChildAt(tableI);
+                LinearLayout ordersLinearLayout = tableElement.findViewById(R.id.OrdersLinearLayout);
+                for (int orderNumber = 0; orderNumber < ordersLinearLayout.getChildCount(); orderNumber++) {
+                    View orderElement = ordersLinearLayout.getChildAt(orderNumber);
                     TextView orderNr = orderElement.findViewById(R.id.OrderNumberTextView);
 
-                    if (orderNr.getText().equals(String.valueOf(orderNumber)) ) {
-                        OrderAndTableView OiT = new OrderAndTableView(tableElement, orderElement);
-                        return OiT;
-                    }
+                    if (orderNr.getText().equals(String.valueOf(orderID)) )
+                        return new OrderAndTableView(tableElement, orderElement);
                 }
         }
         return null;
@@ -476,144 +532,4 @@ public class TablesActivity extends AppCompatActivity {
             this.tableElement = tableElement;
         }
     }
-//    @SuppressLint("SetTextI18n")
-//    private void generateTablesView() {
-//        if(tablesLinearLayout != null) tablesLinearLayout.removeAllViews();
-//        tablesLinearLayout = findViewById(R.id.TablesLinearLayout);
-//
-//        for (int tableNumber = 0; tableNumber < tables.size(); tableNumber++) {
-//            Table table = tables.get(tableNumber);
-//            View tableElement = getLayoutInflater().inflate(R.layout.bar_table_element, null);
-//
-//            TextView tableNumberTextView = tableElement.findViewById(R.id.TableNumberTextView);
-//            tableNumberTextView.setText(table.number + "");
-//
-//            TextView overallPriceTextView = tableElement.findViewById(R.id.OverallPriceTextView);
-//            overallPriceTextView.setText(table.getTotalPrice() + " zł");
-//
-//            TextView tableStateTextView = tableElement.findViewById(R.id.TableStateTextView);
-//            tableStateTextView.setText(table.getState());
-//
-//
-//
-//            Button acceptRequestButton = tableElement.findViewById(R.id.AcceptRequestButton);
-//            acceptRequestButton.setOnClickListener(v -> {
-//                if (table.state == 3) {
-//                    table.state = 1;
-//                    try {
-//                        ExecuteUpdate("UPDATE tables SET state = " + table.state + " WHERE ID = " + table.id);
-//                    } catch (SQLException ignored) {
-//                    }
-//                }
-//                generateTablesView();
-//            });
-//
-//            Button freezeStateButton = tableElement.findViewById(R.id.FreezeStateButton);
-//            freezeStateButton.setOnClickListener(v -> {
-//                if (table.state == 1) {
-//                    table.state = 2;
-//                    freezeStateButton.setText(R.string.bar_unfreeze_table_button_string);
-//                } else {
-//                    table.state = 1;
-//                    freezeStateButton.setText(R.string.bar_freeze_table_button_string);
-//                }
-//                try {
-//                    ExecuteUpdate("UPDATE tables SET state = " + table.state + " WHERE ID = " + table.id);
-//                } catch (SQLException ignored) {
-//                }
-//                //generateTablesView();
-//            });
-//            if (table.state == 1) {
-//                table.state = 2;
-//                freezeStateButton.setText(R.string.bar_unfreeze_table_button_string);
-//                tableStateTextView.setText("FREEZED!");
-//            } else {
-//                table.state = 1;
-//                freezeStateButton.setText(R.string.bar_freeze_table_button_string);
-//                tableStateTextView.setText("READY!");
-//            }
-//
-//            if (table.state == 1) freezeStateButton.setText(R.string.bar_unfreeze_table_button_string);
-//            else freezeStateButton.setText(R.string.bar_freeze_table_button_string);
-//
-//            LinearLayout ordersLinearLayout = tableElement.findViewById(R.id.OrdersLinearLayout);
-//            Button expandCollapseButton = tableElement.findViewById(R.id.ExpandCollapseButton);
-//            expandCollapseButton.setOnClickListener(v -> {
-//                if (ordersLinearLayout.getVisibility() == View.GONE)
-//                    ordersLinearLayout.setVisibility(View.VISIBLE);
-//                else ordersLinearLayout.setVisibility(View.GONE);
-//            });
-//            for (int clientNumber = 0; clientNumber < table.clients.size(); clientNumber++) {
-//                Client client = table.clients.get(clientNumber);
-//                for (int orderNumber = 0; orderNumber < client.orders.size(); orderNumber++) {
-//                    Order order = client.orders.get(orderNumber);
-//                    View orderElement = getLayoutInflater().inflate(R.layout.bar_order_element, null);
-//
-//                    ImageButton deleteOrderButton = orderElement.findViewById(R.id.DeleteOrderButton);
-//                    deleteOrderButton.setOnClickListener(v -> {
-//                        try {
-//                            ExecuteUpdate("DELETE FROM orders WHERE ID = " + order.id);
-//                        } catch (SQLException ignored) {
-//                        }
-//                        client.orders.remove(order);
-//                        //ordersLinearLayout.removeView(orderElement);
-//                        generateTablesView();
-//                    });
-//
-//                    TextView orderNumberTextView = orderElement.findViewById(R.id.OrderNumberTextView);
-//                    orderNumberTextView.setText(order.id + "");
-//
-//                    TextView orderWaitingTimeTextView = orderElement.findViewById(R.id.OrderWaitingTimeTextView);
-//                    orderWaitingTimeTextView.setText(order.getWaitingTime());
-//
-//                    TextView orderPriceTextView = orderElement.findViewById(R.id.OrderPriceTextView);
-//                    orderPriceTextView.setText(order.getTotalPrice() + " zł");
-//
-//                    TextView orderStateTextView = orderElement.findViewById(R.id.OrderStateTextView);
-//                    orderStateTextView.setText(order.getState());
-//
-//                    Button changeOrderStateButton = orderElement.findViewById(R.id.ChangeOrderStateButton);
-//                    if (order.state == 1) changeOrderStateButton.setVisibility(View.VISIBLE);
-//                    else changeOrderStateButton.setVisibility(View.GONE);
-//                    changeOrderStateButton.setOnClickListener(v -> {
-//                        if (order.state == 1) {
-//                            order.state = 2;
-//                            changeOrderStateButton.setVisibility(View.GONE);
-//                        }
-//                        try {
-//                            ExecuteUpdate("UPDATE orders SET state = " + order.state + " WHERE ID = " + order.id);
-//                        } catch (SQLException ignored) {
-//                        }
-//                    });
-//
-//                    TextView commentsTextView = orderElement.findViewById(R.id.CommentsTextView);
-//                    commentsTextView.setText(order.comments);
-//
-//                    LinearLayout wishesLinearLayout = orderElement.findViewById(R.id.WishesLinearLayout);
-//                    for (int wishNumber = 0; wishNumber < order.wishes.size(); wishNumber++) {
-//                        Wish wish = order.wishes.get(wishNumber);
-//                        View wishElement = getLayoutInflater().inflate(R.layout.bar_wish_element, null);
-//
-//                        TextView dishNameTextView = wishElement.findViewById(R.id.DishNameTextView);
-//                        dishNameTextView.setText(wish.dish.name);
-//
-//                        LinearLayout addonsLinearLayout = wishElement.findViewById(R.id.AddonsLinearLayout);
-//                        for (int addonNumber = 0; addonNumber < wish.addons.size(); addonNumber++) {
-//                            Addon addon = wish.addons.get(addonNumber);
-//
-//                            View addonElement = getLayoutInflater().inflate(R.layout.bar_addon_element, null);
-//
-//                            TextView addonNameTextView = addonElement.findViewById(R.id.AddonNameTextView);
-//                            addonNameTextView.setText(addon.name);
-//
-//                            addonsLinearLayout.addView(addonElement);
-//                        }
-//                        wishesLinearLayout.addView(wishElement);
-//                    }
-//                    ordersLinearLayout.addView(orderElement);
-//                }
-//            }
-//            tablesLinearLayout.addView(tableElement);
-//        }
-//    }
 }

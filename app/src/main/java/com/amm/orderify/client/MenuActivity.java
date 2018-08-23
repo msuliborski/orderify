@@ -7,6 +7,7 @@ import android.support.constraint.ConstraintSet;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayout;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -43,7 +44,6 @@ public class MenuActivity extends AppCompatActivity {
     TextView totalPriceTextView;
 
     List<Wish> wishes = new ArrayList<>();
-    List<Addon> addons = new ArrayList<>();
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -63,7 +63,7 @@ public class MenuActivity extends AppCompatActivity {
 
         ImageButton orderButton = findViewById(R.id.OrderButton);
         orderButton.setOnClickListener((View e) -> {
-            addOrder();
+            if(!wishes.equals(new ArrayList<>())) addOrder();
         });
 
         ImageButton goToSummaryButton = findViewById(R.id.GoToSummaryButton);
@@ -85,6 +85,8 @@ public class MenuActivity extends AppCompatActivity {
                 } catch (SQLException ignored) {}
             }
         });
+
+
 
 
     }
@@ -135,6 +137,7 @@ public class MenuActivity extends AppCompatActivity {
 
                 ImageButton menuBackgroundButton = dishElement.findViewById(R.id.MenuBackgroundButton);
                 menuBackgroundButton.setOnClickListener(v -> {
+                    //dish.chosenAddons = dish.baseChosenAddons;
                     if(menuExpand.getVisibility() == View.GONE) {
                         menuExpand.setVisibility(View.VISIBLE);
                         shortDescriptionTextView.setVisibility(View.GONE);
@@ -149,12 +152,11 @@ public class MenuActivity extends AppCompatActivity {
                         constraintSetCopy.applyTo(cl);
                         shortDescriptionTextView.setVisibility(View.VISIBLE);
                     }
-                    addons = new ArrayList<>();
                 });
 
                 ImageView addToOrderButton = dishElement.findViewById(R.id.AddToOrderButton);
                 addToOrderButton.setOnClickListener(e -> {
-                    Wish newWish = new Wish(dish, 1, addons);
+                    Wish newWish = new Wish(dish, 1, new ArrayList<>(dish.chosenAddons));
                     for(int wishI = 0; wishI < wishes.size(); wishI++){
                         if (wishesTheSame(wishes.get(wishI), newWish)) {
                             wishes.get(wishI).amount++; break;}
@@ -164,7 +166,6 @@ public class MenuActivity extends AppCompatActivity {
                     if (wishes.size() == 0) wishes.add(newWish);
                     updateOrders();
                     menuExpand.setVisibility(View.GONE);
-                    addons = new ArrayList<>();
                 });
 
                 GridLayout addonCategoriesGridLayout = dishElement.findViewById(R.id.AddonCategoriesGridLayout);
@@ -187,26 +188,28 @@ public class MenuActivity extends AppCompatActivity {
                             addonElement.setOnClickListener(e -> {
                                 if(CheckboxCheckImage.getVisibility() == View.INVISIBLE) {
                                     CheckboxCheckImage.setVisibility(View.VISIBLE);
-                                    addons.add(addon);
+                                    dish.chosenAddons.add(addon);
                                 } else {
                                     CheckboxCheckImage.setVisibility(View.INVISIBLE);
-                                    addons.remove(addon);
+                                    dish.chosenAddons.remove(addon);
                                 }
+
                             });
                         } else {
-                            if (addonNumber == 0 && addonCategory.addons.size() > 1){ //czy działa?
+                            if (addonNumber == 0){
                                 CheckboxCheckImage.setVisibility(View.VISIBLE);
-                                addons.add(addon); }
+                                dish.chosenAddons.add(addon);
+                                dish.baseChosenAddons.add(addon); }
                             addonElement.setOnClickListener(e -> {
                                 final int childCount = AddonsLinearLayout.getChildCount();
                                 for(int ii = 0; ii < childCount; ii++) {
                                     View vv = AddonsLinearLayout.getChildAt(ii);
                                     ImageView iv = vv.findViewById(R.id.CheckboxCheckImage);
                                     iv.setVisibility(View.INVISIBLE);
-                                    addons.remove(addonCategory.addons.get(ii));
+                                    dish.chosenAddons.remove(addonCategory.addons.get(ii));
                                 }
                                 CheckboxCheckImage.setVisibility(View.VISIBLE);
-                                addons.add(addon);
+                                dish.chosenAddons.add(addon);
                             });
                         }
                         AddonsLinearLayout.addView(addonElement);
@@ -317,7 +320,6 @@ public class MenuActivity extends AppCompatActivity {
                         "VALUES  ("+ wishes.get(wishI).dish.id + ", " + wishes.get(wishI).amount + ", " + newOrderID + ");");
                 ExecuteUpdate("INSERT INTO newWishes (dishID, amount, orderID)\n" +
                         "VALUES  ("+ wishes.get(wishI).dish.id + ", " + wishes.get(wishI).amount + ", " + newOrderID + ");");
-
                 int newWishID = 0;
                 ResultSet wishIDRS = ExecuteQuery("SELECT LAST_INSERT_ID();");
                 if(wishIDRS.next()) newWishID = wishIDRS.getInt(1);
