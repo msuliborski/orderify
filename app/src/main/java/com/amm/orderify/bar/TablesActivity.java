@@ -264,19 +264,20 @@ public class TablesActivity extends AppCompatActivity {
                         });
 
                         final LinearLayout ordersLinearLayout = tableElement.findViewById(R.id.OrdersLinearLayout);
-                        for (int clientNumber = 0; clientNumber < table.clients.size(); clientNumber++) {
-                            final Client client = table.clients.get(clientNumber);
+//                        for (int clientNumber = 0; clientNumber < table.clients.size(); clientNumber++) {
+//                            final Client client = table.clients.get(clientNumber);
 
-                            for (int orderNumber = 0; orderNumber < tablesLinearLayout.getChildCount(); orderNumber++) {
-                                final Order order = client.orders.get(orderNumber);
+                            for (int orderNumber = 0; orderNumber < ordersLinearLayout.getChildCount(); orderNumber++) {
+                                //final Order order = client.orders.get(orderNumber);
+                                //final Order order = table.clients.orders.get(orderNumber);
                                 final View orderElement = ordersLinearLayout.getChildAt(orderNumber);
                                 TextView orderWaitingTimeTextView = orderElement.findViewById(R.id.OrderWaitingTimeTextView);
                                 Thread.sleep(10);
                                 runOnUiThread(() -> {
-                                    orderWaitingTimeTextView.setText(order.getWaitingTime());
+                                    orderWaitingTimeTextView.setText("03:21");
                                 });
                             }
-                        }
+//                        }
                     }
                 } catch (InterruptedException ignored) {}
             }
