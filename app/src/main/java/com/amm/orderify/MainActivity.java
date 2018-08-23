@@ -10,7 +10,11 @@ import android.widget.Button;
 
 import com.amm.orderify.bar.TablesActivity;
 import com.amm.orderify.client.MenuActivity;
+import com.amm.orderify.helpers.data.Client;
 import com.amm.orderify.maintenance.ChoseActivity;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import static com.amm.orderify.helpers.JBDCDriver.*;
 import static com.amm.orderify.helpers.TimeAndDate.*;
@@ -19,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    public static int thisClientID = 1;
+    public static Client client;
 
 
     @Override
@@ -26,11 +32,21 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.app_main_activity);
 
+        InitiateConnection();
+        ConnectToDatabase();
+
+        //get table
+        //??
+
+        //get client
+        try {
+            ResultSet clientRS = ExecuteQuery("SELECT * FROM clients WHERE ID = " + thisClientID);
+            if(clientRS.next()) client = new Client(thisClientID, clientRS.getInt("number"), clientRS.getInt("state"), null);
+        } catch (SQLException ignore) {}
+
         //ask for permissions
         ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE }, 1);
 
-        InitiateConnection();
-        ConnectToDatabase();
 
         Button barButton = findViewById(R.id.BarButton);
         barButton.setOnClickListener(e -> {

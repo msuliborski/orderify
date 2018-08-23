@@ -26,6 +26,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.amm.orderify.MainActivity.client;
 import static com.amm.orderify.helpers.JBDCDriver.*;
 import static com.amm.orderify.helpers.TimeAndDate.*;
 
@@ -43,20 +44,13 @@ public class MenuActivity extends AppCompatActivity {
     List<Wish> wishes = new ArrayList<>();
     List<Addon> addons = new ArrayList<>();
 
-    int thisTableID = 1;
-    Table table;
-
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.client_menu_activity);
 
-        try {
-            ResultSet tableRS = ExecuteQuery("SELECT * FROM tables " +
-                                             "WHERE ID = " + thisTableID);
-            if(tableRS.next()) table = new Table(thisTableID, tableRS.getInt("number"), tableRS.getString("description"), tableRS.getInt("state"), null);
-        } catch (SQLException ignore) {}
+
 
         dishCategories = getDishCategories();
         updateMenu();
@@ -83,10 +77,10 @@ public class MenuActivity extends AppCompatActivity {
 
         ImageButton askWaiterButton = findViewById(R.id.AskWaiterButton);
         askWaiterButton.setOnClickListener(e -> {
-            if(table.state == 1) {
-                table.state = 3;
+            if(client.state == 1) {
+                client.state = 3;
                 try {
-                    ExecuteUpdate("UPDATE tables SET state = " + table.state +  " WHERE ID = " + table.id);
+                    ExecuteUpdate("UPDATE clients SET state = " + client.state +  " WHERE ID = " + client.id);
                 } catch (SQLException ignored) {}
             }
         });
@@ -306,7 +300,7 @@ public class MenuActivity extends AppCompatActivity {
                         while (addonsRS.next()) {
                             addons.add(new Addon(addonsRS.getInt("ID"), addonsRS.getString("name"), addonsRS.getFloat("price")));
                         }
-                        addonCategories.add(new AddonCategory(addonCategoriesRS.getInt("ID"), addonCategoriesRS.getString("name"), addonCategoriesRS.getBoolean("multiChoice"), addons));
+                        addonCategories.add(new AddonCategory(addonCategoriesRS.getInt("ID"), addonCategoriesRS.getString("name"), addonCategoriesRS.getString("description"), addonCategoriesRS.getBoolean("multiChoice"), addons));
                         addons = new ArrayList<>();
                     }
                     dishes.add(new Dish(dishesRS.getInt("ID"), dishesRS.getString("name"),
@@ -323,8 +317,8 @@ public class MenuActivity extends AppCompatActivity {
 
     private void addOrder(){
         try {
-            ExecuteUpdate("INSERT INTO orders (time, date, tableID, comments, state)\n" +
-                    "VALUES  ('" + getCurrentTime() +"', '" + getCurrentDate() +"', " + table.id + ", '" + enterCommentsEditText.getText() + "', 1);"); //add current data
+            ExecuteUpdate("INSERT INTO orders (time, date, comments, state, clientID)\n" +
+                    "VALUES  ('" + getCurrentTime() +"', '" + getCurrentDate() +"', '" + enterCommentsEditText.getText() + "', 1, " + client.id + ");");
             int newOrderID = 0;
             ResultSet orderIDRS = ExecuteQuery("SELECT LAST_INSERT_ID();");
             if(orderIDRS.next()) newOrderID = orderIDRS.getInt(1);

@@ -2,7 +2,6 @@ package com.amm.orderify.client;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -16,54 +15,22 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.amm.orderify.MainActivity.thisClientID;
 import static com.amm.orderify.helpers.JBDCDriver.getConnection;
 
 public class SummaryActivity extends AppCompatActivity
 {
     LinearLayout orderListLinearLayout;
-    List<Order> orders = new ArrayList<>();
-    List<Wish> wishes = new ArrayList<>();
-    List<Addon> addons = new ArrayList<>();
-
+    List<Order> orders;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.client_summary_activity);
 
-        int tableID = 1;
+        orders = getOrders();
 
-
-        try {
-            Statement ordersS = getConnection().createStatement();
-            ResultSet ordersRS = ordersS.executeQuery("SELECT * FROM orders\n" +
-                    "WHERE tableID = " + tableID);
-            while (ordersRS.next()){
-                Statement wishesS = getConnection().createStatement();
-                ResultSet wishesRS = wishesS.executeQuery("SELECT dishID, name, price, amount, orderID FROM wishes\n" +
-                                                               "JOIN dishes ON dishes.ID = wishes.dishID\n" +
-                                                               "WHERE orderID = " + ordersRS.getInt("ID"));
-                while (wishesRS.next()){
-                    Statement addonsS = getConnection().createStatement();
-                    ResultSet addonsRS = addonsS.executeQuery("SELECT addonID, name, price FROM addonsToWishes\n" +
-                            "JOIN addons ON addons.ID = addonsToWishes.addonID\n" +
-                            "WHERE wishID = " + wishesRS.getInt("ID"));
-                    while (addonsRS.next()){
-                        addons.add(new Addon(addonsRS.getInt("addonID"), addonsRS.getString("name"), addonsRS.getFloat("price")));
-                    }
-                    Dish dish = new Dish(wishesRS.getInt("dishID"), wishesRS.getString("name"), wishesRS.getFloat("price"), null, null, null);
-                    wishes.add(new Wish(dish, wishesRS.getInt("amount"), addons));
-                    addons = new ArrayList<>();
-                }
-                orders.add(new Order(ordersRS.getInt("ID"), null, null, ordersRS.getInt("tableID"), ordersRS.getString("comments"), ordersRS.getInt("state"), wishes));
-                wishes = new ArrayList<>();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        createOrderList();
+        updateOrdersView();
 
 
 
@@ -79,13 +46,12 @@ public class SummaryActivity extends AppCompatActivity
 
 
     }
-    public void createOrderList()
-    {
+
+    public void updateOrdersView() {
         if(orderListLinearLayout != null) orderListLinearLayout.removeAllViews();
         orderListLinearLayout = findViewById(R.id.WishListLinearLayout);
 
-        for (int orderNumber = 0; orderNumber < orders.size(); orderNumber++)
-        {
+        for (int orderNumber = 0; orderNumber < orders.size(); orderNumber++) {
             final Order order = orders.get(orderNumber);
             View orderElement = getLayoutInflater().inflate(R.layout.client_summary_order_element, null);
 
@@ -100,8 +66,7 @@ public class SummaryActivity extends AppCompatActivity
 
             LinearLayout wishListLinearLayout = orderElement.findViewById(R.id.WishListLinearLayout);
 
-            for (int wishNumber = 0; wishNumber < order.wishes.size(); wishNumber++)
-            {
+            for (int wishNumber = 0; wishNumber < order.wishes.size(); wishNumber++) {
                 final Wish wish = order.wishes.get(wishNumber);
 
                 View wishElement = getLayoutInflater().inflate(R.layout.client_summary_wish_element, null);
@@ -115,6 +80,37 @@ public class SummaryActivity extends AppCompatActivity
             }
             orderListLinearLayout.addView(orderElement);
         }
+    }
 
+    private List<Order> getOrders(){
+        List<Order> orders = new ArrayList<>();
+        List<Wish> wishes = new ArrayList<>();
+        List<Addon> addons = new ArrayList<>();
+        try {
+            Statement ordersS = getConnection().createStatement();
+            ResultSet ordersRS = ordersS.executeQuery("SELECT * FROM orders \n" +
+                    "WHERE clientID = " + thisClientID);
+            while (ordersRS.next()) {
+                Statement wishesS = getConnection().createStatement();
+                ResultSet wishesRS = wishesS.executeQuery("SELECT wishes.ID, dishID, name, price, amount, orderID FROM wishes\n" +
+                        "JOIN dishes ON dishes.ID = wishes.dishID\n" +
+                        "WHERE orderID = " + ordersRS.getInt("ID"));
+                while (wishesRS.next()) {
+                    Statement addonsS = getConnection().createStatement();
+                    ResultSet addonsRS = addonsS.executeQuery("SELECT addonID, name, price FROM addonsToWishes\n" +
+                            "JOIN addons ON addons.ID = addonsToWishes.addonID\n" +
+                            "WHERE wishID = " + wishesRS.getInt("ID"));
+                    while (addonsRS.next()) {
+                        addons.add(new Addon(addonsRS.getInt("addonID"), addonsRS.getString("name"), addonsRS.getFloat("price")));
+                    }
+                    Dish dish = new Dish(wishesRS.getInt("dishID"), wishesRS.getString("name"), wishesRS.getFloat("price"), null, null, null);
+                    wishes.add(new Wish(dish, wishesRS.getInt("amount"), addons));
+                    addons = new ArrayList<>();
+                }
+                orders.add(new Order(ordersRS.getInt("ID"), ordersRS.getTime("time"), ordersRS.getDate("date"), ordersRS.getString("comments"), ordersRS.getInt("state"), ordersRS.getInt("clientID"), wishes));
+                wishes = new ArrayList<>();
+            }
+        } catch (SQLException ignored) {}
+        return orders;
     }
 }

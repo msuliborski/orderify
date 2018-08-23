@@ -37,7 +37,7 @@ public class AddAddonCategoryActivity extends AppCompatActivity {
 
         try {
             ResultSet addonCategoriesRS = ExecuteQuery("SELECT * FROM addonCategories");
-            while (addonCategoriesRS.next()) addonCategories.add(new AddonCategory(addonCategoriesRS.getInt("ID"), addonCategoriesRS.getString("name"), addonCategoriesRS.getBoolean("multiChoice"), null));
+            while (addonCategoriesRS.next()) addonCategories.add(new AddonCategory(addonCategoriesRS.getInt("ID"), addonCategoriesRS.getString("name"), addonCategoriesRS.getString("description"), addonCategoriesRS.getBoolean("multiChoice"), null));
         } catch (SQLException ignored) {}
 
         addonCategoriesLinearLayout = findViewById(R.id.AddonCategoryLinearLayout);
@@ -57,7 +57,7 @@ public class AddAddonCategoryActivity extends AppCompatActivity {
                 int newAddonCategoryID = 0;
                 ResultSet orderIDRS = ExecuteQuery("SELECT LAST_INSERT_ID();");
                 while (orderIDRS.next()) newAddonCategoryID = orderIDRS.getInt(1);
-                addonCategories.add(new AddonCategory(newAddonCategoryID, addonCategoryNameEditText.getText().toString(), multiChoiceToggleButton.isChecked(), null));
+                addonCategories.add(new AddonCategory(newAddonCategoryID, addonCategoryNameEditText.getText().toString(), null, multiChoiceToggleButton.isChecked(), null));
             } catch (SQLException ignored) { }
             Toast.makeText(this, "AddonCategory added!", Toast.LENGTH_SHORT).show();
             //addonCategoryNameEditText.setText("");

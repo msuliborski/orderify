@@ -7,18 +7,18 @@ public class Order {
     public int id;
     public Date time;
     public Date date;
-    public int tableID;
     public String comments;
     public int state;
+    public int clientID;
     public List<Wish> wishes;
 
-    public Order(int id, Date time, Date date, int tableID, String comments, int state, List<Wish> wishes) {
+    public Order(int id, Date time, Date date, String comments, int state, int clientID, List<Wish> wishes) {
         this.id = id;
         this.time = time;
         this.date = date;
-        this.tableID = tableID;
         this.comments = comments;
         this.state = state;
+        this.clientID = clientID;
         this.wishes = wishes;
     }
 

@@ -52,7 +52,7 @@ public class AddDishActivity extends AppCompatActivity {
 
         try {
             ResultSet addonCategoriesRS = ExecuteQuery("SELECT * FROM addonCategories");
-            while (addonCategoriesRS.next()) addonCategories.add(new AddonCategory(addonCategoriesRS.getInt("ID"), addonCategoriesRS.getString("name"), addonCategoriesRS.getBoolean("multiChoice"), null));
+            while (addonCategoriesRS.next()) addonCategories.add(new AddonCategory(addonCategoriesRS.getInt("ID"), null, addonCategoriesRS.getString("name"), addonCategoriesRS.getBoolean("multiChoice"), null));
 
             ResultSet dishCategoriesRS = ExecuteQuery("SELECT * FROM dishCategories");
             while (dishCategoriesRS.next()) dishCategories.add(new DishCategory(dishCategoriesRS.getInt("ID"), dishCategoriesRS.getString("name"), null));
