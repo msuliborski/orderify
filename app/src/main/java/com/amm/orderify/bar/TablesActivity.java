@@ -118,11 +118,9 @@ public class TablesActivity extends AppCompatActivity {
                 if (table.state == 1) {
                     table.state = 2;
                     freezeStateButton.setText(R.string.bar_unfreeze_table_button_string);
-                    tableStateTextView.setText("FREEZED!");
                 } else {
                     table.state = 1;
                     freezeStateButton.setText(R.string.bar_freeze_table_button_string);
-                    tableStateTextView.setText("READY!");
                 }
                 try {
                     ExecuteUpdate("UPDATE tables SET state = " + table.state + " WHERE ID = " + table.id);
@@ -139,7 +137,7 @@ public class TablesActivity extends AppCompatActivity {
                 freezeStateButton.setText(R.string.bar_freeze_table_button_string);
                 tableStateTextView.setText("READY!");
             }
-            
+
             if (table.state == 1) freezeStateButton.setText(R.string.bar_unfreeze_table_button_string);
             else freezeStateButton.setText(R.string.bar_freeze_table_button_string);
 
@@ -291,7 +289,7 @@ public class TablesActivity extends AppCompatActivity {
             while(true) {
                 try {
                     tables = getTables();
-                    Thread.sleep(100);
+                    Thread.sleep(10);
 //                    for (int tableNumber = 0; tableNumber < tablesLinearLayout.getChildCount(); tableNumber++) {
 //                        final Table table = tables.get(tableNumber);
 //                        final View tableElement = tablesLinearLayout.getChildAt(tableNumber);
@@ -324,6 +322,7 @@ public class TablesActivity extends AppCompatActivity {
                         View tableElement = findTable(table.id);
                         TextView tableStateTextView = tableElement.findViewById(R.id.TableStateTextView);
                         String tableState = table.getState();
+                        Thread.sleep(10);
                         runOnUiThread(() -> {
                             tableStateTextView.setText(tableState);
                         });
