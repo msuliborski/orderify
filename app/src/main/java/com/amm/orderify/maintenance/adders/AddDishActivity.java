@@ -3,6 +3,7 @@ package com.amm.orderify.maintenance.adders;
 import android.annotation.SuppressLint;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -52,7 +53,7 @@ public class AddDishActivity extends AppCompatActivity {
 
         try {
             ResultSet addonCategoriesRS = ExecuteQuery("SELECT * FROM addonCategories");
-            while (addonCategoriesRS.next()) addonCategories.add(new AddonCategory(addonCategoriesRS.getInt("ID"), null, addonCategoriesRS.getString("name"), addonCategoriesRS.getBoolean("multiChoice"), null));
+            while (addonCategoriesRS.next()) addonCategories.add(new AddonCategory(addonCategoriesRS.getInt("ID"), addonCategoriesRS.getString("name"), addonCategoriesRS.getString("name"), addonCategoriesRS.getBoolean("multiChoice"), null));
 
             ResultSet dishCategoriesRS = ExecuteQuery("SELECT * FROM dishCategories");
             while (dishCategoriesRS.next()) dishCategories.add(new DishCategory(dishCategoriesRS.getInt("ID"), dishCategoriesRS.getString("name"), null));
@@ -79,15 +80,24 @@ public class AddDishActivity extends AppCompatActivity {
         updateChosenAddonCategoryList();
 
 
-
-
-        EditText dishCategoryNameEditText = findViewById(R.id.DishCategoryNameEditText);
-
         Button addDishButton = findViewById(R.id.AddDishButton);
         addDishButton.setOnClickListener(e -> {
             try {
                 ExecuteUpdate("INSERT INTO dishes (name, price, descS, descL, dishCategoryID)\n" +
                         "VALUES  ('"+ nameEditText.getText() + "', "+ priceEditText.getText() + ", '" + descSEditText.getText() + "', '"+ descLEditText.getText() + "', "+ dishCategories.get((int) dishCategoriesSpinner.getSelectedItemId()).id + ")");
+
+                int newDishID = 0;
+                ResultSet orderIDRS = ExecuteQuery("SELECT LAST_INSERT_ID();");
+                if(orderIDRS.next()) newDishID = orderIDRS.getInt(1);
+
+                for(int addonCategoryNumber = 0; addonCategoryNumber < chosenAddonCategories.size(); addonCategoryNumber++) {
+                    ExecuteUpdate("INSERT INTO addonCategoriesToDishes (dishID, addonCategoryID) \n" +
+                            "VALUES  (" + newDishID + ", " + chosenAddonCategories.get(addonCategoryNumber).id + ")");
+                }
+
+
+
+
             } catch (SQLException ignored) { }
             Toast.makeText(this, "Dish added!", Toast.LENGTH_SHORT).show();
             //dishCategoryNameEditText.setText("");
@@ -120,6 +130,7 @@ public class AddDishActivity extends AppCompatActivity {
 
             TextView nameTextView = addonCategoryElement.findViewById(R.id.NameTextView);
             nameTextView.setText(addonCategories.get(addonCategoryNumber).name);
+            Log.wtf("eff", addonCategories.get(addonCategoryNumber).name);
 
             TextView multiChoiceTextView = addonCategoryElement.findViewById(R.id.MultiChoiceTextView);
             if (addonCategories.get(addonCategoryNumber).multiChoice) multiChoiceTextView.setText("YES");

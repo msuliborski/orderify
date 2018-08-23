@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <ScrollView
-        android:id="@+id/AddonCategoriesScrollView"
+        android:id="@+id/AddDishScrollView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
@@ -31,16 +31,43 @@
             tools:layout_editor_absoluteY="153dp">
 
 
+            <TextView
+                android:id="@+id/DishCategoryTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="Dish category:"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <Spinner
                 android:id="@+id/DishCategoriesSpinner"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:layout_editor_absoluteX="0dp" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/DishCategoryTextView" />
+
+            <TextView
+                android:id="@+id/AddonCategoriesTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="Addon categories"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/DishCategoriesSpinner" />
 
             <android.support.constraint.ConstraintLayout
-                android:id="@+id/constraintLayout1"
+                android:id="@+id/AddonCategoriesConstraintLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="21dp"
                 android:layout_marginEnd="8dp"
@@ -49,7 +76,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.505"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/DishCategoriesSpinner">
+                app:layout_constraintTop_toBottomOf="@+id/AddonCategoriesTextView">
 
                 <TextView
                     android:id="@+id/IdTextView"
@@ -106,13 +133,25 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/constraintLayout1"
+                app:layout_constraintTop_toBottomOf="@+id/AddonCategoriesConstraintLayout"
                 tools:ignore="MissingConstraints">
 
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/ChosenAddonCategoriesTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="Chosen addon  categories"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/AddonCategoriesLinearLayout" />
+
             <android.support.constraint.ConstraintLayout
-                android:id="@+id/constraintLayout2"
+                android:id="@+id/ChosenAddonCategoriesConstraintLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="8dp"
@@ -121,7 +160,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.505"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/AddonCategoriesLinearLayout">
+                app:layout_constraintTop_toBottomOf="@+id/ChosenAddonCategoriesTextView">
 
                 <TextView
                     android:id="@+id/IdTextView"
@@ -178,7 +217,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
+                app:layout_constraintTop_toBottomOf="@+id/ChosenAddonCategoriesConstraintLayout">
 
             </LinearLayout>
 

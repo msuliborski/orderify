@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -22,6 +23,7 @@ import java.util.Date;
 import java.util.List;
 
 import static com.amm.orderify.helpers.JBDCDriver.*;
+import static com.amm.orderify.helpers.Comparators.*;
 
 public class TablesActivity extends AppCompatActivity {
     List<Table> tables = new ArrayList<>();
@@ -42,6 +44,29 @@ public class TablesActivity extends AppCompatActivity {
         tables = getTables();
         updateTablesView();
 
+
+//        List<Table> oldTables = new ArrayList<>(tables);
+//        List<Table> newTables = new ArrayList<>(tables);
+//        newTables.add(new Table(12, 12, "nin", 1, null));
+//        newTables.add(tables.get(1));
+//        List<Table> diff = getDifferenceFromTableLists(oldTables, newTables);
+//        Log.wtf("diff.size() ", diff.size() + "");
+//        Log.wtf("oldTables.size() ", oldTables.size() + "");
+//        Log.wtf("newTables.size() ", newTables.size() + "");
+//        Log.wtf("tables.size() ", tables.size() + "");
+//        Dish dish = new Dish(wishesRS.getInt("dishID"), wishesRS.getString("name"), wishesRS.getFloat("price"), null, null, null);
+//        wishes.add(new Wish(dish, wishesRS.getInt("amount"), addons));
+//        addons = new ArrayList<>();
+//    }
+//                    orders.add(new Order(ordersRS.getInt("ID"), ordersRS.getTime("time"), ordersRS.getDate("date"), ordersRS.getString("comments"), ordersRS.getInt("state"), clientRS.getInt("ID"), tablesRS.getInt("ID"), wishes));
+//    wishes = new ArrayList<>();
+//}
+//                    clients.add(new Client(clientRS.getInt("ID"), clientRS.getInt("number"), clientRS.getInt("state"), orders));
+//                            orders = new ArrayList<>();
+//        }
+//        tables.add(new Table(tablesRS.getInt("ID"), tablesRS.getInt("number"), tablesRS.getString("description"), tablesRS.getInt("state"), clients));
+//        clients = new ArrayList<>();
+//
         UpdateTableTask task = new UpdateTableTask(TablesActivity.this);
         task.execute();
 
@@ -264,9 +289,7 @@ public class TablesActivity extends AppCompatActivity {
                         });
 
                         final LinearLayout ordersLinearLayout = tableElement.findViewById(R.id.OrdersLinearLayout);
-//                        for (int clientNumber = 0; clientNumber < table.clients.size(); clientNumber++) {
-//                            final Client client = table.clients.get(clientNumber);
-
+//
                             for (int orderNumber = 0; orderNumber < ordersLinearLayout.getChildCount(); orderNumber++) {
                                 //final Order order = client.orders.get(orderNumber);
                                 //final Order order = table.clients.orders.get(orderNumber);

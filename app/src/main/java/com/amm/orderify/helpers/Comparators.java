@@ -13,9 +13,8 @@ public class Comparators {
 
         for(int ot = 0; ot < oldTables.size(); ot++){
             for(int nt = 0; nt < newTables.size(); nt++){
-                if(tablesTheSame(oldTables.get(ot), newTables.get(nt))){
-                    newTables.remove(oldTables.get(ot));
-                }
+                if(tablesTheSame(oldTables.get(ot), newTables.get(nt)))
+                    newTables.remove(newTables.get(nt));
             }
         }
         return newTables;
@@ -25,9 +24,9 @@ public class Comparators {
 
         for(int ot = 0; ot < oldOrders.size(); ot++){
             for(int nt = 0; nt < newOrders.size(); nt++){
-                if(ordersTheSame(oldOrders.get(ot), newOrders.get(nt))){
+                if(ordersTheSame(oldOrders.get(ot), newOrders.get(nt)))
                     oldOrders.remove(oldOrders.get(ot));
-                }
+
             }
         }
         return newOrders;
