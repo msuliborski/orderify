@@ -70,10 +70,9 @@ public class TablesActivity extends AppCompatActivity {
             overallPriceTextView.setText(table.getTotalPrice() + " zł");
 
             TextView tableStateTextView = tableElement.findViewById(R.id.TableStateTextView);
-            tableStateTextView.setText(table.state + " - tableState");
+            tableStateTextView.setText(table.getState());
 
 
-            //states: 1-unfreezed, 2-freezed, 3-wantsHelp, 4-wantsABill =============================================================
             Button acceptRequestButton = tableElement.findViewById(R.id.AcceptRequestButton);
             acceptRequestButton.setOnClickListener(v -> {
                 if (table.state == 3) {
@@ -132,14 +131,7 @@ public class TablesActivity extends AppCompatActivity {
                     orderNumberTextView.setText(order.id + "");
 
                     TextView orderWaitingTimeTextView = orderElement.findViewById(R.id.OrderWaitingTimeTextView);
-                    Date curr = new Date();
-                    Date orderTime = new Date(order.date.getTime() + order.time.getTime());
-                    Date diff = new Date(curr.getTime() - orderTime.getTime());
-                    String seconds = String.format("%02d", (int) (diff.getTime() / 1000) % 60);
-                    String minutes = String.format("%02d", (int) ((diff.getTime() / (1000 * 60)) % 60));
-                    String hours = String.format("%02d", (int) ((diff.getTime() / (1000 * 60 * 60)) % 24));
-                    String days = String.valueOf((int) ((diff.getTime() / (1000 * 60 * 60 * 24))));
-                    orderWaitingTimeTextView.setText(days + " days, " + hours + ":" + minutes + ":" + seconds);
+                    orderWaitingTimeTextView.setText(order.getWaitingTime());
 
                     TextView orderPriceTextView = orderElement.findViewById(R.id.OrderPriceTextView);
                     orderPriceTextView.setText(order.getTotalPrice() + " zł");
@@ -258,43 +250,35 @@ public class TablesActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... params) {
             while(true) {
-                try
-                {
+                try {
                     tables = getTables();
                     Thread.sleep(100);
-                } catch (InterruptedException e)
-                {
-                    e.printStackTrace();
-                }
-                for (int tableNumber = 0; tableNumber < tablesLinearLayout.getChildCount(); tableNumber++) {
-                    final View table = tablesLinearLayout.getChildAt(tableNumber);
-                    final int TNr = tableNumber;
-                    TextView state = table.findViewById(R.id.TableStateTextView);
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            state.setText(tables.get(TNr).state + "");
+                    for (int tableNumber = 0; tableNumber < tablesLinearLayout.getChildCount(); tableNumber++) {
+                        final Table table = tables.get(tableNumber);
+                        final View tableElement = tablesLinearLayout.getChildAt(tableNumber);
+                        TextView state = tableElement.findViewById(R.id.TableStateTextView);
+                        Thread.sleep(10);
+                        int finalTableNumber = tableNumber;
+                        runOnUiThread(() -> {
+                            state.setText(tables.get(finalTableNumber).getState());
+                        });
+
+                        final LinearLayout ordersLinearLayout = tableElement.findViewById(R.id.OrdersLinearLayout);
+                        for (int clientNumber = 0; clientNumber < table.clients.size(); clientNumber++) {
+                            final Client client = table.clients.get(clientNumber);
+
+                            for (int orderNumber = 0; orderNumber < tablesLinearLayout.getChildCount(); orderNumber++) {
+                                final Order order = client.orders.get(orderNumber);
+                                final View orderElement = ordersLinearLayout.getChildAt(orderNumber);
+                                TextView orderWaitingTimeTextView = orderElement.findViewById(R.id.OrderWaitingTimeTextView);
+                                Thread.sleep(10);
+                                runOnUiThread(() -> {
+                                    orderWaitingTimeTextView.setText(order.getWaitingTime());
+                                });
+                            }
                         }
-                    });
-
-                    final LinearLayout ordersLinearLayout = table.findViewById(R.id.OrdersLinearLayout);
-                    for (int orderNumber = 0; orderNumber < ordersLinearLayout.getChildCount(); orderNumber++) {
-                        final View order = ordersLinearLayout.getChildAt(orderNumber);
-                        TextView orderWaitingTimeTextView = order.findViewById(R.id.OrderWaitingTimeTextView);
-                        Date curr = new Date();
-                        int hours = curr.getHours();
-                        int minutes = curr.getMinutes();
-                        int seconds = curr.getSeconds();
-                        try {
-                            Thread.sleep(50);
-
-                            runOnUiThread(() -> {
-                                orderWaitingTimeTextView.setText(hours+":"+minutes+":"+seconds);
-                            });
-                        } catch (InterruptedException ignored) {}
                     }
-                }
-
+                } catch (InterruptedException ignored) {}
             }
         }
 

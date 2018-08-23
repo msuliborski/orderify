@@ -28,4 +28,18 @@ public class Table {
         return totalPrice;
     }
 
+    public String getState(){
+        String state;
+        //states: 1-unfreezed, 2-freezed, 3-wantsHelp, 4-wantsABill =============================================================
+        switch (this.state){
+            case 1: state = "READY!"; break;
+            case 2: state = "FREEZED!"; break;
+            case 3: state = "NEEDS HELP!"; break;
+            case 4: state = "WANTS A BILL!"; break;
+            default: state = "BROKEN - contact dev!";
+        }
+
+        return state;
+    }
+
 }

@@ -28,4 +28,15 @@ public class Order {
 
         return totalPrice;
     }
+
+    public String getWaitingTime(){
+        Date curr = new Date();
+        Date orderTime = new Date(this.date.getTime() + this.time.getTime());
+        Date diff = new Date(curr.getTime() - orderTime.getTime());
+        String seconds = String.format("%02d", (int) (diff.getTime() / 1000) % 60);
+        String minutes = String.format("%02d", (int) ((diff.getTime() / (1000 * 60)) % 60));
+        String hours = String.format("%02d", (int) ((diff.getTime() / (1000 * 60 * 60)) % 24));
+        String days = String.valueOf((int) ((diff.getTime() / (1000 * 60 * 60 * 24))));
+        return days + " days, " + hours + ":" + minutes + ":" + seconds;
+    }
 }
