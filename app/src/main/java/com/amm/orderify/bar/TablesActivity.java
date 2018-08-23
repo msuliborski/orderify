@@ -270,6 +270,45 @@ public class TablesActivity extends AppCompatActivity {
         return tables;
     }
 
+    private List<Order> getNewOrders(){
+        List<Order> newOrders = new ArrayList<>();
+        List<Wish> newWishes = new ArrayList<>();
+        List<Addon> addons = new ArrayList<>();
+        try {
+            Statement newOrdersS = getConnection().createStatement();
+            ResultSet newOrdersRS = newOrdersS.executeQuery("SELECT newOrders.*, clients.ID AS clientID, " +
+                                                                "(SELECT ID FROM tables WHERE ID = clients.tableID) AS tableID FROM newOrders\n" +
+                                                                "JOIN clients ON clients.ID = newOrders.clientID\n" +
+                                                                "GROUP BY newOrders.ID");
+            while (newOrdersRS.next()) {
+                Statement newWishesS = getConnection().createStatement();
+                ResultSet newWishesRS = newWishesS.executeQuery("SELECT newWishes.ID, dishID, name, price, amount, orderID FROM newWishes\n" +
+                        "JOIN dishes ON dishes.ID = newWishes.dishID\n" +
+                        "WHERE orderID = " + newOrdersRS.getInt("ID"));
+                while (newWishesRS.next()) {
+                    Statement addonsS = getConnection().createStatement();
+                    ResultSet addonsRS = addonsS.executeQuery("SELECT addonID, name, price FROM newAddonsToWishes\n" +
+                            "JOIN addons ON addons.ID = newAddonsToWishes.addonID\n" +
+                            "WHERE wishID = " + newWishesRS.getInt("ID"));
+                    while (addonsRS.next()) {
+                        addons.add(new Addon(addonsRS.getInt("addonID"), addonsRS.getString("name"), addonsRS.getFloat("price")));
+                    }
+                    Dish dish = new Dish(newWishesRS.getInt("dishID"), newWishesRS.getString("name"), newWishesRS.getFloat("price"), null, null, null);
+                    newWishes.add(new Wish(dish, newWishesRS.getInt("amount"), addons));
+                    addons = new ArrayList<>();
+                }
+                newOrders.add(new Order(newOrdersRS.getInt("ID"), newOrdersRS.getTime("time"), newOrdersRS.getDate("date"), newOrdersRS.getString("comments"), newOrdersRS.getInt("state"), newOrdersRS.getInt("clientID"), newOrdersRS.getInt("tableID"), newWishes));
+                newWishes = new ArrayList<>();
+            }
+
+            ExecuteUpdate("TRUNCATE newAddonsToWishes");
+            ExecuteUpdate("TRUNCATE newWishes");
+            ExecuteUpdate("TRUNCATE newOrders");
+
+        } catch (SQLException ignored) {}
+        return newOrders;
+    }
+
     @SuppressLint("StaticFieldLeak")
     protected class UpdateTableTask extends AsyncTask<Void, Void, Void> {
         Context context;

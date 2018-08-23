@@ -306,12 +306,16 @@ public class MenuActivity extends AppCompatActivity {
         try {
             ExecuteUpdate("INSERT INTO orders (time, date, comments, state, clientID)\n" +
                     "VALUES  ('" + getCurrentTime() +"', '" + getCurrentDate() +"', '" + enterCommentsEditText.getText() + "', 1, " + client.id + ");");
+            ExecuteUpdate("INSERT INTO newOrders (time, date, comments, state, clientID)\n" +
+                    "VALUES  ('" + getCurrentTime() +"', '" + getCurrentDate() +"', '" + enterCommentsEditText.getText() + "', 1, " + client.id + ");");
             int newOrderID = 0;
             ResultSet orderIDRS = ExecuteQuery("SELECT LAST_INSERT_ID();");
             if(orderIDRS.next()) newOrderID = orderIDRS.getInt(1);
 
             for(int wishI = 0; wishI < wishes.size(); wishI++){
                 ExecuteUpdate("INSERT INTO wishes (dishID, amount, orderID)\n" +
+                        "VALUES  ("+ wishes.get(wishI).dish.id + ", " + wishes.get(wishI).amount + ", " + newOrderID + ");");
+                ExecuteUpdate("INSERT INTO newWishes (dishID, amount, orderID)\n" +
                         "VALUES  ("+ wishes.get(wishI).dish.id + ", " + wishes.get(wishI).amount + ", " + newOrderID + ");");
 
                 int newWishID = 0;
@@ -320,6 +324,8 @@ public class MenuActivity extends AppCompatActivity {
 
                 for(int addonI = 0; addonI < wishes.get(wishI).addons.size(); addonI++){
                     ExecuteUpdate("INSERT INTO addonsToWishes (wishID, addonID)\n" +
+                            "VALUES  (" + newWishID + ", " + wishes.get(wishI).addons.get(addonI).id + ");");
+                    ExecuteUpdate("INSERT INTO newAddonsToWishes (wishID, addonID)\n" +
                             "VALUES  (" + newWishID + ", " + wishes.get(wishI).addons.get(addonI).id + ");");
                 }
             }
