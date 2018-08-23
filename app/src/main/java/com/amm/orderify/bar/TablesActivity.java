@@ -195,7 +195,6 @@ public class TablesActivity extends AppCompatActivity {
     }
 
 
-
     private List<Table> getTables(){
         List<Table> tables = new ArrayList<>();
         List<Client> clients = new ArrayList<>();
@@ -230,7 +229,7 @@ public class TablesActivity extends AppCompatActivity {
                             wishes.add(new Wish(dish, wishesRS.getInt("amount"), addons));
                             addons = new ArrayList<>();
                         }
-                    orders.add(new Order(ordersRS.getInt("ID"), ordersRS.getTime("time"), ordersRS.getDate("date"), ordersRS.getString("comments"), ordersRS.getInt("state"), ordersRS.getInt("clientID"), wishes));
+                    orders.add(new Order(ordersRS.getInt("ID"), ordersRS.getTime("time"), ordersRS.getDate("date"), ordersRS.getString("comments"), ordersRS.getInt("state"), wishes));
                     wishes = new ArrayList<>();
                     }
                     clients.add(new Client(clientRS.getInt("ID"), clientRS.getInt("number"), clientRS.getInt("state"), orders));

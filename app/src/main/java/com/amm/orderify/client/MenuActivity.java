@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.amm.orderify.MainActivity.client;
+import static com.amm.orderify.helpers.Comparators.wishesTheSame;
 import static com.amm.orderify.helpers.JBDCDriver.*;
 import static com.amm.orderify.helpers.TimeAndDate.*;
 
@@ -96,20 +97,6 @@ public class MenuActivity extends AppCompatActivity {
     }
 
 
-    boolean checkIfTheSame(Wish w1, Wish w2){
-        try {
-            for (int i = 0; i < w1.addons.size(); i++) if (!(w1.addons.get(i).id == w2.addons.get(i).id)) return false;
-            for (int i = 0; i < w2.addons.size(); i++) if (!(w1.addons.get(i).id == w2.addons.get(i).id)) return false;
-            if (!(w1.dish.id == w2.dish.id)) return false;
-            if (!(w1.addons.size() == w2.addons.size())) return false;
-        }
-        catch(Exception e){
-            return false;
-        }
-
-        return true;
-    }
-
     @SuppressLint("SetTextI18n")
     private void updateMenu() {
         if(dishCategoriesLinearLayout != null) dishCategoriesLinearLayout.removeAllViews();
@@ -169,7 +156,7 @@ public class MenuActivity extends AppCompatActivity {
                 addToOrderButton.setOnClickListener(e -> {
                     Wish newWish = new Wish(dish, 1, addons);
                     for(int wishI = 0; wishI < wishes.size(); wishI++){
-                        if (checkIfTheSame(wishes.get(wishI), newWish)) {
+                        if (wishesTheSame(wishes.get(wishI), newWish)) {
                             wishes.get(wishI).amount++; break;}
                         if (wishI == wishes.size()-1) {
                             wishes.add(newWish); break;}
