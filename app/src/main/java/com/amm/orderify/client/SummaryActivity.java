@@ -77,7 +77,7 @@ public class SummaryActivity extends AppCompatActivity
             View orderElement = getLayoutInflater().inflate(R.layout.client_summary_order_element, null);
 
             TextView orderNumberTextView = orderElement.findViewById(R.id.OrderNumberTextView);
-            orderNumberTextView.setText(order.id + "");
+            orderNumberTextView.setText("Order " + order.id + ".");
 
             TextView orderStateTextView = orderElement.findViewById(R.id.OrderStateTextView);
             orderStateTextView.setText(order.state + "");

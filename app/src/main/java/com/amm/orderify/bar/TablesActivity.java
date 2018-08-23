@@ -258,37 +258,44 @@ public class TablesActivity extends AppCompatActivity {
         @SuppressLint("SetTextI18n")
         @Override
         protected Void doInBackground(Void... params) {
-            int i = 0;
             while(true) {
-//                for (int tableNumber = 0; tableNumber < tablesLinearLayout.getChildCount(); tableNumber++) {
-//                    final View table = tablesLinearLayout.getChildAt(tableNumber);
-//                    final int TNr = tableNumber;
-//                    TextView state = table.findViewById(R.id.TableStateTextView);
-//                    runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            state.setText(tables.get(TNr).state + "");
-//                        }
-//                    });
-//
-//                    final LinearLayout ordersLinearLayout = table.findViewById(R.id.OrdersLinearLayout);
-//                    for (int orderNumber = 0; orderNumber < ordersLinearLayout.getChildCount(); orderNumber++) {
-//                        final View order = ordersLinearLayout.getChildAt(orderNumber);
-//                        TextView orderWaitingTimeTextView = order.findViewById(R.id.OrderWaitingTimeTextView);
-//                        Date curr = new Date();
-//                        int hours = curr.getHours();
-//                        int minutes = curr.getMinutes();
-//                        int seconds = curr.getSeconds();
-//
-//                    }
-//                }
-                try {
-                    Thread.sleep(1000);
+                try
+                {
                     tables = getTables();
-                    runOnUiThread(() -> {
-                        updateTablesView(); //not everything, only changes
+                    Thread.sleep(100);
+                } catch (InterruptedException e)
+                {
+                    e.printStackTrace();
+                }
+                for (int tableNumber = 0; tableNumber < tablesLinearLayout.getChildCount(); tableNumber++) {
+                    final View table = tablesLinearLayout.getChildAt(tableNumber);
+                    final int TNr = tableNumber;
+                    TextView state = table.findViewById(R.id.TableStateTextView);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            state.setText(tables.get(TNr).state + "");
+                        }
                     });
-                } catch (InterruptedException ignored) {}
+
+                    final LinearLayout ordersLinearLayout = table.findViewById(R.id.OrdersLinearLayout);
+                    for (int orderNumber = 0; orderNumber < ordersLinearLayout.getChildCount(); orderNumber++) {
+                        final View order = ordersLinearLayout.getChildAt(orderNumber);
+                        TextView orderWaitingTimeTextView = order.findViewById(R.id.OrderWaitingTimeTextView);
+                        Date curr = new Date();
+                        int hours = curr.getHours();
+                        int minutes = curr.getMinutes();
+                        int seconds = curr.getSeconds();
+                        try {
+                            Thread.sleep(50);
+
+                            runOnUiThread(() -> {
+                                orderWaitingTimeTextView.setText(hours+":"+minutes+":"+seconds);
+                            });
+                        } catch (InterruptedException ignored) {}
+                    }
+                }
+
             }
         }
 
