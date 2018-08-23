@@ -128,7 +128,7 @@ public class SummaryActivity extends AppCompatActivity
                     wishes.add(new Wish(dish, wishesRS.getInt("amount"), addons));
                     addons = new ArrayList<>();
                 }
-                orders.add(new Order(ordersRS.getInt("ID"), ordersRS.getTime("time"), ordersRS.getDate("date"), ordersRS.getString("comments"), ordersRS.getInt("state"), wishes));
+                orders.add(new Order(ordersRS.getInt("ID"), ordersRS.getTime("time"), ordersRS.getDate("date"), ordersRS.getString("comments"), ordersRS.getInt("state"), 0,0, wishes));
                 wishes = new ArrayList<>();
             }
         } catch (SQLException ignored) {}

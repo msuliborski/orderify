@@ -221,7 +221,7 @@ public class TablesActivity extends AppCompatActivity {
                             wishes.add(new Wish(dish, wishesRS.getInt("amount"), addons));
                             addons = new ArrayList<>();
                         }
-                    orders.add(new Order(ordersRS.getInt("ID"), ordersRS.getTime("time"), ordersRS.getDate("date"), ordersRS.getString("comments"), ordersRS.getInt("state"), wishes));
+                    orders.add(new Order(ordersRS.getInt("ID"), ordersRS.getTime("time"), ordersRS.getDate("date"), ordersRS.getString("comments"), ordersRS.getInt("state"), clientRS.getInt("ID"), tablesRS.getInt("ID"), wishes));
                     wishes = new ArrayList<>();
                     }
                     clients.add(new Client(clientRS.getInt("ID"), clientRS.getInt("number"), clientRS.getInt("state"), orders));

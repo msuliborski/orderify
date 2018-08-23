@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Comparators {
 
-    public static List<Table> tableListsTheSame(List<Table> oldTables, List<Table> newTables){
+    public static List<Table> getDifferenceFromTableLists(List<Table> oldTables, List<Table> newTables){
 
         for(int ot = 0; ot < oldTables.size(); ot++){
             for(int nt = 0; nt < newTables.size(); nt++){
@@ -19,6 +19,18 @@ public class Comparators {
             }
         }
         return newTables;
+    }
+
+    public static List<Order> getDifferenceFromOrderLists(List<Order> oldOrders, List<Order> newOrders){
+
+        for(int ot = 0; ot < oldOrders.size(); ot++){
+            for(int nt = 0; nt < newOrders.size(); nt++){
+                if(ordersTheSame(oldOrders.get(ot), newOrders.get(nt))){
+                    oldOrders.remove(oldOrders.get(ot));
+                }
+            }
+        }
+        return newOrders;
     }
 
     public static boolean tablesTheSame(Table t1, Table t2){
