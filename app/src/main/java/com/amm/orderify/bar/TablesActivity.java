@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -84,23 +83,19 @@ public class TablesActivity extends AppCompatActivity {
 //            }}, 1000);
     }
     @Override
-    protected void onPause()
-    {
+    protected void onPause() {
         super.onPause();
         if (blMyAsyncTask)   {
             blMyAsyncTask = false;
             task.cancel(true);
         }
-        Log.wtf("###############Task paused", task.getStatus() + "");
     }
 
     @Override
-    protected void onResume()
-    {
+    protected void onResume() {
         super.onResume();
         task = new UpdateTableTask(TablesActivity.this);
         task.execute();
-        Log.wtf("!!!!!!!!!!!!!!!!Task executed", task.getStatus() + "");
     }
 
     @SuppressLint("SetTextI18n")
@@ -348,7 +343,6 @@ public class TablesActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... params) {
             while(true) {
-
                 try {
                     tables = getTables();
                     Thread.sleep(10);
@@ -379,7 +373,6 @@ public class TablesActivity extends AppCompatActivity {
                                     orderWaitingTimeTextView.setText(waitingTime);
                                     orderStateTextView.setText(orderState);
                                 });
-
                             }
                         }
                     }
@@ -403,14 +396,11 @@ public class TablesActivity extends AppCompatActivity {
         }
     }
 
-    View findTable (int tableNumber)
-    {
-        for (int tableI = 0; tableI < tablesLinearLayout.getChildCount(); tableI++)
-        {
+    View findTable (int tableNumber) {
+        for (int tableI = 0; tableI < tablesLinearLayout.getChildCount(); tableI++) {
             final View tableElement = tablesLinearLayout.getChildAt(tableI);
             TextView tableNumberTextView = tableElement.findViewById(R.id.TableNumberTextView);
-            if (tableNumberTextView.getText().equals(String.valueOf(tableNumber)))
-            {
+            if (tableNumberTextView.getText().equals(String.valueOf(tableNumber))) {
                 return tableElement;
             }
         }
@@ -430,9 +420,6 @@ public class TablesActivity extends AppCompatActivity {
                         return OiT;
                     }
                 }
-
-
-
         }
         return null;
 
