@@ -70,6 +70,8 @@ public class TablesActivity extends AppCompatActivity {
         UpdateTableTask task = new UpdateTableTask(TablesActivity.this);
         task.execute();
 
+
+
 //        Handler handler = new Handler();
 //        handler.postDelayed(new Runnable(){
 //            public void run(){
@@ -114,19 +116,19 @@ public class TablesActivity extends AppCompatActivity {
             freezeStateButton.setOnClickListener(v -> {
                 if (table.state == 1) {
                     table.state = 2;
-                    freezeStateButton.setText("unfreeze table");
+                    freezeStateButton.setText(R.string.bar_unfreeze_table_button_string);
                 } else {
                     table.state = 1;
-                    freezeStateButton.setText("freeze table");
+                    freezeStateButton.setText(R.string.bar_freeze_table_button_string);
                 }
                 try {
                     ExecuteUpdate("UPDATE tables SET state = " + table.state + " WHERE ID = " + table.id);
                 } catch (SQLException ignored) {
                 }
-                updateTablesView();
+                //updateTablesView();
             });
-            if (table.state == 1) freezeStateButton.setText("freeze table");
-            else freezeStateButton.setText("unfreeze table");
+            if (table.state == 1) freezeStateButton.setText(R.string.bar_unfreeze_table_button_string);
+            else freezeStateButton.setText(R.string.bar_freeze_table_button_string);
 
             LinearLayout ordersLinearLayout = tableElement.findViewById(R.id.OrdersLinearLayout);
             Button expandCollapseButton = tableElement.findViewById(R.id.ExpandCollapseButton);
@@ -278,30 +280,62 @@ public class TablesActivity extends AppCompatActivity {
                 try {
                     tables = getTables();
                     Thread.sleep(100);
-                    for (int tableNumber = 0; tableNumber < tablesLinearLayout.getChildCount(); tableNumber++) {
+//                    for (int tableNumber = 0; tableNumber < tablesLinearLayout.getChildCount(); tableNumber++) {
+//                        final Table table = tables.get(tableNumber);
+//                        final View tableElement = tablesLinearLayout.getChildAt(tableNumber);
+//                        TextView state = tableElement.findViewById(R.id.TableStateTextView);
+//                        Thread.sleep(10);
+//                        int finalTableNumber = tableNumber;
+//                        runOnUiThread(() -> {
+//                            state.setText(tables.get(finalTableNumber).getState());
+//                        });
+//
+//                        final LinearLayout ordersLinearLayout = tableElement.findViewById(R.id.OrdersLinearLayout);
+////                        for (int clientNumber = 0; clientNumber < table.clients.size(); clientNumber++) {
+////                            final Client client = table.clients.get(clientNumber);
+//
+//                            for (int orderNumber = 0; orderNumber < ordersLinearLayout.getChildCount(); orderNumber++) {
+//                                //final Order order = client.orders.get(orderNumber);
+//                                //final Order order = table.clients.orders.get(orderNumber);
+//                                final View orderElement = ordersLinearLayout.getChildAt(orderNumber);
+//                                TextView orderWaitingTimeTextView = orderElement.findViewById(R.id.OrderWaitingTimeTextView);
+//                                Thread.sleep(10);
+//                                runOnUiThread(() -> {
+//                                    orderWaitingTimeTextView.setText("03:21");
+//                                });
+//                            }
+////                        }
+//                    }
+
+                    for(int tableNumber = 0; tableNumber < tables.size(); tableNumber++)
+                    {
                         final Table table = tables.get(tableNumber);
-                        final View tableElement = tablesLinearLayout.getChildAt(tableNumber);
-                        TextView state = tableElement.findViewById(R.id.TableStateTextView);
-                        Thread.sleep(10);
-                        int finalTableNumber = tableNumber;
+                        View view = findTable(table.id);
+                        TextView tableStateTextView = view.findViewById(R.id.TableStateTextView);
                         runOnUiThread(() -> {
-                            state.setText(tables.get(finalTableNumber).getState());
+                            tableStateTextView.setText(table.state +"");
                         });
 
-                        final LinearLayout ordersLinearLayout = tableElement.findViewById(R.id.OrdersLinearLayout);
-//
-                            for (int orderNumber = 0; orderNumber < ordersLinearLayout.getChildCount(); orderNumber++) {
-                                //final Order order = client.orders.get(orderNumber);
-                                //final Order order = table.clients.orders.get(orderNumber);
-                                final View orderElement = ordersLinearLayout.getChildAt(orderNumber);
+                        for (int clientNumber = 0; clientNumber < table.clients.size(); clientNumber++)
+                        {
+                            final Client client = table.clients.get(clientNumber);
+                            for (int orderNumber = 0; orderNumber < client.orders.size(); orderNumber++)
+                            {
+                                Order order = client.orders.get(orderNumber);
+                                View orderElement = findOrder(order.id).orderElement;
+
                                 TextView orderWaitingTimeTextView = orderElement.findViewById(R.id.OrderWaitingTimeTextView);
                                 Thread.sleep(10);
+                                String waitingTime = order.getWaitingTime();
                                 runOnUiThread(() -> {
-                                    orderWaitingTimeTextView.setText("03:21");
+                                    orderWaitingTimeTextView.setText(waitingTime);
                                 });
                             }
-//                        }
+                        }
+
+
                     }
+
                 } catch (InterruptedException ignored) {}
             }
         }
@@ -314,6 +348,56 @@ public class TablesActivity extends AppCompatActivity {
         @Override
         protected void onProgressUpdate(Void... values) {
             super.onProgressUpdate(values);
+        }
+    }
+
+    View findTable (int tableNumber)
+    {
+        for (int tableI = 0; tableI < tablesLinearLayout.getChildCount(); tableI++)
+        {
+            final View tableElement = tablesLinearLayout.getChildAt(tableI);
+            TextView tableNumberTextView = tableElement.findViewById(R.id.TableNumberTextView);
+            if (tableNumberTextView.getText().equals(String.valueOf(tableNumber)))
+            {
+                return tableElement;
+            }
+        }
+        return null;
+    }
+
+    OrderAndTableView findOrder (int orderNumber)
+    {
+        for (int tableI = 0; tableI < tablesLinearLayout.getChildCount(); tableI++)
+        {
+            final View tableElement = tablesLinearLayout.getChildAt(tableI);
+                final LinearLayout ordersLinearLayout = tableElement.findViewById(R.id.OrdersLinearLayout);
+                for (int orderI = 0; orderI < ordersLinearLayout.getChildCount(); orderI++)
+                {
+                    final View orderElement = ordersLinearLayout.getChildAt(orderI);
+                    TextView orderNr = orderElement.findViewById(R.id.OrderNumberTextView);
+
+                    if (orderNr.getText().equals(String.valueOf(orderNumber)) )
+                    {
+                        OrderAndTableView OiT = new OrderAndTableView(tableElement, orderElement);
+                        return OiT;
+                    }
+                }
+
+
+
+        }
+        return null;
+
+    }
+    class OrderAndTableView
+    {
+        View tableElement;
+        View orderElement;
+
+        OrderAndTableView(View tableElement,  View orderElement)
+        {
+            this.orderElement = orderElement;
+            this.tableElement = tableElement;
         }
     }
 }
