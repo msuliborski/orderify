@@ -1,11 +1,15 @@
 package com.amm.orderify.client;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.amm.orderify.MainActivity;
 import com.amm.orderify.R;
 import com.amm.orderify.helpers.data.*;
 
@@ -15,7 +19,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.amm.orderify.MainActivity.client;
 import static com.amm.orderify.MainActivity.thisClientID;
+import static com.amm.orderify.helpers.JBDCDriver.ExecuteUpdate;
 import static com.amm.orderify.helpers.JBDCDriver.getConnection;
 
 public class SummaryActivity extends AppCompatActivity
@@ -31,6 +37,21 @@ public class SummaryActivity extends AppCompatActivity
         orders = getOrders();
 
         updateOrdersView();
+
+        Button askForBillAButton = findViewById(R.id.AskForBillAButton);
+        askForBillAButton.setOnClickListener(v -> {
+            if(client.state == 1) {
+                client.state = 4;
+                try {
+                    ExecuteUpdate("UPDATE clients SET state = " + client.state +  " WHERE ID = " + client.id);
+                } catch (SQLException ignored) {}
+            }
+        });
+
+        Button goToMenuButton = findViewById(R.id.GoToMenuButton);
+        goToMenuButton.setOnClickListener(v -> {
+            this.startActivity(new Intent(this, MenuActivity.class));
+        });
 
 
 

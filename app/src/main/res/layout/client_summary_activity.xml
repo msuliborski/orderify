@@ -100,7 +100,7 @@
         app:srcCompat="@drawable/summary_border_rectangle" />
 
     <Button
-        android:id="@+id/AskForBillButton"
+        android:id="@+id/AskForBillAButton"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="?android:attr/selectableItemBackground"

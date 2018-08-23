@@ -73,7 +73,7 @@ public class TablesActivity extends AppCompatActivity {
             tableStateTextView.setText(table.state + " - tableState");
 
 
-            //states: 1-unfreezed, 2-freezed, 3-wantsHelp =============================================================
+            //states: 1-unfreezed, 2-freezed, 3-wantsHelp, 4-wantsABill =============================================================
             Button acceptRequestButton = tableElement.findViewById(R.id.AcceptRequestButton);
             acceptRequestButton.setOnClickListener(v -> {
                 if (table.state == 3) {
