@@ -24,6 +24,7 @@ public class Order {
         this.wishes = wishes;
     }
 
+
     public float getTotalPrice(){
         float totalPrice = 0;
 
@@ -31,6 +32,18 @@ public class Order {
             totalPrice += wishes.get(wishNumber).getTotalPrice();
 
         return totalPrice;
+    }
+
+    public String getState(){
+        String state;
+        //states: 1-inPreparation, 2-doneAndDelivered =========================================================================
+        switch (this.state){
+            case 1: state = "PREPARING!"; break;
+            case 2: state = "READY!"; break;
+            default: state = "HEART BROKEN - contact dev!";
+        }
+
+        return state;
     }
 
     public String getWaitingTime(){

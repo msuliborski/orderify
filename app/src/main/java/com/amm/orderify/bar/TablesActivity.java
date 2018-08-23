@@ -100,6 +100,7 @@ public class TablesActivity extends AppCompatActivity {
             tableStateTextView.setText(table.getState());
 
 
+
             Button acceptRequestButton = tableElement.findViewById(R.id.AcceptRequestButton);
             acceptRequestButton.setOnClickListener(v -> {
                 if (table.state == 3) {
@@ -117,9 +118,11 @@ public class TablesActivity extends AppCompatActivity {
                 if (table.state == 1) {
                     table.state = 2;
                     freezeStateButton.setText(R.string.bar_unfreeze_table_button_string);
+                    tableStateTextView.setText("FREEZED!");
                 } else {
                     table.state = 1;
                     freezeStateButton.setText(R.string.bar_freeze_table_button_string);
+                    tableStateTextView.setText("READY!");
                 }
                 try {
                     ExecuteUpdate("UPDATE tables SET state = " + table.state + " WHERE ID = " + table.id);
@@ -127,6 +130,16 @@ public class TablesActivity extends AppCompatActivity {
                 }
                 //updateTablesView();
             });
+            if (table.state == 1) {
+                table.state = 2;
+                freezeStateButton.setText(R.string.bar_unfreeze_table_button_string);
+                tableStateTextView.setText("FREEZED!");
+            } else {
+                table.state = 1;
+                freezeStateButton.setText(R.string.bar_freeze_table_button_string);
+                tableStateTextView.setText("READY!");
+            }
+            
             if (table.state == 1) freezeStateButton.setText(R.string.bar_unfreeze_table_button_string);
             else freezeStateButton.setText(R.string.bar_freeze_table_button_string);
 
@@ -166,7 +179,6 @@ public class TablesActivity extends AppCompatActivity {
                     TextView orderStateTextView = orderElement.findViewById(R.id.OrderStateTextView);
                     orderStateTextView.setText(order.state + " - orderState");
 
-                    //states: 1-inPreparation, 2-doneAndDelivered =========================================================================
                     Button changeOrderStateButton = orderElement.findViewById(R.id.ChangeOrderStateButton);
                     if (order.state == 1) changeOrderStateButton.setVisibility(View.VISIBLE);
                     else changeOrderStateButton.setVisibility(View.GONE);
@@ -307,13 +319,13 @@ public class TablesActivity extends AppCompatActivity {
 ////                        }
 //                    }
 
-                    for(int tableNumber = 0; tableNumber < tables.size(); tableNumber++)
-                    {
+                    for(int tableNumber = 0; tableNumber < tables.size(); tableNumber++) {
                         final Table table = tables.get(tableNumber);
-                        View view = findTable(table.id);
-                        TextView tableStateTextView = view.findViewById(R.id.TableStateTextView);
+                        View tableElement = findTable(table.id);
+                        TextView tableStateTextView = tableElement.findViewById(R.id.TableStateTextView);
+                        String tableState = table.getState();
                         runOnUiThread(() -> {
-                            tableStateTextView.setText(table.state +"");
+                            tableStateTextView.setText(tableState);
                         });
 
                         for (int clientNumber = 0; clientNumber < table.clients.size(); clientNumber++)
@@ -325,11 +337,18 @@ public class TablesActivity extends AppCompatActivity {
                                 View orderElement = findOrder(order.id).orderElement;
 
                                 TextView orderWaitingTimeTextView = orderElement.findViewById(R.id.OrderWaitingTimeTextView);
-                                Thread.sleep(10);
                                 String waitingTime = order.getWaitingTime();
+
+                                TextView orderStateTextView = orderElement.findViewById(R.id.OrderStateTextView);
+                                String orderState = order.getState();
+
+                                Thread.sleep(10);
                                 runOnUiThread(() -> {
                                     orderWaitingTimeTextView.setText(waitingTime);
+                                    orderStateTextView.setText(orderState);
                                 });
+
+
                             }
                         }
 
