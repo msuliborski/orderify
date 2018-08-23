@@ -117,6 +117,37 @@ CREATE TABLE addonsToWishes (
 )   CHARSET=utf8;
 
 
+#CREATE TABLE newOrders (
+#    ID INTEGER NOT NULL AUTO_INCREMENT, 
+#    time TIME NOT NULL DEFAULT '00:00:00', 
+#    date DATE NOT NULL DEFAULT '1970-1-1', 
+#    comments VARCHAR(255), 
+#    state INTEGER NOT NULL DEFAULT 1, 
+#    clientID INTEGER NOT NULL DEFAULT 0, 
+#    PRIMARY KEY (ID), 
+#    FOREIGN KEY (clientID) REFERENCES clients(ID)
+#)   CHARSET=utf8;
+
+#CREATE TABLE newWishes (
+#    ID INTEGER NOT NULL AUTO_INCREMENT, 
+#    dishID INTEGER DEFAULT 0, 
+#    amount INTEGER DEFAULT 1, 
+#    orderID INTEGER DEFAULT 0, 
+#    PRIMARY KEY (ID), 
+#    FOREIGN KEY (dishID) REFERENCES dishes(ID),
+#    FOREIGN KEY (orderID) REFERENCES newOrders(ID)
+#)   CHARSET=utf8;
+
+#CREATE TABLE newAddonsToWishes (
+#    ID INTEGER NOT NULL AUTO_INCREMENT, 
+#   wishID INTEGER NOT NULL DEFAULT 0, 
+#    addonID INTEGER NOT NULL DEFAULT 0, 
+#   PRIMARY KEY (ID),
+#  FOREIGN KEY (wishID) REFERENCES newWishes(ID),
+#   FOREIGN KEY (addonID) REFERENCES addons(ID)
+#)   CHARSET=utf8;
+
+
 INSERT INTO tables (number, description, state)
 VALUES  (1, 'Przy oknie', 1), (2, 'Przy barze', 1), (3, 'Na środku', 1), (4, 'W kącie', 1), (5, 'W odległej galaktyce', 1), (6, 'Na Żoliborzu', 1), (7, 'Na zewnątrz', 1);
 
