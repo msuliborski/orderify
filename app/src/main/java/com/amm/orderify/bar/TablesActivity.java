@@ -28,7 +28,11 @@ import static com.amm.orderify.helpers.Comparators.*;
 public class TablesActivity extends AppCompatActivity {
     List<Table> tables = new ArrayList<>();
 
+    boolean blMyAsyncTask;
+    boolean cancelTask;
     LinearLayout tablesLinearLayout;
+    UpdateTableTask task = new UpdateTableTask(TablesActivity.this);
+
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -67,8 +71,7 @@ public class TablesActivity extends AppCompatActivity {
 //        tables.add(new Table(tablesRS.getInt("ID"), tablesRS.getInt("number"), tablesRS.getString("description"), tablesRS.getInt("state"), clients));
 //        clients = new ArrayList<>();
 //
-        UpdateTableTask task = new UpdateTableTask(TablesActivity.this);
-        task.execute();
+
 
 
 
@@ -79,6 +82,25 @@ public class TablesActivity extends AppCompatActivity {
 //
 //                handler.postDelayed(this, 1000);
 //            }}, 1000);
+    }
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+        if (blMyAsyncTask)   {
+            blMyAsyncTask = false;
+            task.cancel(true);
+        }
+        Log.wtf("###############Task paused", task.getStatus() + "");
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        task = new UpdateTableTask(TablesActivity.this);
+        task.execute();
+        Log.wtf("!!!!!!!!!!!!!!!!Task executed", task.getStatus() + "");
     }
 
     @SuppressLint("SetTextI18n")
@@ -319,12 +341,14 @@ public class TablesActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
+            blMyAsyncTask = true;
         }
 
         @SuppressLint("SetTextI18n")
         @Override
         protected Void doInBackground(Void... params) {
             while(true) {
+
                 try {
                     tables = getTables();
                     Thread.sleep(10);
@@ -355,16 +379,22 @@ public class TablesActivity extends AppCompatActivity {
                                     orderWaitingTimeTextView.setText(waitingTime);
                                     orderStateTextView.setText(orderState);
                                 });
+
                             }
                         }
                     }
                 } catch (InterruptedException ignored) {}
+
+                if(Thread.interrupted()) break;
+                if (!blMyAsyncTask) break;
             }
+            return null;
         }
 
         @Override
         protected void onPostExecute(Void v) {
             super.onPostExecute(v);
+            blMyAsyncTask = false;
         }
 
         @Override
