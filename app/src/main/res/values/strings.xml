@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Orderify</string>
+
     <string name="zamawiam_button_string">Zamawiam</string>
     <string name="record_get_text_textview_string">Enter dish</string>
     <string name="send_record_string">Send record</string>
@@ -26,5 +27,23 @@
     <string name="summary_ask_for_bill_button_string">Ask for a bill</string>
     <string name="summary_go_to_menu_button_string">Go to menu</string>
     <string name="summary_order_list_separator_string">Order list</string>
+
+
+    <string name="lifecycle_table_ready">READY!</string>
+    <string name="lifecycle_table_freezed">FREEZED!</string>
+    <string name="lifecycle_table_payment">WAITING FOR A BILL!</string>
+    <string name="lifecycle_table_help">ASKS FOR A WAITER!</string>
+
+    <string name="lifecycle_client_ready">READY!</string>
+    <string name="lifecycle_client_freezed">FREEZED!</string>
+    <string name="lifecycle_client_payment">WAITING FOR A BILL!</string>
+    <string name="lifecycle_client_help">ASKS FOR A WAITER!</string>
+
+    <string name="lifecycle_order_preparation">IN PREPARATION</string>
+    <string name="lifecycle_order_delivered">DELIVERED!</string>
+    <string name="lifecycle_order_payment">WAITING FOR A BILL!</string>
+    <string name="lifecycle_order_paid">PAID!</string>
+
+
 
 </resources>

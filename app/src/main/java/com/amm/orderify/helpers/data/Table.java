@@ -1,5 +1,7 @@
 package com.amm.orderify.helpers.data;
 
+import com.amm.orderify.R;
+
 import java.util.List;
 
 public class Table {
@@ -30,15 +32,13 @@ public class Table {
 
     public String getState(){
         String state;
-        //states: 1-unfreezed, 2-freezed, 3-wantsHelp, 4-wantsABill =============================================================
         switch (this.state){
-            case 1: state = "READY!"; break;
-            case 2: state = "FREEZED!"; break;
-            case 3: state = "NEEDS HELP!"; break;
-            case 4: state = "WANTS A BILL!"; break;
-            default: state = "BROKEN - contact dev!";
+            case 1: state = String.valueOf(R.string.lifecycle_table_ready); break;
+            case 2: state = String.valueOf(R.string.lifecycle_table_freezed); break;
+            case 3: state = String.valueOf(R.string.lifecycle_table_payment); break;
+            case 4: state = String.valueOf(R.string.lifecycle_table_help); break;
+            default: state = "HEART BROKEN - contact dev!";
         }
-
         return state;
     }
 

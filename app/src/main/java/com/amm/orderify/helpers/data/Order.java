@@ -1,5 +1,7 @@
 package com.amm.orderify.helpers.data;
 
+import com.amm.orderify.R;
+
 import java.util.Date;
 import java.util.List;
 
@@ -36,13 +38,13 @@ public class Order {
 
     public String getState(){
         String state;
-        //states: 1-inPreparation, 2-doneAndDelivered =========================================================================
         switch (this.state){
-            case 1: state = "PREPARING!"; break;
-            case 2: state = "READY!"; break;
+            case 1: state = String.valueOf(R.string.lifecycle_order_preparation); break;
+            case 2: state = String.valueOf(R.string.lifecycle_order_delivered); break;
+            case 3: state = String.valueOf(R.string.lifecycle_order_payment); break;
+            case 4: state = String.valueOf(R.string.lifecycle_order_paid); break;
             default: state = "HEART BROKEN - contact dev!";
         }
-
         return state;
     }
 
