@@ -42,9 +42,7 @@ public class TablesActivity extends AppCompatActivity {
             generateTablesView();
         });
 
-        runOnUiThread(() -> {
-            generateTablesView();
-        });
+        generateTablesView(); //wszystko, na czysto wrzucamy. Czyścimy do tego newOrders. Potem ASync
 
 //        Handler handler = new Handler();
 //        handler.postDelayed(new Runnable(){
@@ -474,8 +472,9 @@ public class TablesActivity extends AppCompatActivity {
             while(true) {
                 try {
                     Thread.sleep(10);
-                    updateTablesView();
-                    addNewOrdersView();
+                    updateTablesView(); //nazwy dość intuicyjne, co chwile update stanów stolikow
+                    addNewOrdersView(); // oraz dodanie nowych orderow. W środku tych funkcji są funkcje do pobierania danych z tabel
+
                     } catch (Exception e) {
                     e.printStackTrace();
                 }
