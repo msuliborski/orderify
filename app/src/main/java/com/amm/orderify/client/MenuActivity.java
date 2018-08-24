@@ -2,6 +2,7 @@ package com.amm.orderify.client;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 
 import com.amm.orderify.MainActivity;
 import com.amm.orderify.R;
+import com.amm.orderify.bar.TablesActivity;
 import com.amm.orderify.helpers.data.*;
 
 
@@ -35,10 +37,12 @@ import static com.amm.orderify.helpers.TimeAndDate.*;
 public class MenuActivity extends AppCompatActivity {
 
     List<DishCategory> dishCategories;
-
+    boolean blMyAsyncTask;
+    UpdateMenuTask task = new UpdateMenuTask();
     LinearLayout ordersLinearLayout;
     LinearLayout dishCategoriesLinearLayout;
-
+    int tableState;
+    ConstraintLayout freezeButtonScreen;
     EditText enterCommentsEditText;
 
     TextView totalPriceTextView;
@@ -57,7 +61,7 @@ public class MenuActivity extends AppCompatActivity {
         updateMenu();
 
         enterCommentsEditText = findViewById(R.id.EnterCommentsEditText);
-
+        freezeButtonScreen = findViewById(R.id.FreezeButtonScreen);
         totalPriceTextView = findViewById(R.id.TotalPriceTextView);
         updateTotalPrice();
 
@@ -89,6 +93,21 @@ public class MenuActivity extends AppCompatActivity {
 
 
 
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (blMyAsyncTask)   {
+            blMyAsyncTask = false;
+            task.cancel(true);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        task = new UpdateMenuTask();
+        task.execute();
     }
 
     @SuppressLint("SetTextI18n")
@@ -345,6 +364,77 @@ public class MenuActivity extends AppCompatActivity {
         }
         wishes = new ArrayList<>();
         updateOrders();
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    protected class UpdateMenuTask extends AsyncTask<Void, Void, Void>
+    {
+        @Override
+        protected void onPreExecute() {
+            blMyAsyncTask = true;
+        }
+
+        @SuppressLint("SetTextI18n")
+        @Override
+        protected Void doInBackground(Void... params) {
+
+            Statement stateS = null;
+            ResultSet stateRS;
+            try
+            {
+                stateS = getConnection().createStatement();
+                stateRS = stateS.executeQuery("SELECT state FROM tables WHERE ID = 1");
+                if(stateRS.next()) tableState = stateRS.getInt("state");
+
+
+                if (tableState == 2)
+                {
+                    runOnUiThread(() -> { freezeButtonScreen.setVisibility(View.VISIBLE); });
+                }
+                else runOnUiThread(() -> { freezeButtonScreen.setVisibility(View.GONE); });
+
+            } catch (SQLException e)
+            {
+                e.printStackTrace();
+            }
+
+
+
+            while(true) {
+                try
+                {
+                    int oldTableState = tableState;
+                    stateRS = stateS.executeQuery("SELECT state FROM tables WHERE ID = 1");
+                    if(stateRS.next()) tableState = stateRS.getInt("state");
+                    if(oldTableState != tableState)
+                    {
+                        if (tableState == 2)
+                        {
+                            runOnUiThread(() -> { freezeButtonScreen.setVisibility(View.VISIBLE); });
+                        }
+                        else runOnUiThread(() -> { freezeButtonScreen.setVisibility(View.GONE); });
+                    }
+
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                if(Thread.interrupted()) break;
+                if (!blMyAsyncTask) break;
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void v) {
+            super.onPostExecute(v);
+            blMyAsyncTask = false;
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
     }
 
 }
