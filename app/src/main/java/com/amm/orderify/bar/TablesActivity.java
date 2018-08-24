@@ -141,7 +141,7 @@ public class TablesActivity extends AppCompatActivity {
 
                     try{
                         View orderElement = findOrder(order.id).orderElement;
-
+                        Thread.sleep(10);
                         TextView orderWaitingTimeTextView = orderElement.findViewById(R.id.OrderWaitingTimeTextView);
                         String waitingTime = order.getWaitingTime();
                         runOnUiThread(() -> {orderWaitingTimeTextView.setText(waitingTime);});
@@ -182,19 +182,18 @@ public class TablesActivity extends AppCompatActivity {
             });
 
             TextView orderNumberTextView = orderElement.findViewById(R.id.OrderNumberTextView);
-            runOnUiThread(() -> {orderNumberTextView.setText(order.id + "");});
-
             TextView orderWaitingTimeTextView = orderElement.findViewById(R.id.OrderWaitingTimeTextView);
-            runOnUiThread(() -> {orderWaitingTimeTextView.setText(order.getWaitingTime());});
-
             TextView orderPriceTextView = orderElement.findViewById(R.id.OrderPriceTextView);
-            runOnUiThread(() -> {orderPriceTextView.setText(order.getTotalPrice() + " zł");});
-
             TextView orderStateTextView = orderElement.findViewById(R.id.OrderStateTextView);
-            runOnUiThread(() -> {orderStateTextView.setText(order.getState());});
-
             TextView commentsTextView = orderElement.findViewById(R.id.CommentsTextView);
-            runOnUiThread(() -> {commentsTextView.setText(order.comments);});
+            runOnUiThread(() -> {
+                orderNumberTextView.setText(order.id + "");
+                orderWaitingTimeTextView.setText(order.getWaitingTime());
+                orderPriceTextView.setText(order.getTotalPrice() + " zł");
+                orderStateTextView.setText(order.getState());
+                commentsTextView.setText(order.comments);
+            });
+
 
             Button changeOrderStateButton = orderElement.findViewById(R.id.ChangeOrderStateButton);
             if (order.state == 1) runOnUiThread(() -> {changeOrderStateButton.setVisibility(View.GONE);});
@@ -224,8 +223,10 @@ public class TablesActivity extends AppCompatActivity {
                     View addonElement = getLayoutInflater().inflate(R.layout.bar_addon_element, null);
 
                     TextView addonNameTextView = addonElement.findViewById(R.id.AddonNameTextView);
-                    runOnUiThread(() -> {addonNameTextView.setText(addon.name);});
-                    runOnUiThread(() -> {addonsLinearLayout.addView(addonElement);});
+                    runOnUiThread(() -> {
+                        addonNameTextView.setText(addon.name);
+                        addonsLinearLayout.addView(addonElement);
+                    });
                 }
                 runOnUiThread(() -> {wishesLinearLayout.addView(wishElement);});
             }
