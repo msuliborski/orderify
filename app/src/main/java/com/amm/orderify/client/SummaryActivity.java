@@ -125,7 +125,7 @@ public class SummaryActivity extends AppCompatActivity
                         addons.add(new Addon(addonsRS.getInt("addonID"), addonsRS.getString("name"), addonsRS.getFloat("price")));
                     }
                     Dish dish = new Dish(wishesRS.getInt("dishID"), wishesRS.getString("name"), wishesRS.getFloat("price"), null, null, null);
-                    wishes.add(new Wish(dish, wishesRS.getInt("amount"), addons));
+                    wishes.add(new Wish(0, dish, wishesRS.getInt("amount"), addons));
                     addons = new ArrayList<>();
                 }
                 orders.add(new Order(ordersRS.getInt("ID"), ordersRS.getTime("time"), ordersRS.getDate("date"), ordersRS.getString("comments"), ordersRS.getInt("state"), 0,0, wishes));

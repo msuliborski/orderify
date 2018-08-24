@@ -42,11 +42,11 @@ public class JBDCDriver {
         database = "Orderify";
         user = "root";
 
-//        ip = "10.0.2.2";
-//        password = "";
+        ip = "10.0.2.2";
+        password = "";
 
-        ip = "192.168.1.100";
-        password = "1234";
+//        ip = "192.168.1.100";
+//        password = "1234";
     }
 
     public static void ConnectToDatabase() {
@@ -73,6 +73,10 @@ public class JBDCDriver {
     public static void ExecuteUpdate(String query) throws SQLException {
         logQueriesFromApp(query);
         myStatement.executeUpdate(query);
+    }
+    public static void Execute(String query) throws SQLException {
+        logQueriesFromApp(query);
+        myStatement.execute(query);
     }
 
     public static Connection getConnection() {

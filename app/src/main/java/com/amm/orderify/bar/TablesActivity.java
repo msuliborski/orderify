@@ -264,9 +264,17 @@ public class TablesActivity extends AppCompatActivity {
                 commentsTextView.setText(order.comments);
             });
 
-//            ImageButton deleteOrderButton = orderElement.findViewById(R.id.DeleteOrderButton);
-//            deleteOrderButton.setOnClickListener(v -> {
+            ImageButton deleteOrderButton = orderElement.findViewById(R.id.DeleteOrderButton);
+            deleteOrderButton.setOnClickListener(v -> {
 //                try {
+//                    for(int i = 0; i < order.wishes. size(); i++) {
+//                        for (int j = 0; j < order.wishes.size(); j++){
+//                            ExecuteUpdate("DELETE FROM addonsToWishes WHERE wishID = " + order.wishes.get(i).id);
+//                        }
+//                    }
+//
+//                    for(int i = 0; i < order.wishes.size(); i++)
+//                        ExecuteUpdate("DELETE FROM wishes WHERE ID = " + order.id);
 //                    ExecuteUpdate("DELETE FROM orders WHERE ID = " + order.id);
 //                } catch (SQLException ignored) { }
 //                for(int tableNumber = 0; tableNumber < tables.size(); tableNumber++)
@@ -274,7 +282,7 @@ public class TablesActivity extends AppCompatActivity {
 //                tables.get(order.tableID)
 //                //ordersLinearLayout.removeView(orderElement);
 //                generateTablesView();
-//            });
+            });
 
 
 
@@ -367,7 +375,7 @@ public class TablesActivity extends AppCompatActivity {
                                 addons.add(new Addon(addonsRS.getInt("addonID"), addonsRS.getString("name"), addonsRS.getFloat("price")));
                             }
                             Dish dish = new Dish(wishesRS.getInt("dishID"), wishesRS.getString("name"), wishesRS.getFloat("price"), null, null, null);
-                            wishes.add(new Wish(dish, wishesRS.getInt("amount"), addons));
+                            wishes.add(new Wish(wishesRS.getInt("ID"), dish, wishesRS.getInt("amount"), addons));
                             addons = new ArrayList<>();
                         }
                     orders.add(new Order(ordersRS.getInt("ID"), ordersRS.getTime("time"), ordersRS.getDate("date"), ordersRS.getString("comments"), ordersRS.getInt("state"), clientRS.getInt("ID"), tablesRS.getInt("ID"), wishes));
@@ -415,41 +423,51 @@ public class TablesActivity extends AppCompatActivity {
         return tables;
     }
 
-    private List<Order> getNewOrders(){
-        List<Order> newOrders = new ArrayList<>();
-        List<Wish> newWishes = new ArrayList<>();
-        List<Addon> newAddons = new ArrayList<>();
+    private List<Order> getNewOrders() {
+        boolean locked = false;
         try {
-            Statement newOrdersS = getConnection().createStatement();
-            ResultSet newOrdersRS = newOrdersS.executeQuery("SELECT newOrders.*, " +
-                                                                "(SELECT ID FROM tables WHERE ID = clients.tableID) AS tableID FROM newOrders\n" +
-                                                                "JOIN clients ON clients.ID = newOrders.clientID\n" +
-                                                                "GROUP BY newOrders.ID");
-            while (newOrdersRS.next()) {
-                Statement newWishesS = getConnection().createStatement();
-                ResultSet newWishesRS = newWishesS.executeQuery("SELECT newWishes.ID, dishID, name, price, amount, orderID FROM newWishes\n" +
-                        "JOIN dishes ON dishes.ID = newWishes.dishID\n" +
-                        "WHERE orderID = " + newOrdersRS.getInt("ID"));
-                while (newWishesRS.next()) {
-                    Statement addonsS = getConnection().createStatement();
-                    ResultSet addonsRS = addonsS.executeQuery("SELECT addonID, name, price FROM newAddonsToWishes\n" +
-                            "JOIN addons ON addons.ID = newAddonsToWishes.addonID\n" +
-                            "WHERE wishID = " + newWishesRS.getInt("ID"));
-                    while (addonsRS.next()) {
-                        newAddons.add(new Addon(addonsRS.getInt("addonID"), addonsRS.getString("name"), addonsRS.getFloat("price")));
+            ResultSet lockedRS = ExecuteQuery("SELECT * FROM padlock; \n");
+            if (lockedRS.next()) locked = true;
+        } catch (SQLException ignored) {}
+        if (!locked) {
+            List<Order> newOrders = new ArrayList<>();
+            List<Wish> newWishes = new ArrayList<>();
+            List<Addon> newAddons = new ArrayList<>();
+            try {
+                Statement newOrdersS = getConnection().createStatement();
+                ResultSet newOrdersRS = newOrdersS.executeQuery("SELECT newOrders.*, " +
+                        "(SELECT ID FROM tables WHERE ID = clients.tableID) AS tableID FROM newOrders\n" +
+                        "JOIN clients ON clients.ID = newOrders.clientID\n" +
+                        "GROUP BY newOrders.ID");
+                while (newOrdersRS.next()) {
+                    Statement newWishesS = getConnection().createStatement();
+                    ResultSet newWishesRS = newWishesS.executeQuery("SELECT newWishes.ID, dishID, name, price, amount, orderID FROM newWishes\n" +
+                            "JOIN dishes ON dishes.ID = newWishes.dishID\n" +
+                            "WHERE orderID = " + newOrdersRS.getInt("ID"));
+                    while (newWishesRS.next()) {
+                        Statement addonsS = getConnection().createStatement();
+                        ResultSet addonsRS = addonsS.executeQuery("SELECT addonID, name, price FROM newAddonsToWishes\n" +
+                                "JOIN addons ON addons.ID = newAddonsToWishes.addonID\n" +
+                                "WHERE wishID = " + newWishesRS.getInt("ID"));
+                        while (addonsRS.next()) {
+                            newAddons.add(new Addon(addonsRS.getInt("addonID"), addonsRS.getString("name"), addonsRS.getFloat("price")));
+                        }
+                        Dish dish = new Dish(newWishesRS.getInt("dishID"), newWishesRS.getString("name"), newWishesRS.getFloat("price"), null, null, null);
+                        newWishes.add(new Wish(newWishesRS.getInt("ID"), dish, newWishesRS.getInt("amount"), newAddons));
+                        newAddons = new ArrayList<>();
                     }
-                    Dish dish = new Dish(newWishesRS.getInt("dishID"), newWishesRS.getString("name"), newWishesRS.getFloat("price"), null, null, null);
-                    newWishes.add(new Wish(dish, newWishesRS.getInt("amount"), newAddons));
-                    newAddons = new ArrayList<>();
+                    newOrders.add(new Order(newOrdersRS.getInt("ID"), newOrdersRS.getTime("time"), newOrdersRS.getDate("date"), newOrdersRS.getString("comments"), newOrdersRS.getInt("state"), newOrdersRS.getInt("clientID"), newOrdersRS.getInt("tableID"), newWishes));
+                    newWishes = new ArrayList<>();
                 }
-                newOrders.add(new Order(newOrdersRS.getInt("ID"), newOrdersRS.getTime("time"), newOrdersRS.getDate("date"), newOrdersRS.getString("comments"), newOrdersRS.getInt("state"), newOrdersRS.getInt("clientID"), newOrdersRS.getInt("tableID"), newWishes));
-                newWishes = new ArrayList<>();
+                ExecuteUpdate("DELETE FROM newAddonsToWishes");
+                ExecuteUpdate("DELETE FROM newWishes");
+                ExecuteUpdate("DELETE FROM newOrders");
+            } catch (SQLException e) {
+                Log.wtf("!!!!!!!!!!!!!!EXCEPTION", e.getMessage());
             }
-            ExecuteUpdate("DELETE FROM newAddonsToWishes");
-            ExecuteUpdate("DELETE FROM newWishes");
-            ExecuteUpdate("DELETE FROM newOrders");
-        } catch (SQLException e) {Log.wtf("!!!!!!!!!!!!!!EXCEPTION", e.getMessage()); }
-        return newOrders;
+            return newOrders;
+        }
+        return new ArrayList<>();
     }
 
     @SuppressLint("StaticFieldLeak")
@@ -471,9 +489,10 @@ public class TablesActivity extends AppCompatActivity {
 
             while(true) {
                 try {
-                    Thread.sleep(10);
-                    updateTablesView(); //nazwy dość intuicyjne, co chwile update stanów stolikow
-                    addNewOrdersView(); // oraz dodanie nowych orderow. W środku tych funkcji są funkcje do pobierania danych z tabel
+                    Thread.sleep(100);
+                    updateTablesView();
+                    Thread.sleep(100);
+                    addNewOrdersView();
 
                     } catch (Exception e) {
                     e.printStackTrace();
@@ -520,7 +539,6 @@ public class TablesActivity extends AppCompatActivity {
                 }
         }
         return null;
-
     }
     class OrderAndTableView {
         View tableElement;

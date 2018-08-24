@@ -16,6 +16,13 @@ DROP TABLE IF EXISTS dishCategories;
 DROP TABLE IF EXISTS messages;                
 DROP TABLE IF EXISTS clients;                    
 DROP TABLE IF EXISTS tables;                    
+DROP TABLE IF EXISTS padlock;                    
+
+CREATE TABLE padlock (
+    ID INTEGER NOT NULL AUTO_INCREMENT, 
+    locked BOOLEAN NOT NULL DEFAULT false, 
+    PRIMARY KEY (ID)
+)   CHARSET=utf8;
 
 CREATE TABLE tables (
     ID INTEGER NOT NULL AUTO_INCREMENT, 
@@ -264,7 +271,7 @@ VALUES  (1, 2), (1, 3),
         (28, 20),
         (29, 20);
 
-
+SET FOREIGN_KEY_CHECKS=0;
 INSERT INTO newOrders (time, date, comments, state, clientID)
 VALUES  ('21:37:00', '2018-07-31', 'z lodem', 1, 1),                                                                #1
         ('21:38:11', '2018-07-31', 'arkadiusz, designu prometeusz', 1, 2),                                          #2
@@ -312,3 +319,4 @@ VALUES  (1, 2), (1, 3),
         (27, 18),
         (28, 20),
         (29, 20);
+SET FOREIGN_KEY_CHECKS=1;
