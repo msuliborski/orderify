@@ -4,6 +4,8 @@ import com.amm.orderify.R;
 
 import java.util.List;
 
+import static com.amm.orderify.MainActivity.context;
+
 public class Table {
     public int id;
     public int number;
@@ -33,10 +35,10 @@ public class Table {
     public String getState(){
         String state;
         switch (this.state){
-            case 1: state = String.valueOf(R.string.lifecycle_table_ready); break;
-            case 2: state = String.valueOf(R.string.lifecycle_table_freezed); break;
-            case 3: state = String.valueOf(R.string.lifecycle_table_payment); break;
-            case 4: state = String.valueOf(R.string.lifecycle_table_help); break;
+            case 1: state = context.getString(R.string.lifecycle_table_ready); break;
+            case 2: state = context.getString(R.string.lifecycle_table_freezed); break;
+            case 3: state = context.getString(R.string.lifecycle_table_payment); break;
+            case 4: state = context.getString(R.string.lifecycle_table_help); break;
             default: state = "HEART BROKEN - contact dev!";
         }
         return state;

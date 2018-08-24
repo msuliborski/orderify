@@ -80,7 +80,7 @@ public class SummaryActivity extends AppCompatActivity
             orderNumberTextView.setText("Order " + order.id + ".");
 
             TextView orderStateTextView = orderElement.findViewById(R.id.OrderStateTextView);
-            orderStateTextView.setText(order.state + "");
+            orderStateTextView.setText(order.getState());
 
             TextView orderSumNumberTextView = orderElement.findViewById(R.id.OrderSumNumberTextView);
             orderSumNumberTextView.setText(order.getTotalPrice() + "");
@@ -118,11 +118,11 @@ public class SummaryActivity extends AppCompatActivity
                         "WHERE orderID = " + ordersRS.getInt("ID"));
                 while (wishesRS.next()) {
                     Statement addonsS = getConnection().createStatement();
-                    ResultSet addonsRS = addonsS.executeQuery("SELECT addonID, name, price FROM addonsToWishes\n" +
+                    ResultSet addonsRS = addonsS.executeQuery("SELECT addonID, name, price, addonCategoryID FROM addonsToWishes\n" +
                             "JOIN addons ON addons.ID = addonsToWishes.addonID\n" +
                             "WHERE wishID = " + wishesRS.getInt("ID"));
                     while (addonsRS.next()) {
-                        addons.add(new Addon(addonsRS.getInt("addonID"), addonsRS.getString("name"), addonsRS.getFloat("price")));
+                        addons.add(new Addon(addonsRS.getInt("addonID"), addonsRS.getString("name"), addonsRS.getFloat("price"), addonsRS.getInt("addonCategoryID")));
                     }
                     Dish dish = new Dish(wishesRS.getInt("dishID"), wishesRS.getString("name"), wishesRS.getFloat("price"), null, null, null);
                     wishes.add(new Wish(0, dish, wishesRS.getInt("amount"), addons));

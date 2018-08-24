@@ -19,7 +19,6 @@ import android.widget.TextView;
 
 import com.amm.orderify.MainActivity;
 import com.amm.orderify.R;
-import com.amm.orderify.bar.TablesActivity;
 import com.amm.orderify.helpers.data.*;
 
 
@@ -89,10 +88,6 @@ public class MenuActivity extends AppCompatActivity {
                 } catch (SQLException ignored) {}
             }
         });
-
-
-
-
     }
     @Override
     protected void onPause() {
@@ -304,7 +299,7 @@ public class MenuActivity extends AppCompatActivity {
                         ResultSet addonsRS = addonsS.executeQuery("SELECT * FROM addons \n" +
                                 "WHERE addonCategoryID = " + addonCategoriesRS.getInt("addonCategoryID"));
                         while (addonsRS.next()) {
-                            addons.add(new Addon(addonsRS.getInt("ID"), addonsRS.getString("name"), addonsRS.getFloat("price")));
+                            addons.add(new Addon(addonsRS.getInt("ID"), addonsRS.getString("name"), addonsRS.getFloat("price"), addonsRS.getInt("addonCategoryID")));
                         }
                         addonCategories.add(new AddonCategory(addonCategoriesRS.getInt("ID"), addonCategoriesRS.getString("name"), addonCategoriesRS.getString("description"), addonCategoriesRS.getBoolean("multiChoice"), addons));
                         addons = new ArrayList<>();
@@ -325,7 +320,7 @@ public class MenuActivity extends AppCompatActivity {
         try {
             ExecuteUpdate("SET FOREIGN_KEY_CHECKS=0; \n");
             //ExecuteUpdate("UPDATE padlock SET locked = true WHERE ID = 1; \n");
-            ExecuteUpdate("INSERT INTO padlock (locked) VALUES (true); \n");
+            ExecuteUpdate("INSERT INTO padlock (TTL) VALUES (15); \n");
             int lockID = 0;
             ResultSet lockIDRS = ExecuteQuery("SELECT LAST_INSERT_ID(); \n");
             if(lockIDRS.next()) lockID = lockIDRS.getInt(1);
@@ -356,7 +351,6 @@ public class MenuActivity extends AppCompatActivity {
                             "VALUES  (" + newWishID + ", " + wishes.get(wishI).addons.get(addonI).id + "); \n");
                 }
             }
-            //ExecuteUpdate("UPDATE padlock SET locked = false WHERE ID = 1; \n");
             ExecuteUpdate("DELETE FROM padlock WHERE ID = " + lockID);
             ExecuteUpdate("SET FOREIGN_KEY_CHECKS=1 \n");
         } catch (Exception e) {
@@ -407,7 +401,9 @@ public class MenuActivity extends AppCompatActivity {
 
 
             while(true) {
-
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException ignored) {}
                 refreshTableState();
 
                 if(Thread.interrupted()) break;

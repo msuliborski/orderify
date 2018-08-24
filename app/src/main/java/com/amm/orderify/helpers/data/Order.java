@@ -6,6 +6,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import static com.amm.orderify.MainActivity.context;
+
 public class Order {
     public int id;
     public Date time;
@@ -39,10 +41,10 @@ public class Order {
     public String getState(){
         String state;
         switch (this.state){
-            case 1: state = String.valueOf(R.string.lifecycle_order_preparation); break;
-            case 2: state = String.valueOf(R.string.lifecycle_order_delivered); break;
-            case 3: state = String.valueOf(R.string.lifecycle_order_payment); break;
-            case 4: state = String.valueOf(R.string.lifecycle_order_paid); break;
+            case 1: state = context.getString(R.string.lifecycle_order_preparation); break;
+            case 2: state = context.getString(R.string.lifecycle_order_delivered); break;
+            case 3: state = context.getString(R.string.lifecycle_order_payment); break;
+            case 4: state = context.getString(R.string.lifecycle_order_paid); break;
             default: state = "HEART BROKEN - contact dev!";
         }
         return state;

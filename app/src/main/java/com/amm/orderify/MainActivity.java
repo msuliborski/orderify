@@ -1,11 +1,11 @@
 package com.amm.orderify;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 
 import com.amm.orderify.bar.TablesActivity;
@@ -17,12 +17,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import static com.amm.orderify.helpers.JBDCDriver.*;
-import static com.amm.orderify.helpers.TimeAndDate.*;
 
 public class MainActivity extends AppCompatActivity {
 
 
-
+    public static Context context;
     public static int thisClientID = 1;
     public static Client client;
 
@@ -31,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.app_main_activity);
+
+        context = this.getApplicationContext();
 
         InitiateConnection();
         ConnectToDatabase();
