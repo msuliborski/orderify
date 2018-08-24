@@ -2,6 +2,7 @@ package com.amm.orderify.helpers.data;
 
 import com.amm.orderify.R;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -26,7 +27,6 @@ public class Order {
         this.wishes = wishes;
     }
 
-
     public float getTotalPrice(){
         float totalPrice = 0;
 
@@ -49,9 +49,9 @@ public class Order {
     }
 
     public String getWaitingTime(){
-        Date curr = new Date();
+        Date curr = Calendar.getInstance().getTime();
         Date orderTime = new Date(this.date.getTime() + this.time.getTime());
-        Date diff = new Date(curr.getTime() - orderTime.getTime());
+        Date diff = new Date(curr.getTime() - orderTime.getTime() + 7200000);
         String seconds = String.format("%02d", (int) (diff.getTime() / 1000) % 60);
         String minutes = String.format("%02d", (int) ((diff.getTime() / (1000 * 60)) % 60));
         String hours = String.format("%02d", (int) ((diff.getTime() / (1000 * 60 * 60)) % 24));
