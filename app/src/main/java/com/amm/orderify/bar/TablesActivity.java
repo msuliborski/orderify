@@ -266,22 +266,19 @@ public class TablesActivity extends AppCompatActivity {
 
             ImageButton deleteOrderButton = orderElement.findViewById(R.id.DeleteOrderButton);
             deleteOrderButton.setOnClickListener(v -> {
-//                try {
-//                    for(int i = 0; i < order.wishes. size(); i++) {
-//                        for (int j = 0; j < order.wishes.size(); j++){
-//                            ExecuteUpdate("DELETE FROM addonsToWishes WHERE wishID = " + order.wishes.get(i).id);
-//                        }
-//                    }
-//
-//                    for(int i = 0; i < order.wishes.size(); i++)
-//                        ExecuteUpdate("DELETE FROM wishes WHERE ID = " + order.id);
-//                    ExecuteUpdate("DELETE FROM orders WHERE ID = " + order.id);
-//                } catch (SQLException ignored) { }
-//                for(int tableNumber = 0; tableNumber < tables.size(); tableNumber++)
-//                client.orders.remove(order);
-//                tables.get(order.tableID)
-//                //ordersLinearLayout.removeView(orderElement);
-//                generateTablesView();
+                Log.wtf("delete", "delete");
+                try {
+                    for(int wishNumber = 0; wishNumber < order.wishes.size(); wishNumber++) {
+                        for (int addonNumber = 0; addonNumber < order.wishes.get(wishNumber).addons.size(); addonNumber++){
+                            ExecuteUpdate("DELETE FROM addonsToWishes WHERE addonID = " + order.wishes.get(wishNumber).addons.get(addonNumber).id);
+                        }
+                        ExecuteUpdate("DELETE FROM wishes WHERE ID = " + order.wishes.get(wishNumber).id);
+                    }
+                    ExecuteUpdate("DELETE FROM orders WHERE ID = " + order.id);
+                } catch (SQLException e) {
+                    Log.wtf("wada", e.getMessage()+"");
+                }
+                ordersLinearLayout.removeView(orderElement);
             });
 
 
