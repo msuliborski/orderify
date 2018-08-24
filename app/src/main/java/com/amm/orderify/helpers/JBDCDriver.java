@@ -47,6 +47,7 @@ public class JBDCDriver {
 
         ip = "192.168.1.100";
         password = "1234";
+        
     }
 
     public static void ConnectToDatabase() {
