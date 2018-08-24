@@ -366,6 +366,33 @@ public class MenuActivity extends AppCompatActivity {
         updateOrders();
     }
 
+    void refreshTableState()
+    {
+        Statement stateS = null;
+        ResultSet stateRS;
+        try
+        {
+            int oldTableState = tableState;
+            stateS = getConnection().createStatement();
+            stateRS = stateS.executeQuery("SELECT state FROM tables WHERE ID = 1");
+            if(stateRS.next()) tableState = stateRS.getInt("state");
+            if(oldTableState != tableState)
+            {
+                if (tableState == 2)
+                {
+                    runOnUiThread(() -> { freezeButtonScreen.setVisibility(View.VISIBLE); });
+                }
+                else runOnUiThread(() -> { freezeButtonScreen.setVisibility(View.GONE); });
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
     @SuppressLint("StaticFieldLeak")
     protected class UpdateMenuTask extends AsyncTask<Void, Void, Void>
     {
@@ -378,47 +405,11 @@ public class MenuActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... params) {
 
-            Statement stateS = null;
-            ResultSet stateRS;
-            try
-            {
-                stateS = getConnection().createStatement();
-                stateRS = stateS.executeQuery("SELECT state FROM tables WHERE ID = 1");
-                if(stateRS.next()) tableState = stateRS.getInt("state");
-
-
-                if (tableState == 2)
-                {
-                    runOnUiThread(() -> { freezeButtonScreen.setVisibility(View.VISIBLE); });
-                }
-                else runOnUiThread(() -> { freezeButtonScreen.setVisibility(View.GONE); });
-
-            } catch (SQLException e)
-            {
-                e.printStackTrace();
-            }
-
-
 
             while(true) {
-                try
-                {
-                    int oldTableState = tableState;
-                    stateRS = stateS.executeQuery("SELECT state FROM tables WHERE ID = 1");
-                    if(stateRS.next()) tableState = stateRS.getInt("state");
-                    if(oldTableState != tableState)
-                    {
-                        if (tableState == 2)
-                        {
-                            runOnUiThread(() -> { freezeButtonScreen.setVisibility(View.VISIBLE); });
-                        }
-                        else runOnUiThread(() -> { freezeButtonScreen.setVisibility(View.GONE); });
-                    }
 
+                refreshTableState();
 
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
                 if(Thread.interrupted()) break;
                 if (!blMyAsyncTask) break;
             }
