@@ -13,4 +13,8 @@
     <color name="barOrderStateButtonBackgroundColor">#30a430</color>
     <color name="barUnfreezeButtonBackgroundColor">#8db8c4</color>
     <color name="barFreezeButtonBackgroundColor">#00bff4</color>
+    <color name="summaryOrderElementTitleBackgroundColor">#eaf3d6</color>
+    <color name="summaryOrderStateDoneColor">#00d600</color>
+    <color name="summaryOrderStateNotDoneColor">#a9a400</color>
+    <color name="darkRedFaded">#a49684</color>
 </resources>

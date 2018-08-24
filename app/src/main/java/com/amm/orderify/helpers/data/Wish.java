@@ -4,11 +4,13 @@ import java.util.List;
 
 public class Wish {
 
+    public int id;
     public Dish dish;
     public int amount;
     public List<Addon> addons;
 
-    public Wish(Dish dish, int amount, List<Addon> addons) {
+    public Wish(int id, Dish dish, int amount, List<Addon> addons) {
+        this.id = id;
         this.dish = dish;
         this.amount = amount;
         this.addons = addons;

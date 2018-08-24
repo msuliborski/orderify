@@ -32,7 +32,7 @@ public class AddTableActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.maintenance_add_table_activity);
+        setContentView(R.layout.maintenance_table_activity);
 
 
         try {
@@ -79,7 +79,7 @@ public class AddTableActivity extends AppCompatActivity {
         tablesLinearLayout.removeAllViews();
 
         for (int tableNumber = 0; tableNumber < tables.size(); tableNumber++){
-            View tableElement = tableListInflater.inflate(R.layout.maintenance_table_element, null);
+            View tableElement = tableListInflater.inflate(R.layout.maintenance_table_table_element, null);
             TextView idTextView = tableElement.findViewById(R.id.IdTextView);
             idTextView.setText(tables.get(tableNumber).id + "");
 
@@ -89,7 +89,7 @@ public class AddTableActivity extends AppCompatActivity {
             TextView descriptionTextView = tableElement.findViewById(R.id.DescriptionTextView);
             descriptionTextView.setText(tables.get(tableNumber).description);
 
-            ImageButton deleteButton = tableElement.findViewById(R.id.DeleteButton);
+            ImageButton deleteButton = tableElement.findViewById(R.id.ActionButton);
             final int finalTableNumber = tableNumber;
             deleteButton.setOnClickListener(v -> {
                 try {

@@ -31,7 +31,7 @@ public class AddDishCategoryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.maintenance_add_dishcategory_activity);
+        setContentView(R.layout.maintenance_dishcategory_activity);
 
 
         try {
@@ -82,7 +82,7 @@ public class AddDishCategoryActivity extends AppCompatActivity {
             TextView nameTextView = dishCategoryElement.findViewById(R.id.NameTextView);
             nameTextView.setText(dishCategories.get(dishCategoryNumber).name);
 
-            ImageButton deleteButton = dishCategoryElement.findViewById(R.id.DeleteButton);
+            ImageButton deleteButton = dishCategoryElement.findViewById(R.id.ActionButton);
             final int finalDishCategoryNumber = dishCategoryNumber;
             deleteButton.setOnClickListener(v -> {
                 try {

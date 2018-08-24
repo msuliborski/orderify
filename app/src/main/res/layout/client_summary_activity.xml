@@ -1,31 +1,186 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/backgroundPrimary"
     tools:context=".client.SummaryActivity">
 
     <TextView
         android:id="@+id/PositionPriceTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp"
+        android:elevation="3dp"
+        android:fontFamily="@font/tw_cen"
         android:text="@string/position_price_textview_string"
-        app:layout_constraintBottom_toTopOf="@+id/TablePriceTextView"
+        android:textColor="@color/backgroundPrimary"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/SummaryBackgroundBorder"
         app:layout_constraintEnd_toEndOf="@+id/TablePriceTextView"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/SummaryBackgroundBorder"
+        app:layout_constraintVertical_bias="0.13" />
+
+    <TextView
+        android:id="@+id/PositionPriceNumberTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:elevation="3dp"
+        android:fontFamily="@font/tw_cen"
+        android:text="85,00 zł"
+        android:textColor="@color/backgroundPrimary"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@+id/TablePriceTextView"
+        app:layout_constraintTop_toBottomOf="@+id/PositionPriceTextView" />
+
+    <TextView
+        android:id="@+id/TablePriceNumberTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:elevation="3dp"
+        android:fontFamily="@font/tw_cen"
+        android:text="145,00 zł"
+        android:textColor="@color/backgroundPrimary"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@+id/TablePriceTextView"
+        app:layout_constraintTop_toBottomOf="@+id/TablePriceTextView" />
 
     <TextView
         android:id="@+id/TablePriceTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        android:elevation="3dp"
+        android:fontFamily="@font/tw_cen"
         android:text="@string/table_price_textview_string"
+        android:textColor="@color/backgroundPrimary"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/SummaryBackgroundBorder"
+        app:layout_constraintEnd_toEndOf="@+id/SummaryBackgroundBorder"
+        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintStart_toStartOf="@+id/SummaryBackgroundBorder"
+        app:layout_constraintTop_toTopOf="@+id/SummaryBackgroundBorder"
+        app:layout_constraintVertical_bias="0.6" />
+
+    <ImageView
+        android:id="@+id/SeparatingLineImageView"
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/PositionPriceTextView" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.3"
+        app:srcCompat="@drawable/basket_background" />
+
+    <ImageView
+        android:id="@+id/SummaryBackgroundImageView"
+        android:layout_width="210dp"
+        android:layout_height="0dp"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toTopOf="@+id/SeparatingLineImageView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/basket_background" />
+
+    <ImageView
+        android:id="@+id/SummaryBackgroundBorder"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/SummaryBackgroundImageView"
+        app:layout_constraintEnd_toEndOf="@+id/SummaryBackgroundImageView"
+        app:layout_constraintStart_toStartOf="@+id/SummaryBackgroundImageView"
+        app:layout_constraintTop_toTopOf="@+id/SummaryBackgroundImageView"
+        app:srcCompat="@drawable/summary_border_rectangle" />
+
+    <Button
+        android:id="@+id/AskForBillAButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:fontFamily="@font/tw_cen"
+        android:text="@string/summary_ask_for_bill_button_string"
+        android:textAllCaps="false"
+        android:textColor="@color/darkRed"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@id/ButtonSeparator"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/SummaryBackgroundImageView"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/GoToMenuButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:fontFamily="@font/tw_cen"
+        android:text="@string/go_to_menu_button_string"
+        android:textAllCaps="false"
+        android:textColor="@color/darkRed"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/SeparatorArrow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/SummaryBackgroundImageView"
+        app:layout_constraintTop_toBottomOf="@+id/ButtonSeparator" />
+
+    <ImageView
+        android:id="@+id/ButtonSeparator"
+        android:layout_width="0dp"
+        android:layout_height="1.5dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@+id/SeparatorArrow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/SummaryBackgroundImageView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/summary_button_separator" />
+
+    <ScrollView
+        android:id="@+id/OrderListScrollView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/SeparatingLineImageView">
+
+        <LinearLayout
+            android:id="@+id/WishListLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
+
+    <ImageView
+        android:id="@+id/SeparatorArrow"
+        android:layout_width="158dp"
+        android:layout_height="25dp"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/summary_separator_arrow"
+        app:layout_constraintStart_toEndOf="@id/SummaryBackgroundImageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/SeparatingLineImageView"
+        app:layout_constraintBottom_toBottomOf="@id/SeparatingLineImageView"
+        tools:layout_editor_absoluteX="337dp"
+        tools:layout_editor_absoluteY="109dp" />
+
+    <TextView
+        android:id="@+id/SeparatorArrowTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/tw_cen"
+        android:text="@string/summary_order_list_separator_string"
+        android:textColor="@color/backgroundPrimary"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/SeparatorArrow"
+        app:layout_constraintEnd_toEndOf="@+id/SeparatorArrow"
+        app:layout_constraintStart_toStartOf="@+id/SeparatorArrow"
+        app:layout_constraintTop_toTopOf="@+id/SeparatorArrow" />
 
 
 </android.support.constraint.ConstraintLayout>

@@ -37,7 +37,7 @@ public class ChoseActivity extends AppCompatActivity {
         });
         Button addAddonButton = findViewById(R.id.ChoseAddonButton);
         addAddonButton.setOnClickListener(e -> {
-            this.startActivity(new Intent(this, AddAddonCategoryActivity.class));
+            this.startActivity(new Intent(this, AddAddonActivity.class));
         });
 
 
