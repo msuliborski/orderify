@@ -17,6 +17,8 @@ import com.amm.orderify.maintenance.EditActivity;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static com.amm.orderify.helpers.JBDCDriver.*;
 
@@ -39,15 +41,21 @@ public class MainActivity extends AppCompatActivity {
         InitiateConnection();
         ConnectToDatabase();
 
-
-        ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE }, 1);
-
         this.startActivity(new Intent(MainActivity.this, RoleActivity.class));
+
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                finish();
+                Intent homepage = new Intent(MainActivity.this, RoleActivity.class);
+                startActivity(homepage);
+            }
+        }, 1);
 
         Button barButton = findViewById(R.id.BarButton);
         barButton.setOnClickListener(e -> {
             this.startActivity(new Intent(MainActivity.this, TablesActivity.class));
-
         });
 
         Button clientButton = findViewById(R.id.ClientButton);
@@ -59,9 +67,5 @@ public class MainActivity extends AppCompatActivity {
         addButton.setOnClickListener(e -> {
             this.startActivity(new Intent(MainActivity.this, EditActivity.class));
         });
-
-
-
     }
-
 }

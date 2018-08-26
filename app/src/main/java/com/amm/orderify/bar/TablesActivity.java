@@ -1,6 +1,5 @@
 package com.amm.orderify.bar;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -26,13 +25,10 @@ import static com.amm.orderify.helpers.JBDCDriver.*;
 
 public class TablesActivity extends AppCompatActivity {
 
-
-    boolean blMyAsyncTask;
+    static boolean blMyAsyncTask;
     LinearLayout tablesLinearLayout;
     UpdateTableTask task = new UpdateTableTask(TablesActivity.this);
 
-
-    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +63,8 @@ public class TablesActivity extends AppCompatActivity {
         task.execute();
     }
 
-    @SuppressLint("SetTextI18n")
+    //do sortowania - funkcja która sprawdza czy jest nowy order/wezwanier kelnera/platnosc, usuwa wszystkie ordery z danego stolika i wkleja na nowo, posortowane
+
     private void generateTablesView() {
 
         List<Table> tables = getOnlyTables();
@@ -80,10 +77,7 @@ public class TablesActivity extends AppCompatActivity {
             View tableElement = getLayoutInflater().inflate(R.layout.bar_table_element, null);
 
             TextView tableNumberTextView = tableElement.findViewById(R.id.TableNumberTextView);
-            tableNumberTextView.setText(table.number + "");
-
-            TextView overallPriceTextView = tableElement.findViewById(R.id.OverallPriceTextView);
-            overallPriceTextView.setText("0,00 zł");
+            tableNumberTextView.setText(table.getNumberString());
 
             TextView tableStateTextView = tableElement.findViewById(R.id.TableStateTextView);
             tableStateTextView.setText(table.getState());
@@ -112,11 +106,11 @@ public class TablesActivity extends AppCompatActivity {
             if (table.state == 1) {
                 table.state = 2;
                 freezeStateButton.setText(R.string.bar_unfreeze_table_button_string);
-                tableStateTextView.setText("FREEZED!");
+                tableStateTextView.setText(this.getString(R.string.lifecycle_table_freezed));
             } else {
                 table.state = 1;
                 freezeStateButton.setText(R.string.bar_freeze_table_button_string);
-                tableStateTextView.setText("READY!");
+                tableStateTextView.setText(this.getString(R.string.lifecycle_table_ready));
             }
 
             if (table.state == 1) freezeStateButton.setText(R.string.bar_unfreeze_table_button_string);
@@ -130,13 +124,13 @@ public class TablesActivity extends AppCompatActivity {
         for(int tableNumber = 0; tableNumber < tables.size(); tableNumber++) {
             Table table = tables.get(tableNumber);
             try {
-                View tableElement = findTable(table.id);
+                View tableElement = findTableViewById(table.id, tablesLinearLayout);
                 TextView tableStateTextView = tableElement.findViewById(R.id.TableStateTextView);
                 String tableState = table.getState();
-                runOnUiThread(() -> {tableStateTextView.setText(tableState);});
+                runOnUiThread(() -> tableStateTextView.setText(tableState));
 
                 TextView overallPriceTextView = tableElement.findViewById(R.id.OverallPriceTextView);
-                runOnUiThread(() -> {overallPriceTextView.setText(table.getTotalPriceString());});
+                runOnUiThread(() -> overallPriceTextView.setText(table.getTotalPriceString()));
 
             } catch (Exception ignored) { }
 
@@ -145,25 +139,27 @@ public class TablesActivity extends AppCompatActivity {
                 for (int orderNumber = 0; orderNumber < client.orders.size(); orderNumber++) {
                     Order order = client.orders.get(orderNumber);
                     try{
-                        View orderElement = findOrder(order.id).orderElement;
                         Thread.sleep(10);
+                        View orderElement = findOrderViewById(order.id, tablesLinearLayout).orderElement;
+                        TextView orderStateTextView = orderElement.findViewById(R.id.OrderStateTextView);
                         TextView orderWaitingTimeTextView = orderElement.findViewById(R.id.OrderWaitingTimeTextView);
                         String waitingTime = order.getWaitingTime();
-                        runOnUiThread(() -> {orderWaitingTimeTextView.setText(waitingTime);});
-
-                        TextView orderStateTextView = orderElement.findViewById(R.id.OrderStateTextView);
                         String orderState = order.getState();
-                        runOnUiThread(() -> {orderStateTextView.setText(orderState);});
+                        runOnUiThread(() -> {
+                            orderWaitingTimeTextView.setText(waitingTime);
+                            orderStateTextView.setText(orderState);
+                        });
                     } catch(Exception ignore){}
                 }
             }
         }
     }
-    private void addNewOrdersView(List<Order> newOrders) throws Exception{
+
+    private void addNewOrdersView(List<Order> newOrders) {
         for (int orderNumber = 0; orderNumber < newOrders.size(); orderNumber++) {
             Order order = newOrders.get(orderNumber);
 
-            View tableElement = findTable(order.tableID);
+            View tableElement = findTableViewById(order.tableID, tablesLinearLayout);
             LinearLayout ordersLinearLayout = tableElement.findViewById(R.id.OrdersLinearLayout);
 
             View orderElement = getLayoutInflater().inflate(R.layout.bar_order_element, null);
@@ -199,12 +195,12 @@ public class TablesActivity extends AppCompatActivity {
 
 
             Button changeOrderStateButton = orderElement.findViewById(R.id.ChangeOrderStateButton);
-            if (order.state == 1) runOnUiThread(() -> {changeOrderStateButton.setVisibility(View.VISIBLE);});
-            else runOnUiThread(() -> {changeOrderStateButton.setVisibility(View.GONE);});
+            if (order.state == 1) runOnUiThread(() -> changeOrderStateButton.setVisibility(View.VISIBLE));
+            else runOnUiThread(() -> changeOrderStateButton.setVisibility(View.GONE));
             changeOrderStateButton.setOnClickListener(v -> {
                 if (order.state == 1) {
                     order.state = 2;
-                    runOnUiThread(() -> {changeOrderStateButton.setVisibility(View.GONE);});
+                    runOnUiThread(() -> changeOrderStateButton.setVisibility(View.GONE));
                 }
                 try {
                     ExecuteUpdate("UPDATE orders SET state = " + order.state + " WHERE ID = " + order.id);
@@ -217,11 +213,11 @@ public class TablesActivity extends AppCompatActivity {
                 View wishElement = getLayoutInflater().inflate(R.layout.bar_wish_element, null);
 
                 TextView dishNameTextView = wishElement.findViewById(R.id.DishNameTextView);
-                runOnUiThread(() -> {dishNameTextView.setText(wish.dish.name + " x" + wish.amount);});
+                runOnUiThread(() -> dishNameTextView.setText(wish.dish.name + " x" + wish.amount));
 
                 LinearLayout addonsLinearLayout = wishElement.findViewById(R.id.AddonsLinearLayout);
 
-                //SORT
+                //sort
                 wish.addons.sort(Comparator.comparing(object -> String.valueOf(object.addonCategoryID)));
 
                 for (int addonNumber = 0; addonNumber < wish.addons.size(); addonNumber++) {
@@ -235,9 +231,9 @@ public class TablesActivity extends AppCompatActivity {
                         addonsLinearLayout.addView(addonElement);
                     });
                 }
-                runOnUiThread(() -> {wishesLinearLayout.addView(wishElement);});
+                runOnUiThread(() -> wishesLinearLayout.addView(wishElement));
             }
-            runOnUiThread(() -> { ordersLinearLayout.addView(orderElement);});
+            runOnUiThread(() -> ordersLinearLayout.addView(orderElement));
 
             Button expandCollapseButton = tableElement.findViewById(R.id.ExpandCollapseButton);
             expandCollapseButton.setOnClickListener(v -> {
@@ -303,7 +299,7 @@ public class TablesActivity extends AppCompatActivity {
                         "GROUP BY newOrders.ID");
                 while (newOrdersRS.next()) {
                     Statement newWishesS = getConnection().createStatement();
-                    ResultSet newWishesRS = newWishesS.executeQuery("SELECT newWishes.ID, dishID, name, price, amount, orderID FROM newWishes\n" +
+                    ResultSet newWishesRS = newWishesS.executeQuery("SELECT newWishes.ID, dishID, dishes.dishCategoryID, name, price, amount, orderID FROM newWishes\n" +
                             "JOIN dishes ON dishes.ID = newWishes.dishID\n" +
                             "WHERE orderID = " + newOrdersRS.getInt("ID"));
                     while (newWishesRS.next()) {
@@ -314,7 +310,7 @@ public class TablesActivity extends AppCompatActivity {
                         while (addonsRS.next()) {
                             newAddons.add(new Addon(addonsRS.getInt("addonID"), addonsRS.getString("name"), addonsRS.getFloat("price"), addonsRS.getInt("addonCategoryID")));
                         }
-                        Dish dish = new Dish(newWishesRS.getInt("dishID"), newWishesRS.getString("name"), newWishesRS.getFloat("price"), null, null, null);
+                        Dish dish = new Dish(newWishesRS.getInt("dishID"), newWishesRS.getString("name"), newWishesRS.getFloat("price"), null, null, newWishesRS.getInt("dishCategoryID"), null);
                         newWishes.add(new Wish(newWishesRS.getInt("ID"), dish, newWishesRS.getInt("amount"), newAddons));
                         newAddons = new ArrayList<>();
                     }
@@ -349,7 +345,7 @@ public class TablesActivity extends AppCompatActivity {
                     "GROUP BY orders.ID");
             while (ordersRS.next()) {
                 Statement wishesS = getConnection().createStatement();
-                ResultSet wishesRS = wishesS.executeQuery("SELECT wishes.ID, dishID, name, price, amount, orderID FROM wishes\n" +
+                ResultSet wishesRS = wishesS.executeQuery("SELECT wishes.ID, dishID, dishes.dishCategoryID, name, price, amount, orderID FROM wishes\n" +
                         "JOIN dishes ON dishes.ID = wishes.dishID\n" +
                         "WHERE orderID = " + ordersRS.getInt("ID"));
                 while (wishesRS.next()) {
@@ -360,7 +356,7 @@ public class TablesActivity extends AppCompatActivity {
                     while (addonsRS.next()) {
                         addons.add(new Addon(addonsRS.getInt("addonID"), addonsRS.getString("name"), addonsRS.getFloat("price"), addonsRS.getInt("addonCategoryID")));
                     }
-                    Dish dish = new Dish(wishesRS.getInt("dishID"), wishesRS.getString("name"), wishesRS.getFloat("price"), null, null, null);
+                    Dish dish = new Dish(wishesRS.getInt("dishID"), wishesRS.getString("name"), wishesRS.getFloat("price"), null, null, wishesRS.getInt("dishCategoryID"), null);
                     wishes.add(new Wish(wishesRS.getInt("ID"), dish, wishesRS.getInt("amount"), addons));
                     addons = new ArrayList<>();
                 }
@@ -376,7 +372,6 @@ public class TablesActivity extends AppCompatActivity {
         return orders;
     }
 
-    @SuppressLint("StaticFieldLeak")
     protected class UpdateTableTask extends AsyncTask<Void, Void, Void> {
         Context context;
 
@@ -389,7 +384,6 @@ public class TablesActivity extends AppCompatActivity {
             blMyAsyncTask = true;
         }
 
-        @SuppressLint("SetTextI18n")
         @Override
         protected Void doInBackground(Void... params) {
 
@@ -427,28 +421,27 @@ public class TablesActivity extends AppCompatActivity {
         }
     }
 
-    View findTable (int tableID) {
+    View findTableViewById(int tableID, LinearLayout tablesLinearLayout) {
         for (int tableNumber = 0; tableNumber < tablesLinearLayout.getChildCount(); tableNumber++) {
             View tableElement = tablesLinearLayout.getChildAt(tableNumber);
             TextView tableNumberTextView = tableElement.findViewById(R.id.TableNumberTextView);
-            if (tableNumberTextView.getText().equals(String.valueOf(tableID))) {
+            if (tableNumberTextView.getText().equals("Table #" + String.valueOf(tableID))) {
                 return tableElement;
             }
         }
         return null;
     }
 
-    OrderAndTableView findOrder (int orderID) {
-        for (int tableI = 0; tableI < tablesLinearLayout.getChildCount(); tableI++) {
-            View tableElement = tablesLinearLayout.getChildAt(tableI);
-                LinearLayout ordersLinearLayout = tableElement.findViewById(R.id.OrdersLinearLayout);
-                for (int orderNumber = 0; orderNumber < ordersLinearLayout.getChildCount(); orderNumber++) {
-                    View orderElement = ordersLinearLayout.getChildAt(orderNumber);
-                    TextView orderNr = orderElement.findViewById(R.id.OrderNumberTextView);
-
-                    if (orderNr.getText().equals(String.valueOf(orderID)) )
-                        return new OrderAndTableView(tableElement, orderElement);
-                }
+    OrderAndTableView findOrderViewById(int orderID, LinearLayout tablesLinearLayout) {
+        for (int tableNumber = 0; tableNumber < tablesLinearLayout.getChildCount(); tableNumber++) {
+            View tableElement = tablesLinearLayout.getChildAt(tableNumber);
+            LinearLayout ordersLinearLayout = tableElement.findViewById(R.id.OrdersLinearLayout);
+            for (int orderNumber = 0; orderNumber < ordersLinearLayout.getChildCount(); orderNumber++) {
+                View orderElement = ordersLinearLayout.getChildAt(orderNumber);
+                TextView orderNumberTextView = orderElement.findViewById(R.id.OrderNumberTextView);
+                if (orderNumberTextView.getText().equals(String.valueOf("Order #"+orderID)) )
+                    return new OrderAndTableView(tableElement, orderElement);
+            }
         }
         return null;
     }
@@ -456,16 +449,14 @@ public class TablesActivity extends AppCompatActivity {
     class OrderAndTableView {
         View tableElement;
         View orderElement;
-
         OrderAndTableView(View tableElement,  View orderElement) {
             this.orderElement = orderElement;
             this.tableElement = tableElement;
         }
     }
 
-
-// - arek! zostaw to!
-private List<Table> getFullTablesData(){
+    // - arek! zostaw to!
+    private List<Table> getFullTablesData(){
         if (notLocked()) {
             List<Table> tables = new ArrayList<>();
             List<Client> clients = new ArrayList<>();
@@ -485,7 +476,7 @@ private List<Table> getFullTablesData(){
                                 "WHERE clientID = " + clientRS.getInt("ID"));
                         while (ordersRS.next()) {
                             Statement wishesS = getConnection().createStatement();
-                            ResultSet wishesRS = wishesS.executeQuery("SELECT wishes.ID, dishID, name, price, amount, orderID FROM wishes\n" +
+                            ResultSet wishesRS = wishesS.executeQuery("SELECT wishes.ID, dishID, dishes.dishCategoryID, name, price, amount, orderID FROM wishes\n" +
                                     "JOIN dishes ON dishes.ID = wishes.dishID\n" +
                                     "WHERE orderID = " + ordersRS.getInt("ID"));
                             while (wishesRS.next()) {
@@ -496,7 +487,7 @@ private List<Table> getFullTablesData(){
                                 while (addonsRS.next()) {
                                     addons.add(new Addon(addonsRS.getInt("addonID"), addonsRS.getString("name"), addonsRS.getFloat("price"), addonsRS.getInt("addonCategoryID")));
                                 }
-                                Dish dish = new Dish(wishesRS.getInt("dishID"), wishesRS.getString("name"), wishesRS.getFloat("price"), null, null, null);
+                                Dish dish = new Dish(wishesRS.getInt("dishID"), wishesRS.getString("name"), wishesRS.getFloat("price"), null, null, wishesRS.getInt("dishCategoryID"), null);
                                 wishes.add(new Wish(wishesRS.getInt("ID"), dish, wishesRS.getInt("amount"), addons));
                                 addons = new ArrayList<>();
                             }

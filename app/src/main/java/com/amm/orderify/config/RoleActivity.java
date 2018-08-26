@@ -1,8 +1,10 @@
 package com.amm.orderify.config;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -26,6 +28,7 @@ import java.util.List;
 
 import static android.widget.AdapterView.*;
 import static com.amm.orderify.MainActivity.*;
+import static com.amm.orderify.helpers.JBDCDriver.ExecuteQuery;
 import static com.amm.orderify.helpers.JBDCDriver.getConnection;
 
 public class RoleActivity extends AppCompatActivity {
@@ -54,27 +57,30 @@ public class RoleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.config_role_activity);
 
+        ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE }, 1);
+
         sharedPreferences = getSharedPreferences("Orderify", MODE_PRIVATE);
         editor = getSharedPreferences("Orderify", MODE_PRIVATE).edit();
 
-        int ROLE = sharedPreferences.getInt("ROLE", -1);
-
-        if (ROLE != -1) {
-            switch(ROLE){
-                case 0: //BAR
-                    this.startActivity(new Intent(this, TablesActivity.class));
-                    break;
-                case 1: //CLIENT   //GET data from DB!!!!!!!!!!!!!!!!!1
-                    thisTable = new Table(sharedPreferences.getInt("thisTableID", 1), sharedPreferences.getInt("thisTableID", 1), null, 1, null);
-                    thisClient = new Client(sharedPreferences.getInt("thisClientID", 1), sharedPreferences.getInt("thisClientID", 1), 1, null);
-                    this.startActivity(new Intent(this, MenuActivity.class));
-                    break;
-                case 2: //MAINTENANCE
-                    this.startActivity(new Intent(this, EditActivity.class));
-                    break;
-                default:
-                    break;
-            }
+        switch(sharedPreferences.getInt("role", -1)){
+            case -1: break;
+            case 0: //BAR
+                this.startActivity(new Intent(this, TablesActivity.class)); break;
+            case 1: //CLIENT
+                try {
+                    ResultSet tablesRS = ExecuteQuery("SELECT * FROM tables WHERE ID = " + sharedPreferences.getInt("thisTableID", 1));
+                    if (tablesRS.next())
+                        thisTable = new Table(tablesRS.getInt("ID"), tablesRS.getInt("number"), tablesRS.getString("description"), tablesRS.getInt("state"), null);
+                    ResultSet clientRS = ExecuteQuery("SELECT * FROM clients WHERE tableID = " + thisTable.id);
+                    if (clientRS.next())
+                        thisClient = new Client(clientRS.getInt("ID"), clientRS.getInt("number"), clientRS.getInt("state"), null);
+                } catch (SQLException ignored) {}
+                this.startActivity(new Intent(this, MenuActivity.class));
+                break;
+            case 2: //MAINTENANCE
+                this.startActivity(new Intent(this, EditActivity.class));
+                break;
+            default: break;
         }
 
         choseTableTextView = findViewById(R.id.ChoseTableTextView);
@@ -113,21 +119,20 @@ public class RoleActivity extends AppCompatActivity {
                 switch(position){
                     case 0: //BAR
                         choseTableTextView.setVisibility(View.GONE);
-                        choseClientTextView.setVisibility(View.GONE);
                         tableSpinner.setVisibility(View.GONE);
+                        choseClientTextView.setVisibility(View.GONE);
                         clientSpinner.setVisibility(View.GONE);
                         break;
                     case 1: //CLIENT
                         choseTableTextView.setVisibility(View.VISIBLE);
-                        choseClientTextView.setVisibility(View.VISIBLE);
-
                         tableSpinner.setVisibility(View.VISIBLE);
+
+                        choseClientTextView.setVisibility(View.VISIBLE);
                         clientSpinner.setVisibility(View.VISIBLE);
 
-                        String[] tableStrings = new String[tables.size()];
-                        for (int tableNumber = 0; tableNumber < tables.size(); tableNumber++){
-                            tableStrings[tableNumber] = tables.get(tableNumber).number + ". " + tables.get(tableNumber).description;
-                        }
+                        List<String> tableStrings = new ArrayList<>();
+                        for (int tableNumber = 0; tableNumber < tables.size(); tableNumber++)
+                            tableStrings.add("Table #" + tables.get(tableNumber).number + " - " + tables.get(tableNumber).description);
                         ArrayAdapter<String> tablesAdapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_dropdown_item, tableStrings);
                         tableSpinner.setAdapter(tablesAdapter);
                         tableSpinner.setSelection(0);
@@ -136,46 +141,40 @@ public class RoleActivity extends AppCompatActivity {
                             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                                 Table table = tables.get(position);
                                 List<String> clientStrings = new ArrayList<>();
-                                for (int clientNumber = 0; clientNumber < table.clients.size(); clientNumber++){
-                                    clientStrings.add(table.clients.get(clientNumber).number + "");
-                                }
+                                for (int clientNumber = 0; clientNumber < table.clients.size(); clientNumber++)
+                                    clientStrings.add("Client #" + table.clients.get(clientNumber).number);
                                 ArrayAdapter<String>clientAdapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_dropdown_item, clientStrings);
                                 clientSpinner.setAdapter(clientAdapter);
                             }
-
                             @Override
-                            public void onNothingSelected(AdapterView<?> parentView) {
-                            }
-
+                            public void onNothingSelected(AdapterView<?> parentView) { }
                         });
                         break;
                     case 2: //MAINTENANCE
                         choseTableTextView.setVisibility(View.GONE);
-                        choseClientTextView.setVisibility(View.GONE);
                         tableSpinner.setVisibility(View.GONE);
+                        choseClientTextView.setVisibility(View.GONE);
                         clientSpinner.setVisibility(View.GONE);
                         break;
-                    default:
-                        break;
+                    default: break;
                 }
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parentView) {
-            }
+            public void onNothingSelected(AdapterView<?> parentView) { }
         });
 
         rememberCheckBox = findViewById(R.id.RememberCheckBox);
         rememberCheckBox.setOnClickListener(v -> {
-            if(remember) {rememberCheckBox.setSelected(false); remember = false;}
-            else {rememberCheckBox.setSelected(true); remember = true;}
+            remember = !remember;
         });
 
         selectButton = findViewById(R.id.SelectRoleButton);
         selectButton.setOnClickListener(v -> {
             if(remember){
-                editor.putInt("ROLE", roleSpinner.getSelectedItemPosition());
-                editor.apply();
+                editor.putInt("role", roleSpinner.getSelectedItemPosition());editor.apply();
+            } else {
+                editor.clear(); editor.apply();
             }
             switch(roleSpinner.getSelectedItemPosition()){
                 case 0: //BAR

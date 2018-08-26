@@ -1,8 +1,8 @@
 package com.amm.orderify.maintenance.adders;
 
-import android.annotation.SuppressLint;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -28,38 +28,29 @@ public class AddTableActivity extends AppCompatActivity {
     static LayoutInflater tableListInflater;
     public List<Table> tables = new ArrayList<>();
 
-    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.maintenance_table_activity);
 
-
         try {
             ResultSet tablesRS = ExecuteQuery("SELECT * FROM tables");
-            while (tablesRS.next()) tables.add(new Table(tablesRS.getInt("ID"), tablesRS.getInt("number"), tablesRS.getString("description"), 1, null));
+            while (tablesRS.next())
+                tables.add(new Table(tablesRS.getInt("ID"), tablesRS.getInt("number"), tablesRS.getString("description"), 1, null));
         } catch (SQLException ignored) {}
 
         tablesLinearLayout = findViewById(R.id.TableLinearLayout);
         tableListInflater = getLayoutInflater();
-
-
         updateTableList();
-
-
-
 
         EditText tableNumberEditText = findViewById(R.id.TableNumberEditText);
         EditText tableDescriptionEditText = findViewById(R.id.TableDescriptionEditText);
 
         Button addTableButton = findViewById(R.id.AddTableButton);
-        addTableButton.setOnClickListener(e -> {
+        addTableButton.setOnClickListener(v -> {
             try {
                 ExecuteUpdate("INSERT INTO tables (number, description, state)\n" +
                         "VALUES  (" + tableNumberEditText.getText() + ", '" + tableDescriptionEditText.getText() + "', 1);");
-
-                ExecuteUpdate("INSERT INTO clients (number, state, tableID)\n" +
-                        "VALUES  (1, 1, 1), (2, 1, 1), (3, 1, 1), (4, 1, 1);");
 
                 int newTableID = 0;
                 ResultSet orderIDRS = ExecuteQuery("SELECT LAST_INSERT_ID();");
@@ -69,19 +60,16 @@ public class AddTableActivity extends AppCompatActivity {
                         "VALUES  (1, 1, " + newTableID + "), (2, 1, " + newTableID + "), (3, 1, " + newTableID + "), (4, 1, " + newTableID + ");");
 
                 tables.add(new Table(newTableID, Integer.parseInt(tableNumberEditText.getText().toString()), tableDescriptionEditText.getText().toString(), 1, null));
-            } catch (SQLException ignored) {
-            }
+            } catch (SQLException d) { Log.wtf("SQL Exception", d.getMessage()); }
             tableNumberEditText.setText("");
             tableDescriptionEditText.setText("");
             Toast.makeText(this, "Table added!", Toast.LENGTH_SHORT).show();
             updateTableList();
-            //this.startActivity(new Intent(this, EditActivity.class));
         });
 
 
     }
 
-    @SuppressLint("SetTextI18n")
     public void updateTableList() {
         tablesLinearLayout.removeAllViews();
 
@@ -106,9 +94,9 @@ public class AddTableActivity extends AppCompatActivity {
                     updateTableList();
                 } catch (SQLException e) {
                     if(e.getErrorCode() == 1451) Toast.makeText(this, "Table " + tables.get(finalTableNumber).number + " has order assigned!", Toast.LENGTH_SHORT).show();
+                    else { Log.wtf("SQL Exception", e.getMessage()); }
                 }
             });
-
             tablesLinearLayout.addView(tableElement);
         }
     }

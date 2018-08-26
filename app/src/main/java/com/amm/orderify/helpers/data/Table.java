@@ -23,8 +23,11 @@ public class Table {
 
     }
 
-    public float getTotalPrice(){
+    public String getNumberString() {
+        return "Table #" + this.number + "";
+    }
 
+    public float getTotalPrice(){
         float totalPrice = 0;
 
         for (int clientNumber = 0; clientNumber < clients.size(); clientNumber++)
@@ -34,7 +37,6 @@ public class Table {
     }
 
     public String getTotalPriceString(){
-
         float totalPrice = 0;
 
         for (int clientNumber = 0; clientNumber < clients.size(); clientNumber++)

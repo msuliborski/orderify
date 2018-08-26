@@ -1,6 +1,5 @@
 package com.amm.orderify.client;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.constraint.ConstraintLayout;
@@ -27,6 +26,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import static com.amm.orderify.MainActivity.thisClient;
@@ -37,26 +37,22 @@ import static com.amm.orderify.helpers.TimeAndDate.*;
 
 public class MenuActivity extends AppCompatActivity {
 
-    List<DishCategory> dishCategories;
     boolean blMyAsyncTask;
     UpdateMenuTask task = new UpdateMenuTask();
+
     LinearLayout ordersLinearLayout;
     LinearLayout dishCategoriesLinearLayout;
-    int tableState;
     ConstraintLayout freezeButtonScreen;
     EditText enterCommentsEditText;
-
     TextView totalPriceTextView;
 
     List<Wish> wishes = new ArrayList<>();
+    List<DishCategory> dishCategories;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.client_menu_activity);
-
-        Log.wtf("table", thisTable.id+"");
-        Log.wtf("client", thisClient.id+"");
 
         dishCategories = getDishCategories();
         updateMenu();
@@ -72,14 +68,10 @@ public class MenuActivity extends AppCompatActivity {
         });
 
         ImageButton goToSummaryButton = findViewById(R.id.GoToSummaryButton);
-        goToSummaryButton.setOnClickListener(e -> {
-            this.startActivity(new Intent(this, SummaryActivity.class));
-        });
+        goToSummaryButton.setOnClickListener(e -> this.startActivity(new Intent(this, SummaryActivity.class)));
 
         ImageButton cancelOrderButton = findViewById(R.id.CancelOrderButton);
-        cancelOrderButton.setOnClickListener(e -> {
-            this.startActivity(new Intent(this, MainActivity.class));
-        });
+        cancelOrderButton.setOnClickListener(e -> this.startActivity(new Intent(this, MainActivity.class)));
 
         ImageButton askWaiterButton = findViewById(R.id.AskWaiterButton);
         askWaiterButton.setOnClickListener(e -> {
@@ -120,10 +112,12 @@ public class MenuActivity extends AppCompatActivity {
 
     private void updateMenu() {
         if(dishCategoriesLinearLayout != null) dishCategoriesLinearLayout.removeAllViews();
+        dishCategories.sort(Comparator.comparing(object -> String.valueOf(object.id))); //sort
         dishCategoriesLinearLayout = findViewById(R.id.DishCategoriesLinearLayout);
         for (int dishCategoryNumber = 0; dishCategoryNumber < dishCategories.size(); dishCategoryNumber++){
-
             DishCategory dishCategory = dishCategories.get(dishCategoryNumber);
+            dishCategory.dishes.sort(Comparator.comparing(object -> String.valueOf(object.name))); //sort
+
             View dishCategoryElement = getLayoutInflater().inflate(R.layout.client_menu_dishcategory_element, null);
 
             TextView dishCategoryTextView = dishCategoryElement.findViewById(R.id.DishCategoryTextView);
@@ -132,6 +126,8 @@ public class MenuActivity extends AppCompatActivity {
             LinearLayout dishesLinearLayout = dishCategoryElement.findViewById(R.id.DishesLinearLayout);
             for (int dishNumber = 0; dishNumber < dishCategory.dishes.size(); dishNumber++){
                 Dish dish = dishCategory.dishes.get(dishNumber);
+                dish.addonCategories.sort(Comparator.comparing(object -> String.valueOf(object.name))); //sort
+
                 View dishElement = getLayoutInflater().inflate(R.layout.client_menu_dish_element, null);
 
                 TextView nameTextView = dishElement.findViewById(R.id.NameTextView);
@@ -149,7 +145,6 @@ public class MenuActivity extends AppCompatActivity {
                 ConstraintLayout cl = dishElement.findViewById(R.id.cl);
                 ConstraintSet constraintSetCopy = new ConstraintSet();
                 constraintSetCopy.clone(cl);
-
 
                 ConstraintLayout menuExpand = dishElement.findViewById(R.id.MenuExpand);
 
@@ -182,12 +177,12 @@ public class MenuActivity extends AppCompatActivity {
                     }
                     if (wishes.size() == 0) wishes.add(newWish);
                     updateWishes();
-                    //menuExpand.setVisibility(View.GONE);
                 });
 
                 GridLayout addonCategoriesGridLayout = dishElement.findViewById(R.id.AddonCategoriesGridLayout);
                 for (int addonCategoriesNumber = 0; addonCategoriesNumber < dish.addonCategories.size(); addonCategoriesNumber++) {
                     AddonCategory addonCategory = dish.addonCategories.get(addonCategoriesNumber);
+                    addonCategory.addons.sort(Comparator.comparing(object -> String.valueOf(object.name))); //sort
 
                     View addonCategoryElement = getLayoutInflater().inflate(R.layout.client_menu_addoncategory_element, null);
 
@@ -199,7 +194,7 @@ public class MenuActivity extends AppCompatActivity {
                         Addon addon = addonCategory.addons.get(addonNumber);
                         View addonElement = getLayoutInflater().inflate(R.layout.client_menu_addon_element, null);
                         TextView AddonNameTextView = addonElement.findViewById(R.id.AddonNameTextView);
-                        String addonNameString = addon.name + "(+" + addon.getPriceString() + ")";
+                        String addonNameString = addon.name + "(" + addon.getPriceString() + ")";
                         AddonNameTextView.setText(addonNameString);
                         ImageView CheckboxCheckImage = addonElement.findViewById(R.id.CheckboxCheckImage);
                         if (addonCategory.multiChoice){
@@ -241,6 +236,7 @@ public class MenuActivity extends AppCompatActivity {
     private void updateWishes() {
         if(ordersLinearLayout != null) ordersLinearLayout.removeAllViews();
         ordersLinearLayout = findViewById(R.id.OrdersLinearLayout);
+        wishes.sort(Comparator.comparing(object -> String.valueOf(object.dish.dishCategory))); //sort
         for (int wishNumber = 0; wishNumber < wishes.size(); wishNumber++) {
             View orderElement = getLayoutInflater().inflate(R.layout.client_menu_wish_element, null);
 
@@ -308,7 +304,7 @@ public class MenuActivity extends AppCompatActivity {
                     }
                     dishes.add(new Dish(dishesRS.getInt("ID"), dishesRS.getString("name"),
                             dishesRS.getFloat("price"), dishesRS.getString("descS"),
-                            dishesRS.getString("descL"), addonCategories));
+                            dishesRS.getString("descL"), dishesRS.getInt("dishCategoryID") , addonCategories));
                     addonCategories = new ArrayList<>();
                 }
                 dishCategories.add(new DishCategory(dishCategoriesRS.getInt("ID"), dishCategoriesRS.getString("name"), dishes));
@@ -320,8 +316,6 @@ public class MenuActivity extends AppCompatActivity {
 
     private void addOrder(){
         try {
-            ExecuteUpdate("SET FOREIGN_KEY_CHECKS=0; \n");
-            //ExecuteUpdate("UPDATE padlock SET locked = true WHERE ID = 1; \n");
             ExecuteUpdate("INSERT INTO padlock (TTL) VALUES (15); \n");
             int lockID = 0;
             ResultSet lockIDRS = ExecuteQuery("SELECT LAST_INSERT_ID(); \n");
@@ -354,50 +348,28 @@ public class MenuActivity extends AppCompatActivity {
                 }
             }
             ExecuteUpdate("DELETE FROM padlock WHERE ID = " + lockID);
-            ExecuteUpdate("SET FOREIGN_KEY_CHECKS=1 \n");
-        } catch (Exception e) {
-            Log.wtf("dd", e.getMessage()+"");
-        }
+        } catch (Exception e) { Log.wtf("SQL Exeption", e.getMessage()+""); }
         wishes = new ArrayList<>();
         updateWishes();
     }
 
-    void refreshTableState()
-    {
-        Statement stateS = null;
-        ResultSet stateRS;
-        try
-        {
-            int oldTableState = tableState;
-            stateS = getConnection().createStatement();
-            stateRS = stateS.executeQuery("SELECT state FROM tables WHERE ID = 1");
-            if(stateRS.next()) tableState = stateRS.getInt("state");
-            if(oldTableState != tableState)
-            {
-                if (tableState == 2)
-                {
-                    runOnUiThread(() -> { freezeButtonScreen.setVisibility(View.VISIBLE); });
-                }
-                else runOnUiThread(() -> { freezeButtonScreen.setVisibility(View.GONE); });
-            }
+    void refreshTableState() {
+        try {
+            ResultSet stateRS = ExecuteQuery("SELECT state FROM tables WHERE ID = 1");
+            if(stateRS.next()) thisTable.state = stateRS.getInt("state");
 
+            if (thisTable.state == 2) runOnUiThread(() -> freezeButtonScreen.setVisibility(View.VISIBLE));
+            else runOnUiThread(() -> freezeButtonScreen.setVisibility(View.GONE));
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
+        } catch (Exception ignored) {}
     }
 
-    @SuppressLint("StaticFieldLeak")
-    protected class UpdateMenuTask extends AsyncTask<Void, Void, Void>
-    {
+    protected class UpdateMenuTask extends AsyncTask<Void, Void, Void> {
         @Override
         protected void onPreExecute() {
             blMyAsyncTask = true;
         }
 
-        @SuppressLint("SetTextI18n")
         @Override
         protected Void doInBackground(Void... params) {
 
@@ -405,11 +377,11 @@ public class MenuActivity extends AppCompatActivity {
             while(true) {
                 try {
                     Thread.sleep(100);
-                } catch (InterruptedException ignored) {}
-                refreshTableState();
+                    refreshTableState();
 
-                if(Thread.interrupted()) break;
-                if (!blMyAsyncTask) break;
+                    if(Thread.interrupted()) break;
+                    if (!blMyAsyncTask) break;
+                } catch (InterruptedException ignored) {}
             }
             return null;
         }

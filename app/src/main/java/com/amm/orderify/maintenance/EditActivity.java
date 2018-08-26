@@ -8,6 +8,8 @@ import android.widget.Button;
 import com.amm.orderify.R;
 import com.amm.orderify.maintenance.adders.*;
 
+import static com.amm.orderify.helpers.LogFile.clearLog;
+
 public class EditActivity extends AppCompatActivity {
 
 
@@ -16,6 +18,11 @@ public class EditActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.maintenance_chose_activity);
 
+
+        Button clearLogButton = findViewById(R.id.ClearLogButton);
+        clearLogButton.setOnClickListener(e -> {
+            clearLog();
+        });
 
         Button AddTableButton = findViewById(R.id.ChoseTableButton);
         AddTableButton.setOnClickListener(e -> {

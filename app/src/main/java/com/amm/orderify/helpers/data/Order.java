@@ -57,7 +57,7 @@ public class Order {
     }
 
     public String getOrderNumberString(){
-        return String.valueOf(this.id % 100);
+        return "Order #" + this.id % 100;
     }
 
     public String getState(){

@@ -29,7 +29,7 @@
     <ImageView
         android:id="@+id/SeparatingLineDark"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="8dp"
         android:layout_marginTop="38dp"
         android:elevation="20dp"
         android:scaleType="fitXY"
@@ -336,24 +336,6 @@
         app:layout_constraintEnd_toEndOf="@id/BottomSeparatorArrow"
         app:layout_constraintStart_toStartOf="@id/BottomSeparatorArrow"
         app:layout_constraintTop_toTopOf="@id/BottomSeparatorArrow" />
-
-    <TextView
-        android:id="@+id/ErrorsTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/tw_cen"
-        android:elevation="21dp"
-        android:text="Tu się pojawiają chujowe errory"
-        android:textColor="@color/errorColor"
-        android:textSize="6sp"
-        app:layout_constraintBottom_toTopOf="@+id/GoToSummaryButton"
-        app:layout_constraintEnd_toEndOf="@+id/BasketBackground"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/OrderButton" />
 
     <ImageView
         android:id="@+id/BottomSeparatorArrow"

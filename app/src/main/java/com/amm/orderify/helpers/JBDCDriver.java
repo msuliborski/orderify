@@ -1,15 +1,7 @@
 package com.amm.orderify.helpers;
 
-import android.content.Context;
-import android.os.Environment;
 import android.os.StrictMode;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -17,8 +9,7 @@ import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-import static com.amm.orderify.helpers.TimeAndDate.getCurrentDate;
-import static com.amm.orderify.helpers.TimeAndDate.getCurrentTime;
+import static com.amm.orderify.helpers.LogFile.writeToLog;
 
 public class JBDCDriver {
 
@@ -62,21 +53,19 @@ public class JBDCDriver {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
 
     public static ResultSet ExecuteQuery(String query) throws SQLException {
-        logQueriesFromApp(query);
+        writeToLog(query);
         return myStatement.executeQuery(query);
     }
 
     public static void ExecuteUpdate(String query) throws SQLException {
-        logQueriesFromApp(query);
+        writeToLog(query);
         myStatement.executeUpdate(query);
     }
     public static void Execute(String query) throws SQLException {
-        logQueriesFromApp(query);
+        writeToLog(query);
         myStatement.execute(query);
     }
 
@@ -84,44 +73,7 @@ public class JBDCDriver {
         return connection;
     }
 
-    private static void logQueriesFromApp(String query){
-        File queriesFromApp = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "queriesFromApp.txt");
-        /*
-        Environment.getExternalStorageState() - returns path to internal SD mount point like “/mnt/sdcard”
 
-        getExternalFilesDir() - returns the path to files folder inside Android/data/data/application_package/ on the SD card.
-        It is used to store any required files for your app (like images downloaded from web or cache files).
-        Once the app is uninstalled, any data stored in this folder is gone too.
-
-        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) - returns path to Downloads folder;
-        * */
-
-        try {
-            if(!queriesFromApp.exists()){
-                FileOutputStream fos = new FileOutputStream(queriesFromApp);
-                fos.write("".getBytes());
-                fos.close();
-            }
-
-            FileInputStream fis = new FileInputStream(queriesFromApp);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(fis));
-            StringBuilder sb = new StringBuilder();
-            String line;
-            while ((line = reader.readLine()) != null) sb.append(line).append("\n");
-            reader.close();
-            String queriesFromAppString = sb.toString();
-            fis.close();
-
-            queriesFromAppString += "Date: " + getCurrentDate() +", " + getCurrentTime() +"\n" + query + "\n\n";
-            FileOutputStream fos = new FileOutputStream(queriesFromApp);
-            fos.write(queriesFromAppString.getBytes());
-            fos.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
 }
 
 
