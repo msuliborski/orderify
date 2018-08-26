@@ -12,4 +12,8 @@ public class DishCategory {
         this.name = name;
         this.dishes = items;
     }
+
+    public String getIdString(){
+        return id+"";
+    }
 }

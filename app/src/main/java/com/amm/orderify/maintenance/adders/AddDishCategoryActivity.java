@@ -1,6 +1,5 @@
 package com.amm.orderify.maintenance.adders;
 
-import android.annotation.SuppressLint;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,6 +13,7 @@ import android.widget.Toast;
 
 import com.amm.orderify.R;
 import com.amm.orderify.helpers.data.DishCategory;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -27,12 +27,10 @@ public class AddDishCategoryActivity extends AppCompatActivity {
     static LayoutInflater dishCategoriesListInflater;
     public List<DishCategory> dishCategories = new ArrayList<>();
 
-    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.maintenance_dishcategory_activity);
-
 
         try {
             ResultSet dishCategoriesRS = ExecuteQuery("SELECT * FROM dishCategories");
@@ -42,11 +40,7 @@ public class AddDishCategoryActivity extends AppCompatActivity {
         dishCategoriesLinearLayout = findViewById(R.id.DishesLinearLayout);
         dishCategoriesListInflater = getLayoutInflater();
 
-
         updateDishCategoryList();
-
-
-
 
         EditText dishCategoryNameEditText = findViewById(R.id.DishCategoryNameEditText);
 
@@ -57,27 +51,21 @@ public class AddDishCategoryActivity extends AppCompatActivity {
                         "VALUES ('" + dishCategoryNameEditText.getText().toString() + "')");
                 int newDishCategoryID = 0;
                 ResultSet orderIDRS = ExecuteQuery("SELECT LAST_INSERT_ID();");
-                while (orderIDRS.next()) newDishCategoryID = orderIDRS.getInt(1);
+                if(orderIDRS.next()) newDishCategoryID = orderIDRS.getInt(1);
                 dishCategories.add(new DishCategory(newDishCategoryID, dishCategoryNameEditText.getText().toString(), null));
             } catch (SQLException ignored) { }
             Toast.makeText(this, "DishCategory added!", Toast.LENGTH_SHORT).show();
-            //dishCategoryNameEditText.setText("");
             updateDishCategoryList();
-            //this.startActivity(new Intent(this, ChoseActivity.class));
         });
-
-
     }
 
-    @SuppressLint("SetTextI18n")
     public void updateDishCategoryList() {
         dishCategoriesLinearLayout.removeAllViews();
-
         for (int dishCategoryNumber = 0; dishCategoryNumber < dishCategories.size(); dishCategoryNumber++){
             View dishCategoryElement = dishCategoriesListInflater.inflate(R.layout.maintenance_dishcategory_element, null);
 
             TextView idTextView = dishCategoryElement.findViewById(R.id.IdTextView);
-            idTextView.setText(dishCategories.get(dishCategoryNumber).id + "");
+            idTextView.setText(dishCategories.get(dishCategoryNumber).getIdString());
 
             TextView nameTextView = dishCategoryElement.findViewById(R.id.NameTextView);
             nameTextView.setText(dishCategories.get(dishCategoryNumber).name);
@@ -94,7 +82,6 @@ public class AddDishCategoryActivity extends AppCompatActivity {
                     if(e.getErrorCode() == 1451) Toast.makeText(this, "DishCategory " + dishCategories.get(finalDishCategoryNumber).name + " has addons assigned!", Toast.LENGTH_SHORT).show();
                 }
             });
-
             dishCategoriesLinearLayout.addView(dishCategoryElement);
         }
     }

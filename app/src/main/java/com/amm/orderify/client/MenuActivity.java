@@ -1,7 +1,7 @@
 package com.amm.orderify.client;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
 import android.support.v7.app.AppCompatActivity;
@@ -24,42 +24,43 @@ import com.amm.orderify.helpers.data.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
-import static com.amm.orderify.MainActivity.client;
+import static com.amm.orderify.MainActivity.thisClient;
+import static com.amm.orderify.MainActivity.thisTable;
 import static com.amm.orderify.helpers.Comparators.wishesTheSame;
 import static com.amm.orderify.helpers.JBDCDriver.*;
 import static com.amm.orderify.helpers.TimeAndDate.*;
 
 public class MenuActivity extends AppCompatActivity {
 
-    List<DishCategory> dishCategories;
+    boolean blMyAsyncTask;
+    UpdateMenuTask task = new UpdateMenuTask();
 
     LinearLayout ordersLinearLayout;
     LinearLayout dishCategoriesLinearLayout;
-
+    ConstraintLayout freezeButtonScreen;
     EditText enterCommentsEditText;
-
     TextView totalPriceTextView;
 
     List<Wish> wishes = new ArrayList<>();
+    List<DishCategory> dishCategories;
 
-    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.client_menu_activity);
 
-
-
         dishCategories = getDishCategories();
         updateMenu();
 
         enterCommentsEditText = findViewById(R.id.EnterCommentsEditText);
-
+        freezeButtonScreen = findViewById(R.id.FreezeButtonScreen);
         totalPriceTextView = findViewById(R.id.TotalPriceTextView);
-        updateTotalPrice();
+        updateOrderTotalPrice();
 
         ImageButton orderButton = findViewById(R.id.OrderButton);
         orderButton.setOnClickListener((View e) -> {
@@ -67,45 +68,56 @@ public class MenuActivity extends AppCompatActivity {
         });
 
         ImageButton goToSummaryButton = findViewById(R.id.GoToSummaryButton);
-        goToSummaryButton.setOnClickListener(e -> {
-            this.startActivity(new Intent(this, SummaryActivity.class));
-        });
+        goToSummaryButton.setOnClickListener(e -> this.startActivity(new Intent(this, SummaryActivity.class)));
 
         ImageButton cancelOrderButton = findViewById(R.id.CancelOrderButton);
-        cancelOrderButton.setOnClickListener(e -> {
-            this.startActivity(new Intent(this, MainActivity.class));
-        });
+        cancelOrderButton.setOnClickListener(e -> this.startActivity(new Intent(this, MainActivity.class)));
 
         ImageButton askWaiterButton = findViewById(R.id.AskWaiterButton);
         askWaiterButton.setOnClickListener(e -> {
-            if(client.state == 1) {
-                client.state = 3;
+            if(thisClient.state == 1) {
+                thisClient.state = 3;
                 try {
-                    ExecuteUpdate("UPDATE clients SET state = " + client.state +  " WHERE ID = " + client.id);
+                    ExecuteUpdate("UPDATE clients SET state = " + thisClient.state +  " WHERE ID = " + thisClient.id);
                 } catch (SQLException ignored) {}
             }
         });
-
-
-
-
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (blMyAsyncTask)   {
+            blMyAsyncTask = false;
+            task.cancel(true);
+        }
     }
 
-    @SuppressLint("SetTextI18n")
-    void updateTotalPrice(){
+    @Override
+    protected void onResume() {
+        super.onResume();
+        task = new UpdateMenuTask();
+        task.execute();
+    }
+
+    void updateOrderTotalPrice(){
         float totalPrice = 0;
         for (int wishNumber = 0; wishNumber < wishes.size(); wishNumber++) totalPrice += wishes.get(wishNumber).getTotalPrice();
-        totalPriceTextView.setText(totalPrice + " zł");
+
+        DecimalFormat formatter = new DecimalFormat("0.00");
+        String totalPriceString = formatter.format(totalPrice) + " zł";
+        totalPriceTextView.setText(totalPriceString);
+
     }
 
 
-    @SuppressLint("SetTextI18n")
     private void updateMenu() {
         if(dishCategoriesLinearLayout != null) dishCategoriesLinearLayout.removeAllViews();
+        dishCategories.sort(Comparator.comparing(object -> String.valueOf(object.id))); //sort
         dishCategoriesLinearLayout = findViewById(R.id.DishCategoriesLinearLayout);
         for (int dishCategoryNumber = 0; dishCategoryNumber < dishCategories.size(); dishCategoryNumber++){
-
             DishCategory dishCategory = dishCategories.get(dishCategoryNumber);
+            dishCategory.dishes.sort(Comparator.comparing(object -> String.valueOf(object.name))); //sort
+
             View dishCategoryElement = getLayoutInflater().inflate(R.layout.client_menu_dishcategory_element, null);
 
             TextView dishCategoryTextView = dishCategoryElement.findViewById(R.id.DishCategoryTextView);
@@ -114,13 +126,15 @@ public class MenuActivity extends AppCompatActivity {
             LinearLayout dishesLinearLayout = dishCategoryElement.findViewById(R.id.DishesLinearLayout);
             for (int dishNumber = 0; dishNumber < dishCategory.dishes.size(); dishNumber++){
                 Dish dish = dishCategory.dishes.get(dishNumber);
+                dish.addonCategories.sort(Comparator.comparing(object -> String.valueOf(object.name))); //sort
+
                 View dishElement = getLayoutInflater().inflate(R.layout.client_menu_dish_element, null);
 
                 TextView nameTextView = dishElement.findViewById(R.id.NameTextView);
                 nameTextView.setText(dish.name);
 
                 TextView priceTextView = dishElement.findViewById(R.id.PriceTextView);
-                priceTextView.setText(dish.price + "");
+                priceTextView.setText(dish.getPriceString());
 
                 TextView shortDescriptionTextView = dishElement.findViewById(R.id.ShortDescriptionTextView);
                 shortDescriptionTextView.setText(dish.descS);
@@ -131,7 +145,6 @@ public class MenuActivity extends AppCompatActivity {
                 ConstraintLayout cl = dishElement.findViewById(R.id.cl);
                 ConstraintSet constraintSetCopy = new ConstraintSet();
                 constraintSetCopy.clone(cl);
-
 
                 ConstraintLayout menuExpand = dishElement.findViewById(R.id.MenuExpand);
 
@@ -163,13 +176,13 @@ public class MenuActivity extends AppCompatActivity {
                             wishes.add(newWish); break;}
                     }
                     if (wishes.size() == 0) wishes.add(newWish);
-                    updateOrders();
-                    //menuExpand.setVisibility(View.GONE);
+                    updateWishes();
                 });
 
                 GridLayout addonCategoriesGridLayout = dishElement.findViewById(R.id.AddonCategoriesGridLayout);
                 for (int addonCategoriesNumber = 0; addonCategoriesNumber < dish.addonCategories.size(); addonCategoriesNumber++) {
                     AddonCategory addonCategory = dish.addonCategories.get(addonCategoriesNumber);
+                    addonCategory.addons.sort(Comparator.comparing(object -> String.valueOf(object.name))); //sort
 
                     View addonCategoryElement = getLayoutInflater().inflate(R.layout.client_menu_addoncategory_element, null);
 
@@ -181,9 +194,9 @@ public class MenuActivity extends AppCompatActivity {
                         Addon addon = addonCategory.addons.get(addonNumber);
                         View addonElement = getLayoutInflater().inflate(R.layout.client_menu_addon_element, null);
                         TextView AddonNameTextView = addonElement.findViewById(R.id.AddonNameTextView);
-                        AddonNameTextView.setText(addon.name);
+                        String addonNameString = addon.name + "(" + addon.getPriceString() + ")";
+                        AddonNameTextView.setText(addonNameString);
                         ImageView CheckboxCheckImage = addonElement.findViewById(R.id.CheckboxCheckImage);
-                        //Log.wtf("a", dish.name + "    " + addonCategory.name + "    " + addonCategory.multiChoice);
                         if (addonCategory.multiChoice){
                             addonElement.setOnClickListener(e -> {
                                 if(CheckboxCheckImage.getVisibility() == View.INVISIBLE) {
@@ -220,44 +233,43 @@ public class MenuActivity extends AppCompatActivity {
     }
 
 
-
-    @SuppressLint("SetTextI18n")
-    private void updateOrders() {
+    private void updateWishes() {
         if(ordersLinearLayout != null) ordersLinearLayout.removeAllViews();
         ordersLinearLayout = findViewById(R.id.OrdersLinearLayout);
+        wishes.sort(Comparator.comparing(object -> String.valueOf(object.dish.dishCategory))); //sort
         for (int wishNumber = 0; wishNumber < wishes.size(); wishNumber++) {
             View orderElement = getLayoutInflater().inflate(R.layout.client_menu_wish_element, null);
 
             TextView orderPriceTextView = orderElement.findViewById(R.id.orderPriceTextView);
-            orderPriceTextView.setText(wishes.get(wishNumber).getTotalPrice() + " zł");
+            orderPriceTextView.setText(wishes.get(wishNumber).getTotalPriceString());
 
             TextView orderNameTextView = orderElement.findViewById(R.id.orderNameTextView);
             orderNameTextView.setText(wishes.get(wishNumber).dish.name);
 
             TextView QuantityTextView = orderElement.findViewById(R.id.QuantityTextView);
-            QuantityTextView.setText(wishes.get(wishNumber).amount + "");
+            QuantityTextView.setText(wishes.get(wishNumber).getAmountString());
 
             final int finalWishNumber = wishNumber;
             ImageButton QuantityUpButton = orderElement.findViewById(R.id.QuantityUpButton);
             QuantityUpButton.setOnClickListener(e -> {
                 wishes.get(finalWishNumber).amount++;
-                updateOrders();
+                updateWishes();
             });
             ImageButton QuantityDownButton = orderElement.findViewById(R.id.QuantityDownButton);
             QuantityDownButton.setOnClickListener(e -> {
                 if (wishes.get(finalWishNumber).amount > 1) {
                     wishes.get(finalWishNumber).amount--;
-                    updateOrders();
+                    updateWishes();
                 }
             });
             ImageButton OrderCancelButton = orderElement.findViewById(R.id.OrderCancelButton);
             OrderCancelButton.setOnClickListener(v -> {
                 wishes.remove(finalWishNumber);
-                updateOrders();
+                updateWishes();
             });
             ordersLinearLayout.addView(orderElement);
         }
-        updateTotalPrice();
+        updateOrderTotalPrice();
 
     }
 
@@ -285,14 +297,14 @@ public class MenuActivity extends AppCompatActivity {
                         ResultSet addonsRS = addonsS.executeQuery("SELECT * FROM addons \n" +
                                 "WHERE addonCategoryID = " + addonCategoriesRS.getInt("addonCategoryID"));
                         while (addonsRS.next()) {
-                            addons.add(new Addon(addonsRS.getInt("ID"), addonsRS.getString("name"), addonsRS.getFloat("price")));
+                            addons.add(new Addon(addonsRS.getInt("ID"), addonsRS.getString("name"), addonsRS.getFloat("price"), addonsRS.getInt("addonCategoryID")));
                         }
                         addonCategories.add(new AddonCategory(addonCategoriesRS.getInt("ID"), addonCategoriesRS.getString("name"), addonCategoriesRS.getString("description"), addonCategoriesRS.getBoolean("multiChoice"), addons));
                         addons = new ArrayList<>();
                     }
                     dishes.add(new Dish(dishesRS.getInt("ID"), dishesRS.getString("name"),
                             dishesRS.getFloat("price"), dishesRS.getString("descS"),
-                            dishesRS.getString("descL"), addonCategories));
+                            dishesRS.getString("descL"), dishesRS.getInt("dishCategoryID") , addonCategories));
                     addonCategories = new ArrayList<>();
                 }
                 dishCategories.add(new DishCategory(dishCategoriesRS.getInt("ID"), dishCategoriesRS.getString("name"), dishes));
@@ -304,17 +316,15 @@ public class MenuActivity extends AppCompatActivity {
 
     private void addOrder(){
         try {
-            ExecuteUpdate("SET FOREIGN_KEY_CHECKS=0; \n");
-            //ExecuteUpdate("UPDATE padlock SET locked = true WHERE ID = 1; \n");
-            ExecuteUpdate("INSERT INTO padlock (locked) VALUES (true); \n");
+            ExecuteUpdate("INSERT INTO padlock (TTL) VALUES (15); \n");
             int lockID = 0;
             ResultSet lockIDRS = ExecuteQuery("SELECT LAST_INSERT_ID(); \n");
             if(lockIDRS.next()) lockID = lockIDRS.getInt(1);
 
             ExecuteUpdate("INSERT INTO orders (time, date, comments, state, clientID) \n" +
-                    "VALUES  ('" + getCurrentTime() +"', '" + getCurrentDate() +"', '" + enterCommentsEditText.getText() + "', 1, " + client.id + "); \n");
+                    "VALUES  ('" + getCurrentTime() +"', '" + getCurrentDate() +"', '" + enterCommentsEditText.getText() + "', 1, " + thisClient.id + "); \n");
             ExecuteUpdate( "INSERT INTO newOrders (time, date, comments, state, clientID) \n" +
-                        "VALUES  ('" + getCurrentTime() +"', '" + getCurrentDate() +"', '" + enterCommentsEditText.getText() + "', 1, " + client.id + "); \n");
+                        "VALUES  ('" + getCurrentTime() +"', '" + getCurrentDate() +"', '" + enterCommentsEditText.getText() + "', 1, " + thisClient.id + "); \n");
 
             int newOrderID = 0;
             ResultSet orderIDRS = ExecuteQuery("SELECT LAST_INSERT_ID(); \n");
@@ -337,14 +347,55 @@ public class MenuActivity extends AppCompatActivity {
                             "VALUES  (" + newWishID + ", " + wishes.get(wishI).addons.get(addonI).id + "); \n");
                 }
             }
-            //ExecuteUpdate("UPDATE padlock SET locked = false WHERE ID = 1; \n");
             ExecuteUpdate("DELETE FROM padlock WHERE ID = " + lockID);
-            ExecuteUpdate("SET FOREIGN_KEY_CHECKS=1 \n");
-        } catch (Exception e) {
-            Log.wtf("dd", e.getMessage()+"");
-        }
+        } catch (Exception e) { Log.wtf("SQL Exeption", e.getMessage()+""); }
         wishes = new ArrayList<>();
-        updateOrders();
+        updateWishes();
+    }
+
+    void refreshTableState() {
+        try {
+            ResultSet stateRS = ExecuteQuery("SELECT state FROM tables WHERE ID = 1");
+            if(stateRS.next()) thisTable.state = stateRS.getInt("state");
+
+            if (thisTable.state == 2) runOnUiThread(() -> freezeButtonScreen.setVisibility(View.VISIBLE));
+            else runOnUiThread(() -> freezeButtonScreen.setVisibility(View.GONE));
+
+        } catch (Exception ignored) {}
+    }
+
+    protected class UpdateMenuTask extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected void onPreExecute() {
+            blMyAsyncTask = true;
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+
+
+            while(true) {
+                try {
+                    Thread.sleep(100);
+                    refreshTableState();
+
+                    if(Thread.interrupted()) break;
+                    if (!blMyAsyncTask) break;
+                } catch (InterruptedException ignored) {}
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void v) {
+            super.onPostExecute(v);
+            blMyAsyncTask = false;
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
     }
 
 }

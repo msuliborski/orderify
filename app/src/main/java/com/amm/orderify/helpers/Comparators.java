@@ -77,9 +77,11 @@ public class Comparators {
         try {
             if (!(w1.dish.id == w2.dish.id)) return false;
             if (!(w1.addons.size() == w2.addons.size())) return false;
-            for (int i = 0; i < w1.addons.size(); i++)
-                for (int j = 0; j < w2.addons.size(); j++)
-                    if (!(w1.addons.get(i).id == w2.addons.get(j).id)) return false;
+
+            for (int i = 0; i < w1.addons.size(); i++){
+                if (!(w1.addons.contains(w2.addons.get(i)))) return false;
+                if (!(w2.addons.contains(w1.addons.get(i)))) return false;
+            }
         }
         catch(Exception ignored){}
 

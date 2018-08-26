@@ -1,6 +1,5 @@
 package com.amm.orderify.maintenance.adders;
 
-import android.annotation.SuppressLint;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,6 +17,7 @@ import android.widget.Toast;
 import com.amm.orderify.R;
 import com.amm.orderify.helpers.data.AddonCategory;
 import com.amm.orderify.helpers.data.DishCategory;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -44,12 +44,10 @@ public class AddDishActivity extends AppCompatActivity {
     public List<AddonCategory> addonCategories = new ArrayList<>();
     public List<AddonCategory> chosenAddonCategories = new ArrayList<>();
 
-    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.maintenance_dish_activity);
-
 
         try {
             ResultSet addonCategoriesRS = ExecuteQuery("SELECT * FROM addonCategories");
@@ -58,7 +56,6 @@ public class AddDishActivity extends AppCompatActivity {
             ResultSet dishCategoriesRS = ExecuteQuery("SELECT * FROM dishCategories");
             while (dishCategoriesRS.next()) dishCategories.add(new DishCategory(dishCategoriesRS.getInt("ID"), dishCategoriesRS.getString("name"), null));
         } catch (SQLException ignored) {}
-
 
         dishCategoriesSpinner = findViewById(R.id.DishCategoriesSpinner);
         addonCategoriesLinearLayout = findViewById(R.id.AddonCategoriesLinearLayout);
@@ -69,7 +66,6 @@ public class AddDishActivity extends AppCompatActivity {
         descSEditText = findViewById(R.id.DescSEditText);
         descLEditText = findViewById(R.id.DescLEditText);
 
-
         dishCategoriesInflater = getLayoutInflater();
         updateDishCategoryList();
 
@@ -78,7 +74,6 @@ public class AddDishActivity extends AppCompatActivity {
 
         chosenAddonCategoriesInflater = getLayoutInflater();
         updateChosenAddonCategoryList();
-
 
         Button addDishButton = findViewById(R.id.AddDishButton);
         addDishButton.setOnClickListener(e -> {
@@ -94,21 +89,11 @@ public class AddDishActivity extends AppCompatActivity {
                     ExecuteUpdate("INSERT INTO addonCategoriesToDishes (dishID, addonCategoryID) \n" +
                             "VALUES  (" + newDishID + ", " + chosenAddonCategories.get(addonCategoryNumber).id + ")");
                 }
-
-
-
-
             } catch (SQLException ignored) { }
             Toast.makeText(this, "Dish added!", Toast.LENGTH_SHORT).show();
-            //dishCategoryNameEditText.setText("");
-            //updateDishCategoryList();
-            //this.startActivity(new Intent(this, ChoseActivity.class));
         });
-
-
     }
 
-    @SuppressLint("SetTextI18n")
     public void updateDishCategoryList() {
 
         String[] items = new String[dishCategories.size()];
@@ -118,7 +103,7 @@ public class AddDishActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
         dishCategoriesSpinner.setAdapter(adapter);
     }
-    @SuppressLint("SetTextI18n")
+
     public void updateAddonCategoryList() {
         addonCategoriesLinearLayout.removeAllViews();
 
@@ -126,15 +111,16 @@ public class AddDishActivity extends AppCompatActivity {
             View addonCategoryElement = addonCategoriesInflater.inflate(R.layout.maintenance_addoncategory_element, null);
 
             TextView idTextView = addonCategoryElement.findViewById(R.id.IdTextView);
-            idTextView.setText(addonCategories.get(addonCategoryNumber).id + "");
+            idTextView.setText(addonCategories.get(addonCategoryNumber).getIdString());
 
             TextView nameTextView = addonCategoryElement.findViewById(R.id.NameTextView);
             nameTextView.setText(addonCategories.get(addonCategoryNumber).name);
             Log.wtf("eff", addonCategories.get(addonCategoryNumber).name);
 
             TextView multiChoiceTextView = addonCategoryElement.findViewById(R.id.MultiChoiceTextView);
-            if (addonCategories.get(addonCategoryNumber).multiChoice) multiChoiceTextView.setText("YES");
-            else multiChoiceTextView.setText("NO");
+            String yes = "YES", no = "NO";
+            if (addonCategories.get(addonCategoryNumber).multiChoice) multiChoiceTextView.setText(yes);
+            else multiChoiceTextView.setText(no);
 
             ImageButton actionButton = addonCategoryElement.findViewById(R.id.ActionButton);
             int finalAddonCategoryNumber = addonCategoryNumber;
@@ -144,11 +130,10 @@ public class AddDishActivity extends AppCompatActivity {
                 updateAddonCategoryList();
                 updateChosenAddonCategoryList();
             });
-
             addonCategoriesLinearLayout.addView(addonCategoryElement);
         }
     }
-    @SuppressLint("SetTextI18n")
+
     public void updateChosenAddonCategoryList() {
         chosenAddonCategoriesLinearLayout.removeAllViews();
 
@@ -156,14 +141,15 @@ public class AddDishActivity extends AppCompatActivity {
             View chosenAddonCategoryElement = chosenAddonCategoriesInflater.inflate(R.layout.maintenance_addoncategory_element, null);
 
             TextView idTextView = chosenAddonCategoryElement.findViewById(R.id.IdTextView);
-            idTextView.setText(chosenAddonCategories.get(chosenAddonCategoryNumber).id + "");
+            idTextView.setText(chosenAddonCategories.get(chosenAddonCategoryNumber).getIdString());
 
             TextView nameTextView = chosenAddonCategoryElement.findViewById(R.id.NameTextView);
             nameTextView.setText(chosenAddonCategories.get(chosenAddonCategoryNumber).name);
 
             TextView multiChoiceTextView = chosenAddonCategoryElement.findViewById(R.id.MultiChoiceTextView);
-            if (chosenAddonCategories.get(chosenAddonCategoryNumber).multiChoice) multiChoiceTextView.setText("YES");
-            else multiChoiceTextView.setText("NO");
+            String yes = "YES", no = "NO";
+            if (chosenAddonCategories.get(chosenAddonCategoryNumber).multiChoice) multiChoiceTextView.setText(yes);
+            else multiChoiceTextView.setText(no);
 
             ImageButton actionButton = chosenAddonCategoryElement.findViewById(R.id.ActionButton);
             int finalChosenAddonCategoryNumber = chosenAddonCategoryNumber;
@@ -173,7 +159,6 @@ public class AddDishActivity extends AppCompatActivity {
                 updateAddonCategoryList();
                 updateChosenAddonCategoryList();
             });
-
             chosenAddonCategoriesLinearLayout.addView(chosenAddonCategoryElement);
         }
     }
