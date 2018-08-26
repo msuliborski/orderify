@@ -2,6 +2,8 @@ CREATE DATABASE IF NOT EXISTS Orderify;
 
 USE Orderify;
 
+SET FOREIGN_KEY_CHECKS=0;
+
 DROP TABLE IF EXISTS newAddonsToWishes;             
 DROP TABLE IF EXISTS newWishes;                     
 DROP TABLE IF EXISTS newOrders;                     
@@ -273,7 +275,6 @@ VALUES  (1, 2), (1, 3),
         (28, 20),
         (29, 20);
 
-SET FOREIGN_KEY_CHECKS=0;
 INSERT INTO newOrders (time, date, comments, state, clientID)
 VALUES  ('21:37:00', '2018-07-31', 'z lodem', 1, 1),                                                                #1
         ('21:38:11', '2018-07-31', 'arkadiusz, designu prometeusz', 1, 2),                                          #2
@@ -321,5 +322,4 @@ VALUES  (1, 2), (1, 3),
         (27, 18),
         (28, 20),
         (29, 20);
-SET FOREIGN_KEY_CHECKS=1;
 
