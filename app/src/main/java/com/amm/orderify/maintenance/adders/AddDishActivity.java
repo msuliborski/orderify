@@ -102,7 +102,7 @@ public class AddDishActivity extends AppCompatActivity {
             Toast.makeText(this, "Dish added!", Toast.LENGTH_SHORT).show();
             //dishCategoryNameEditText.setText("");
             //updateDishCategoryList();
-            //this.startActivity(new Intent(this, ChoseActivity.class));
+            //this.startActivity(new Intent(this, EditActivity.class));
         });
 
 

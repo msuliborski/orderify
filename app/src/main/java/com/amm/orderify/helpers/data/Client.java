@@ -2,6 +2,7 @@ package com.amm.orderify.helpers.data;
 
 import com.amm.orderify.R;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import static com.amm.orderify.MainActivity.context;
@@ -26,6 +27,16 @@ public class Client {
             totalPrice += orders.get(orderNumber).getTotalPrice();
 
         return totalPrice;
+    }
+
+    public String getTotalPriceString(){
+        float totalPrice = 0;
+
+        for (int orderNumber = 0; orderNumber < orders.size(); orderNumber++)
+            totalPrice += orders.get(orderNumber).getTotalPrice();
+
+        DecimalFormat formatter = new DecimalFormat("0.00");
+        return formatter.format(totalPrice) + " zł";
     }
 
     public String getState(){

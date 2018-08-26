@@ -1,5 +1,7 @@
 package com.amm.orderify.helpers.data;
 
+import java.text.DecimalFormat;
+
 public class Addon {
     public int id;
     public String name;
@@ -11,5 +13,10 @@ public class Addon {
         this.name = name;
         this.price = price;
         this.addonCategoryID = addonCategoryID;
+    }
+
+    public String getPriceString(){
+        DecimalFormat formatter = new DecimalFormat("0.00");
+        return formatter.format(this.price) + " zł";
     }
 }

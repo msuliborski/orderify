@@ -25,10 +25,12 @@ import com.amm.orderify.helpers.data.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.amm.orderify.MainActivity.client;
+import static com.amm.orderify.MainActivity.thisClient;
+import static com.amm.orderify.MainActivity.thisTable;
 import static com.amm.orderify.helpers.Comparators.wishesTheSame;
 import static com.amm.orderify.helpers.JBDCDriver.*;
 import static com.amm.orderify.helpers.TimeAndDate.*;
@@ -48,13 +50,13 @@ public class MenuActivity extends AppCompatActivity {
 
     List<Wish> wishes = new ArrayList<>();
 
-    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.client_menu_activity);
 
-
+        Log.wtf("table", thisTable.id+"");
+        Log.wtf("client", thisClient.id+"");
 
         dishCategories = getDishCategories();
         updateMenu();
@@ -62,7 +64,7 @@ public class MenuActivity extends AppCompatActivity {
         enterCommentsEditText = findViewById(R.id.EnterCommentsEditText);
         freezeButtonScreen = findViewById(R.id.FreezeButtonScreen);
         totalPriceTextView = findViewById(R.id.TotalPriceTextView);
-        updateTotalPrice();
+        updateOrderTotalPrice();
 
         ImageButton orderButton = findViewById(R.id.OrderButton);
         orderButton.setOnClickListener((View e) -> {
@@ -81,10 +83,10 @@ public class MenuActivity extends AppCompatActivity {
 
         ImageButton askWaiterButton = findViewById(R.id.AskWaiterButton);
         askWaiterButton.setOnClickListener(e -> {
-            if(client.state == 1) {
-                client.state = 3;
+            if(thisClient.state == 1) {
+                thisClient.state = 3;
                 try {
-                    ExecuteUpdate("UPDATE clients SET state = " + client.state +  " WHERE ID = " + client.id);
+                    ExecuteUpdate("UPDATE clients SET state = " + thisClient.state +  " WHERE ID = " + thisClient.id);
                 } catch (SQLException ignored) {}
             }
         });
@@ -105,15 +107,17 @@ public class MenuActivity extends AppCompatActivity {
         task.execute();
     }
 
-    @SuppressLint("SetTextI18n")
-    void updateTotalPrice(){
+    void updateOrderTotalPrice(){
         float totalPrice = 0;
         for (int wishNumber = 0; wishNumber < wishes.size(); wishNumber++) totalPrice += wishes.get(wishNumber).getTotalPrice();
-        totalPriceTextView.setText(totalPrice + " zł");
+
+        DecimalFormat formatter = new DecimalFormat("0.00");
+        String totalPriceString = formatter.format(totalPrice) + " zł";
+        totalPriceTextView.setText(totalPriceString);
+
     }
 
 
-    @SuppressLint("SetTextI18n")
     private void updateMenu() {
         if(dishCategoriesLinearLayout != null) dishCategoriesLinearLayout.removeAllViews();
         dishCategoriesLinearLayout = findViewById(R.id.DishCategoriesLinearLayout);
@@ -134,7 +138,7 @@ public class MenuActivity extends AppCompatActivity {
                 nameTextView.setText(dish.name);
 
                 TextView priceTextView = dishElement.findViewById(R.id.PriceTextView);
-                priceTextView.setText(dish.price + "");
+                priceTextView.setText(dish.getPriceString());
 
                 TextView shortDescriptionTextView = dishElement.findViewById(R.id.ShortDescriptionTextView);
                 shortDescriptionTextView.setText(dish.descS);
@@ -177,7 +181,7 @@ public class MenuActivity extends AppCompatActivity {
                             wishes.add(newWish); break;}
                     }
                     if (wishes.size() == 0) wishes.add(newWish);
-                    updateOrders();
+                    updateWishes();
                     //menuExpand.setVisibility(View.GONE);
                 });
 
@@ -195,9 +199,9 @@ public class MenuActivity extends AppCompatActivity {
                         Addon addon = addonCategory.addons.get(addonNumber);
                         View addonElement = getLayoutInflater().inflate(R.layout.client_menu_addon_element, null);
                         TextView AddonNameTextView = addonElement.findViewById(R.id.AddonNameTextView);
-                        AddonNameTextView.setText(addon.name);
+                        String addonNameString = addon.name + "(+" + addon.getPriceString() + ")";
+                        AddonNameTextView.setText(addonNameString);
                         ImageView CheckboxCheckImage = addonElement.findViewById(R.id.CheckboxCheckImage);
-                        //Log.wtf("a", dish.name + "    " + addonCategory.name + "    " + addonCategory.multiChoice);
                         if (addonCategory.multiChoice){
                             addonElement.setOnClickListener(e -> {
                                 if(CheckboxCheckImage.getVisibility() == View.INVISIBLE) {
@@ -234,44 +238,42 @@ public class MenuActivity extends AppCompatActivity {
     }
 
 
-
-    @SuppressLint("SetTextI18n")
-    private void updateOrders() {
+    private void updateWishes() {
         if(ordersLinearLayout != null) ordersLinearLayout.removeAllViews();
         ordersLinearLayout = findViewById(R.id.OrdersLinearLayout);
         for (int wishNumber = 0; wishNumber < wishes.size(); wishNumber++) {
             View orderElement = getLayoutInflater().inflate(R.layout.client_menu_wish_element, null);
 
             TextView orderPriceTextView = orderElement.findViewById(R.id.orderPriceTextView);
-            orderPriceTextView.setText(wishes.get(wishNumber).getTotalPrice() + " zł");
+            orderPriceTextView.setText(wishes.get(wishNumber).getTotalPriceString());
 
             TextView orderNameTextView = orderElement.findViewById(R.id.orderNameTextView);
             orderNameTextView.setText(wishes.get(wishNumber).dish.name);
 
             TextView QuantityTextView = orderElement.findViewById(R.id.QuantityTextView);
-            QuantityTextView.setText(wishes.get(wishNumber).amount + "");
+            QuantityTextView.setText(wishes.get(wishNumber).getAmountString());
 
             final int finalWishNumber = wishNumber;
             ImageButton QuantityUpButton = orderElement.findViewById(R.id.QuantityUpButton);
             QuantityUpButton.setOnClickListener(e -> {
                 wishes.get(finalWishNumber).amount++;
-                updateOrders();
+                updateWishes();
             });
             ImageButton QuantityDownButton = orderElement.findViewById(R.id.QuantityDownButton);
             QuantityDownButton.setOnClickListener(e -> {
                 if (wishes.get(finalWishNumber).amount > 1) {
                     wishes.get(finalWishNumber).amount--;
-                    updateOrders();
+                    updateWishes();
                 }
             });
             ImageButton OrderCancelButton = orderElement.findViewById(R.id.OrderCancelButton);
             OrderCancelButton.setOnClickListener(v -> {
                 wishes.remove(finalWishNumber);
-                updateOrders();
+                updateWishes();
             });
             ordersLinearLayout.addView(orderElement);
         }
-        updateTotalPrice();
+        updateOrderTotalPrice();
 
     }
 
@@ -326,9 +328,9 @@ public class MenuActivity extends AppCompatActivity {
             if(lockIDRS.next()) lockID = lockIDRS.getInt(1);
 
             ExecuteUpdate("INSERT INTO orders (time, date, comments, state, clientID) \n" +
-                    "VALUES  ('" + getCurrentTime() +"', '" + getCurrentDate() +"', '" + enterCommentsEditText.getText() + "', 1, " + client.id + "); \n");
+                    "VALUES  ('" + getCurrentTime() +"', '" + getCurrentDate() +"', '" + enterCommentsEditText.getText() + "', 1, " + thisClient.id + "); \n");
             ExecuteUpdate( "INSERT INTO newOrders (time, date, comments, state, clientID) \n" +
-                        "VALUES  ('" + getCurrentTime() +"', '" + getCurrentDate() +"', '" + enterCommentsEditText.getText() + "', 1, " + client.id + "); \n");
+                        "VALUES  ('" + getCurrentTime() +"', '" + getCurrentDate() +"', '" + enterCommentsEditText.getText() + "', 1, " + thisClient.id + "); \n");
 
             int newOrderID = 0;
             ResultSet orderIDRS = ExecuteQuery("SELECT LAST_INSERT_ID(); \n");
@@ -357,7 +359,7 @@ public class MenuActivity extends AppCompatActivity {
             Log.wtf("dd", e.getMessage()+"");
         }
         wishes = new ArrayList<>();
-        updateOrders();
+        updateWishes();
     }
 
     void refreshTableState()

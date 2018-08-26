@@ -57,13 +57,13 @@ public class AddDishCategoryActivity extends AppCompatActivity {
                         "VALUES ('" + dishCategoryNameEditText.getText().toString() + "')");
                 int newDishCategoryID = 0;
                 ResultSet orderIDRS = ExecuteQuery("SELECT LAST_INSERT_ID();");
-                while (orderIDRS.next()) newDishCategoryID = orderIDRS.getInt(1);
+                if(orderIDRS.next()) newDishCategoryID = orderIDRS.getInt(1);
                 dishCategories.add(new DishCategory(newDishCategoryID, dishCategoryNameEditText.getText().toString(), null));
             } catch (SQLException ignored) { }
             Toast.makeText(this, "DishCategory added!", Toast.LENGTH_SHORT).show();
             //dishCategoryNameEditText.setText("");
             updateDishCategoryList();
-            //this.startActivity(new Intent(this, ChoseActivity.class));
+            //this.startActivity(new Intent(this, EditActivity.class));
         });
 
 

@@ -10,8 +10,10 @@ import android.widget.Button;
 
 import com.amm.orderify.bar.TablesActivity;
 import com.amm.orderify.client.MenuActivity;
+import com.amm.orderify.config.RoleActivity;
 import com.amm.orderify.helpers.data.Client;
-import com.amm.orderify.maintenance.ChoseActivity;
+import com.amm.orderify.helpers.data.Table;
+import com.amm.orderify.maintenance.EditActivity;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,8 +24,9 @@ public class MainActivity extends AppCompatActivity {
 
 
     public static Context context;
-    public static int thisClientID = 1;
-    public static Client client;
+
+    public static Table thisTable;
+    public static Client thisClient;
 
 
     @Override
@@ -36,18 +39,10 @@ public class MainActivity extends AppCompatActivity {
         InitiateConnection();
         ConnectToDatabase();
 
-        //get table
-        //??
 
-        //get client
-        try {
-            ResultSet clientRS = ExecuteQuery("SELECT * FROM clients WHERE ID = " + thisClientID);
-            if(clientRS.next()) client = new Client(thisClientID, clientRS.getInt("number"), clientRS.getInt("state"), null);
-        } catch (SQLException ignore) {}
-
-        //ask for permissions
         ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE }, 1);
 
+        this.startActivity(new Intent(MainActivity.this, RoleActivity.class));
 
         Button barButton = findViewById(R.id.BarButton);
         barButton.setOnClickListener(e -> {
@@ -62,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button addButton = findViewById(R.id.AddButton);
         addButton.setOnClickListener(e -> {
-            this.startActivity(new Intent(MainActivity.this, ChoseActivity.class));
+            this.startActivity(new Intent(MainActivity.this, EditActivity.class));
         });
 
 

@@ -70,7 +70,7 @@ public class AddAddonActivity extends AppCompatActivity {
             Toast.makeText(this, "Addon added!", Toast.LENGTH_SHORT).show();
             //dishCategoryNameEditText.setText("");
             //updateDishCategoryList();
-            //this.startActivity(new Intent(this, ChoseActivity.class));
+            //this.startActivity(new Intent(this, EditActivity.class));
         });
 
 

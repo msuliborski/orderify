@@ -5,11 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.amm.orderify.MainActivity;
 import com.amm.orderify.R;
 import com.amm.orderify.helpers.data.*;
 
@@ -19,8 +17,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.amm.orderify.MainActivity.client;
-import static com.amm.orderify.MainActivity.thisClientID;
+import static com.amm.orderify.MainActivity.*;
 import static com.amm.orderify.helpers.JBDCDriver.ExecuteUpdate;
 import static com.amm.orderify.helpers.JBDCDriver.getConnection;
 
@@ -40,10 +37,10 @@ public class SummaryActivity extends AppCompatActivity
 
         Button askForBillAButton = findViewById(R.id.AskForBillAButton);
         askForBillAButton.setOnClickListener(v -> {
-            if(client.state == 1) {
-                client.state = 4;
+            if(thisClient.state == 1) {
+                thisClient.state = 4;
                 try {
-                    ExecuteUpdate("UPDATE clients SET state = " + client.state +  " WHERE ID = " + client.id);
+                    ExecuteUpdate("UPDATE clients SET state = " + thisClient.state +  " WHERE ID = " + thisClient.id);
                 } catch (SQLException ignored) {}
             }
         });
@@ -110,7 +107,7 @@ public class SummaryActivity extends AppCompatActivity
         try {
             Statement ordersS = getConnection().createStatement();
             ResultSet ordersRS = ordersS.executeQuery("SELECT * FROM orders \n" +
-                    "WHERE clientID = " + thisClientID);
+                    "WHERE clientID = " + thisClient.id);
             while (ordersRS.next()) {
                 Statement wishesS = getConnection().createStatement();
                 ResultSet wishesRS = wishesS.executeQuery("SELECT wishes.ID, dishID, name, price, amount, orderID FROM wishes\n" +

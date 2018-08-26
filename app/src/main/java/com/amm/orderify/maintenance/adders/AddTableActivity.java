@@ -58,9 +58,16 @@ public class AddTableActivity extends AppCompatActivity {
                 ExecuteUpdate("INSERT INTO tables (number, description, state)\n" +
                         "VALUES  (" + tableNumberEditText.getText() + ", '" + tableDescriptionEditText.getText() + "', 1);");
 
+                ExecuteUpdate("INSERT INTO clients (number, state, tableID)\n" +
+                        "VALUES  (1, 1, 1), (2, 1, 1), (3, 1, 1), (4, 1, 1);");
+
                 int newTableID = 0;
                 ResultSet orderIDRS = ExecuteQuery("SELECT LAST_INSERT_ID();");
-                while (orderIDRS.next()) newTableID = orderIDRS.getInt(1);
+                if (orderIDRS.next()) newTableID = orderIDRS.getInt(1);
+
+                ExecuteUpdate("INSERT INTO clients (number, state, tableID)\n" +
+                        "VALUES  (1, 1, " + newTableID + "), (2, 1, " + newTableID + "), (3, 1, " + newTableID + "), (4, 1, " + newTableID + ");");
+
                 tables.add(new Table(newTableID, Integer.parseInt(tableNumberEditText.getText().toString()), tableDescriptionEditText.getText().toString(), 1, null));
             } catch (SQLException ignored) {
             }
@@ -68,7 +75,7 @@ public class AddTableActivity extends AppCompatActivity {
             tableDescriptionEditText.setText("");
             Toast.makeText(this, "Table added!", Toast.LENGTH_SHORT).show();
             updateTableList();
-            //this.startActivity(new Intent(this, ChoseActivity.class));
+            //this.startActivity(new Intent(this, EditActivity.class));
         });
 
 

@@ -8,7 +8,7 @@ import android.widget.Button;
 import com.amm.orderify.R;
 import com.amm.orderify.maintenance.adders.*;
 
-public class ChoseActivity extends AppCompatActivity {
+public class EditActivity extends AppCompatActivity {
 
 
     @Override

@@ -62,7 +62,7 @@ public class AddAddonCategoryActivity extends AppCompatActivity {
             Toast.makeText(this, "AddonCategory added!", Toast.LENGTH_SHORT).show();
             //addonCategoryNameEditText.setText("");
             updateAddonCategoryList();
-            //this.startActivity(new Intent(this, ChoseActivity.class));
+            //this.startActivity(new Intent(this, EditActivity.class));
         });
 
 

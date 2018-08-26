@@ -83,7 +83,7 @@ public class TablesActivity extends AppCompatActivity {
             tableNumberTextView.setText(table.number + "");
 
             TextView overallPriceTextView = tableElement.findViewById(R.id.OverallPriceTextView);
-            overallPriceTextView.setText("0.00 zł");
+            overallPriceTextView.setText("0,00 zł");
 
             TextView tableStateTextView = tableElement.findViewById(R.id.TableStateTextView);
             tableStateTextView.setText(table.getState());
@@ -136,7 +136,7 @@ public class TablesActivity extends AppCompatActivity {
                 runOnUiThread(() -> {tableStateTextView.setText(tableState);});
 
                 TextView overallPriceTextView = tableElement.findViewById(R.id.OverallPriceTextView);
-                runOnUiThread(() -> {overallPriceTextView.setText(table.getTotalPrice() + "zł");});
+                runOnUiThread(() -> {overallPriceTextView.setText(table.getTotalPriceString());});
 
             } catch (Exception ignored) { }
 
@@ -144,7 +144,6 @@ public class TablesActivity extends AppCompatActivity {
                 Client client = table.clients.get(clientNumber);
                 for (int orderNumber = 0; orderNumber < client.orders.size(); orderNumber++) {
                     Order order = client.orders.get(orderNumber);
-
                     try{
                         View orderElement = findOrder(order.id).orderElement;
                         Thread.sleep(10);
@@ -191,9 +190,9 @@ public class TablesActivity extends AppCompatActivity {
             TextView orderStateTextView = orderElement.findViewById(R.id.OrderStateTextView);
             TextView commentsTextView = orderElement.findViewById(R.id.CommentsTextView);
             runOnUiThread(() -> {
-                orderNumberTextView.setText(order.id + "");
+                orderNumberTextView.setText(order.getOrderNumberString());
                 orderWaitingTimeTextView.setText(order.getWaitingTime());
-                orderPriceTextView.setText(order.getTotalPrice() + " zł");
+                orderPriceTextView.setText(order.getTotalPriceString());
                 orderStateTextView.setText(order.getState());
                 commentsTextView.setText(order.comments);
             });
@@ -403,9 +402,9 @@ public class TablesActivity extends AppCompatActivity {
             while(true) {
                 try {
                     updateTablesView(getFullTablesData());
-                    Thread.sleep(100);
+                    Thread.sleep(1000);
                     addNewOrdersView(getNewOrders());
-                    Thread.sleep(100);
+                    Thread.sleep(1000);
 
                     } catch (Exception e) {
                     e.printStackTrace();

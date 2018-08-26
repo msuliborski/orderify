@@ -1,10 +1,14 @@
 package com.amm.orderify.helpers.data;
 
+import android.util.Log;
+
 import com.amm.orderify.R;
 
+import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import static com.amm.orderify.MainActivity.context;
 
@@ -38,6 +42,24 @@ public class Order {
         return totalPrice;
     }
 
+    public String getTotalPriceString(){
+        float totalPrice = 0;
+
+        for (int wishNumber = 0; wishNumber < wishes.size(); wishNumber++)
+            totalPrice += wishes.get(wishNumber).getTotalPrice();
+
+        DecimalFormat formatter = new DecimalFormat("0.00");
+        return formatter.format(totalPrice) + " zł";
+    }
+
+    public int getOrderNumber(){
+        return this.id % 100;
+    }
+
+    public String getOrderNumberString(){
+        return String.valueOf(this.id % 100);
+    }
+
     public String getState(){
         String state;
         switch (this.state){
@@ -51,13 +73,10 @@ public class Order {
     }
 
     public String getWaitingTime(){
-        Date curr = Calendar.getInstance().getTime();
+        Date curr = Calendar.getInstance(TimeZone.getTimeZone("GMT+02:00")).getTime();
         Date orderTime = new Date(this.date.getTime() + this.time.getTime());
-        Date diff = new Date(curr.getTime() - orderTime.getTime() + 7200000);
-        String seconds = String.format("%02d", (int) (diff.getTime() / 1000) % 60);
-        String minutes = String.format("%02d", (int) ((diff.getTime() / (1000 * 60)) % 60));
-        String hours = String.format("%02d", (int) ((diff.getTime() / (1000 * 60 * 60)) % 24));
-        String days = String.valueOf((int) ((diff.getTime() / (1000 * 60 * 60 * 24))));
-        return days + " days, " + hours + ":" + minutes + ":" + seconds;
+        Date diff = new Date(curr.getTime() - orderTime.getTime() - 3600000);
+        //String seconds = String.format("%02d", (int) (diff.getTime() / 1000) % 60);String minutes = String.format("%02d", (int) ((diff.getTime() / (1000 * 60)) % 60));String hours = String.format("%02d", (int) ((diff.getTime() / (1000 * 60 * 60)) % 24));String days = String.valueOf((int) ((diff.getTime() / (1000 * 60 * 60 * 24))));return days + " days, " + hours + ":" + minutes + ":" + seconds;
+        return String.valueOf((int)(diff.getTime() / (1000 * 60))+1) + " min";
     }
 }
