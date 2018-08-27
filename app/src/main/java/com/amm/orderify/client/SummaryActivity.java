@@ -139,46 +139,45 @@ public class SummaryActivity extends AppCompatActivity {
 
 
     private Table getFullTableData(){
+        Table table = null;
         List<Client> clients = new ArrayList<>();
         List<Order> orders = new ArrayList<>();
         List<Wish> wishes = new ArrayList<>();
         List<Addon> addons = new ArrayList<>();
         try {
-            Statement tablesS = getConnection().createStatement();
-            ResultSet tablesRS = tablesS.executeQuery("SELECT * FROM tables WHERE ID = " + thisTable.id);
-            if (tablesRS.next()) {
-                Statement clientS = getConnection().createStatement();
-                ResultSet clientRS = clientS.executeQuery("SELECT * FROM clients \n" +
-                        "WHERE tableID = " + thisTable.id);
-                while (clientRS.next()) {
-                    Statement ordersS = getConnection().createStatement();
-                    ResultSet ordersRS = ordersS.executeQuery("SELECT * FROM orders \n" +
-                            "WHERE clientID = " + clientRS.getInt("ID"));
-                    while (ordersRS.next()) {
-                        Statement wishesS = getConnection().createStatement();
-                        ResultSet wishesRS = wishesS.executeQuery("SELECT wishes.ID, dishID, dishes.dishCategoryID, name, price, amount, orderID FROM wishes\n" +
-                                "JOIN dishes ON dishes.ID = wishes.dishID\n" +
-                                "WHERE orderID = " + ordersRS.getInt("ID"));
-                        while (wishesRS.next()) {
-                            Statement addonsS = getConnection().createStatement();
-                            ResultSet addonsRS = addonsS.executeQuery("SELECT addonID, name, price, addonCategoryID FROM addonsToWishes\n" +
-                                    "JOIN addons ON addons.ID = addonsToWishes.addonID\n" +
-                                    "WHERE wishID = " + wishesRS.getInt("ID"));
-                            while (addonsRS.next()) {
-                                addons.add(new Addon(addonsRS.getInt("addonID"), addonsRS.getString("name"), addonsRS.getFloat("price"), addonsRS.getInt("addonCategoryID")));
-                            }
-                            Dish dish = new Dish(wishesRS.getInt("dishID"), wishesRS.getString("name"), wishesRS.getFloat("price"), null, null, wishesRS.getInt("dishCategoryID"), null);
-                            wishes.add(new Wish(wishesRS.getInt("ID"), dish, wishesRS.getInt("amount"), addons));
-                            addons = new ArrayList<>();
+            Statement clientS = getConnection().createStatement();
+            ResultSet clientRS = clientS.executeQuery("SELECT tables.ID AS tableID, tables.number AS tableNumber, tables.description AS tableDescription, tables.state AS tableState, clients.ID AS clientID, clients.number AS clientNumber, clients.state AS clientState FROM tables \n" +
+                                                           "JOIN clients ON clients.tableID = tables.ID\n" +
+                                                           "WHERE tableID = " + thisTable.id);
+            while (clientRS.next()) {
+                Statement ordersS = getConnection().createStatement();
+                ResultSet ordersRS = ordersS.executeQuery("SELECT * FROM orders \n" +
+                        "WHERE clientID = " + clientRS.getInt("clientID"));
+                while (ordersRS.next()) {
+                    Statement wishesS = getConnection().createStatement();
+                    ResultSet wishesRS = wishesS.executeQuery("SELECT wishes.ID, dishID, dishes.dishCategoryID, name, price, amount, orderID FROM wishes\n" +
+                            "JOIN dishes ON dishes.ID = wishes.dishID\n" +
+                            "WHERE orderID = " + ordersRS.getInt("ID"));
+                    while (wishesRS.next()) {
+                        Statement addonsS = getConnection().createStatement();
+                        ResultSet addonsRS = addonsS.executeQuery("SELECT addonID, name, price, addonCategoryID FROM addonsToWishes\n" +
+                                "JOIN addons ON addons.ID = addonsToWishes.addonID\n" +
+                                "WHERE wishID = " + wishesRS.getInt("ID"));
+                        while (addonsRS.next()) {
+                            addons.add(new Addon(addonsRS.getInt("addonID"), addonsRS.getString("name"), addonsRS.getFloat("price"), addonsRS.getInt("addonCategoryID")));
                         }
-                        orders.add(new Order(ordersRS.getInt("ID"), ordersRS.getTime("time"), ordersRS.getDate("date"), ordersRS.getString("comments"), ordersRS.getInt("state"), clientRS.getInt("ID"), tablesRS.getInt("ID"), wishes));
-                        wishes = new ArrayList<>();
+                        Dish dish = new Dish(wishesRS.getInt("dishID"), wishesRS.getString("name"), wishesRS.getFloat("price"), null, null, wishesRS.getInt("dishCategoryID"), null);
+                        wishes.add(new Wish(wishesRS.getInt("ID"), dish, wishesRS.getInt("amount"), addons));
+                        addons = new ArrayList<>();
                     }
-                    clients.add(new Client(clientRS.getInt("ID"), clientRS.getInt("number"), clientRS.getInt("state"), orders));
-                    orders = new ArrayList<>();
+                    orders.add(new Order(ordersRS.getInt("ID"), ordersRS.getTime("time"), ordersRS.getDate("date"), ordersRS.getString("comments"), ordersRS.getInt("state"), clientRS.getInt("clientID"), clientRS.getInt("tableID"), wishes));
+                    wishes = new ArrayList<>();
                 }
-                return new Table(tablesRS.getInt("ID"), tablesRS.getInt("number"), tablesRS.getString("description"), tablesRS.getInt("state"), clients);
+                clients.add(new Client(clientRS.getInt("clientID"), clientRS.getInt("clientNumber"), clientRS.getInt("clientState"), orders));
+                orders = new ArrayList<>();
+                table = new Table(clientRS.getInt("tableID"), clientRS.getInt("tableNumber"), clientRS.getString("tableDescription"), clientRS.getInt("tableState"), clients);
             }
+            return table;
         }catch (SQLException ignored) { }
         return null;
     }
