@@ -16,4 +16,8 @@ public class AddonCategory {
         this.multiChoice = multiChoice;
         this.addons = addons;
     }
+
+    public String getIdString() {
+        return id+"";
+    }
 }

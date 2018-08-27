@@ -1,6 +1,5 @@
 package com.amm.orderify.maintenance.adders;
 
-import android.annotation.SuppressLint;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,9 +14,11 @@ import android.widget.Toast;
 
 import com.amm.orderify.R;
 import com.amm.orderify.helpers.data.AddonCategory;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import static com.amm.orderify.helpers.JBDCDriver.*;
@@ -25,15 +26,14 @@ import static com.amm.orderify.helpers.JBDCDriver.*;
 public class AddAddonCategoryActivity extends AppCompatActivity {
 
     public LinearLayout addonCategoriesLinearLayout;
-    static LayoutInflater addonCategoriesListInflater;
+    public LayoutInflater addonCategoriesListInflater;
+
     public List<AddonCategory> addonCategories = new ArrayList<>();
 
-    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.maintenance_addoncategory_activity);
-
 
         try {
             ResultSet addonCategoriesRS = ExecuteQuery("SELECT * FROM addonCategories");
@@ -42,7 +42,6 @@ public class AddAddonCategoryActivity extends AppCompatActivity {
 
         addonCategoriesLinearLayout = findViewById(R.id.AddonCategoryLinearLayout);
         addonCategoriesListInflater = getLayoutInflater();
-
 
         updateAddonCategoryList();
 
@@ -54,35 +53,37 @@ public class AddAddonCategoryActivity extends AppCompatActivity {
             try {
                 ExecuteUpdate("INSERT INTO addonCategories (name)\n" +
                         "VALUES ('" + addonCategoryNameEditText.getText().toString() + "')");
+
                 int newAddonCategoryID = 0;
                 ResultSet orderIDRS = ExecuteQuery("SELECT LAST_INSERT_ID();");
-                while (orderIDRS.next()) newAddonCategoryID = orderIDRS.getInt(1);
+
+                if(orderIDRS.next()) newAddonCategoryID = orderIDRS.getInt(1);
                 addonCategories.add(new AddonCategory(newAddonCategoryID, addonCategoryNameEditText.getText().toString(), null, multiChoiceToggleButton.isChecked(), null));
             } catch (SQLException ignored) { }
             Toast.makeText(this, "AddonCategory added!", Toast.LENGTH_SHORT).show();
-            //addonCategoryNameEditText.setText("");
             updateAddonCategoryList();
-            //this.startActivity(new Intent(this, ChoseActivity.class));
         });
-
-
     }
 
-    @SuppressLint("SetTextI18n")
     public void updateAddonCategoryList() {
+        addonCategories.sort(Comparator.comparing(object -> String.valueOf(object.name)));
         addonCategoriesLinearLayout.removeAllViews();
         for (int addonCategoryNumber = 0; addonCategoryNumber < addonCategories.size(); addonCategoryNumber++){
             View addonCategoryElement = addonCategoriesListInflater.inflate(R.layout.maintenance_addoncategory_element, null);
 
             TextView idTextView = addonCategoryElement.findViewById(R.id.IdTextView);
-            idTextView.setText(addonCategories.get(addonCategoryNumber).id + "");
+            idTextView.setText(addonCategories.get(addonCategoryNumber).getIdString());
 
             TextView nameTextView = addonCategoryElement.findViewById(R.id.NameTextView);
             nameTextView.setText(addonCategories.get(addonCategoryNumber).name);
 
+            TextView descriptionTextView = addonCategoryElement.findViewById(R.id.DescriptionTextView);
+            descriptionTextView.setText(addonCategories.get(addonCategoryNumber).description);
+
             TextView multiChoiceTextView = addonCategoryElement.findViewById(R.id.MultiChoiceTextView);
-            if (addonCategories.get(addonCategoryNumber).multiChoice) multiChoiceTextView.setText("YES");
-            else multiChoiceTextView.setText("NO");
+            String yes = "YES", no = "NO";
+            if (addonCategories.get(addonCategoryNumber).multiChoice) multiChoiceTextView.setText(yes);
+            else multiChoiceTextView.setText(no);
 
             ImageButton deleteButton = addonCategoryElement.findViewById(R.id.ActionButton);
             final int finaladdonCategoryNumber = addonCategoryNumber;

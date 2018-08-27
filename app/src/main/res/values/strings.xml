@@ -27,6 +27,8 @@
     <string name="summary_ask_for_bill_button_string">Ask for a bill</string>
     <string name="summary_go_to_menu_button_string">Go to menu</string>
     <string name="summary_order_list_separator_string">Order list</string>
+    <string name="menu_table_freezed_message1">This table is unavaible.</string>
+    <string name="menu_table_freezed_message2">Please use another table or contact facility personnel.</string>
 
 
     <string name="lifecycle_table_ready">READY!</string>

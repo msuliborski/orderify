@@ -2,6 +2,8 @@ CREATE DATABASE IF NOT EXISTS Orderify;
 
 USE Orderify;
 
+SET FOREIGN_KEY_CHECKS=0;
+
 DROP TABLE IF EXISTS newAddonsToWishes;             
 DROP TABLE IF EXISTS newWishes;                     
 DROP TABLE IF EXISTS newOrders;                     
@@ -20,7 +22,7 @@ DROP TABLE IF EXISTS padlock;
 
 CREATE TABLE padlock (
     ID INTEGER NOT NULL AUTO_INCREMENT, 
-    locked BOOLEAN NOT NULL DEFAULT false, 
+    TTL INTEGER NOT NULL DEFAULT 15, 
     PRIMARY KEY (ID)
 )   CHARSET=utf8;
 
@@ -59,7 +61,7 @@ CREATE TABLE dishCategories (
 CREATE TABLE dishes (
     ID INTEGER NOT NULL AUTO_INCREMENT, 
     name VARCHAR(50) NOT NULL, 
-    price INTEGER NOT NULL DEFAULT 0, 
+    price FLOAT NOT NULL DEFAULT 0, 
     descS VARCHAR(255), 
     descL LONGTEXT, 
     dishCategoryID INTEGER NOT NULL DEFAULT 0, 
@@ -78,7 +80,7 @@ CREATE TABLE addonCategories (
 CREATE TABLE addons (
     ID INTEGER NOT NULL AUTO_INCREMENT, 
     name VARCHAR(255) NOT NULL, 
-    price INTEGER NOT NULL DEFAULT 0, 
+    price FLOAT NOT NULL DEFAULT 0, 
     addonCategoryID INTEGER NOT NULL DEFAULT 0, 
     PRIMARY KEY (ID),
     FOREIGN KEY (addonCategoryID) REFERENCES addonCategories(ID)
@@ -167,7 +169,9 @@ VALUES  (1, 1, 1), (2, 1, 1), (3, 1, 1), (4, 1, 1),
         (1, 1, 2), (2, 1, 2), (3, 1, 2), (4, 1, 2),
         (1, 1, 3), (2, 1, 3), (3, 1, 3), (4, 1, 3),
         (1, 1, 4), (2, 1, 4), (3, 1, 4), (4, 1, 4),
-        (1, 1, 5), (2, 1, 5), (3, 1, 5), (4, 1, 5);
+        (1, 1, 5), (2, 1, 5), (3, 1, 5), (4, 1, 5),
+        (1, 1, 6), (2, 1, 6), (3, 1, 6), (4, 1, 6),
+        (1, 1, 7), (2, 1, 7), (3, 1, 7), (4, 1, 7);
 
 INSERT INTO messages (content)
 VALUES  ('Tylko dzisiaj, kurczak w cieście bez kurczaka!'), ('Such design, big wow!');
@@ -176,7 +180,7 @@ INSERT INTO dishCategories (name)
 VALUES  ('Pizza'), ('Dania główne'), ('Zupy'), ('Napoje'), ('Alkohole');
 
 INSERT INTO dishes (name, price, descS, descL, dishCategoryID)
-VALUES  ('Margarita', 15, 'krótki opis dania', 'długi opis dania mający na celu bliższe zapoznanie z jakością tego wspaniałego produktu oraz nakłonienie do zakupu', 1),        #1
+VALUES  ('Margarita', 15.5, 'krótki opis dania', 'długi opis dania mający na celu bliższe zapoznanie z jakością tego wspaniałego produktu oraz nakłonienie do zakupu', 1),        #1
         ('Peperoni', 17, 'krótki opis dania', 'długi opis dania mający na celu bliższe zapoznanie z jakością tego wspaniałego produktu oraz nakłonienie do zakupu', 1),         #2
         ('Hawajska', 18, 'krótki opis dania', 'długi opis dania mający na celu bliższe zapoznanie z jakością tego wspaniałego produktu oraz nakłonienie do zakupu', 1),         #3
         ('Kurczak w cieście', 13, 'takie on jest dobry', 'araby z południa będą przychodzić i oddawać swoje żony żeby spróbować tego wspaniałego dania', 2),                    #4
@@ -201,7 +205,7 @@ VALUES  ('Sosy', null, true),               #1
         ('Rozmiary', "do wódki", false);    #7
 
 INSERT INTO addons (name, price, addonCategoryID)
-VALUES  ('Sos tatarski', 1, 1), ('Sos czosnkowy', 1, 1), ('Sos pomidorowy', 1, 1),              #1-3
+VALUES  ('Sos tatarski', 1.25, 1), ('Sos czosnkowy', 1, 1), ('Sos pomidorowy', 1, 1),              #1-3
         ('Mała', 0, 2), ('Średnia', 7, 2), ('Duża', 13, 2),                                     #4-6
         ('Sałatka z kapusty', 0, 3), ('Warzywa gotowane', 0, 3), ('Marchewka', 0, 3),           #7-9
         ('Ziemniaki', 0, 4), ('Pieczone ziemniaki', 0, 4), ('Frytki', 0, 4), ('Kluski', 0, 4),  #10-13
@@ -271,7 +275,6 @@ VALUES  (1, 2), (1, 3),
         (28, 20),
         (29, 20);
 
-SET FOREIGN_KEY_CHECKS=0;
 INSERT INTO newOrders (time, date, comments, state, clientID)
 VALUES  ('21:37:00', '2018-07-31', 'z lodem', 1, 1),                                                                #1
         ('21:38:11', '2018-07-31', 'arkadiusz, designu prometeusz', 1, 2),                                          #2
@@ -319,4 +322,4 @@ VALUES  (1, 2), (1, 3),
         (27, 18),
         (28, 20),
         (29, 20);
-SET FOREIGN_KEY_CHECKS=1;
+

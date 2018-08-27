@@ -95,6 +95,7 @@
         android:textAllCaps="false"
         android:textColor="@android:color/white"
         android:textSize="12sp"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/OrderNumberBackgroundImageView"
         app:layout_constraintEnd_toEndOf="@+id/OrderNumberBackgroundImageView"
         app:layout_constraintHorizontal_bias="0.9"

@@ -8,7 +8,7 @@
     tools:context=".client.SummaryActivity">
 
     <TextView
-        android:id="@+id/PositionPriceTextView"
+        android:id="@+id/ClientPriceTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:elevation="3dp"
@@ -22,7 +22,7 @@
         app:layout_constraintVertical_bias="0.13" />
 
     <TextView
-        android:id="@+id/PositionPriceNumberTextView"
+        android:id="@+id/ClientPriceNumberTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -32,7 +32,7 @@
         android:textColor="@color/backgroundPrimary"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="@+id/TablePriceTextView"
-        app:layout_constraintTop_toBottomOf="@+id/PositionPriceTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/ClientPriceTextView" />
 
     <TextView
         android:id="@+id/TablePriceNumberTextView"
