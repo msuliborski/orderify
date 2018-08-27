@@ -18,6 +18,7 @@ import com.amm.orderify.helpers.data.AddonCategory;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import static com.amm.orderify.helpers.JBDCDriver.*;
@@ -65,6 +66,7 @@ public class AddAddonCategoryActivity extends AppCompatActivity {
     }
 
     public void updateAddonCategoryList() {
+        addonCategories.sort(Comparator.comparing(object -> String.valueOf(object.name)));
         addonCategoriesLinearLayout.removeAllViews();
         for (int addonCategoryNumber = 0; addonCategoryNumber < addonCategories.size(); addonCategoryNumber++){
             View addonCategoryElement = addonCategoriesListInflater.inflate(R.layout.maintenance_addoncategory_element, null);
@@ -74,6 +76,9 @@ public class AddAddonCategoryActivity extends AppCompatActivity {
 
             TextView nameTextView = addonCategoryElement.findViewById(R.id.NameTextView);
             nameTextView.setText(addonCategories.get(addonCategoryNumber).name);
+
+            TextView descriptionTextView = addonCategoryElement.findViewById(R.id.DescriptionTextView);
+            descriptionTextView.setText(addonCategories.get(addonCategoryNumber).description);
 
             TextView multiChoiceTextView = addonCategoryElement.findViewById(R.id.MultiChoiceTextView);
             String yes = "YES", no = "NO";

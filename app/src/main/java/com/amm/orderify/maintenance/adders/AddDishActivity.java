@@ -2,7 +2,6 @@ package com.amm.orderify.maintenance.adders;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -16,21 +15,25 @@ import android.widget.Toast;
 
 import com.amm.orderify.R;
 import com.amm.orderify.helpers.data.AddonCategory;
+import com.amm.orderify.helpers.data.Dish;
 import com.amm.orderify.helpers.data.DishCategory;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import static com.amm.orderify.helpers.JBDCDriver.*;
 
 public class AddDishActivity extends AppCompatActivity {
 
+    public LinearLayout dishesLinearLayout;
     public LinearLayout addonCategoriesLinearLayout;
     public LinearLayout chosenAddonCategoriesLinearLayout;
     public Spinner dishCategoriesSpinner;
 
+    static LayoutInflater dishesInflater;
     static LayoutInflater addonCategoriesInflater;
     static LayoutInflater chosenAddonCategoriesInflater;
     static LayoutInflater dishCategoriesInflater;
@@ -40,6 +43,7 @@ public class AddDishActivity extends AppCompatActivity {
     public EditText descSEditText;
     public EditText descLEditText;
 
+    public List<Dish> dishes = new ArrayList<>();
     public List<DishCategory> dishCategories = new ArrayList<>();
     public List<AddonCategory> addonCategories = new ArrayList<>();
     public List<AddonCategory> chosenAddonCategories = new ArrayList<>();
@@ -50,13 +54,17 @@ public class AddDishActivity extends AppCompatActivity {
         setContentView(R.layout.maintenance_dish_activity);
 
         try {
+            ResultSet dishesRS = ExecuteQuery("SELECT * FROM dishes");
+            while (dishesRS.next()) dishes.add(new Dish(dishesRS.getInt("ID"), dishesRS.getString("name"), dishesRS.getFloat("price"), dishesRS.getString("descS"), dishesRS.getString("descL"), dishesRS.getInt("dishCategoryID") , null));
+
             ResultSet addonCategoriesRS = ExecuteQuery("SELECT * FROM addonCategories");
-            while (addonCategoriesRS.next()) addonCategories.add(new AddonCategory(addonCategoriesRS.getInt("ID"), addonCategoriesRS.getString("name"), addonCategoriesRS.getString("name"), addonCategoriesRS.getBoolean("multiChoice"), null));
+            while (addonCategoriesRS.next()) addonCategories.add(new AddonCategory(addonCategoriesRS.getInt("ID"), addonCategoriesRS.getString("name"), addonCategoriesRS.getString("description"), addonCategoriesRS.getBoolean("multiChoice"), null));
 
             ResultSet dishCategoriesRS = ExecuteQuery("SELECT * FROM dishCategories");
             while (dishCategoriesRS.next()) dishCategories.add(new DishCategory(dishCategoriesRS.getInt("ID"), dishCategoriesRS.getString("name"), null));
         } catch (SQLException ignored) {}
 
+        dishesLinearLayout = findViewById(R.id.DishesLinearLayout);
         dishCategoriesSpinner = findViewById(R.id.DishCategoriesSpinner);
         addonCategoriesLinearLayout = findViewById(R.id.AddonCategoriesLinearLayout);
         chosenAddonCategoriesLinearLayout = findViewById(R.id.ChosenAddonCategoriesLinearLayout);
@@ -65,6 +73,9 @@ public class AddDishActivity extends AppCompatActivity {
         priceEditText = findViewById(R.id.PriceEditText);
         descSEditText = findViewById(R.id.DescSEditText);
         descLEditText = findViewById(R.id.DescLEditText);
+
+        dishesInflater = getLayoutInflater();
+        updateDishesList();
 
         dishCategoriesInflater = getLayoutInflater();
         updateDishCategoryList();
@@ -94,6 +105,48 @@ public class AddDishActivity extends AppCompatActivity {
         });
     }
 
+    public void updateDishesList() {
+        dishes.sort(Comparator.comparing(object -> String.valueOf(object.id))); //sort
+        dishes.sort(Comparator.comparing(object -> String.valueOf(object.dishCategoryID))); //sort
+        dishesLinearLayout.removeAllViews();
+        for (int dishNumber = 0; dishNumber < dishes.size(); dishNumber++){
+            View dishElement = dishesInflater.inflate(R.layout.maintenance_dish_element, null);
+
+            TextView idTextView = dishElement.findViewById(R.id.IdTextView);
+            idTextView.setText(dishes.get(dishNumber).getIdString());
+
+            TextView nameTextView = dishElement.findViewById(R.id.NameTextView);
+            nameTextView.setText(dishes.get(dishNumber).name);
+
+            TextView dishCategoryNameTextView = dishElement.findViewById(R.id.DishCategoryNameTextView);
+            dishCategoryNameTextView.setText(dishes.get(dishNumber).dishCategoryID + "");
+
+            TextView descSTextView = dishElement.findViewById(R.id.DescSTextView);
+            descSTextView.setText(dishes.get(dishNumber).descS);
+
+            TextView descLTextView = dishElement.findViewById(R.id.DescLTextView);
+            descLTextView.setText(dishes.get(dishNumber).descL);
+
+            TextView priceTextView = dishElement.findViewById(R.id.PriceTextView);
+            priceTextView.setText(dishes.get(dishNumber).getPriceString());
+
+            int finalDishNumber = dishNumber;
+            ImageButton editButton = dishElement.findViewById(R.id.EditButton);
+            editButton.setOnClickListener(v -> {
+                //get data to xml elements - bedzie ciezkie, pomyslimy potem
+                updateDishesList();
+            });
+            ImageButton deleteButton = dishElement.findViewById(R.id.DeleteButton);
+            deleteButton.setOnClickListener(v -> {
+                try {
+                    ExecuteUpdate("DELETE FROM dishes WHERE ID = " + finalDishNumber);
+                } catch (SQLException ignore) {}
+                dishes.remove(dishes.get(finalDishNumber));
+                updateDishesList();
+            });
+            dishesLinearLayout.addView(dishElement);
+        }
+    }
     public void updateDishCategoryList() {
 
         String[] items = new String[dishCategories.size()];
@@ -105,6 +158,7 @@ public class AddDishActivity extends AppCompatActivity {
     }
 
     public void updateAddonCategoryList() {
+        addonCategories.sort(Comparator.comparing(object -> String.valueOf(object.name))); //sort
         addonCategoriesLinearLayout.removeAllViews();
 
         for (int addonCategoryNumber = 0; addonCategoryNumber < addonCategories.size(); addonCategoryNumber++){
@@ -115,7 +169,9 @@ public class AddDishActivity extends AppCompatActivity {
 
             TextView nameTextView = addonCategoryElement.findViewById(R.id.NameTextView);
             nameTextView.setText(addonCategories.get(addonCategoryNumber).name);
-            Log.wtf("eff", addonCategories.get(addonCategoryNumber).name);
+
+            TextView descriptionTextView = addonCategoryElement.findViewById(R.id.DescriptionTextView);
+            descriptionTextView.setText(addonCategories.get(addonCategoryNumber).description);
 
             TextView multiChoiceTextView = addonCategoryElement.findViewById(R.id.MultiChoiceTextView);
             String yes = "YES", no = "NO";
@@ -135,6 +191,7 @@ public class AddDishActivity extends AppCompatActivity {
     }
 
     public void updateChosenAddonCategoryList() {
+        chosenAddonCategories.sort(Comparator.comparing(object -> String.valueOf(object.name))); //sort
         chosenAddonCategoriesLinearLayout.removeAllViews();
 
         for (int chosenAddonCategoryNumber = 0; chosenAddonCategoryNumber < chosenAddonCategories.size(); chosenAddonCategoryNumber++){
@@ -145,6 +202,9 @@ public class AddDishActivity extends AppCompatActivity {
 
             TextView nameTextView = chosenAddonCategoryElement.findViewById(R.id.NameTextView);
             nameTextView.setText(chosenAddonCategories.get(chosenAddonCategoryNumber).name);
+
+            TextView descriptionTextView = chosenAddonCategoryElement.findViewById(R.id.DescriptionTextView);
+            descriptionTextView.setText(chosenAddonCategories.get(chosenAddonCategoryNumber).description);
 
             TextView multiChoiceTextView = chosenAddonCategoryElement.findViewById(R.id.MultiChoiceTextView);
             String yes = "YES", no = "NO";

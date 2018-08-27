@@ -236,7 +236,7 @@ public class MenuActivity extends AppCompatActivity {
     private void updateWishes() {
         if(ordersLinearLayout != null) ordersLinearLayout.removeAllViews();
         ordersLinearLayout = findViewById(R.id.OrdersLinearLayout);
-        wishes.sort(Comparator.comparing(object -> String.valueOf(object.dish.dishCategory))); //sort
+        wishes.sort(Comparator.comparing(object -> String.valueOf(object.dish.dishCategoryID))); //sort
         for (int wishNumber = 0; wishNumber < wishes.size(); wishNumber++) {
             View orderElement = getLayoutInflater().inflate(R.layout.client_menu_wish_element, null);
 
@@ -302,9 +302,7 @@ public class MenuActivity extends AppCompatActivity {
                         addonCategories.add(new AddonCategory(addonCategoriesRS.getInt("ID"), addonCategoriesRS.getString("name"), addonCategoriesRS.getString("description"), addonCategoriesRS.getBoolean("multiChoice"), addons));
                         addons = new ArrayList<>();
                     }
-                    dishes.add(new Dish(dishesRS.getInt("ID"), dishesRS.getString("name"),
-                            dishesRS.getFloat("price"), dishesRS.getString("descS"),
-                            dishesRS.getString("descL"), dishesRS.getInt("dishCategoryID") , addonCategories));
+                    dishes.add(new Dish(dishesRS.getInt("ID"), dishesRS.getString("name"), dishesRS.getFloat("price"), dishesRS.getString("descS"), dishesRS.getString("descL"), dishesRS.getInt("dishCategoryID") , addonCategories));
                     addonCategories = new ArrayList<>();
                 }
                 dishCategories.add(new DishCategory(dishCategoriesRS.getInt("ID"), dishCategoriesRS.getString("name"), dishes));

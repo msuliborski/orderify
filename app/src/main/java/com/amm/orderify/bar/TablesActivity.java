@@ -217,8 +217,7 @@ public class TablesActivity extends AppCompatActivity {
 
                 LinearLayout addonsLinearLayout = wishElement.findViewById(R.id.AddonsLinearLayout);
 
-                //sort
-                wish.addons.sort(Comparator.comparing(object -> String.valueOf(object.addonCategoryID)));
+                wish.addons.sort(Comparator.comparing(object -> String.valueOf(object.addonCategoryID))); //sort
 
                 for (int addonNumber = 0; addonNumber < wish.addons.size(); addonNumber++) {
                     Addon addon = wish.addons.get(addonNumber);

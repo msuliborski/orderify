@@ -16,6 +16,7 @@ import com.amm.orderify.helpers.data.AddonCategory;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import static com.amm.orderify.helpers.JBDCDriver.*;
@@ -60,6 +61,7 @@ public class AddAddonActivity extends AppCompatActivity {
     }
 
     public void updateAddonCategoryList() {
+        //addonCategories.sort(Comparator.comparing(object -> String.valueOf(object.id)));
         List<String> addonCategoryString = new ArrayList<>();
         for (int addonCategoryNumber = 0; addonCategoryNumber < addonCategories.size(); addonCategoryNumber++)
             addonCategoryString.add(addonCategories.get(addonCategoryNumber).id + ". " + addonCategories.get(addonCategoryNumber).name + " (" + addonCategories.get(addonCategoryNumber).description + ")");

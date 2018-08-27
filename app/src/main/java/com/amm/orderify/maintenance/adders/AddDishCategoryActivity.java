@@ -17,6 +17,7 @@ import com.amm.orderify.helpers.data.DishCategory;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import static com.amm.orderify.helpers.JBDCDriver.*;
@@ -60,6 +61,7 @@ public class AddDishCategoryActivity extends AppCompatActivity {
     }
 
     public void updateDishCategoryList() {
+        dishCategories.sort(Comparator.comparing(object -> String.valueOf(object.name)));
         dishCategoriesLinearLayout.removeAllViews();
         for (int dishCategoryNumber = 0; dishCategoryNumber < dishCategories.size(); dishCategoryNumber++){
             View dishCategoryElement = dishCategoriesListInflater.inflate(R.layout.maintenance_dishcategory_element, null);

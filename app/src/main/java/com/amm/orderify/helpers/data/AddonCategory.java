@@ -17,7 +17,7 @@ public class AddonCategory {
         this.addons = addons;
     }
 
-    public String getIdString(){
+    public String getIdString() {
         return id+"";
     }
 }
