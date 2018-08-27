@@ -37,7 +37,7 @@ public class Order {
         float totalPrice = 0;
 
         for (int wishNumber = 0; wishNumber < wishes.size(); wishNumber++)
-            totalPrice += wishes.get(wishNumber).getTotalPrice();
+            if(state <= 3)totalPrice += wishes.get(wishNumber).getTotalPrice();
 
         return totalPrice;
     }

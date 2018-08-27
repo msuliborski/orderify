@@ -228,17 +228,17 @@ VALUES  (1, 1), (1, 2),
         (14, 7);
 
 INSERT INTO orders (time, date, comments, state, clientID)
-VALUES  ('21:37:00', '2018-07-31', 'z lodem', 1, 1),                                                                #1
-        ('21:38:11', '2018-07-31', 'arkadiusz, designu prometeusz', 1, 2),                                          #2
-        ('21:41:22', '2018-07-31', 'to ja szukam czy ci chlopi maja proce', 1, 5),                                  #3
-        ('21:49:22', '2018-07-31', 'rzucam sobie na SQL', 1, 6),                                                    #4
-        ('21:49:33', '2018-07-31', 'po co ja się w ogóle sile z tymi uwagami, nikt tego nie przeczyta :(', 1, 7),   #5
-        ('21:49:33', '2018-07-31', 'podaje hasło!', 1, 9),                                                          #6
-        ('21:49:33', '2018-07-31', 'napoje prosze przyniesć od razu', 1, 10),                                       #7
-        ('21:49:33', '2018-07-31', 'ZTK, DVD, Hi-Fi, Midi, AGH, CBŚ, NPM, CKM, ZTM', 1, 13),                        #8
-        ('21:49:33', '2018-07-31', 'Inne stoliki nie były obsłurzone, ja byłm obsłużony.', 1, 17),                  #9
-        ('21:49:33', '2018-07-31', 'Ja byłem obsłużony, dla mnie była każda wódka i każda potrawa', 1, 17),         #10
-        ('21:49:33', '2018-07-31', 'i każda muzyka w orkiestrze', 1, 17);                                           #11
+VALUES  (DATE_ADD(CURRENT_TIME(), INTERVAL 2 HOUR) , CURRENT_DATE(), 'z lodem', 1, 1),                                                                #1
+        (DATE_ADD(CURRENT_TIME(), INTERVAL 2 HOUR) , CURRENT_DATE(), 'arkadiusz, designu prometeusz', 1, 2),                                          #2
+        (DATE_ADD(CURRENT_TIME(), INTERVAL 2 HOUR) , CURRENT_DATE(), 'to ja szukam czy ci chlopi maja proce', 1, 5),                                  #3
+        (DATE_ADD(CURRENT_TIME(), INTERVAL 2 HOUR) , CURRENT_DATE(), 'rzucam sobie na SQL', 1, 6),                                                    #4
+        (DATE_ADD(CURRENT_TIME(), INTERVAL 2 HOUR) , CURRENT_DATE(), 'po co ja się w ogóle sile z tymi uwagami, nikt tego nie przeczyta :(', 1, 7),   #5
+        (DATE_ADD(CURRENT_TIME(), INTERVAL 2 HOUR) , CURRENT_DATE(), 'podaje hasło!', 1, 9),                                                          #6
+        (DATE_ADD(CURRENT_TIME(), INTERVAL 2 HOUR) , CURRENT_DATE(), 'napoje prosze przyniesć od razu', 1, 10),                                       #7
+        (DATE_ADD(CURRENT_TIME(), INTERVAL 2 HOUR) , CURRENT_DATE(), 'ZTK, DVD, Hi-Fi, Midi, AGH, CBŚ, NPM, CKM, ZTM', 1, 13),                        #8
+        (DATE_ADD(CURRENT_TIME(), INTERVAL 2 HOUR) , CURRENT_DATE(), 'Inne stoliki nie były obsłurzone, ja byłm obsłużony.', 1, 17),                  #9
+        (DATE_ADD(CURRENT_TIME(), INTERVAL 2 HOUR) , CURRENT_DATE(), 'Ja byłem obsłużony, dla mnie była każda wódka i każda potrawa', 1, 17),         #10
+        (DATE_ADD(CURRENT_TIME(), INTERVAL 2 HOUR) , CURRENT_DATE(), 'i każda muzyka w orkiestrze', 1, 17);                                           #11
 
  
 INSERT INTO wishes (dishID, amount, orderID)
@@ -276,17 +276,17 @@ VALUES  (1, 2), (1, 3),
         (29, 20);
 
 INSERT INTO newOrders (time, date, comments, state, clientID)
-VALUES  ('21:37:00', '2018-07-31', 'z lodem', 1, 1),                                                                #1
-        ('21:38:11', '2018-07-31', 'arkadiusz, designu prometeusz', 1, 2),                                          #2
-        ('21:41:22', '2018-07-31', 'to ja szukam czy ci chlopi maja proce', 1, 5),                                  #3
-        ('21:49:22', '2018-07-31', 'rzucam sobie na SQL', 1, 6),                                                    #4
-        ('21:49:33', '2018-07-31', 'po co ja się w ogóle sile z tymi uwagami, nikt tego nie przeczyta :(', 1, 7),   #5
-        ('21:49:33', '2018-07-31', 'podaje hasło!', 1, 9),                                                          #6
-        ('21:49:33', '2018-07-31', 'napoje prosze przyniesć od razu', 1, 10),                                       #7
-        ('21:49:33', '2018-07-31', 'ZTK, DVD, Hi-Fi, Midi, AGH, CBŚ, NPM, CKM, ZTM', 1, 13),                        #8
-        ('21:49:33', '2018-07-31', 'Inne stoliki nie były obsłużone, ja byłm obsłużony.', 1, 17),                   #9
-        ('21:49:33', '2018-07-31', 'Ja byłem obsłużony, dla mnie była każda wódka i każda potrawa', 1, 17),         #10
-        ('21:49:33', '2018-07-31', 'i każda muzyka w orkiestrze', 1, 17);                                           #11
+VALUES  (DATE_ADD(CURRENT_TIME(), INTERVAL 2 HOUR) , CURRENT_DATE(), 'z lodem', 1, 1),                                                                #1
+        (DATE_ADD(CURRENT_TIME(), INTERVAL 2 HOUR) , CURRENT_DATE(), 'arkadiusz, designu prometeusz', 1, 2),                                          #2
+        (DATE_ADD(CURRENT_TIME(), INTERVAL 2 HOUR) , CURRENT_DATE(), 'to ja szukam czy ci chlopi maja proce', 1, 5),                                  #3
+        (DATE_ADD(CURRENT_TIME(), INTERVAL 2 HOUR) , CURRENT_DATE(), 'rzucam sobie na SQL', 1, 6),                                                    #4
+        (DATE_ADD(CURRENT_TIME(), INTERVAL 2 HOUR) , CURRENT_DATE(), 'po co ja się w ogóle sile z tymi uwagami, nikt tego nie przeczyta :(', 1, 7),   #5
+        (DATE_ADD(CURRENT_TIME(), INTERVAL 2 HOUR) , CURRENT_DATE(), 'podaje hasło!', 1, 9),                                                          #6
+        (DATE_ADD(CURRENT_TIME(), INTERVAL 2 HOUR) , CURRENT_DATE(), 'napoje prosze przyniesć od razu', 1, 10),                                       #7
+        (DATE_ADD(CURRENT_TIME(), INTERVAL 2 HOUR) , CURRENT_DATE(), 'ZTK, DVD, Hi-Fi, Midi, AGH, CBŚ, NPM, CKM, ZTM', 1, 13),                        #8
+        (DATE_ADD(CURRENT_TIME(), INTERVAL 2 HOUR) , CURRENT_DATE(), 'Inne stoliki nie były obsłurzone, ja byłm obsłużony.', 1, 17),                  #9
+        (DATE_ADD(CURRENT_TIME(), INTERVAL 2 HOUR) , CURRENT_DATE(), 'Ja byłem obsłużony, dla mnie była każda wódka i każda potrawa', 1, 17),         #10
+        (DATE_ADD(CURRENT_TIME(), INTERVAL 2 HOUR) , CURRENT_DATE(), 'i każda muzyka w orkiestrze', 1, 17);                                           #11
 
  
 INSERT INTO newWishes (dishID, amount, orderID)
@@ -322,4 +322,3 @@ VALUES  (1, 2), (1, 3),
         (27, 18),
         (28, 20),
         (29, 20);
-

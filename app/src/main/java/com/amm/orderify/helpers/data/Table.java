@@ -20,7 +20,6 @@ public class Table {
         this.description = description;
         this.state = state;
         this.clients = clients;
-
     }
 
     public String getNumberString() {

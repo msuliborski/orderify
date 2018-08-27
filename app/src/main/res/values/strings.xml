@@ -1,54 +1,68 @@
 <resources>
     <string name="app_name">Orderify</string>
 
-    <string name="zamawiam_button_string">Zamawiam</string>
-    <string name="record_get_text_textview_string">Enter dish</string>
-    <string name="send_record_string">Send record</string>
-    <string name="get_records_button_string">Get some</string>
-    <string name="go_to_menu_button_string">Go to menu</string>
-    <string name="position_price_textview_string">Koszt zamówienia stanowiska:</string>
-    <string name="table_price_textview_string">Koszt zamówień z całego stołu:</string>
-    <string name="go_to_summary_button_string">Summary</string>
-    <string name="order_textview_string">Order</string>
-    <string name="menu_textview_string">Menu</string>
-    <string name="sum_textview_string">Total:</string>
-    <string name="enter_comments_textview_string">Comments:</string>
-    <string name="order_button_textview_string">Order</string>
-    <string name="ask_waiter_button_textview_string">Ask waiter for help</string>
-    <string name="cancel_order_button_textview_string">Cancel your order</string>
-    <string name="go_to_summary_button_textview_string">Summary</string>
-    <string name="messages_textview_string">Messages</string>
-    <string name="add_to_order_textview_string">Add to order</string>
-    <string name="edit_messages_textview_string">Add or edit messages</string>
-    <string name="edit_menu_textview_string">Edit menu</string>
-    <string name="bar_order_state_button_string">zrealizowane</string>
-    <string name="bar_freeze_table_button_string">freeze table</string>
-    <string name="bar_unfreeze_table_button_string">unfreeze table</string>
-    <string name="summary_ask_for_bill_button_string">Ask for a bill</string>
-    <string name="summary_go_to_menu_button_string">Go to menu</string>
-    <string name="summary_order_list_separator_string">Order list</string>
-    <string name="menu_table_freezed_message1">This table is unavaible.</string>
-    <string name="menu_table_freezed_message2">Please use another table or contact facility personnel.</string>
-    <string name="cancel_bill_button_string">Cancel bill request</string>
-    <string name="cancel_bill_message1">Please wait.</string>
-    <string name="cancel_bill_message2">Your bill will be delivered to you shortly.</string>
+    <string name="client_menu_order_textview">Order</string>
+    <string name="client_menu_menu_textview">Menu</string>
+
+    <string name="client_menu_total_price_textview">Total:</string>
+    <string name="client_menu_comments_textview">Comments:</string>
+    <string name="client_menu_order_button">Order</string>
+
+    <string name="client_menu_go_to_summary_button">Summary</string>
+    <string name="client_menu_cancel_order_button">Cancel your order</string>
+    <string name="client_menu_ask_waiter_button">Ask waiter for help</string>
+
+    <string name="client_menu_add_to_order_button">Add to order</string>
+    <string name="client_menu_messages_textview">Messages</string>
 
 
-    <string name="lifecycle_table_ready">READY!</string>
-    <string name="lifecycle_table_freezed">FREEZED!</string>
-    <string name="lifecycle_table_payment">WAITING FOR A BILL!</string>
-    <string name="lifecycle_table_help">ASKS FOR A WAITER!</string>
 
-    <string name="lifecycle_client_ready">READY!</string>
-    <string name="lifecycle_client_freezed">FREEZED!</string>
-    <string name="lifecycle_client_payment">WAITING FOR A BILL!</string>
-    <string name="lifecycle_client_help">ASKS FOR A WAITER!</string>
+
+    <string name="client_summary_client_tital_price_textview">Your total price:</string>
+    <string name="client_summary_table_tital_price_textview">Whole table total price:</string>
+
+    <string name="client_summary_ask_for_bill_button_string">Ask for a bill</string>
+    <string name="client_summary_go_to_menu_button_string">Go to menu</string>
+    <string name="client_summary_order_list_separator_string">Order list</string>
+
+
+
+
+    <string name="client_table_freezed_message_1">This table is unavailable.</string>
+    <string name="client_table_freezed_message_2">Please use another table or contact facility personnel.</string>
+
+    <string name="client_cancel_bill_message_1">Please wait.</string>
+    <string name="client_cancel_bill_message_2">Your bill will be delivered to you shortly.</string>
+    <string name="client_cancel_bill_button">Cancel bill request</string>
+
+
+
+
+    <string name="bar_edit_messages_textview">Add or edit messages</string>
+    <string name="bar_edit_menu_textview">Edit menu</string>
+
+    <string name="bar_tables_order_state_prepared_button">PREPARED</string>
+    <string name="bar_tables_order_state_paid_button">PAID</string>
+
+    <string name="bar_tables_table_state_freeze_button">FREEZE</string>
+    <string name="bar_tables_table_state_unfreeze_button">UNFREEZE</string>
+
+
+
+
+    <string name="lifecycle_table_ready">READY</string>
+    <string name="lifecycle_table_freezed">FREEZED</string>
+    <string name="lifecycle_table_payment">WAITING FOR A BILL</string>
+    <string name="lifecycle_table_help">ASKS FOR A WAITER</string>
+
+    <string name="lifecycle_client_ready">READY</string>
+    <string name="lifecycle_client_freezed">FREEZED</string>
+    <string name="lifecycle_client_payment">WAITS FOR A BILL</string>
+    <string name="lifecycle_client_help">ASKS FOR A WAITER</string>
 
     <string name="lifecycle_order_preparation">IN PREPARATION</string>
-    <string name="lifecycle_order_delivered">DELIVERED!</string>
-    <string name="lifecycle_order_payment">WAITING FOR A BILL!</string>
-    <string name="lifecycle_order_paid">PAID!</string>
-
-
+    <string name="lifecycle_order_delivered">DELIVERED</string>
+    <string name="lifecycle_order_payment">WAITING FOR A BILL</string>
+    <string name="lifecycle_order_paid">PAID</string>
 
 </resources>

@@ -23,7 +23,6 @@ import com.amm.orderify.helpers.data.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -32,6 +31,7 @@ import java.util.List;
 import static com.amm.orderify.MainActivity.thisClient;
 import static com.amm.orderify.MainActivity.thisTable;
 import static com.amm.orderify.helpers.Comparators.wishesTheSame;
+import static com.amm.orderify.helpers.DataManagement.getFullMenuData;
 import static com.amm.orderify.helpers.JBDCDriver.*;
 import static com.amm.orderify.helpers.TimeAndDate.*;
 
@@ -54,8 +54,11 @@ public class MenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.client_menu_activity);
 
-        dishCategories = getDishCategories();
+        dishCategories = getFullMenuData();
         updateMenu();
+
+        Log.wtf("table", thisTable.id + "");
+        Log.wtf("client", thisClient.id + "");
 
         enterCommentsEditText = findViewById(R.id.EnterCommentsEditText);
         freezeButtonScreen = findViewById(R.id.FreezeButtonScreen);
@@ -84,30 +87,14 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
     }
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if (blMyAsyncTask)   {
-            blMyAsyncTask = false;
-            task.cancel(true);
-        }
-    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        task = new UpdateMenuTask();
-        task.execute();
-    }
-
-    void updateOrderTotalPrice(){
+    private void updateOrderTotalPrice(){
         float totalPrice = 0;
         for (int wishNumber = 0; wishNumber < wishes.size(); wishNumber++) totalPrice += wishes.get(wishNumber).getTotalPrice();
 
         DecimalFormat formatter = new DecimalFormat("0.00");
         String totalPriceString = formatter.format(totalPrice) + " zł";
         totalPriceTextView.setText(totalPriceString);
-
     }
 
 
@@ -271,46 +258,6 @@ public class MenuActivity extends AppCompatActivity {
             ordersLinearLayout.addView(orderElement);
         }
         updateOrderTotalPrice();
-
-    }
-
-    private List<DishCategory> getDishCategories() {
-
-        List<Addon> addons = new ArrayList<>();
-        List<AddonCategory> addonCategories = new ArrayList<>();
-        List<Dish> dishes = new ArrayList<>();
-        List<DishCategory> dishCategories = new ArrayList<>();
-
-        try {
-            Statement dishCategoriesS = getConnection().createStatement();
-            ResultSet dishCategoriesRS = dishCategoriesS.executeQuery("SELECT * FROM dishCategories");
-            while (dishCategoriesRS.next()) {
-                Statement dishesS = getConnection().createStatement();
-                ResultSet dishesRS = dishesS.executeQuery("SELECT * FROM dishes \n" +
-                        "WHERE dishCategoryID = " + dishCategoriesRS.getInt("ID"));
-                while (dishesRS.next()) {
-                    Statement addonCategoriesS = getConnection().createStatement();
-                    ResultSet addonCategoriesRS = addonCategoriesS.executeQuery("SELECT * FROM addonCategoriesToDishes\n" +
-                            "JOIN addonCategories ON addonCategories.ID = addonCategoriesToDishes.addonCategoryID\n" +
-                            "WHERE dishID = " + dishesRS.getInt("ID"));
-                    while (addonCategoriesRS.next()) {
-                        Statement addonsS = getConnection().createStatement();
-                        ResultSet addonsRS = addonsS.executeQuery("SELECT * FROM addons \n" +
-                                "WHERE addonCategoryID = " + addonCategoriesRS.getInt("addonCategoryID"));
-                        while (addonsRS.next()) {
-                            addons.add(new Addon(addonsRS.getInt("ID"), addonsRS.getString("name"), addonsRS.getFloat("price"), addonsRS.getInt("addonCategoryID")));
-                        }
-                        addonCategories.add(new AddonCategory(addonCategoriesRS.getInt("ID"), addonCategoriesRS.getString("name"), addonCategoriesRS.getString("description"), addonCategoriesRS.getBoolean("multiChoice"), addons));
-                        addons = new ArrayList<>();
-                    }
-                    dishes.add(new Dish(dishesRS.getInt("ID"), dishesRS.getString("name"), dishesRS.getFloat("price"), dishesRS.getString("descS"), dishesRS.getString("descL"), dishesRS.getInt("dishCategoryID") , addonCategories));
-                    addonCategories = new ArrayList<>();
-                }
-                dishCategories.add(new DishCategory(dishCategoriesRS.getInt("ID"), dishCategoriesRS.getString("name"), dishes));
-                dishes = new ArrayList<>();
-            }
-        } catch(SQLException ignore) { }
-        return dishCategories;
     }
 
     private void addOrder(){
@@ -352,7 +299,7 @@ public class MenuActivity extends AppCompatActivity {
         updateWishes();
     }
 
-    void refreshTableState() {
+    private void refreshTableState() {
         try {
             ResultSet stateRS = ExecuteQuery("SELECT state FROM tables WHERE ID = 1");
             if(stateRS.next()) thisTable.state = stateRS.getInt("state");
@@ -363,6 +310,22 @@ public class MenuActivity extends AppCompatActivity {
         } catch (Exception ignored) {}
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (blMyAsyncTask)   {
+            blMyAsyncTask = false;
+            task.cancel(true);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        task = new UpdateMenuTask();
+        task.execute();
+    }
+
     protected class UpdateMenuTask extends AsyncTask<Void, Void, Void> {
         @Override
         protected void onPreExecute() {
@@ -371,8 +334,6 @@ public class MenuActivity extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(Void... params) {
-
-
             while(true) {
                 try {
                     Thread.sleep(100);

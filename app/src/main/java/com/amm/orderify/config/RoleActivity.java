@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -99,7 +100,7 @@ public class RoleActivity extends AppCompatActivity {
                 while (clientRS.next()){
                     clients.add(new Client(clientRS.getInt("ID"), clientRS.getInt("number"), clientRS.getInt("state"), null));
                 }
-                tables.add(new Table(tablesRS.getInt("ID"), tablesRS.getInt("number"), tablesRS.getString("description"), 1, clients));
+                tables.add(new Table(tablesRS.getInt("ID"), tablesRS.getInt("number"), tablesRS.getString("description"), tablesRS.getInt("state"), clients));
                 clients = new ArrayList<>();
             }
         } catch (SQLException ignored) {}
@@ -182,7 +183,10 @@ public class RoleActivity extends AppCompatActivity {
                     break;
                 case 1: //CLIENT
                     thisTable = tables.get(tableSpinner.getSelectedItemPosition());
-                    thisClient = tables.get(tableSpinner.getSelectedItemPosition()).clients.get(clientSpinner.getSelectedItemPosition());
+                    thisClient = thisTable.clients.get(clientSpinner.getSelectedItemPosition());
+
+                    Log.wtf("table", thisTable.id + "");
+                    Log.wtf("client", thisClient.id + "");
                     if(remember){
                         editor.putInt("thisTableID", thisTable.id);
                         editor.putInt("thisClientID", thisClient.id);

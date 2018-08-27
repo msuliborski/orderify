@@ -91,7 +91,7 @@
         android:layout_height="15dp"
         android:background="@drawable/bar_order_state_button_background"
         android:fontFamily="@font/tw_cen"
-        android:text="@string/bar_order_state_button_string"
+        android:text="@string/bar_tables_order_state_prepared_button"
         android:textAllCaps="false"
         android:textColor="@android:color/white"
         android:textSize="12sp"
