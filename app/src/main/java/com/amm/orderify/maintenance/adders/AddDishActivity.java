@@ -2,6 +2,7 @@ package com.amm.orderify.maintenance.adders;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -14,12 +15,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amm.orderify.R;
+import com.amm.orderify.helpers.data.Addon;
 import com.amm.orderify.helpers.data.AddonCategory;
 import com.amm.orderify.helpers.data.Dish;
 import com.amm.orderify.helpers.data.DishCategory;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -100,8 +103,9 @@ public class AddDishActivity extends AppCompatActivity {
                     ExecuteUpdate("INSERT INTO addonCategoriesToDishes (dishID, addonCategoryID) \n" +
                             "VALUES  (" + newDishID + ", " + chosenAddonCategories.get(addonCategoryNumber).id + ")");
                 }
+                updateDishesList();
+                Toast.makeText(this, "Dish added!", Toast.LENGTH_SHORT).show();
             } catch (SQLException ignored) { }
-            Toast.makeText(this, "Dish added!", Toast.LENGTH_SHORT).show();
         });
     }
 
@@ -110,25 +114,26 @@ public class AddDishActivity extends AppCompatActivity {
         dishes.sort(Comparator.comparing(object -> String.valueOf(object.dishCategoryID))); //sort
         dishesLinearLayout.removeAllViews();
         for (int dishNumber = 0; dishNumber < dishes.size(); dishNumber++){
+            Dish dish = dishes.get(dishNumber);
             View dishElement = dishesInflater.inflate(R.layout.maintenance_dish_element, null);
 
             TextView idTextView = dishElement.findViewById(R.id.IdTextView);
-            idTextView.setText(dishes.get(dishNumber).getIdString());
+            idTextView.setText(dish.getIdString());
 
             TextView nameTextView = dishElement.findViewById(R.id.NameTextView);
-            nameTextView.setText(dishes.get(dishNumber).name);
+            nameTextView.setText(dish.name);
 
             TextView dishCategoryNameTextView = dishElement.findViewById(R.id.DishCategoryNameTextView);
-            dishCategoryNameTextView.setText(dishes.get(dishNumber).dishCategoryID + "");
+            dishCategoryNameTextView.setText(dish.dishCategoryID + "");
 
             TextView descSTextView = dishElement.findViewById(R.id.DescSTextView);
-            descSTextView.setText(dishes.get(dishNumber).descS);
+            descSTextView.setText(dish.descS);
 
             TextView descLTextView = dishElement.findViewById(R.id.DescLTextView);
-            descLTextView.setText(dishes.get(dishNumber).descL);
+            descLTextView.setText(dish.descL);
 
             TextView priceTextView = dishElement.findViewById(R.id.PriceTextView);
-            priceTextView.setText(dishes.get(dishNumber).getPriceString());
+            priceTextView.setText(dish.getPriceString());
 
             int finalDishNumber = dishNumber;
             ImageButton editButton = dishElement.findViewById(R.id.EditButton);
@@ -139,10 +144,14 @@ public class AddDishActivity extends AppCompatActivity {
             ImageButton deleteButton = dishElement.findViewById(R.id.DeleteButton);
             deleteButton.setOnClickListener(v -> {
                 try {
-                    ExecuteUpdate("DELETE FROM dishes WHERE ID = " + finalDishNumber);
-                } catch (SQLException ignore) {}
-                dishes.remove(dishes.get(finalDishNumber));
-                updateDishesList();
+                    ExecuteUpdate("DELETE FROM addonCategoriesToDishes WHERE dishID = " + dish.id);
+                    ExecuteUpdate("DELETE FROM dishes WHERE ID = " + dish.id);
+                    dishes.remove(dishes.get(finalDishNumber));
+                    updateDishesList();
+                } catch (SQLException e) {
+                    Log.wtf("adfs", e.getMessage()+" "+e.getErrorCode());
+                    if(e.getErrorCode() == 1451) Toast.makeText(this, "Dish " + dishes.get(finalDishNumber).name + " has wishes/orders assigned!", Toast.LENGTH_SHORT).show();
+                }
             });
             dishesLinearLayout.addView(dishElement);
         }
