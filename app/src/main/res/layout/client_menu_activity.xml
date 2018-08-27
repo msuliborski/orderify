@@ -29,7 +29,7 @@
     <ImageView
         android:id="@+id/SeparatingLineDark"
         android:layout_width="0dp"
-        android:layout_height="8dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="38dp"
         android:elevation="20dp"
         android:scaleType="fitXY"

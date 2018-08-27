@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/backgroundPrimary"
+    android:animateLayoutChanges="true"
     tools:context=".client.SummaryActivity">
 
     <TextView
@@ -100,7 +101,7 @@
         app:srcCompat="@drawable/summary_border_rectangle" />
 
     <Button
-        android:id="@+id/AskForBillAButton"
+        android:id="@+id/AskForGlobalBillButton"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="?android:attr/selectableItemBackground"
@@ -109,6 +110,21 @@
         android:textAllCaps="false"
         android:textColor="@color/darkRed"
         android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@id/ButtonSeparator"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/SummaryBackgroundImageView"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/AskForLocalBillAButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:fontFamily="@font/tw_cen"
+        android:text="@string/summary_ask_for_bill_button_string"
+        android:textAllCaps="false"
+        android:textColor="@color/darkRed"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/ButtonSeparator"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/SummaryBackgroundImageView"
@@ -161,11 +177,11 @@
         android:layout_width="158dp"
         android:layout_height="25dp"
         android:scaleType="fitCenter"
-        app:srcCompat="@drawable/summary_separator_arrow"
-        app:layout_constraintStart_toEndOf="@id/SummaryBackgroundImageView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/SeparatingLineImageView"
         app:layout_constraintBottom_toBottomOf="@id/SeparatingLineImageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/SummaryBackgroundImageView"
+        app:layout_constraintTop_toTopOf="@id/SeparatingLineImageView"
+        app:srcCompat="@drawable/summary_separator_arrow"
         tools:layout_editor_absoluteX="337dp"
         tools:layout_editor_absoluteY="109dp" />
 
@@ -181,6 +197,89 @@
         app:layout_constraintEnd_toEndOf="@+id/SeparatorArrow"
         app:layout_constraintStart_toStartOf="@+id/SeparatorArrow"
         app:layout_constraintTop_toTopOf="@+id/SeparatorArrow" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/CancelBillScreen"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/basket_background"
+        android:elevation="100dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/CancelBillButton"
+            android:layout_width="100dp"
+            android:layout_height="16dp"
+
+            android:background="?android:attr/selectableItemBackground"
+            android:elevation="110dp"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:scaleType="fitStart"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.9"
+            app:srcCompat="@drawable/common_button_background" />
+
+        <TextView
+            android:id="@+id/CancelBillButtonTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:elevation="111dp"
+            android:fontFamily="@font/tw_cen"
+            android:text="@string/cancel_bill_button_string"
+            android:textColor="@color/darkRed"
+            android:textSize="8sp"
+            app:layout_constraintBottom_toBottomOf="@+id/CancelBillButton"
+            app:layout_constraintEnd_toEndOf="@+id/CancelBillButton"
+            app:layout_constraintStart_toStartOf="@+id/CancelBillButton"
+            app:layout_constraintTop_toTopOf="@+id/CancelBillButton" />
+
+        <TextView
+            android:id="@+id/BillMessage1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/tw_cen"
+            android:text="@string/cancel_bill_message1"
+            android:textAlignment="center"
+            android:textColor="@color/backgroundPrimary"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.45" />
+
+        <TextView
+            android:id="@+id/BillMessage2"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/tw_cen"
+            android:text="@string/cancel_bill_message2"
+            android:textAlignment="center"
+            android:textColor="@color/backgroundPrimary"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/BillMessage1" />
+
+
+    </android.support.constraint.ConstraintLayout>
 
 
 </android.support.constraint.ConstraintLayout>

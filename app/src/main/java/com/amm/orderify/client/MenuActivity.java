@@ -65,6 +65,7 @@ public class MenuActivity extends AppCompatActivity {
         ImageButton orderButton = findViewById(R.id.OrderButton);
         orderButton.setOnClickListener((View e) -> {
             if(!wishes.equals(new ArrayList<>())) addOrder();
+            this.startActivity(new Intent(this, SummaryActivity.class));
         });
 
         ImageButton goToSummaryButton = findViewById(R.id.GoToSummaryButton);

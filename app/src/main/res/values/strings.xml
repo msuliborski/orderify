@@ -29,6 +29,9 @@
     <string name="summary_order_list_separator_string">Order list</string>
     <string name="menu_table_freezed_message1">This table is unavaible.</string>
     <string name="menu_table_freezed_message2">Please use another table or contact facility personnel.</string>
+    <string name="cancel_bill_button_string">Cancel bill request</string>
+    <string name="cancel_bill_message1">Please wait.</string>
+    <string name="cancel_bill_message2">Your bill will be delivered to you shortly.</string>
 
 
     <string name="lifecycle_table_ready">READY!</string>

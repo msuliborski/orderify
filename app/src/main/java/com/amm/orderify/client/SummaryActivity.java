@@ -2,11 +2,13 @@ package com.amm.orderify.client;
 
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -28,6 +30,7 @@ public class SummaryActivity extends AppCompatActivity {
     UpdateOrdersTask task = new UpdateOrdersTask();
 
     LinearLayout orderListLinearLayout;
+    ConstraintLayout cancelBillScreen;
 
     Table table;
     Client client;
@@ -41,13 +44,60 @@ public class SummaryActivity extends AppCompatActivity {
         if (table != null) client = table.clients.get(thisClient.number-1);
         generateOrdersView();
 
-        Button askForBillAButton = findViewById(R.id.AskForBillAButton);
-        askForBillAButton.setOnClickListener(v -> {
-            if(thisClient.state == 1) {
-                thisClient.state = 4;
-                try {
-                    ExecuteUpdate("UPDATE clients SET state = " + thisClient.state +  " WHERE ID = " + thisClient.id);
-                } catch (SQLException ignored) {}
+        cancelBillScreen = findViewById(R.id.CancelBillScreen);
+        ImageButton cancelBillButton = cancelBillScreen.findViewById(R.id.CancelBillButton);
+        cancelBillButton.setOnClickListener(e -> {
+            if (thisTable.state == 3)
+            {
+                for (int clientNumber = 0; clientNumber < thisTable.clients.size(); clientNumber++)
+                {
+                    thisTable.clients.get(clientNumber).state = 1;
+                    try
+                    {
+                        ExecuteUpdate("UPDATE clients SET state = " + thisTable.clients.get(clientNumber).state + " WHERE ID = " + thisTable.clients.get(clientNumber).id);
+                    } catch (SQLException ee)
+                    {
+                    }
+                }
+                try
+                {
+                    thisTable.state = 1;
+                    ExecuteUpdate("UPDATE tables SET state = " + thisTable.state + " WHERE ID = " + thisTable.id);
+                } catch (SQLException ee)
+                {
+                }
+            }
+            else if (thisClient.state == 3)
+            {
+                try
+                {
+                    thisClient.state = 1;
+                    ExecuteUpdate("UPDATE clients SET state = " + thisClient.state + " WHERE ID = " + thisClient.id);
+                } catch (SQLException ee)
+                {
+                }
+            }
+        });
+
+        Button askForGlobalBillButton = findViewById(R.id.AskForGlobalBillButton);
+        askForGlobalBillButton.setOnClickListener(v -> {
+
+            for (int clientNumber = 0; clientNumber < thisTable.clients.size(); clientNumber++)
+            {
+                thisTable.clients.get(clientNumber).state = 3;
+                try
+                {
+                    ExecuteUpdate("UPDATE clients SET state = " + thisTable.clients.get(clientNumber).state + " WHERE ID = " + thisTable.clients.get(clientNumber).id);
+                } catch (SQLException e)
+                {
+                }
+            }
+            try
+            {
+                thisTable.state = 3;
+                ExecuteUpdate("UPDATE tables SET state = " + thisTable.state + " WHERE ID = " + thisTable.id);
+            } catch (SQLException e)
+            {
             }
         });
 
@@ -182,6 +232,17 @@ public class SummaryActivity extends AppCompatActivity {
         return null;
     }
 
+    void refreshTableState() {
+        try {
+            ResultSet stateRS = ExecuteQuery("SELECT state FROM clients WHERE ID = " + thisClient.state);
+            if(stateRS.next()) thisClient.state = stateRS.getInt("state");
+
+            if (thisClient.state == 3) runOnUiThread(() -> cancelBillScreen.setVisibility(View.VISIBLE));
+            else runOnUiThread(() -> cancelBillScreen.setVisibility(View.GONE));
+
+        } catch (Exception ignored) {}
+    }
+
     protected class UpdateOrdersTask extends AsyncTask<Void, Void, Void> {
         @Override
         protected void onPreExecute() {
@@ -196,6 +257,7 @@ public class SummaryActivity extends AppCompatActivity {
                     table = getFullTableData();
                     if (table != null) client = table.clients.get(thisClient.number-1);
                     updateOrdersView();
+                    refreshTableState();
 
                     if(Thread.interrupted()) break;
                     if (!blMyAsyncTask) break;

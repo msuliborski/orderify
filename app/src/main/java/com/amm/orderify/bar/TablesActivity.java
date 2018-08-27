@@ -81,13 +81,26 @@ public class TablesActivity extends AppCompatActivity {
 
             TextView tableStateTextView = tableElement.findViewById(R.id.TableStateTextView);
             tableStateTextView.setText(table.getState());
-
             Button acceptRequestButton = tableElement.findViewById(R.id.AcceptRequestButton);
             acceptRequestButton.setOnClickListener(v -> {
+                Log.wtf("Table state", table.getState() +" !!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
                 if (table.state == 3) {
+
                     table.state = 1;
                     try { ExecuteUpdate("UPDATE tables SET state = " + table.state + " WHERE ID = " + table.id);
                     } catch (SQLException ignored) {}
+
+                    for (int clientNumber = 0; clientNumber < table.clients.size(); clientNumber++)
+                    {
+                        table.clients.get(clientNumber).state = 1;
+                        try
+                        {
+                            ExecuteUpdate("UPDATE clients SET state = " + table.clients.get(clientNumber).state + " WHERE ID = " + table.clients.get(clientNumber).id);
+                        } catch (SQLException ee)
+                        {
+                        }
+                    }
                 }
             });
 
@@ -103,18 +116,14 @@ public class TablesActivity extends AppCompatActivity {
                 try { ExecuteUpdate("UPDATE tables SET state = " + table.state + " WHERE ID = " + table.id);
                 } catch (SQLException ignored) { }
             });
-            if (table.state == 1) {
-                table.state = 2;
+            if (table.state == 2) {
                 freezeStateButton.setText(R.string.bar_unfreeze_table_button_string);
                 tableStateTextView.setText(this.getString(R.string.lifecycle_table_freezed));
-            } else {
-                table.state = 1;
+            }
+            else {
                 freezeStateButton.setText(R.string.bar_freeze_table_button_string);
-                tableStateTextView.setText(this.getString(R.string.lifecycle_table_ready));
             }
 
-            if (table.state == 1) freezeStateButton.setText(R.string.bar_unfreeze_table_button_string);
-            else freezeStateButton.setText(R.string.bar_freeze_table_button_string);
 
             tablesLinearLayout.addView(tableElement);
         }
