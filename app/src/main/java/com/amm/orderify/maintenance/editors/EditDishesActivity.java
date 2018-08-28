@@ -113,9 +113,9 @@ public class EditDishesActivity extends AppCompatActivity {
         dishesLinearLayout.removeAllViews();
         for (int dishNumber = 0; dishNumber < dishes.size(); dishNumber++){
             Dish dish = dishes.get(dishNumber);
-            View dishElement = dishesInflater.inflate(R.layout.maintenance_dish_element, null);
+            View dishElement = dishesInflater.inflate(R.layout.maintenance_element_dish, null);
 
-            TextView idTextView = dishElement.findViewById(R.id.TablesTextView);
+            TextView idTextView = dishElement.findViewById(R.id.IdTextView);
             idTextView.setText(dish.getIdString());
 
             TextView nameTextView = dishElement.findViewById(R.id.NameTextView);
@@ -134,7 +134,7 @@ public class EditDishesActivity extends AppCompatActivity {
             priceTextView.setText(dish.getPriceString());
 
             int finalDishNumber = dishNumber;
-            ImageButton deleteButton = dishElement.findViewById(R.id.ActionButton);
+            ImageButton deleteButton = dishElement.findViewById(R.id.DeleteButton);
             deleteButton.setOnClickListener(v -> {
                 try {
                     ExecuteUpdate("DELETE FROM addonCategoriesToDishes WHERE dishID = " + dish.id);
@@ -164,9 +164,9 @@ public class EditDishesActivity extends AppCompatActivity {
         addonCategoriesLinearLayout.removeAllViews();
 
         for (int addonCategoryNumber = 0; addonCategoryNumber < addonCategories.size(); addonCategoryNumber++){
-            View addonCategoryElement = addonCategoriesInflater.inflate(R.layout.maintenance_addoncategory_element, null);
+            View addonCategoryElement = addonCategoriesInflater.inflate(R.layout.maintenance_element_addoncategory, null);
 
-            TextView idTextView = addonCategoryElement.findViewById(R.id.TablesTextView);
+            TextView idTextView = addonCategoryElement.findViewById(R.id.IdTextView);
             idTextView.setText(addonCategories.get(addonCategoryNumber).getIdString());
 
             TextView nameTextView = addonCategoryElement.findViewById(R.id.NameTextView);
@@ -180,7 +180,7 @@ public class EditDishesActivity extends AppCompatActivity {
             if (addonCategories.get(addonCategoryNumber).multiChoice) multiChoiceTextView.setText(yes);
             else multiChoiceTextView.setText(no);
 
-            ImageButton actionButton = addonCategoryElement.findViewById(R.id.ActionButton);
+            ImageButton actionButton = addonCategoryElement.findViewById(R.id.DeleteButton);
             int finalAddonCategoryNumber = addonCategoryNumber;
             actionButton.setOnClickListener(v -> {
                 chosenAddonCategories.add(addonCategories.get(finalAddonCategoryNumber));
@@ -197,9 +197,9 @@ public class EditDishesActivity extends AppCompatActivity {
         chosenAddonCategoriesLinearLayout.removeAllViews();
 
         for (int chosenAddonCategoryNumber = 0; chosenAddonCategoryNumber < chosenAddonCategories.size(); chosenAddonCategoryNumber++){
-            View chosenAddonCategoryElement = chosenAddonCategoriesInflater.inflate(R.layout.maintenance_addoncategory_element, null);
+            View chosenAddonCategoryElement = chosenAddonCategoriesInflater.inflate(R.layout.maintenance_element_addoncategory, null);
 
-            TextView idTextView = chosenAddonCategoryElement.findViewById(R.id.TablesTextView);
+            TextView idTextView = chosenAddonCategoryElement.findViewById(R.id.IdTextView);
             idTextView.setText(chosenAddonCategories.get(chosenAddonCategoryNumber).getIdString());
 
             TextView nameTextView = chosenAddonCategoryElement.findViewById(R.id.NameTextView);
@@ -213,7 +213,7 @@ public class EditDishesActivity extends AppCompatActivity {
             if (chosenAddonCategories.get(chosenAddonCategoryNumber).multiChoice) multiChoiceTextView.setText(yes);
             else multiChoiceTextView.setText(no);
 
-            ImageButton actionButton = chosenAddonCategoryElement.findViewById(R.id.ActionButton);
+            ImageButton actionButton = chosenAddonCategoryElement.findViewById(R.id.DeleteButton);
             int finalChosenAddonCategoryNumber = chosenAddonCategoryNumber;
             actionButton.setOnClickListener(v -> {
                 addonCategories.add(chosenAddonCategories.get(finalChosenAddonCategoryNumber));

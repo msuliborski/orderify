@@ -7,10 +7,9 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/TablesTextView"
+        android:id="@+id/IdTextView"
         android:layout_width="60dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:text="2"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints"
@@ -18,20 +17,30 @@
 
     <TextView
         android:id="@+id/NameTextView"
-        android:layout_width="300dp"
+        android:layout_width="400dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="4dp"
         android:text="Pizza"
-        app:layout_constraintStart_toEndOf="@+id/TablesTextView"
+        app:layout_constraintStart_toEndOf="@+id/IdTextView"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteY="0dp" />
 
     <ImageButton
-        android:id="@+id/ActionButton"
+        android:id="@+id/EditButton"
         android:layout_width="19dp"
         android:layout_height="19dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="4dp"
         app:layout_constraintStart_toEndOf="@+id/NameTextView"
+        app:srcCompat="@drawable/bar_accept_request_button"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="0dp" />
+
+    <ImageButton
+        android:id="@+id/DeleteButton"
+        android:layout_width="19dp"
+        android:layout_height="19dp"
+        android:layout_marginStart="4dp"
+        app:layout_constraintStart_toEndOf="@+id/EditButton"
         app:srcCompat="@drawable/bar_delete_order_button"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteY="0dp" />

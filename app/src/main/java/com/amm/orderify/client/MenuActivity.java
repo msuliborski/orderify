@@ -106,7 +106,7 @@ public class MenuActivity extends AppCompatActivity {
             DishCategory dishCategory = dishCategories.get(dishCategoryNumber);
             dishCategory.dishes.sort(Comparator.comparing(object -> String.valueOf(object.name))); //sort
 
-            View dishCategoryElement = getLayoutInflater().inflate(R.layout.client_menu_dishcategory_element, null);
+            View dishCategoryElement = getLayoutInflater().inflate(R.layout.client_menu_element_dishcategory, null);
 
             TextView dishCategoryTextView = dishCategoryElement.findViewById(R.id.DishCategoryTextView);
             dishCategoryTextView.setText(dishCategory.name);
@@ -116,7 +116,7 @@ public class MenuActivity extends AppCompatActivity {
                 Dish dish = dishCategory.dishes.get(dishNumber);
                 dish.addonCategories.sort(Comparator.comparing(object -> String.valueOf(object.name))); //sort
 
-                View dishElement = getLayoutInflater().inflate(R.layout.client_menu_dish_element, null);
+                View dishElement = getLayoutInflater().inflate(R.layout.client_menu_element_dish, null);
 
                 TextView nameTextView = dishElement.findViewById(R.id.NameTextView);
                 nameTextView.setText(dish.name);
@@ -172,7 +172,7 @@ public class MenuActivity extends AppCompatActivity {
                     AddonCategory addonCategory = dish.addonCategories.get(addonCategoriesNumber);
                     addonCategory.addons.sort(Comparator.comparing(object -> String.valueOf(object.name))); //sort
 
-                    View addonCategoryElement = getLayoutInflater().inflate(R.layout.client_menu_addoncategory_element, null);
+                    View addonCategoryElement = getLayoutInflater().inflate(R.layout.client_menu_element_addoncategory, null);
 
                     TextView CategoryNameTextView = addonCategoryElement.findViewById(R.id.AddonCategoryNameTextView);
                     CategoryNameTextView.setText(addonCategory.name);
@@ -180,7 +180,7 @@ public class MenuActivity extends AppCompatActivity {
                     LinearLayout AddonsLinearLayout = addonCategoryElement.findViewById(R.id.AddonsLinearLayout);
                     for (int addonNumber = 0; addonNumber < addonCategory.addons.size(); addonNumber++) {
                         Addon addon = addonCategory.addons.get(addonNumber);
-                        View addonElement = getLayoutInflater().inflate(R.layout.client_menu_addon_element, null);
+                        View addonElement = getLayoutInflater().inflate(R.layout.client_menu_element_addon, null);
                         TextView AddonNameTextView = addonElement.findViewById(R.id.AddonNameTextView);
                         String addonNameString = addon.name + "(" + addon.getPriceString() + ")";
                         AddonNameTextView.setText(addonNameString);
@@ -226,7 +226,7 @@ public class MenuActivity extends AppCompatActivity {
         ordersLinearLayout = findViewById(R.id.OrdersLinearLayout);
         wishes.sort(Comparator.comparing(object -> String.valueOf(object.dish.dishCategoryID))); //sort
         for (int wishNumber = 0; wishNumber < wishes.size(); wishNumber++) {
-            View orderElement = getLayoutInflater().inflate(R.layout.client_menu_wish_element, null);
+            View orderElement = getLayoutInflater().inflate(R.layout.client_menu_element_wish, null);
 
             TextView orderPriceTextView = orderElement.findViewById(R.id.orderPriceTextView);
             orderPriceTextView.setText(wishes.get(wishNumber).getTotalPriceString());

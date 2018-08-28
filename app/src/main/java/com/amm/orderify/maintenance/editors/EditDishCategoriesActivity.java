@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -86,6 +85,7 @@ public class EditDishCategoriesActivity extends AppCompatActivity {
             while (dishCategoriesRS.next())
                 dishCategories.add(new DishCategory(dishCategoriesRS.getInt("ID"), dishCategoriesRS.getString("name"), null));
         } catch (SQLException ignored) {}
+        Log.wtf("ef", dishCategories.size()+"");
         return dishCategories;
     }
 
@@ -94,8 +94,8 @@ public class EditDishCategoriesActivity extends AppCompatActivity {
         dishCategoriesLinearLayout.removeAllViews();
         for (int dishCategoryNumber = -1; dishCategoryNumber < dishCategories.size(); dishCategoryNumber++){
 
-            View dishCategoryElement = dishCategoriesListInflater.inflate(R.layout.maintenance_dishcategory_element, null);
-            TextView idTextView = dishCategoryElement.findViewById(R.id.TablesTextView);
+            View dishCategoryElement = dishCategoriesListInflater.inflate(R.layout.maintenance_element_dishcategory, null);
+            TextView idTextView = dishCategoryElement.findViewById(R.id.IdTextView);
             TextView nameTextView = dishCategoryElement.findViewById(R.id.NameTextView);
             ImageButton editButton = dishCategoryElement.findViewById(R.id.EditButton);
             ImageButton deleteButton = dishCategoryElement.findViewById(R.id.DeleteButton);
@@ -104,6 +104,7 @@ public class EditDishCategoriesActivity extends AppCompatActivity {
                 idTextView.setText("ID");
                 nameTextView.setText("NAME");
                 deleteButton.setImageAlpha(1);
+                editButton.setImageAlpha(1);
                 dishCategoriesLinearLayout.addView(dishCategoryElement);
                 continue;
             }

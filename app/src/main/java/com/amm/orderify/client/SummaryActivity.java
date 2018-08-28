@@ -75,7 +75,7 @@ public class SummaryActivity extends AppCompatActivity {
         orderListLinearLayout = findViewById(R.id.WishListLinearLayout);
         for (int orderNumber = 0; orderNumber < thisClient.orders.size(); orderNumber++) {
             final Order order =  thisClient.orders.get(orderNumber);
-            View orderElement = getLayoutInflater().inflate(R.layout.client_summary_order_element, null);
+            View orderElement = getLayoutInflater().inflate(R.layout.client_summary_element_order, null);
 
             TextView orderNumberTextView = orderElement.findViewById(R.id.OrderNumberTextView);
             orderNumberTextView.setText(order.getOrderNumberString());
@@ -91,7 +91,7 @@ public class SummaryActivity extends AppCompatActivity {
             for (int wishNumber = 0; wishNumber < order.wishes.size(); wishNumber++) {
                 final Wish wish = order.wishes.get(wishNumber);
 
-                View wishElement = getLayoutInflater().inflate(R.layout.client_summary_wish_element, null);
+                View wishElement = getLayoutInflater().inflate(R.layout.client_summary_element_wish, null);
                 TextView wishNameTextView = wishElement.findViewById(R.id.WishNameTextView);
                 wishNameTextView.setText(wish.dish.name);
 

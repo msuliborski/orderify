@@ -50,7 +50,7 @@ public class EditAddonCategoriesActivity extends AppCompatActivity {
 
         updateAddonCategoryList(getAddonCategories());
 
-        actionButton = findViewById(R.id.ActionButton);
+        actionButton = findViewById(R.id.DeleteButton);
         actionButton.setOnClickListener(e -> {
             if(editedAddonCategoryID == 0) {
                 try {
@@ -98,8 +98,8 @@ public class EditAddonCategoriesActivity extends AppCompatActivity {
         addonCategoriesLinearLayout.removeAllViews();
         for (int addonCategoryNumber = -1; addonCategoryNumber < addonCategories.size(); addonCategoryNumber++){
 
-            View addonCategoryElement = addonCategoriesListInflater.inflate(R.layout.maintenance_addoncategory_element, null);
-            TextView idTextView = addonCategoryElement.findViewById(R.id.TablesTextView);
+            View addonCategoryElement = addonCategoriesListInflater.inflate(R.layout.maintenance_element_addoncategory, null);
+            TextView idTextView = addonCategoryElement.findViewById(R.id.IdTextView);
             TextView nameTextView = addonCategoryElement.findViewById(R.id.NameTextView);
             TextView descriptionTextView = addonCategoryElement.findViewById(R.id.DescriptionTextView);
             TextView multiChoiceTextView = addonCategoryElement.findViewById(R.id.MultiChoiceTextView);
@@ -111,6 +111,7 @@ public class EditAddonCategoriesActivity extends AppCompatActivity {
                 nameTextView.setText("NAME");
                 descriptionTextView.setText("DESCRIPTION");
                 multiChoiceTextView.setText("MULTI");
+                editButton.setImageAlpha(1);
                 deleteButton.setImageAlpha(1);
                 addonCategoriesLinearLayout.addView(addonCategoryElement);
                 continue;

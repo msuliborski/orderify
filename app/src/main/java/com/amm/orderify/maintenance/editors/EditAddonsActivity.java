@@ -49,8 +49,8 @@ public class EditAddonsActivity extends AppCompatActivity {
         addonCategoriesInflater = getLayoutInflater();
         updateAddonCategoryList();
 
-        Button actionOnTableButton = findViewById(R.id.ActionButton);
-        actionOnTableButton.setOnClickListener(e -> {
+        Button addAddonButton = findViewById(R.id.AddAddonButton);
+        addAddonButton.setOnClickListener(e -> {
             try {
                 ExecuteUpdate("INSERT INTO addons (name, price, addonCategoryID)\n" +
                         "VALUES  ('" + nameEditText.getText() + "', " + priceEditText.getText() + ", " + addonCategories.get((int) addonCategoriesSpinner.getSelectedItemId()).id + ")");

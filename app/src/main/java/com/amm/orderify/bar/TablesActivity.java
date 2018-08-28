@@ -53,7 +53,7 @@ public class TablesActivity extends AppCompatActivity {
         tablesLinearLayout = findViewById(R.id.TablesLinearLayout);
 
         for (int tableNumber = 0; tableNumber < tables.size(); tableNumber++) {
-            View tableElement = getLayoutInflater().inflate(R.layout.bar_table_element, null);
+            View tableElement = getLayoutInflater().inflate(R.layout.bar_tables_element_table, null);
             Table table = tables.get(tableNumber);
             TextView tableNumberTextView = tableElement.findViewById(R.id.TableNumberTextView);
             tableNumberTextView.setText(table.getNumberString());
@@ -97,7 +97,7 @@ public class TablesActivity extends AppCompatActivity {
             View tableElement = findTableViewById(order.tableID, tablesLinearLayout);
             LinearLayout ordersLinearLayout = tableElement.findViewById(R.id.OrdersLinearLayout);
 
-            View orderElement = getLayoutInflater().inflate(R.layout.bar_order_element, null);
+            View orderElement = getLayoutInflater().inflate(R.layout.bar_tables_element_order, null);
 
             ImageButton deleteOrderButton = orderElement.findViewById(R.id.DeleteOrderButton);
             deleteOrderButton.setOnClickListener(v -> {
@@ -155,7 +155,7 @@ public class TablesActivity extends AppCompatActivity {
             LinearLayout wishesLinearLayout = orderElement.findViewById(R.id.WishesLinearLayout);
             for (int wishNumber = 0; wishNumber < order.wishes.size(); wishNumber++) {
                 Wish wish = order.wishes.get(wishNumber);
-                View wishElement = getLayoutInflater().inflate(R.layout.bar_wish_element, null);
+                View wishElement = getLayoutInflater().inflate(R.layout.bar_tables_element_wish, null);
 
                 TextView dishNameTextView = wishElement.findViewById(R.id.DishNameTextView);
                 runOnUiThread(() -> dishNameTextView.setText(wish.dish.name + " x" + wish.amount));
@@ -167,7 +167,7 @@ public class TablesActivity extends AppCompatActivity {
                 for (int addonNumber = 0; addonNumber < wish.addons.size(); addonNumber++) {
                     Addon addon = wish.addons.get(addonNumber);
 
-                    View addonElement = getLayoutInflater().inflate(R.layout.bar_addon_element, null);
+                    View addonElement = getLayoutInflater().inflate(R.layout.bar_tables_element_addon, null);
 
                     TextView addonNameTextView = addonElement.findViewById(R.id.AddonNameTextView);
                     runOnUiThread(() -> {

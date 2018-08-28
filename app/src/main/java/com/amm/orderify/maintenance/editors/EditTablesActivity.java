@@ -48,7 +48,7 @@ public class EditTablesActivity extends AppCompatActivity {
 
         updateTableList(getTables());
 
-        actionButton = findViewById(R.id.ActionButton);
+        actionButton = findViewById(R.id.DeleteButton);
         actionButton.setOnClickListener(v -> {
             if(editedTableID == 0) {
                 try {
@@ -95,8 +95,8 @@ public class EditTablesActivity extends AppCompatActivity {
     public void updateTableList(List<Table> tables) {
         tablesLinearLayout.removeAllViews();
         for (int tableNumber = -1; tableNumber < tables.size(); tableNumber++){
-            View tableElement = tableListInflater.inflate(R.layout.maintenance_table_element, null);
-            TextView idTextView = tableElement.findViewById(R.id.TablesTextView);
+            View tableElement = tableListInflater.inflate(R.layout.maintenance_element_table, null);
+            TextView idTextView = tableElement.findViewById(R.id.IdTextView);
             TextView numberTextView = tableElement.findViewById(R.id.NumberTextView);
             TextView descriptionTextView = tableElement.findViewById(R.id.DescriptionTextView);
             ImageButton editButton = tableElement.findViewById(R.id.EditButton);
