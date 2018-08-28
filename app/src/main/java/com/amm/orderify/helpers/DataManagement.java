@@ -43,7 +43,7 @@ public class DataManagement {
                         addonCategories.add(new AddonCategory(addonCategoriesRS.getInt("ID"), addonCategoriesRS.getString("name"), addonCategoriesRS.getString("description"), addonCategoriesRS.getBoolean("multiChoice"), addons));
                         addons = new ArrayList<>();
                     }
-                    dishes.add(new Dish(dishesRS.getInt("ID"), dishesRS.getString("name"), dishesRS.getFloat("price"), dishesRS.getString("descS"), dishesRS.getString("descL"), dishesRS.getInt("dishCategoryID") , addonCategories));
+                    dishes.add(new Dish(dishesRS.getInt("ID"), dishesRS.getInt("number"), dishesRS.getString("name"), dishesRS.getFloat("price"), dishesRS.getString("descS"), dishesRS.getString("descL"), dishesRS.getInt("dishCategoryID") , addonCategories));
                     addonCategories = new ArrayList<>();
                 }
                 dishCategories.add(new DishCategory(dishCategoriesRS.getInt("ID"), dishCategoriesRS.getString("name"), dishes));
@@ -75,7 +75,7 @@ public class DataManagement {
                                 "WHERE clientID = " + clientRS.getInt("ID"));
                         while (ordersRS.next()) {
                             Statement wishesS = getConnection().createStatement();
-                            ResultSet wishesRS = wishesS.executeQuery("SELECT wishes.ID, dishID, dishes.dishCategoryID, name, price, amount, orderID FROM wishes\n" +
+                            ResultSet wishesRS = wishesS.executeQuery("SELECT wishes.ID, dishes.number, dishID, dishes.dishCategoryID, name, price, amount, orderID FROM wishes\n" +
                                     "JOIN dishes ON dishes.ID = wishes.dishID\n" +
                                     "WHERE orderID = " + ordersRS.getInt("ID"));
                             while (wishesRS.next()) {
@@ -86,7 +86,7 @@ public class DataManagement {
                                 while (addonsRS.next()) {
                                     addons.add(new Addon(addonsRS.getInt("addonID"), addonsRS.getString("name"), addonsRS.getFloat("price"), addonsRS.getInt("addonCategoryID")));
                                 }
-                                Dish dish = new Dish(wishesRS.getInt("dishID"), wishesRS.getString("name"), wishesRS.getFloat("price"), null, null, wishesRS.getInt("dishCategoryID"), null);
+                                Dish dish = new Dish(wishesRS.getInt("dishID"), wishesRS.getInt("number"), wishesRS.getString("name"), wishesRS.getFloat("price"), null, null, wishesRS.getInt("dishCategoryID"), null);
                                 wishes.add(new Wish(wishesRS.getInt("ID"), dish, wishesRS.getInt("amount"), addons));
                                 addons = new ArrayList<>();
                             }
@@ -122,7 +122,7 @@ public class DataManagement {
                         "WHERE clientID = " + clientRS.getInt("clientID"));
                 while (ordersRS.next()) {
                     Statement wishesS = getConnection().createStatement();
-                    ResultSet wishesRS = wishesS.executeQuery("SELECT wishes.ID, dishID, dishes.dishCategoryID, name, price, amount, orderID FROM wishes\n" +
+                    ResultSet wishesRS = wishesS.executeQuery("SELECT wishes.ID, dishes.number, dishID, dishes.dishCategoryID, name, price, amount, orderID FROM wishes\n" +
                             "JOIN dishes ON dishes.ID = wishes.dishID\n" +
                             "WHERE orderID = " + ordersRS.getInt("ID"));
                     while (wishesRS.next()) {
@@ -133,7 +133,7 @@ public class DataManagement {
                         while (addonsRS.next()) {
                             addons.add(new Addon(addonsRS.getInt("addonID"), addonsRS.getString("name"), addonsRS.getFloat("price"), addonsRS.getInt("addonCategoryID")));
                         }
-                        Dish dish = new Dish(wishesRS.getInt("dishID"), wishesRS.getString("name"), wishesRS.getFloat("price"), null, null, wishesRS.getInt("dishCategoryID"), null);
+                        Dish dish = new Dish(wishesRS.getInt("dishID"), wishesRS.getInt("number"), wishesRS.getString("name"), wishesRS.getFloat("price"), null, null, wishesRS.getInt("dishCategoryID"), null);
                         wishes.add(new Wish(wishesRS.getInt("ID"), dish, wishesRS.getInt("amount"), addons));
                         addons = new ArrayList<>();
                     }
@@ -163,7 +163,7 @@ public class DataManagement {
                         "GROUP BY newOrders.ID");
                 while (newOrdersRS.next()) {
                     Statement newWishesS = getConnection().createStatement();
-                    ResultSet newWishesRS = newWishesS.executeQuery("SELECT newWishes.ID, dishID, dishes.dishCategoryID, name, price, amount, orderID FROM newWishes\n" +
+                    ResultSet newWishesRS = newWishesS.executeQuery("SELECT newWishes.ID, dishes.number, dishID, dishes.dishCategoryID, name, price, amount, orderID FROM newWishes\n" +
                             "JOIN dishes ON dishes.ID = newWishes.dishID\n" +
                             "WHERE orderID = " + newOrdersRS.getInt("ID"));
                     while (newWishesRS.next()) {
@@ -174,7 +174,7 @@ public class DataManagement {
                         while (addonsRS.next()) {
                             newAddons.add(new Addon(addonsRS.getInt("addonID"), addonsRS.getString("name"), addonsRS.getFloat("price"), addonsRS.getInt("addonCategoryID")));
                         }
-                        Dish dish = new Dish(newWishesRS.getInt("dishID"), newWishesRS.getString("name"), newWishesRS.getFloat("price"), null, null, newWishesRS.getInt("dishCategoryID"), null);
+                        Dish dish = new Dish(newWishesRS.getInt("dishID"), newWishesRS.getInt("number"), newWishesRS.getString("name"), newWishesRS.getFloat("price"), null, null, newWishesRS.getInt("dishCategoryID"), null);
                         newWishes.add(new Wish(newWishesRS.getInt("ID"), dish, newWishesRS.getInt("amount"), newAddons));
                         newAddons = new ArrayList<>();
                     }
@@ -205,7 +205,7 @@ public class DataManagement {
                     "GROUP BY orders.ID");
             while (ordersRS.next()) {
                 Statement wishesS = getConnection().createStatement();
-                ResultSet wishesRS = wishesS.executeQuery("SELECT wishes.ID, dishID, dishes.dishCategoryID, name, price, amount, orderID FROM wishes\n" +
+                ResultSet wishesRS = wishesS.executeQuery("SELECT wishes.ID, dishID, dishes.number, dishes.dishCategoryID, name, price, amount, orderID FROM wishes\n" +
                         "JOIN dishes ON dishes.ID = wishes.dishID\n" +
                         "WHERE orderID = " + ordersRS.getInt("ID"));
                 while (wishesRS.next()) {
@@ -216,7 +216,7 @@ public class DataManagement {
                     while (addonsRS.next()) {
                         addons.add(new Addon(addonsRS.getInt("addonID"), addonsRS.getString("name"), addonsRS.getFloat("price"), addonsRS.getInt("addonCategoryID")));
                     }
-                    Dish dish = new Dish(wishesRS.getInt("dishID"), wishesRS.getString("name"), wishesRS.getFloat("price"), null, null, wishesRS.getInt("dishCategoryID"), null);
+                    Dish dish = new Dish(wishesRS.getInt("dishID"), wishesRS.getInt("number"), wishesRS.getString("name"), wishesRS.getFloat("price"), null, null, wishesRS.getInt("dishCategoryID"), null);
                     wishes.add(new Wish(wishesRS.getInt("ID"), dish, wishesRS.getInt("amount"), addons));
                     addons = new ArrayList<>();
                 }

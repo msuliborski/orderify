@@ -1,4 +1,4 @@
-package com.amm.orderify.maintenance.adders;
+package com.amm.orderify.maintenance.editors;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,7 +20,7 @@ import java.util.List;
 
 import static com.amm.orderify.helpers.JBDCDriver.*;
 
-public class AddAddonActivity extends AppCompatActivity {
+public class EditAddonsActivity extends AppCompatActivity {
 
     public Spinner addonCategoriesSpinner;
 
@@ -34,7 +34,7 @@ public class AddAddonActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.maintenance_add_addon_activity);
+        setContentView(R.layout.maintenance_edit_addons_activity);
 
         try {
             ResultSet addonCategoriesRS = ExecuteQuery("SELECT * FROM addonCategories");
@@ -49,14 +49,17 @@ public class AddAddonActivity extends AppCompatActivity {
         addonCategoriesInflater = getLayoutInflater();
         updateAddonCategoryList();
 
-        Button addDishButton = findViewById(R.id.AddDishButton);
-        addDishButton.setOnClickListener(e -> {
+        Button actionOnTableButton = findViewById(R.id.ActionButton);
+        actionOnTableButton.setOnClickListener(e -> {
             try {
                 ExecuteUpdate("INSERT INTO addons (name, price, addonCategoryID)\n" +
                         "VALUES  ('" + nameEditText.getText() + "', " + priceEditText.getText() + ", " + addonCategories.get((int) addonCategoriesSpinner.getSelectedItemId()).id + ")");
             } catch (SQLException e1) { Log.wtf("SQL Exception", e1.getMessage()); }
             Toast.makeText(this, "Addon added!", Toast.LENGTH_SHORT).show();
         });
+
+
+
     }
 
     public void updateAddonCategoryList() {

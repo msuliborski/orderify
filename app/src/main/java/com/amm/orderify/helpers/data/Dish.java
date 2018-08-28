@@ -8,6 +8,7 @@ public class Dish {
 
     public int id;
     public String name;
+    public int number;
     public float price;
     public String descS;
     public String descL;
@@ -15,8 +16,9 @@ public class Dish {
     public List<AddonCategory> addonCategories;
     public List<Addon> chosenAddons = new ArrayList<>(); //for menu handling
 
-    public Dish(int id, String name, float price, String descS, String descL, int dishCategoryID, List<AddonCategory> addonCategories) {
+    public Dish(int id, int number, String name, float price, String descS, String descL, int dishCategoryID, List<AddonCategory> addonCategories) {
         this.id = id;
+        this.number = number;
         this.name = name;
         this.price = price;
         this.descS = descS;

@@ -60,6 +60,7 @@ CREATE TABLE dishCategories (
 
 CREATE TABLE dishes (
     ID INTEGER NOT NULL AUTO_INCREMENT, 
+    number INTEGER, 
     name VARCHAR(50) NOT NULL, 
     price FLOAT NOT NULL DEFAULT 0, 
     descS VARCHAR(255), 
@@ -179,21 +180,21 @@ VALUES  ('Tylko dzisiaj, kurczak w cieście bez kurczaka!'), ('Such design, big 
 INSERT INTO dishCategories (name)
 VALUES  ('Pizza'), ('Dania główne'), ('Zupy'), ('Napoje'), ('Alkohole');
 
-INSERT INTO dishes (name, price, descS, descL, dishCategoryID)
-VALUES  ('Margarita', 15.5, 'krótki opis dania', 'długi opis dania mający na celu bliższe zapoznanie z jakością tego wspaniałego produktu oraz nakłonienie do zakupu', 1),        #1
-        ('Peperoni', 17, 'krótki opis dania', 'długi opis dania mający na celu bliższe zapoznanie z jakością tego wspaniałego produktu oraz nakłonienie do zakupu', 1),         #2
-        ('Hawajska', 18, 'krótki opis dania', 'długi opis dania mający na celu bliższe zapoznanie z jakością tego wspaniałego produktu oraz nakłonienie do zakupu', 1),         #3
-        ('Kurczak w cieście', 13, 'takie on jest dobry', 'araby z południa będą przychodzić i oddawać swoje żony żeby spróbować tego wspaniałego dania', 2),                    #4
-        ('Sznycel taki dobry, wspaniały i taki fantastyczny', 42.54, 'short', 'long', 2),                                                                                       #5
-        ('Dewolaj', 15, 'krótki opis dania', 'długi opis dania mający na celu bliższe zapoznanie z jakością tego wspaniałego produktu oraz nakłonienie do zakupu', 2),          #6
-        ('Zupa pomidorowa', 5, 'krótki opis dania', 'długi opis dania mający na celu bliższe zapoznanie z jakością tego wspaniałego produktu oraz nakłonienie do zakupu', 3),   #7
-        ('Zupa ogórkowa', 5, 'krótki opis dania', 'długi opis dania mający na celu bliższe zapoznanie z jakością tego wspaniałego produktu oraz nakłonienie do zakupu', 3),     #8
-        ('Herbata', 5, 'krótki opis dania', 'długi opis dania mający na celu bliższe zapoznanie z jakością tego wspaniałego produktu oraz nakłonienie do zakupu', 4),           #9
-        ('Cola', 5, 'shokrótki opis daniart', 'długi opis dania mający na celu bliższe zapoznanie z jakością tego wspaniałego produktu oraz nakłonienie do zakupu', 4),         #10
-        ('Sok pomarańczowy', 4, 'krótki opis dania', 'długi opis dania mający na celu bliższe zapoznanie z jakością tego wspaniałego produktu oraz nakłonienie do zakupu', 4),  #11
-        ('Piwo', 5, 'krótki opis dania', 'długi opis dania mający na celu bliższe zapoznanie z jakością tego wspaniałego produktu oraz nakłonienie do zakupu', 5),              #12
-        ('Wódka', 5, 'krótki opis dania', 'długi opis dania mający na celu bliższe zapoznanie z jakością tego wspaniałego produktu oraz nakłonienie do zakupu', 5),             #13
-        ('Tequila', 6, 'krótki opis dania', 'długi opis dania mający na celu bliższe zapoznanie z jakością tego wspaniałego produktu oraz nakłonienie do zakupu', 5);           #14
+INSERT INTO dishes (number, name, price, descS, descL, dishCategoryID)
+VALUES  (1, 'Margarita', 15.5, 'krótki opis dania', 'długi opis dania mający na celu bliższe zapoznanie z jakością tego wspaniałego produktu oraz nakłonienie do zakupu', 1),        #1
+        (2, 'Peperoni', 17, 'krótki opis dania', 'długi opis dania mający na celu bliższe zapoznanie z jakością tego wspaniałego produktu oraz nakłonienie do zakupu', 1),         #2
+        (3, 'Hawajska', 18, 'krótki opis dania', 'długi opis dania mający na celu bliższe zapoznanie z jakością tego wspaniałego produktu oraz nakłonienie do zakupu', 1),         #3
+        (1, 'Kurczak w cieście', 13, 'takie on jest dobry', 'araby z południa będą przychodzić i oddawać swoje żony żeby spróbować tego wspaniałego dania', 2),                    #4
+        (2, 'Sznycel taki dobry, wspaniały i taki fantastyczny', 42.54, 'short', 'long', 2),                                                                                       #5
+        (3, 'Dewolaj', 15, 'krótki opis dania', 'długi opis dania mający na celu bliższe zapoznanie z jakością tego wspaniałego produktu oraz nakłonienie do zakupu', 2),          #6
+        (1, 'Zupa pomidorowa', 5, 'krótki opis dania', 'długi opis dania mający na celu bliższe zapoznanie z jakością tego wspaniałego produktu oraz nakłonienie do zakupu', 3),   #7
+        (2, 'Zupa ogórkowa', 5, 'krótki opis dania', 'długi opis dania mający na celu bliższe zapoznanie z jakością tego wspaniałego produktu oraz nakłonienie do zakupu', 3),     #8
+        (1, 'Herbata', 5, 'krótki opis dania', 'długi opis dania mający na celu bliższe zapoznanie z jakością tego wspaniałego produktu oraz nakłonienie do zakupu', 4),           #9
+        (2, 'Cola', 5, 'shokrótki opis daniart', 'długi opis dania mający na celu bliższe zapoznanie z jakością tego wspaniałego produktu oraz nakłonienie do zakupu', 4),         #10
+        (3, 'Sok pomarańczowy', 4, 'krótki opis dania', 'długi opis dania mający na celu bliższe zapoznanie z jakością tego wspaniałego produktu oraz nakłonienie do zakupu', 4),  #11
+        (1, 'Piwo', 5, 'krótki opis dania', 'długi opis dania mający na celu bliższe zapoznanie z jakością tego wspaniałego produktu oraz nakłonienie do zakupu', 5),              #12
+        (2, 'Wódka', 5, 'krótki opis dania', 'długi opis dania mający na celu bliższe zapoznanie z jakością tego wspaniałego produktu oraz nakłonienie do zakupu', 5),             #13
+        (3, 'Tequila', 6, 'krótki opis dania', 'długi opis dania mający na celu bliższe zapoznanie z jakością tego wspaniałego produktu oraz nakłonienie do zakupu', 5);           #14
 
 INSERT INTO addonCategories (name, description, multiChoice) 
 VALUES  ('Sosy', null, true),               #1

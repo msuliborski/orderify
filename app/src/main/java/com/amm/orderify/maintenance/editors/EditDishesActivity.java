@@ -1,4 +1,4 @@
-package com.amm.orderify.maintenance.adders;
+package com.amm.orderify.maintenance.editors;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,7 +27,7 @@ import java.util.List;
 
 import static com.amm.orderify.helpers.JBDCDriver.*;
 
-public class AddDishActivity extends AppCompatActivity {
+public class EditDishesActivity extends AppCompatActivity {
 
     public LinearLayout dishesLinearLayout;
     public LinearLayout addonCategoriesLinearLayout;
@@ -52,11 +52,11 @@ public class AddDishActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.maintenance_add_dish_activity);
+        setContentView(R.layout.maintenance_edit_dishes_activity);
 
         try {
             ResultSet dishesRS = ExecuteQuery("SELECT * FROM dishes");
-            while (dishesRS.next()) dishes.add(new Dish(dishesRS.getInt("ID"), dishesRS.getString("name"), dishesRS.getFloat("price"), dishesRS.getString("descS"), dishesRS.getString("descL"), dishesRS.getInt("dishCategoryID") , null));
+            while (dishesRS.next()) dishes.add(new Dish(dishesRS.getInt("ID"), dishesRS.getInt("number"), dishesRS.getString("name"), dishesRS.getFloat("price"), dishesRS.getString("descS"), dishesRS.getString("descL"), dishesRS.getInt("dishCategoryID") , null));
 
             ResultSet addonCategoriesRS = ExecuteQuery("SELECT * FROM addonCategories");
             while (addonCategoriesRS.next()) addonCategories.add(new AddonCategory(addonCategoriesRS.getInt("ID"), addonCategoriesRS.getString("name"), addonCategoriesRS.getString("description"), addonCategoriesRS.getBoolean("multiChoice"), null));

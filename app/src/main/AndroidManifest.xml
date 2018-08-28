@@ -45,43 +45,23 @@
             android:screenOrientation="landscape"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".maintenance.adders.AddTableActivity"
+            android:name=".maintenance.editors.EditTablesActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".maintenance.adders.AddDishCategoryActivity"
+            android:name=".maintenance.editors.EditDishCategoriesActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".maintenance.adders.AddDishActivity"
+            android:name=".maintenance.editors.EditDishesActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".maintenance.adders.AddAddonCategoryActivity"
+            android:name=".maintenance.editors.EditAddonCategoriesActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".maintenance.adders.AddAddonActivity"
-            android:screenOrientation="landscape"
-            android:windowSoftInputMode="stateHidden" />
-        <activity
-            android:name=".maintenance.editors.EditTableActivity"
-            android:screenOrientation="landscape"
-            android:windowSoftInputMode="stateHidden" />
-        <activity
-            android:name=".maintenance.editors.EditDishCategoryActivity"
-            android:screenOrientation="landscape"
-            android:windowSoftInputMode="stateHidden" />
-        <activity
-            android:name=".maintenance.editors.EditDishActivity"
-            android:screenOrientation="landscape"
-            android:windowSoftInputMode="stateHidden" />
-        <activity
-            android:name=".maintenance.editors.EditAddonCategoryActivity"
-            android:screenOrientation="landscape"
-            android:windowSoftInputMode="stateHidden" />
-        <activity
-            android:name=".maintenance.editors.EditAddonActivity"
+            android:name=".maintenance.editors.EditAddonsActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="stateHidden" />
     </application>

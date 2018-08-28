@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.widget.Button;
 
 import com.amm.orderify.R;
-import com.amm.orderify.maintenance.adders.*;
 import com.amm.orderify.maintenance.editors.*;
 
 import static com.amm.orderify.helpers.LogFile.clearLog;
@@ -23,31 +22,19 @@ public class MaintenanceActivity extends AppCompatActivity {
         Button clearLogButton = findViewById(R.id.ClearLogButton);
         clearLogButton.setOnClickListener(e -> clearLog());
 
-        Button choseAddTableButton = findViewById(R.id.ChoseAddTableButton);
-        choseAddTableButton.setOnClickListener(e -> this.startActivity(new Intent(this, AddTableActivity.class)));
-        Button choseEditTableButton = findViewById(R.id.ChoseEditTableButton);
-        choseEditTableButton.setOnClickListener(e -> this.startActivity(new Intent(this, EditTableActivity.class)));
+        Button choseTablesButton = findViewById(R.id.ChoseTablesButton);
+        choseTablesButton.setOnClickListener(e -> this.startActivity(new Intent(this, EditTablesActivity.class)));
 
-        Button AddDishCategoryButton = findViewById(R.id.ChoseAddDishCategoryButton);
-        AddDishCategoryButton.setOnClickListener(e -> this.startActivity(new Intent(this, AddDishCategoryActivity.class)));
-        Button choseEditDishCategoryButton = findViewById(R.id.ChoseEditDishCategoryButton);
-        choseEditDishCategoryButton.setOnClickListener(e -> this.startActivity(new Intent(this, EditDishCategoryActivity.class)));
+        Button choseDishCategoriesButton = findViewById(R.id.ChoseDishCategoriesButton);
+        choseDishCategoriesButton.setOnClickListener(e -> this.startActivity(new Intent(this, EditDishCategoriesActivity.class)));
 
-        Button AddDishButton = findViewById(R.id.ChoseAddDishButton);
-        AddDishButton.setOnClickListener(e -> this.startActivity(new Intent(this, AddDishActivity.class)));
-        Button choseEditDishButton = findViewById(R.id.ChoseEditDishButton);
-        choseEditDishButton.setOnClickListener(e -> this.startActivity(new Intent(this, EditDishActivity.class)));
+        Button choseDishesButton = findViewById(R.id.ChoseDishesButton);
+        choseDishesButton.setOnClickListener(e -> this.startActivity(new Intent(this, EditDishesActivity.class)));
 
-        Button AddAddonCategoriesButton = findViewById(R.id.ChoseAddAddonCategoriesButton);
-        AddAddonCategoriesButton.setOnClickListener(e -> this.startActivity(new Intent(this, AddAddonCategoryActivity.class)));
-        Button choseEditAddonCategoriesButton = findViewById(R.id.ChoseEditAddonCategoriesButton);
-        choseEditAddonCategoriesButton.setOnClickListener(e -> this.startActivity(new Intent(this, EditAddonCategoryActivity.class)));
+        Button choseAddonCategoriesButton = findViewById(R.id.ChoseAddonCategoriesButton);
+        choseAddonCategoriesButton.setOnClickListener(e -> this.startActivity(new Intent(this, EditAddonCategoriesActivity.class)));
 
-        Button addAddonButton = findViewById(R.id.ChoseAddAddonButton);
-        addAddonButton.setOnClickListener(e -> this.startActivity(new Intent(this, AddAddonActivity.class)));
-        Button choseEditAddonButton = findViewById(R.id.ChoseEditAddonButton);
-        choseEditAddonButton.setOnClickListener(e -> this.startActivity(new Intent(this, EditAddonActivity.class)));
-
-
+        Button choseAddonsButton = findViewById(R.id.ChoseAddonsButton);
+        choseAddonsButton.setOnClickListener(e -> this.startActivity(new Intent(this, EditAddonsActivity.class)));
     }
 }

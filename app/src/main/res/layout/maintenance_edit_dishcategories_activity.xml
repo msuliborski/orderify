@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <ScrollView
-        android:id="@+id/AddonCategoryScrollView"
+        android:id="@+id/DishCategoryScrollView"
         android:layout_width="wrap_content"
         android:layout_height="100dp"
         android:layout_marginEnd="8dp"
@@ -18,7 +18,7 @@
         tools:ignore="MissingConstraints">
 
         <LinearLayout
-            android:id="@+id/AddonCategoryLinearLayout"
+            android:id="@+id/DishCategoryLinearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" />
@@ -28,14 +28,13 @@
         android:id="@+id/NameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:text="Name:"
-        app:layout_constraintEnd_toStartOf="@+id/AddonCategoryNameEditText"
-        app:layout_constraintTop_toBottomOf="@+id/MultiChoiceToggleButton"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintEnd_toStartOf="@+id/DishCategoryNameEditText"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="163dp" />
 
     <EditText
-        android:id="@+id/AddonCategoryNameEditText"
+        android:id="@+id/DishCategoryNameEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -46,33 +45,31 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/MultiChoiceToggleButton"
+        app:layout_constraintTop_toBottomOf="@+id/DishCategoryScrollView"
         tools:ignore="MissingConstraints" />
 
     <Button
-        android:id="@+id/EditAddonCategoryButton"
+        android:id="@+id/ActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="Edit addonCategory"
+        android:text="Add DishCategory"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/AddonCategoryNameEditText"
+        app:layout_constraintTop_toBottomOf="@+id/DishCategoryNameEditText"
         tools:ignore="HardcodedText,MissingConstraints" />
 
-    <Switch
-        android:id="@+id/MultiChoiceToggleButton"
+    <Button
+        android:id="@+id/CancelButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="muliChoice:"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/AddonCategoryScrollView"
+        android:text="Cancel"
+        app:layout_constraintStart_toEndOf="@+id/ActionButton"
+        app:layout_constraintTop_toBottomOf="@+id/DishCategoryNameEditText"
         tools:ignore="MissingConstraints" />
 
 </android.support.constraint.ConstraintLayout>

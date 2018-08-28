@@ -1,4 +1,4 @@
-package com.amm.orderify.maintenance.adders;
+package com.amm.orderify.maintenance.editors;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,35 +22,64 @@ import java.util.List;
 
 import static com.amm.orderify.helpers.JBDCDriver.*;
 
-public class AddTableActivity extends AppCompatActivity {
+public class EditTablesActivity extends AppCompatActivity {
 
     public LinearLayout tablesLinearLayout;
     static LayoutInflater tableListInflater;
 
+    EditText tableNumberEditText;
+    EditText tableDescriptionEditText;
+
+    Button actionButton;
+    Button cancelButton;
+
+    int editedTableID = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.maintenance_add_table_activity);
+        setContentView(R.layout.maintenance_edit_tables_activity);
 
         tablesLinearLayout = findViewById(R.id.TableLinearLayout);
         tableListInflater = getLayoutInflater();
+
+        tableNumberEditText = findViewById(R.id.TableNumberEditText);
+        tableDescriptionEditText = findViewById(R.id.TableDescriptionEditText);
+
         updateTableList(getTables());
 
-
-        EditText tableNumberEditText = findViewById(R.id.TableNumberEditText);
-        EditText tableDescriptionEditText = findViewById(R.id.TableDescriptionEditText);
-
-        Button addTableButton = findViewById(R.id.AddTableButton);
-        addTableButton.setOnClickListener(v -> {
-            try {
-                ExecuteUpdate("INSERT INTO tables (number, description, state)\n" +
-                        "VALUES  (" + tableNumberEditText.getText() + ", '" + tableDescriptionEditText.getText() + "', 1);");
-                tableNumberEditText.setText("");
-                tableDescriptionEditText.setText("");
-                Toast.makeText(this, "Table added!", Toast.LENGTH_SHORT).show();
-                updateTableList(getTables());
-            } catch (SQLException d) { Log.wtf("SQL Exception", d.getMessage()); }
+        actionButton = findViewById(R.id.ActionButton);
+        actionButton.setOnClickListener(v -> {
+            if(editedTableID == 0) {
+                try {
+                    ExecuteUpdate("INSERT INTO tables (number, description, state)\n" +
+                                         "VALUES  (" + tableNumberEditText.getText() + ", '" + tableDescriptionEditText.getText() + "', 1);");
+                    tableNumberEditText.setText("");
+                    tableDescriptionEditText.setText("");
+                    Toast.makeText(this, "Table added!", Toast.LENGTH_SHORT).show();
+                    updateTableList(getTables());
+                } catch (SQLException d) { Log.wtf("SQL Exception", d.getMessage()); }
+            } else {
+                try {
+                    ExecuteUpdate("UPDATE tables SET number = " +  tableNumberEditText.getText() + ", description = '" + tableDescriptionEditText.getText() + "' " +
+                                         "WHERE ID = " + editedTableID);
+                    cancelButton.callOnClick();
+                    Toast.makeText(this, "Table edited!", Toast.LENGTH_SHORT).show();
+                    updateTableList(getTables());
+                } catch (SQLException d) { Log.wtf("SQLException", d.getMessage()); }
+            }
         });
+
+        cancelButton = findViewById(R.id.CancelButton);
+        cancelButton.setVisibility(View.GONE);
+        cancelButton.setOnClickListener(e -> {
+            tableNumberEditText.setText("");
+            tableDescriptionEditText.setText("");
+            editedTableID = 0;
+            cancelButton.setVisibility(View.GONE);
+            actionButton.setText("Add table");
+        });
+
     }
 
     private List<Table> getTables(){
@@ -70,12 +99,14 @@ public class AddTableActivity extends AppCompatActivity {
             TextView idTextView = tableElement.findViewById(R.id.TablesTextView);
             TextView numberTextView = tableElement.findViewById(R.id.NumberTextView);
             TextView descriptionTextView = tableElement.findViewById(R.id.DescriptionTextView);
-            ImageButton deleteButton = tableElement.findViewById(R.id.ActionButton);
+            ImageButton editButton = tableElement.findViewById(R.id.EditButton);
+            ImageButton deleteButton = tableElement.findViewById(R.id.DeleteButton);
 
             if(tableNumber == -1) {
                 idTextView.setText("ID");
                 numberTextView.setText("NUMBER");
                 descriptionTextView.setText("DESCRIPTION");
+                editButton.setImageAlpha(1);
                 deleteButton.setImageAlpha(1);
                 tablesLinearLayout.addView(tableElement);
                 continue;
@@ -85,6 +116,13 @@ public class AddTableActivity extends AppCompatActivity {
             numberTextView.setText(tables.get(tableNumber).getPlaneNumberString());
             descriptionTextView.setText(tables.get(tableNumber).description);
             final int finalTableNumber = tableNumber;
+            editButton.setOnClickListener(v -> {
+                tableNumberEditText.setText(tables.get(finalTableNumber).getPlaneNumberString());
+                tableDescriptionEditText.setText(tables.get(finalTableNumber).description);
+                editedTableID = tables.get(finalTableNumber).id;
+                actionButton.setText("Edit table");
+                cancelButton.setVisibility(View.VISIBLE);
+            });
             deleteButton.setOnClickListener(v -> {
                 try {
                     ExecuteUpdate("DELETE FROM tables WHERE ID = " + tables.get(finalTableNumber).id);
