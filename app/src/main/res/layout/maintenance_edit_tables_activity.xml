@@ -31,12 +31,12 @@
         android:layout_marginEnd="4dp"
         android:layout_marginTop="20dp"
         android:text="Number:"
-        app:layout_constraintEnd_toStartOf="@+id/TableNumberEditText"
+        app:layout_constraintEnd_toStartOf="@+id/NumberEditText"
         app:layout_constraintTop_toBottomOf="@+id/TableScrollView"
         tools:ignore="MissingConstraints" />
 
     <EditText
-        android:id="@+id/TableNumberEditText"
+        android:id="@+id/NumberEditText"
         android:layout_width="127dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -57,12 +57,12 @@
         android:layout_marginEnd="4dp"
         android:layout_marginTop="20dp"
         android:text="Description:"
-        app:layout_constraintEnd_toStartOf="@+id/TableDescriptionEditText"
-        app:layout_constraintTop_toBottomOf="@+id/TableNumberEditText"
+        app:layout_constraintEnd_toStartOf="@+id/DescriptionEditText"
+        app:layout_constraintTop_toBottomOf="@+id/NumberEditText"
         tools:ignore="MissingConstraints" />
 
     <EditText
-        android:id="@+id/TableDescriptionEditText"
+        android:id="@+id/DescriptionEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -73,11 +73,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TableNumberEditText"
+        app:layout_constraintTop_toBottomOf="@+id/NumberEditText"
         tools:ignore="MissingConstraints" />
 
     <Button
-        android:id="@+id/DeleteButton"
+        android:id="@+id/ActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -86,7 +86,7 @@
         android:text="Add table"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TableDescriptionEditText"
+        app:layout_constraintTop_toBottomOf="@+id/DescriptionEditText"
         tools:ignore="HardcodedText,MissingConstraints" />
 
     <Button
@@ -97,8 +97,8 @@
         android:layout_marginTop="8dp"
         android:text="Cancel"
         android:visibility="visible"
-        app:layout_constraintStart_toEndOf="@+id/DeleteButton"
-        app:layout_constraintTop_toBottomOf="@+id/TableDescriptionEditText"
+        app:layout_constraintStart_toEndOf="@+id/ActionButton"
+        app:layout_constraintTop_toBottomOf="@+id/DescriptionEditText"
         tools:ignore="MissingConstraints" />
 
 </android.support.constraint.ConstraintLayout>

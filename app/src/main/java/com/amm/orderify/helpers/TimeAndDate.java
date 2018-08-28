@@ -8,7 +8,7 @@ public class TimeAndDate {
 
     public static String getCurrentTime(){
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT+02:00"));
-        return String.valueOf(calendar.get(Calendar.HOUR_OF_DAY)) + ":" + String.valueOf(calendar.get(Calendar.MINUTE)) + ":" + String.valueOf(calendar.get(Calendar.SECOND));
+            return String.valueOf(calendar.get(Calendar.HOUR_OF_DAY)) + ":" + String.valueOf(calendar.get(Calendar.MINUTE)) + ":" + String.valueOf(calendar.get(Calendar.SECOND));
     }
 
     public static String getCurrentDate(){

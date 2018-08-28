@@ -25,7 +25,7 @@ public class Table {
     public String getNumberString() {
         return "Table #" + this.number + "";
     }
-    public String getPlaneNumberString() {
+    public String getPureNumberString() {
         return this.number + "";
     }
 

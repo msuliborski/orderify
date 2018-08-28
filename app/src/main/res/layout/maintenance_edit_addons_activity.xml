@@ -29,6 +29,25 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/AddonCategoryTextView" />
 
+    <ScrollView
+        android:id="@+id/AddonsScrollView"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/AddonCategoriesSpinner"
+        tools:ignore="MissingConstraints">
+
+        <LinearLayout
+            android:id="@+id/AddonsLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
+
     <TextView
         android:id="@+id/NameTextView"
         android:layout_width="wrap_content"
@@ -36,7 +55,7 @@
         android:layout_marginTop="20dp"
         android:text="Name:"
         app:layout_constraintEnd_toStartOf="@+id/NameEditText"
-        app:layout_constraintTop_toBottomOf="@+id/AddonCategoriesScrollView" />
+        app:layout_constraintTop_toBottomOf="@+id/AddonsScrollView" />
 
     <EditText
         android:id="@+id/NameEditText"
@@ -50,7 +69,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/AddonCategoriesScrollView" />
+        app:layout_constraintTop_toBottomOf="@+id/AddonsScrollView" />
 
     <TextView
         android:id="@+id/PriceTextView"
@@ -75,7 +94,7 @@
         app:layout_constraintTop_toBottomOf="@+id/NameEditText" />
 
     <Button
-        android:id="@+id/AddAddonButton"
+        android:id="@+id/ActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -86,24 +105,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/PriceEditText" />
 
-    <ScrollView
-        android:id="@+id/AddonCategoriesScrollView"
+    <Button
+        android:id="@+id/CancelButton"
         android:layout_width="wrap_content"
-        android:layout_height="100dp"
-        android:layout_marginEnd="8dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/AddonCategoriesSpinner"
-        tools:ignore="MissingConstraints">
-
-        <LinearLayout
-            android:id="@+id/AddonCategoriesLinearLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
-    </ScrollView>
+        android:text="Cancel"
+        app:layout_constraintStart_toEndOf="@+id/ActionButton"
+        app:layout_constraintTop_toBottomOf="@+id/PriceEditText" />
 
 
 </android.support.constraint.ConstraintLayout>

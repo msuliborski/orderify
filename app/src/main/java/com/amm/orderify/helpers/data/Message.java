@@ -9,3 +9,7 @@ public class Message {
         this.content = content;
     }
 }
+
+
+//        if(content == null) this.content = "";
+//        else this.content = content;

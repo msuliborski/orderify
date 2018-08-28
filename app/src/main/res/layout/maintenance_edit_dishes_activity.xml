@@ -47,9 +47,7 @@
                 android:id="@+id/DishesLinearLayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="4dp"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -90,84 +88,15 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/DishCategoriesSpinner" />
 
-            <android.support.constraint.ConstraintLayout
-                android:id="@+id/AddonCategoriesConstraintLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="16dp"
-                android:layout_marginEnd="3dp"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/AddonCategoriesTextView">
-
-                <TextView
-                    android:id="@+id/IdTextView"
-                    android:layout_width="60dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:text="ID"
-                    app:layout_constraintStart_toStartOf="parent"
-                    tools:ignore="MissingConstraints"
-                    tools:layout_editor_absoluteY="0dp" />
-
-                <TextView
-                    android:id="@+id/NameTextView"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:text="NAME"
-                    app:layout_constraintStart_toEndOf="@+id/IdTextView"
-                    tools:ignore="MissingConstraints"
-                    tools:layout_editor_absoluteY="0dp" />
-
-                <TextView
-                    android:id="@+id/DescriptionTextView"
-                    android:layout_width="250dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:layout_weight="1"
-                    android:text="DESCRIPTION"
-                    app:layout_constraintStart_toEndOf="@+id/NameTextView"
-                    tools:ignore="MissingConstraints"
-                    tools:layout_editor_absoluteY="0dp" />
-
-                <TextView
-                    android:id="@+id/MultiChoiceTextView"
-                    android:layout_width="50dp"
-                    android:layout_height="19dp"
-                    android:layout_marginStart="4dp"
-                    android:text="MULTI"
-                    app:layout_constraintStart_toEndOf="@+id/DescriptionTextView"
-                    tools:ignore="MissingConstraints"
-                    tools:layout_editor_absoluteY="0dp" />
-
-                <ImageButton
-                    android:id="@+id/DeleteButton"
-                    android:layout_width="19dp"
-                    android:layout_height="19dp"
-                    android:layout_marginStart="4dp"
-                    android:contentDescription="TODO"
-                    app:layout_constraintStart_toEndOf="@+id/MultiChoiceTextView"
-                    app:srcCompat="@drawable/bar_addon_element_background"
-                    tools:ignore="MissingConstraints"
-                    tools:layout_editor_absoluteY="0dp" />
-
-
-            </android.support.constraint.ConstraintLayout>
-
             <LinearLayout
                 android:id="@+id/AddonCategoriesLinearLayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="4dp"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/AddonCategoriesConstraintLayout"
+                app:layout_constraintTop_toBottomOf="@+id/AddonCategoriesTextView"
                 tools:ignore="MissingConstraints">
 
             </LinearLayout>
@@ -184,83 +113,15 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/AddonCategoriesLinearLayout" />
 
-            <android.support.constraint.ConstraintLayout
-                android:id="@+id/ChosenAddonCategoriesConstraintLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="16dp"
-                android:layout_marginEnd="4dp"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ChosenAddonCategoriesTextView">
-
-                <TextView
-                    android:id="@+id/IdTextView"
-                    android:layout_width="60dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:text="ID"
-                    app:layout_constraintStart_toStartOf="parent"
-                    tools:ignore="MissingConstraints"
-                    tools:layout_editor_absoluteY="0dp" />
-
-                <TextView
-                    android:id="@+id/NameTextView"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:text="NAME"
-                    app:layout_constraintStart_toEndOf="@+id/IdTextView"
-                    tools:ignore="MissingConstraints"
-                    tools:layout_editor_absoluteY="0dp" />
-
-                <TextView
-                    android:id="@+id/DescriptionTextView"
-                    android:layout_width="250dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:layout_weight="1"
-                    android:text="DESCRIPTION"
-                    app:layout_constraintStart_toEndOf="@+id/NameTextView"
-                    tools:ignore="MissingConstraints"
-                    tools:layout_editor_absoluteY="0dp" />
-
-                <TextView
-                    android:id="@+id/MultiChoiceTextView"
-                    android:layout_width="50dp"
-                    android:layout_height="19dp"
-                    android:layout_marginStart="4dp"
-                    android:text="MULTI"
-                    app:layout_constraintStart_toEndOf="@+id/DescriptionTextView"
-                    tools:ignore="MissingConstraints"
-                    tools:layout_editor_absoluteY="0dp" />
-
-                <ImageButton
-                    android:id="@+id/DeleteButton"
-                    android:layout_width="19dp"
-                    android:layout_height="19dp"
-                    android:layout_marginStart="4dp"
-                    android:contentDescription="TODO"
-                    app:layout_constraintStart_toEndOf="@+id/MultiChoiceTextView"
-                    app:srcCompat="@drawable/bar_addon_element_background"
-                    tools:ignore="MissingConstraints"
-                    tools:layout_editor_absoluteY="0dp" />
-
-
-            </android.support.constraint.ConstraintLayout>
-
             <LinearLayout
                 android:id="@+id/ChosenAddonCategoriesLinearLayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ChosenAddonCategoriesConstraintLayout">
+                app:layout_constraintTop_toBottomOf="@+id/ChosenAddonCategoriesTextView">
 
             </LinearLayout>
 
@@ -354,7 +215,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/DescSEditText" />
 
             <Button
-                android:id="@+id/AddDishButton"
+                android:id="@+id/ActionButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
@@ -363,6 +224,16 @@
                 android:text="Add Dish"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/DescLEditText" />
+
+            <Button
+                android:id="@+id/CancelButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="9dp"
+                android:layout_marginTop="8dp"
+                android:text="Cancel"
+                app:layout_constraintStart_toEndOf="@+id/ActionButton"
                 app:layout_constraintTop_toBottomOf="@+id/DescLEditText" />
 
 

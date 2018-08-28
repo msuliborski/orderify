@@ -3,7 +3,6 @@ package com.amm.orderify.maintenance.editors;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,10 +26,10 @@ import static com.amm.orderify.helpers.JBDCDriver.*;
 public class EditAddonCategoriesActivity extends AppCompatActivity {
 
     LinearLayout addonCategoriesLinearLayout;
-    LayoutInflater addonCategoriesListInflater;
 
-    EditText addonCategoryNameEditText;
     Switch multiChoiceToggleButton;
+    EditText nameEditText;
+    EditText descriptionEditText;
 
     Button actionButton;
     Button cancelButton;
@@ -43,38 +42,38 @@ public class EditAddonCategoriesActivity extends AppCompatActivity {
         setContentView(R.layout.maintenance_edit_addoncategories_activity);
 
         addonCategoriesLinearLayout = findViewById(R.id.AddonCategoryLinearLayout);
-        addonCategoriesListInflater = getLayoutInflater();
 
-        addonCategoryNameEditText = findViewById(R.id.AddonCategoryNameEditText);
         multiChoiceToggleButton = findViewById(R.id.MultiChoiceToggleButton);
+        nameEditText = findViewById(R.id.NameEditText);
+        descriptionEditText = findViewById(R.id.DescriptionEditText);
 
         updateAddonCategoryList(getAddonCategories());
 
-        actionButton = findViewById(R.id.DeleteButton);
+        actionButton = findViewById(R.id.ActionButton);
         actionButton.setOnClickListener(e -> {
             if(editedAddonCategoryID == 0) {
                 try {
-                    ExecuteUpdate("INSERT INTO addonCategories (name, multiChoice)\n" +
-                            "VALUES ('" + addonCategoryNameEditText.getText().toString() + "', " + multiChoiceToggleButton.isChecked() + ")");
+                    ExecuteUpdate("INSERT INTO addonCategories (name, description, multiChoice)\n" +
+                            "VALUES ('" + nameEditText.getText() + "', '" + descriptionEditText.getText() + "', " + multiChoiceToggleButton.isChecked() + ")");
                     Toast.makeText(this, "AddonCategory added!", Toast.LENGTH_SHORT).show();
                     updateAddonCategoryList(getAddonCategories());
                 } catch (SQLException d) { Log.wtf("SQL Exception", d.getMessage()); }
             } else {
                 try {
-                    ExecuteUpdate("UPDATE addonCategories SET name = '" + addonCategoryNameEditText.getText().toString() + "', multiChoice = " + multiChoiceToggleButton.isChecked() + " WHERE ID = " + editedAddonCategoryID);
+                    ExecuteUpdate("UPDATE addonCategories SET " + "name = '" + nameEditText.getText() + "', " + "description = '" + descriptionEditText.getText() + "', " +
+                            "multiChoice = " + multiChoiceToggleButton.isChecked() + " WHERE ID = " + editedAddonCategoryID);
                     Toast.makeText(this, "AddonCategory edited!", Toast.LENGTH_SHORT).show();
                     cancelButton.callOnClick();
                     updateAddonCategoryList(getAddonCategories());
-                } catch (SQLException d) {
-                    Log.wtf("SQLException", d.getMessage());
-                }
+                } catch (SQLException d) { Log.wtf("SQLException", d.getMessage()); }
             }
         });
 
         cancelButton = findViewById(R.id.CancelButton);
         cancelButton.setVisibility(View.GONE);
         cancelButton.setOnClickListener(e -> {
-            addonCategoryNameEditText.setText("");
+            nameEditText.setText("");
+            descriptionEditText.setText("");
             multiChoiceToggleButton.setChecked(false);
             editedAddonCategoryID = 0;
             cancelButton.setVisibility(View.GONE);
@@ -98,7 +97,7 @@ public class EditAddonCategoriesActivity extends AppCompatActivity {
         addonCategoriesLinearLayout.removeAllViews();
         for (int addonCategoryNumber = -1; addonCategoryNumber < addonCategories.size(); addonCategoryNumber++){
 
-            View addonCategoryElement = addonCategoriesListInflater.inflate(R.layout.maintenance_element_addoncategory, null);
+            View addonCategoryElement = getLayoutInflater().inflate(R.layout.maintenance_element_addoncategory, null);
             TextView idTextView = addonCategoryElement.findViewById(R.id.IdTextView);
             TextView nameTextView = addonCategoryElement.findViewById(R.id.NameTextView);
             TextView descriptionTextView = addonCategoryElement.findViewById(R.id.DescriptionTextView);
@@ -124,22 +123,24 @@ public class EditAddonCategoriesActivity extends AppCompatActivity {
             if (addonCategories.get(addonCategoryNumber).multiChoice) multiChoiceTextView.setText(yes);
             else multiChoiceTextView.setText(no);
 
-            final int finaladdonCategoryNumber = addonCategoryNumber;
+            final int finalAddonCategoryNumber = addonCategoryNumber;
             editButton.setOnClickListener(v -> {
-                addonCategoryNameEditText.setText(addonCategories.get(finaladdonCategoryNumber).name);
-                multiChoiceToggleButton.setChecked(addonCategories.get(finaladdonCategoryNumber).multiChoice);
-                editedAddonCategoryID = addonCategories.get(finaladdonCategoryNumber).id;
+                nameEditText.setText(addonCategories.get(finalAddonCategoryNumber).name);
+                descriptionTextView.setText(addonCategories.get(finalAddonCategoryNumber).description);
+                multiChoiceToggleButton.setChecked(addonCategories.get(finalAddonCategoryNumber).multiChoice);
+                editedAddonCategoryID = addonCategories.get(finalAddonCategoryNumber).id;
                 actionButton.setText("Edit addonCategory");
                 cancelButton.setVisibility(View.VISIBLE);
             });
             deleteButton.setOnClickListener(v -> {
                 try {
-                    ExecuteUpdate("DELETE FROM addonCategories WHERE ID = " + addonCategories.get(finaladdonCategoryNumber).id);
-                    addonCategories.remove(addonCategories.get(finaladdonCategoryNumber));
+                    //delete addons as well?
+                    ExecuteUpdate("DELETE FROM addonCategories WHERE ID = " + addonCategories.get(finalAddonCategoryNumber).id);
+                    addonCategories.remove(addonCategories.get(finalAddonCategoryNumber));
                     updateAddonCategoryList(getAddonCategories());
                     Toast.makeText(this, "AddonCategory deleted!", Toast.LENGTH_SHORT).show();
                 } catch (SQLException e) {
-                    if(e.getErrorCode() == 1451) Toast.makeText(this, "AddonCategory " + addonCategories.get(finaladdonCategoryNumber).name + " has addons assigned!", Toast.LENGTH_SHORT).show();
+                    if(e.getErrorCode() == 1451) Toast.makeText(this, "AddonCategory " + addonCategories.get(finalAddonCategoryNumber).name + " has addons assigned!", Toast.LENGTH_SHORT).show();
                 }
             });
 

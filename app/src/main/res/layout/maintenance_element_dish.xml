@@ -6,44 +6,51 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <View
+        android:id="@+id/Separator1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp" />
+
     <TextView
         android:id="@+id/IdTextView"
         android:layout_width="40dp"
         android:layout_height="wrap_content"
         android:text="2"
         app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteY="0dp" />
+        app:layout_constraintTop_toBottomOf="@+id/Separator1"
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/NameTextView"
-        android:layout_width="310dp"
+        android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:text="Name"
         app:layout_constraintStart_toEndOf="@+id/IdTextView"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteY="0dp" />
+        app:layout_constraintTop_toBottomOf="@+id/Separator1"
+        tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/DishCategoryNameTextView"
+        android:id="@+id/DishCategoryTextView"
         android:layout_width="110dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:text="category"
         app:layout_constraintStart_toEndOf="@+id/NameTextView"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteY="0dp" />
+        app:layout_constraintTop_toBottomOf="@+id/Separator1"
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/DescLTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginEnd="24dp"
         android:text="descL"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.499"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/DescSTextView"
         tools:ignore="MissingConstraints" />
@@ -52,12 +59,12 @@
         android:id="@+id/DescSTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginEnd="24dp"
         android:text="descS"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/NameTextView"
+        app:layout_constraintTop_toBottomOf="@+id/IdTextView"
         tools:ignore="MissingConstraints" />
 
     <TextView
@@ -66,9 +73,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:text="10 zł"
-        app:layout_constraintStart_toEndOf="@+id/DishCategoryNameTextView"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteY="0dp" />
+        app:layout_constraintStart_toEndOf="@+id/DishCategoryTextView"
+        app:layout_constraintTop_toBottomOf="@+id/Separator1"
+        tools:ignore="MissingConstraints" />
 
     <ImageButton
         android:id="@+id/DeleteButton"
@@ -76,33 +83,29 @@
         android:layout_height="19dp"
         android:layout_marginStart="4dp"
         android:contentDescription="TODO"
-        app:layout_constraintStart_toEndOf="@+id/PriceTextView"
+        app:layout_constraintStart_toEndOf="@+id/EditButton"
+        app:layout_constraintTop_toBottomOf="@+id/Separator1"
         app:srcCompat="@drawable/bar_delete_order_button"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteY="0dp" />
-
-    <TextView
-        android:id="@+id/separator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/separator2"
         tools:ignore="MissingConstraints" />
 
-    <TextView
-        android:id="@+id/separator2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.499"
-        app:layout_constraintStart_toStartOf="parent"
+    <ImageButton
+        android:id="@+id/EditButton"
+        android:layout_width="19dp"
+        android:layout_height="19dp"
+        android:layout_marginStart="4dp"
+        android:contentDescription="TODO"
+        app:layout_constraintStart_toEndOf="@+id/PriceTextView"
+        app:layout_constraintTop_toBottomOf="@+id/Separator1"
+        app:srcCompat="@drawable/bar_accept_request_button"
+        tools:ignore="MissingConstraints" />
+
+    <View
+        android:id="@+id/Separator2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
         app:layout_constraintTop_toBottomOf="@+id/DescLTextView"
-        tools:ignore="MissingConstraints" />
+        tools:layout_editor_absoluteX="16dp" />
 
 
 </android.support.constraint.ConstraintLayout>

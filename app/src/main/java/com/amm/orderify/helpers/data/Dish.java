@@ -16,6 +16,8 @@ public class Dish {
     public List<AddonCategory> addonCategories;
     public List<Addon> chosenAddons = new ArrayList<>(); //for menu handling
 
+    public String dishCategoryName;
+
     public Dish(int id, int number, String name, float price, String descS, String descL, int dishCategoryID, List<AddonCategory> addonCategories) {
         this.id = id;
         this.number = number;
@@ -31,9 +33,18 @@ public class Dish {
         DecimalFormat formatter = new DecimalFormat("0.00");
         return formatter.format(this.price) + " zł";
     }
+    public String getPurePriceString(){
+        return  this.price + "";
+    }
 
     public String getIdString(){
         return id+"";
     }
 
 }
+
+//
+//        if(descS == null) this.descS = "";
+//        else this.descS = descS;
+//        if(descL == null) this.descL = "";
+//        else this.descL = descL;

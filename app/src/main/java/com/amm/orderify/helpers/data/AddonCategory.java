@@ -21,3 +21,7 @@ public class AddonCategory {
         return id+"";
     }
 }
+
+//
+//        if(description == null) this.description = "";
+//        else this.description = description;

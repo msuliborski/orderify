@@ -26,9 +26,8 @@ import static com.amm.orderify.helpers.JBDCDriver.*;
 public class EditDishCategoriesActivity extends AppCompatActivity {
 
     LinearLayout dishCategoriesLinearLayout;
-    LayoutInflater dishCategoriesListInflater;
 
-    EditText dishCategoryNameEditText;
+    EditText nameEditText;
 
     Button actionButton;
     Button cancelButton;
@@ -41,36 +40,33 @@ public class EditDishCategoriesActivity extends AppCompatActivity {
         setContentView(R.layout.maintenance_edit_dishcategories_activity);
 
         dishCategoriesLinearLayout = findViewById(R.id.DishCategoryLinearLayout);
-        dishCategoriesListInflater = getLayoutInflater();
 
-        dishCategoryNameEditText = findViewById(R.id.DishCategoryNameEditText);
+        nameEditText = findViewById(R.id.NameEditText);
         updateDishCategoryList(getDishCategories());
 
         actionButton = findViewById(R.id.ActionButton);
         actionButton.setOnClickListener(e -> {
             if(editedDishCategoryID == 0) {
                 try {
-                    ExecuteUpdate("INSERT INTO dishCategories (name, multiChoice)\n" +
-                            "VALUES ('" + dishCategoryNameEditText.getText().toString() + "')");
+                    ExecuteUpdate("INSERT INTO dishCategories (name)\n" +
+                            "VALUES ('" + nameEditText.getText().toString() + "')");
                     Toast.makeText(this, "DishCategory added!", Toast.LENGTH_SHORT).show();
                     updateDishCategoryList(getDishCategories());
                 } catch (SQLException d) { Log.wtf("SQL Exception", d.getMessage()); }
             } else {
                 try {
-                    ExecuteUpdate("UPDATE dishCategories SET name = '" + dishCategoryNameEditText.getText().toString() + "' WHERE ID = " + editedDishCategoryID);
+                    ExecuteUpdate("UPDATE dishCategories SET name = '" + nameEditText.getText().toString() + "' WHERE ID = " + editedDishCategoryID);
                     Toast.makeText(this, "DishCategory edited!", Toast.LENGTH_SHORT).show();
                     cancelButton.callOnClick();
                     updateDishCategoryList(getDishCategories());
-                } catch (SQLException d) {
-                    Log.wtf("SQLException", d.getMessage());
-                }
+                } catch (SQLException d) { Log.wtf("SQLException", d.getMessage()); }
             }
         });
 
         cancelButton = findViewById(R.id.CancelButton);
         cancelButton.setVisibility(View.GONE);
         cancelButton.setOnClickListener(e -> {
-            dishCategoryNameEditText.setText("");
+            nameEditText.setText("");
             editedDishCategoryID = 0;
             cancelButton.setVisibility(View.GONE);
             actionButton.setText("Add dishCategory");
@@ -94,7 +90,7 @@ public class EditDishCategoriesActivity extends AppCompatActivity {
         dishCategoriesLinearLayout.removeAllViews();
         for (int dishCategoryNumber = -1; dishCategoryNumber < dishCategories.size(); dishCategoryNumber++){
 
-            View dishCategoryElement = dishCategoriesListInflater.inflate(R.layout.maintenance_element_dishcategory, null);
+            View dishCategoryElement = getLayoutInflater().inflate(R.layout.maintenance_element_dishcategory, null);
             TextView idTextView = dishCategoryElement.findViewById(R.id.IdTextView);
             TextView nameTextView = dishCategoryElement.findViewById(R.id.NameTextView);
             ImageButton editButton = dishCategoryElement.findViewById(R.id.EditButton);
@@ -114,7 +110,7 @@ public class EditDishCategoriesActivity extends AppCompatActivity {
 
             final int finaldishCategoryNumber = dishCategoryNumber;
             editButton.setOnClickListener(v -> {
-                dishCategoryNameEditText.setText(dishCategories.get(finaldishCategoryNumber).name);
+                nameEditText.setText(dishCategories.get(finaldishCategoryNumber).name);
                 editedDishCategoryID = dishCategories.get(finaldishCategoryNumber).id;
                 actionButton.setText("Edit dishCategory");
                 cancelButton.setVisibility(View.VISIBLE);

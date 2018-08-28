@@ -30,12 +30,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="Name:"
-        app:layout_constraintEnd_toStartOf="@+id/AddonCategoryNameEditText"
+        app:layout_constraintEnd_toStartOf="@+id/NameEditText"
         app:layout_constraintTop_toBottomOf="@+id/MultiChoiceToggleButton"
         tools:ignore="MissingConstraints" />
 
     <EditText
-        android:id="@+id/AddonCategoryNameEditText"
+        android:id="@+id/NameEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -49,6 +49,31 @@
         app:layout_constraintTop_toBottomOf="@+id/MultiChoiceToggleButton"
         tools:ignore="MissingConstraints" />
 
+    <TextView
+        android:id="@+id/DescriptionTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Description:"
+        app:layout_constraintEnd_toStartOf="@+id/DescriptionEditText"
+        app:layout_constraintTop_toBottomOf="@+id/NameEditText"
+        tools:ignore="MissingConstraints" />
+
+    <EditText
+        android:id="@+id/DescriptionEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/NameEditText"
+        tools:ignore="MissingConstraints" />
+
     <Button
         android:id="@+id/ActionButton"
         android:layout_width="wrap_content"
@@ -58,8 +83,9 @@
         android:layout_marginTop="8dp"
         android:text="Add AddonCategory"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/AddonCategoryNameEditText"
+        app:layout_constraintTop_toBottomOf="@+id/DescriptionEditText"
         tools:ignore="HardcodedText,MissingConstraints" />
 
     <Switch
@@ -83,7 +109,7 @@
         android:layout_marginTop="8dp"
         android:text="Cancel"
         app:layout_constraintStart_toEndOf="@+id/ActionButton"
-        app:layout_constraintTop_toBottomOf="@+id/AddonCategoryNameEditText"
+        app:layout_constraintTop_toBottomOf="@+id/DescriptionEditText"
         tools:ignore="MissingConstraints" />
 
 </android.support.constraint.ConstraintLayout>
