@@ -25,6 +25,13 @@ public class Table {
     public String getNumberString() {
         return "Table #" + this.number + "";
     }
+    public String getPlaneNumberString() {
+        return this.number + "";
+    }
+
+    public String getIdString() {
+        return this.id + "";
+    }
 
     public float getTotalPrice(){
         float totalPrice = 0;

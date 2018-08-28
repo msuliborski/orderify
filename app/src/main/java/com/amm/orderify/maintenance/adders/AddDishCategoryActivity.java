@@ -31,7 +31,7 @@ public class AddDishCategoryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.maintenance_dishcategory_activity);
+        setContentView(R.layout.maintenance_add_dishcategory_activity);
 
         try {
             ResultSet dishCategoriesRS = ExecuteQuery("SELECT * FROM dishCategories");
@@ -66,7 +66,7 @@ public class AddDishCategoryActivity extends AppCompatActivity {
         for (int dishCategoryNumber = 0; dishCategoryNumber < dishCategories.size(); dishCategoryNumber++){
             View dishCategoryElement = dishCategoriesListInflater.inflate(R.layout.maintenance_dishcategory_element, null);
 
-            TextView idTextView = dishCategoryElement.findViewById(R.id.IdTextView);
+            TextView idTextView = dishCategoryElement.findViewById(R.id.TablesTextView);
             idTextView.setText(dishCategories.get(dishCategoryNumber).getIdString());
 
             TextView nameTextView = dishCategoryElement.findViewById(R.id.NameTextView);

@@ -16,7 +16,6 @@ import com.amm.orderify.helpers.data.AddonCategory;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 import static com.amm.orderify.helpers.JBDCDriver.*;
@@ -35,7 +34,7 @@ public class AddAddonActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.maintenance_addon_activity);
+        setContentView(R.layout.maintenance_add_addon_activity);
 
         try {
             ResultSet addonCategoriesRS = ExecuteQuery("SELECT * FROM addonCategories");

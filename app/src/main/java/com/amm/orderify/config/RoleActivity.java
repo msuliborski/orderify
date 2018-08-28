@@ -19,7 +19,7 @@ import com.amm.orderify.R;
 import com.amm.orderify.bar.TablesActivity;
 import com.amm.orderify.client.MenuActivity;
 import com.amm.orderify.helpers.data.*;
-import com.amm.orderify.maintenance.EditActivity;
+import com.amm.orderify.maintenance.MaintenanceActivity;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -79,7 +79,7 @@ public class RoleActivity extends AppCompatActivity {
                 this.startActivity(new Intent(this, MenuActivity.class));
                 break;
             case 2: //MAINTENANCE
-                this.startActivity(new Intent(this, EditActivity.class));
+                this.startActivity(new Intent(this, MaintenanceActivity.class));
                 break;
             default: break;
         }
@@ -195,7 +195,7 @@ public class RoleActivity extends AppCompatActivity {
                     this.startActivity(new Intent(this, MenuActivity.class));
                     break;
                 case 2: //MAINTENANCE
-                    this.startActivity(new Intent(this, EditActivity.class));
+                    this.startActivity(new Intent(this, MaintenanceActivity.class));
                     break;
                 default:
                     break;

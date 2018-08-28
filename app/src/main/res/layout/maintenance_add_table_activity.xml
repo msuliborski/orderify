@@ -5,59 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/ConstraintLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteY="0dp">
-
-        <TextView
-            android:id="@+id/IdTextView"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="ID"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteY="0dp" />
-
-        <TextView
-            android:id="@+id/NumberTextView"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="NUMBER"
-            app:layout_constraintStart_toEndOf="@+id/IdTextView"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteY="0dp" />
-
-        <TextView
-            android:id="@+id/NameTextView"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="DESCRIPTION"
-            app:layout_constraintStart_toEndOf="@+id/NumberTextView"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteY="0dp" />
-
-        <ImageButton
-            android:id="@+id/ActionButton"
-            android:layout_width="19dp"
-            android:layout_height="19dp"
-            android:layout_marginStart="8dp"
-            app:layout_constraintStart_toEndOf="@+id/NameTextView"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteY="0dp" />
-
-    </android.support.constraint.ConstraintLayout>
-
     <ScrollView
         android:id="@+id/TableScrollView"
         android:layout_width="wrap_content"
@@ -67,7 +14,7 @@
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ConstraintLayout"
+        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints">
 
         <LinearLayout
@@ -78,7 +25,7 @@
     </ScrollView>
 
     <TextView
-        android:id="@+id/TextView1"
+        android:id="@+id/NumberTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="4dp"
@@ -104,7 +51,7 @@
         tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/TextView2"
+        android:id="@+id/DescriptionTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="4dp"
@@ -141,5 +88,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/TableDescriptionEditText"
         tools:ignore="HardcodedText,MissingConstraints" />
+
+    <Button
+        android:id="@+id/CancelButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="Cancel"
+        android:visibility="gone"
+        app:layout_constraintStart_toEndOf="@+id/AddTableButton"
+        tools:layout_editor_absoluteY="223dp" />
 
 </android.support.constraint.ConstraintLayout>

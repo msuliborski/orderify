@@ -15,14 +15,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amm.orderify.R;
-import com.amm.orderify.helpers.data.Addon;
 import com.amm.orderify.helpers.data.AddonCategory;
 import com.amm.orderify.helpers.data.Dish;
 import com.amm.orderify.helpers.data.DishCategory;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -54,7 +52,7 @@ public class AddDishActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.maintenance_dish_activity);
+        setContentView(R.layout.maintenance_add_dish_activity);
 
         try {
             ResultSet dishesRS = ExecuteQuery("SELECT * FROM dishes");
@@ -117,7 +115,7 @@ public class AddDishActivity extends AppCompatActivity {
             Dish dish = dishes.get(dishNumber);
             View dishElement = dishesInflater.inflate(R.layout.maintenance_dish_element, null);
 
-            TextView idTextView = dishElement.findViewById(R.id.IdTextView);
+            TextView idTextView = dishElement.findViewById(R.id.TablesTextView);
             idTextView.setText(dish.getIdString());
 
             TextView nameTextView = dishElement.findViewById(R.id.NameTextView);
@@ -136,12 +134,7 @@ public class AddDishActivity extends AppCompatActivity {
             priceTextView.setText(dish.getPriceString());
 
             int finalDishNumber = dishNumber;
-            ImageButton editButton = dishElement.findViewById(R.id.EditButton);
-            editButton.setOnClickListener(v -> {
-                //get data to xml elements - bedzie ciezkie, pomyslimy potem
-                updateDishesList();
-            });
-            ImageButton deleteButton = dishElement.findViewById(R.id.DeleteButton);
+            ImageButton deleteButton = dishElement.findViewById(R.id.ActionButton);
             deleteButton.setOnClickListener(v -> {
                 try {
                     ExecuteUpdate("DELETE FROM addonCategoriesToDishes WHERE dishID = " + dish.id);
@@ -173,7 +166,7 @@ public class AddDishActivity extends AppCompatActivity {
         for (int addonCategoryNumber = 0; addonCategoryNumber < addonCategories.size(); addonCategoryNumber++){
             View addonCategoryElement = addonCategoriesInflater.inflate(R.layout.maintenance_addoncategory_element, null);
 
-            TextView idTextView = addonCategoryElement.findViewById(R.id.IdTextView);
+            TextView idTextView = addonCategoryElement.findViewById(R.id.TablesTextView);
             idTextView.setText(addonCategories.get(addonCategoryNumber).getIdString());
 
             TextView nameTextView = addonCategoryElement.findViewById(R.id.NameTextView);
@@ -206,7 +199,7 @@ public class AddDishActivity extends AppCompatActivity {
         for (int chosenAddonCategoryNumber = 0; chosenAddonCategoryNumber < chosenAddonCategories.size(); chosenAddonCategoryNumber++){
             View chosenAddonCategoryElement = chosenAddonCategoriesInflater.inflate(R.layout.maintenance_addoncategory_element, null);
 
-            TextView idTextView = chosenAddonCategoryElement.findViewById(R.id.IdTextView);
+            TextView idTextView = chosenAddonCategoryElement.findViewById(R.id.TablesTextView);
             idTextView.setText(chosenAddonCategories.get(chosenAddonCategoryNumber).getIdString());
 
             TextView nameTextView = chosenAddonCategoryElement.findViewById(R.id.NameTextView);

@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/IdTextView"
+        android:id="@+id/TablesTextView"
         android:layout_width="60dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="Pizza"
-        app:layout_constraintStart_toEndOf="@+id/IdTextView"
+        app:layout_constraintStart_toEndOf="@+id/TablesTextView"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteY="0dp" />
 
