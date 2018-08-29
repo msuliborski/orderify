@@ -1,10 +1,14 @@
 package com.amm.orderify.helpers;
 
+import android.util.ArrayMap;
+
+import com.amm.orderify.helpers.data.Addon;
 import com.amm.orderify.helpers.data.Client;
 import com.amm.orderify.helpers.data.Order;
 import com.amm.orderify.helpers.data.Table;
 import com.amm.orderify.helpers.data.Wish;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Comparators {
@@ -20,12 +24,12 @@ public class Comparators {
         return newTables;
     }
 
-    public static List<Order> getDifferenceFromOrderLists(List<Order> oldOrders, List<Order> newOrders){
+    public static ArrayMap<Integer, Order> getDifferenceFromOrderLists(ArrayMap<Integer, Order> oldOrders, ArrayMap<Integer, Order> newOrders){
 
         for(int ot = 0; ot < oldOrders.size(); ot++){
             for(int nt = 0; nt < newOrders.size(); nt++){
-                if(ordersTheSame(oldOrders.get(ot), newOrders.get(nt)))
-                    oldOrders.remove(oldOrders.get(ot));
+                if(ordersTheSame(oldOrders.valueAt(ot), newOrders.valueAt(nt)))
+                    oldOrders.remove(oldOrders.valueAt(ot).id);
 
             }
         }
@@ -41,7 +45,7 @@ public class Comparators {
 
             for (int i = 0; i < t1.clients.size(); i++)
                 for (int j = 0; j < t2.clients.size(); j++)
-                    if (!clientsTheSame(t1.clients.get(i), t2.clients.get(j))) return false;
+                    if (!clientsTheSame(t1.clients.valueAt(i), t2.clients.valueAt(j))) return false;
         } catch(Exception ignored){}
 
         return true;
@@ -54,7 +58,7 @@ public class Comparators {
 
         for (int i = 0; i < c1.orders.size(); i++)
             for (int j = 0; j < c2.orders.size(); j++)
-                if (!ordersTheSame(c1.orders.get(i), c2.orders.get(j))) return false;
+                if (!ordersTheSame(c1.orders.valueAt(i), c2.orders.valueAt(j))) return false;
 
         return true;
     }
@@ -68,7 +72,7 @@ public class Comparators {
 
         for (int i = 0; i < o1.wishes.size(); i++)
             for (int j = 0; j < o2.wishes.size(); j++)
-                if (!wishesTheSame(o1.wishes.get(i), o2.wishes.get(j))) return false;
+                if (!wishesTheSame(o1.wishes.valueAt(i), o2.wishes.valueAt(j))) return false;
 
         return true;
     }
@@ -79,8 +83,8 @@ public class Comparators {
             if (!(w1.addons.size() == w2.addons.size())) return false;
 
             for (int i = 0; i < w1.addons.size(); i++){
-                if (!(w1.addons.contains(w2.addons.get(i)))) return false;
-                if (!(w2.addons.contains(w1.addons.get(i)))) return false;
+                if (!(w1.addons.containsValue(w2.addons.valueAt(i)))) return false;
+                if (!(w2.addons.containsValue(w1.addons.valueAt(i)))) return false;
             }
         }
         catch(Exception ignored){}

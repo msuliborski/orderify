@@ -1,13 +1,12 @@
 package com.amm.orderify.helpers.data;
 
-import android.util.Log;
+import android.util.ArrayMap;
 
 import com.amm.orderify.R;
 
 import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.TimeZone;
 
 import static com.amm.orderify.MainActivity.context;
@@ -20,9 +19,9 @@ public class Order {
     public int state;
     public int clientID;
     public int tableID;
-    public List<Wish> wishes;
+    public ArrayMap<Integer, Wish> wishes;
 
-    public Order(int id, Date time, Date date, String comments, int state, int clientID, int tableID, List<Wish> wishes) {
+    public Order(int id, Date time, Date date, String comments, int state, int clientID, int tableID, ArrayMap<Integer, Wish> wishes) {
         this.id = id;
         this.time = time;
         this.date = date;
@@ -37,7 +36,7 @@ public class Order {
         float totalPrice = 0;
 
         for (int wishNumber = 0; wishNumber < wishes.size(); wishNumber++)
-            if(state <= 3)totalPrice += wishes.get(wishNumber).getTotalPrice();
+            if(state <= 3)totalPrice += wishes.valueAt(wishNumber).getTotalPrice();
 
         return totalPrice;
     }
@@ -46,7 +45,7 @@ public class Order {
         float totalPrice = 0;
 
         for (int wishNumber = 0; wishNumber < wishes.size(); wishNumber++)
-            totalPrice += wishes.get(wishNumber).getTotalPrice();
+            totalPrice += wishes.valueAt(wishNumber).getTotalPrice();
 
         DecimalFormat formatter = new DecimalFormat("0.00");
         return formatter.format(totalPrice) + " zł";

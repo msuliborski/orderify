@@ -2,7 +2,9 @@ package com.amm.orderify.maintenance.editors;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.ArrayMap;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,8 +18,6 @@ import com.amm.orderify.helpers.data.Table;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 import static com.amm.orderify.helpers.JBDCDriver.*;
 
@@ -51,6 +51,13 @@ public class EditTablesActivity extends AppCompatActivity {
                 try {
                     ExecuteUpdate("INSERT INTO tables (number, description, state)\n" +
                                          "VALUES  (" + numberEditText.getText() + ", '" + descriptionEditText.getText() + "', 1);");
+
+                    int newTableID = 0;
+                    ResultSet orderIDRS = ExecuteQuery("SELECT LAST_INSERT_ID();");
+                    if (orderIDRS.next()) newTableID = orderIDRS.getInt(1);
+
+                    ExecuteUpdate("INSERT INTO clients (number, state, tableID)\n" +
+                                         "VALUES  (1, 1, " + newTableID + "), (2, 1, " + newTableID + "), (3, 1, " + newTableID + "), (4, 1, " + newTableID + ");");
                     numberEditText.setText("");
                     descriptionEditText.setText("");
                     Toast.makeText(this, "Table added!", Toast.LENGTH_SHORT).show();
@@ -79,17 +86,17 @@ public class EditTablesActivity extends AppCompatActivity {
 
     }
 
-    private List<Table> getTables(){
-        List<Table> tables = new ArrayList<>();
+    private ArrayMap<Integer, Table> getTables(){
+        ArrayMap<Integer, Table> tables = new ArrayMap<>();
         try {
             ResultSet tablesRS = ExecuteQuery("SELECT * FROM tables");
             while (tablesRS.next())
-                tables.add(new Table(tablesRS.getInt("ID"), tablesRS.getInt("number"), tablesRS.getString("description"), 1, null));
+                tables.put(tablesRS.getInt("ID"), new Table(tablesRS.getInt("ID"), tablesRS.getInt("number"), tablesRS.getString("description"), 1, null));
         } catch (SQLException ignored) {}
         return tables;
     }
 
-    public void updateTableList(List<Table> tables) {
+    public void updateTableList(ArrayMap<Integer, Table> tables) {
         tablesLinearLayout.removeAllViews();
         for (int tableNumber = -1; tableNumber < tables.size(); tableNumber++){
             View tableElement = getLayoutInflater().inflate(R.layout.maintenance_element_table, null);
@@ -109,25 +116,27 @@ public class EditTablesActivity extends AppCompatActivity {
                 continue;
             }
 
-            idTextView.setText(tables.get(tableNumber).getIdString());
-            numberTextView.setText(tables.get(tableNumber).getPureNumberString());
-            descriptionTextView.setText(tables.get(tableNumber).description);
-            final int finalTableNumber = tableNumber;
+            Table table = tables.valueAt(tableNumber);
+
+            idTextView.setText(table.getIdString());
+            numberTextView.setText(table.getPureNumberString());
+            descriptionTextView.setText(table.description);
             editButton.setOnClickListener(v -> {
-                numberEditText.setText(tables.get(finalTableNumber).getPureNumberString());
-                descriptionEditText.setText(tables.get(finalTableNumber).description);
-                editedTableID = tables.get(finalTableNumber).id;
+                numberEditText.setText(table.getPureNumberString());
+                descriptionEditText.setText(table.description);
+                editedTableID = table.id;
                 actionButton.setText("Edit table");
                 cancelButton.setVisibility(View.VISIBLE);
             });
             deleteButton.setOnClickListener(v -> {
                 try {
-                    ExecuteUpdate("DELETE FROM tables WHERE ID = " + tables.get(finalTableNumber).id);
-                    tables.remove(tables.get(finalTableNumber));
+                    ExecuteUpdate("DELETE FROM clients WHERE tableID = " + table.id);
+                    ExecuteUpdate("DELETE FROM tables WHERE ID = " + table.id);
+                    tables.remove(table.id);
                     Toast.makeText(this, "Table deleted!", Toast.LENGTH_SHORT).show();
                     updateTableList(getTables());
                 } catch (SQLException e) {
-                    if(e.getErrorCode() == 1451) Toast.makeText(this, "Table " + tables.get(finalTableNumber).number + " has order assigned!", Toast.LENGTH_SHORT).show();
+                    if(e.getErrorCode() == 1451) Toast.makeText(this, "Table #" + table.number + " has order assigned!", Toast.LENGTH_SHORT).show();
                     else { Log.wtf("SQLException", e.getMessage()); }
                 }
             });

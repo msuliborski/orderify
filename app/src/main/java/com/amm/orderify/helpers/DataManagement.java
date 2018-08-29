@@ -1,25 +1,24 @@
 package com.amm.orderify.helpers;
 
+import android.util.ArrayMap;
 import android.util.Log;
 
 import com.amm.orderify.helpers.data.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 
 import static com.amm.orderify.helpers.JBDCDriver.*;
 
 public class DataManagement {
 
 
-    public static List<DishCategory> getFullMenuData() {
+    public static ArrayMap<Integer, DishCategory> getFullMenuData() {
 
-        List<Addon> addons = new ArrayList<>();
-        List<AddonCategory> addonCategories = new ArrayList<>();
-        List<Dish> dishes = new ArrayList<>();
-        List<DishCategory> dishCategories = new ArrayList<>();
+        ArrayMap<Integer, Addon> addons = new ArrayMap<>();
+        ArrayMap<Integer, AddonCategory> addonCategories = new ArrayMap<>();
+        ArrayMap<Integer, Dish> dishes = new ArrayMap<>();
+        ArrayMap<Integer, DishCategory> dishCategories = new ArrayMap<>();
 
         try {
             Statement dishCategoriesS = getConnection().createStatement();
@@ -38,30 +37,30 @@ public class DataManagement {
                         ResultSet addonsRS = addonsS.executeQuery("SELECT * FROM addons \n" +
                                 "WHERE addonCategoryID = " + addonCategoriesRS.getInt("addonCategoryID"));
                         while (addonsRS.next()) {
-                            addons.add(new Addon(addonsRS.getInt("ID"), addonsRS.getString("name"), addonsRS.getFloat("price"), addonsRS.getInt("addonCategoryID")));
+                            addons.put(addonsRS.getInt("ID"), new Addon(addonsRS.getInt("ID"), addonsRS.getString("name"), addonsRS.getFloat("price"), addonsRS.getInt("addonCategoryID")));
                         }
-                        addonCategories.add(new AddonCategory(addonCategoriesRS.getInt("ID"), addonCategoriesRS.getString("name"), addonCategoriesRS.getString("description"), addonCategoriesRS.getBoolean("multiChoice"), addons));
-                        addons = new ArrayList<>();
+                        addonCategories.put(addonCategoriesRS.getInt("ID"), new AddonCategory(addonCategoriesRS.getInt("ID"), addonCategoriesRS.getString("name"), addonCategoriesRS.getString("description"), addonCategoriesRS.getBoolean("multiChoice"), addons));
+                        addons = new ArrayMap<>();
                     }
-                    dishes.add(new Dish(dishesRS.getInt("ID"), dishesRS.getInt("number"), dishesRS.getString("name"), dishesRS.getFloat("price"), dishesRS.getString("descS"), dishesRS.getString("descL"), dishesRS.getInt("dishCategoryID") , addonCategories));
-                    addonCategories = new ArrayList<>();
+                    dishes.put(dishesRS.getInt("ID"), new Dish(dishesRS.getInt("ID"), dishesRS.getInt("number"), dishesRS.getString("name"), dishesRS.getFloat("price"), dishesRS.getString("descS"), dishesRS.getString("descL"), dishesRS.getInt("dishCategoryID") , addonCategories));
+                    addonCategories = new ArrayMap<>();
                 }
-                dishCategories.add(new DishCategory(dishCategoriesRS.getInt("ID"), dishCategoriesRS.getString("name"), dishes));
-                dishes = new ArrayList<>();
+                dishCategories.put(dishCategoriesRS.getInt("ID"), new DishCategory(dishCategoriesRS.getInt("ID"), dishCategoriesRS.getString("name"), dishes));
+                dishes = new ArrayMap<>();
             }
             return dishCategories;
         } catch(SQLException e) { Log.wtf("SQLException", "Code: " + e.getErrorCode() + ", \nMessage:" + e.getMessage()); }
-        return null;
+        return new ArrayMap<>();
     }
 
 
-    public static List<Table> getFullTablesData(){
+    public static ArrayMap<Integer, Table> getFullTablesData(){
         if (notLocked()) {
-            List<Table> tables = new ArrayList<>();
-            List<Client> clients = new ArrayList<>();
-            List<Order> orders = new ArrayList<>();
-            List<Wish> wishes = new ArrayList<>();
-            List<Addon> addons = new ArrayList<>();
+            ArrayMap<Integer, Table> tables = new ArrayMap<>();
+            ArrayMap<Integer, Client> clients = new ArrayMap<>();
+            ArrayMap<Integer, Order> orders = new ArrayMap<>();
+            ArrayMap<Integer, Wish> wishes = new ArrayMap<>();
+            ArrayMap<Integer, Addon> addons = new ArrayMap<>();
             try {
                 Statement tablesS = getConnection().createStatement();
                 ResultSet tablesRS = tablesS.executeQuery("SELECT * FROM tables");
@@ -84,33 +83,33 @@ public class DataManagement {
                                         "JOIN addons ON addons.ID = addonsToWishes.addonID\n" +
                                         "WHERE wishID = " + wishesRS.getInt("ID"));
                                 while (addonsRS.next()) {
-                                    addons.add(new Addon(addonsRS.getInt("addonID"), addonsRS.getString("name"), addonsRS.getFloat("price"), addonsRS.getInt("addonCategoryID")));
+                                    addons.put(addonsRS.getInt("addonID"), new Addon(addonsRS.getInt("addonID"), addonsRS.getString("name"), addonsRS.getFloat("price"), addonsRS.getInt("addonCategoryID")));
                                 }
                                 Dish dish = new Dish(wishesRS.getInt("dishID"), wishesRS.getInt("number"), wishesRS.getString("name"), wishesRS.getFloat("price"), null, null, wishesRS.getInt("dishCategoryID"), null);
-                                wishes.add(new Wish(wishesRS.getInt("ID"), dish, wishesRS.getInt("amount"), addons));
-                                addons = new ArrayList<>();
+                                wishes.put(wishesRS.getInt("ID"), new Wish(wishesRS.getInt("ID"), dish, wishesRS.getInt("amount"), addons));
+                                addons = new ArrayMap<>();
                             }
-                            orders.add(new Order(ordersRS.getInt("ID"), ordersRS.getTime("time"), ordersRS.getDate("date"), ordersRS.getString("comments"), ordersRS.getInt("state"), clientRS.getInt("ID"), tablesRS.getInt("ID"), wishes));
-                            wishes = new ArrayList<>();
+                            orders.put(ordersRS.getInt("ID"), new Order(ordersRS.getInt("ID"), ordersRS.getTime("time"), ordersRS.getDate("date"), ordersRS.getString("comments"), ordersRS.getInt("state"), clientRS.getInt("ID"), tablesRS.getInt("ID"), wishes));
+                            wishes = new ArrayMap<>();
                         }
-                        clients.add(new Client(clientRS.getInt("ID"), clientRS.getInt("number"), clientRS.getInt("state"), orders));
-                        orders = new ArrayList<>();
+                        clients.put(clientRS.getInt("ID"), new Client(clientRS.getInt("ID"), clientRS.getInt("number"), clientRS.getInt("state"), orders));
+                        orders = new ArrayMap<>();
                     }
-                    tables.add(new Table(tablesRS.getInt("ID"), tablesRS.getInt("number"), tablesRS.getString("description"), tablesRS.getInt("state"), clients));
-                    clients = new ArrayList<>();
+                    tables.put(tablesRS.getInt("ID"), new Table(tablesRS.getInt("ID"), tablesRS.getInt("number"), tablesRS.getString("description"), tablesRS.getInt("state"), clients));
+                    clients = new ArrayMap<>();
                 }
                 return tables;
             } catch(SQLException e) { Log.wtf("SQLException", "Code: " + e.getErrorCode() + ", \nMessage:" + e.getMessage()); }
         }
-        return new ArrayList<>();
+        return new ArrayMap<>();
     }
 
     public static Table getFullTableData(int tableID){
         Table table = null;
-        List<Client> clients = new ArrayList<>();
-        List<Order> orders = new ArrayList<>();
-        List<Wish> wishes = new ArrayList<>();
-        List<Addon> addons = new ArrayList<>();
+        ArrayMap<Integer, Client> clients = new ArrayMap<>();
+        ArrayMap<Integer, Order> orders = new ArrayMap<>();
+        ArrayMap<Integer, Wish> wishes = new ArrayMap<>();
+        ArrayMap<Integer, Addon> addons = new ArrayMap<>();
         try {
             Statement clientS = getConnection().createStatement();
             ResultSet clientRS = clientS.executeQuery("SELECT tables.ID AS tableID, tables.number AS tableNumber, tables.description AS tableDescription, tables.state AS tableState, clients.ID AS clientID, clients.number AS clientNumber, clients.state AS clientState FROM tables \n" +
@@ -131,17 +130,17 @@ public class DataManagement {
                                 "JOIN addons ON addons.ID = addonsToWishes.addonID\n" +
                                 "WHERE wishID = " + wishesRS.getInt("ID"));
                         while (addonsRS.next()) {
-                            addons.add(new Addon(addonsRS.getInt("addonID"), addonsRS.getString("name"), addonsRS.getFloat("price"), addonsRS.getInt("addonCategoryID")));
+                            addons.put(addonsRS.getInt("addonID"), new Addon(addonsRS.getInt("addonID"), addonsRS.getString("name"), addonsRS.getFloat("price"), addonsRS.getInt("addonCategoryID")));
                         }
-                        Dish dish = new Dish(wishesRS.getInt("dishID"), wishesRS.getInt("number"), wishesRS.getString("name"), wishesRS.getFloat("price"), null, null, wishesRS.getInt("dishCategoryID"), null);
-                        wishes.add(new Wish(wishesRS.getInt("ID"), dish, wishesRS.getInt("amount"), addons));
-                        addons = new ArrayList<>();
+                        Dish dish = new Dish(wishesRS.getInt("dishID"), wishesRS.getInt("number"), wishesRS.getString("name"), wishesRS.getFloat("price"), null, null, wishesRS.getInt("dishCategoryID"), new ArrayMap<>());
+                        wishes.put(wishesRS.getInt("ID"), new Wish(wishesRS.getInt("ID"), dish, wishesRS.getInt("amount"), addons));
+                        addons = new ArrayMap<>();
                     }
-                    orders.add(new Order(ordersRS.getInt("ID"), ordersRS.getTime("time"), ordersRS.getDate("date"), ordersRS.getString("comments"), ordersRS.getInt("state"), clientRS.getInt("clientID"), clientRS.getInt("tableID"), wishes));
-                    wishes = new ArrayList<>();
+                    orders.put(ordersRS.getInt("ID"), new Order(ordersRS.getInt("ID"), ordersRS.getTime("time"), ordersRS.getDate("date"), ordersRS.getString("comments"), ordersRS.getInt("state"), clientRS.getInt("clientID"), clientRS.getInt("tableID"), wishes));
+                    wishes = new ArrayMap<>();
                 }
-                clients.add(new Client(clientRS.getInt("clientID"), clientRS.getInt("clientNumber"), clientRS.getInt("clientState"), orders));
-                orders = new ArrayList<>();
+                clients.put(clientRS.getInt("clientID"), new Client(clientRS.getInt("clientID"), clientRS.getInt("clientNumber"), clientRS.getInt("clientState"), orders));
+                orders = new ArrayMap<>();
                 table = new Table(clientRS.getInt("tableID"), clientRS.getInt("tableNumber"), clientRS.getString("tableDescription"), clientRS.getInt("tableState"), clients);
             }
             return table;
@@ -150,11 +149,11 @@ public class DataManagement {
     }
 
 
-    public static List<Order> getNewOrders() {
+    public static ArrayMap<Integer, Order> getNewOrders() {
         if (notLocked()) {
-            List<Order> newOrders = new ArrayList<>();
-            List<Wish> newWishes = new ArrayList<>();
-            List<Addon> newAddons = new ArrayList<>();
+            ArrayMap<Integer, Order> newOrders = new ArrayMap<>();
+            ArrayMap<Integer, Wish> newWishes = new ArrayMap<>();
+            ArrayMap<Integer, Addon> newAddons = new ArrayMap<>();
             try {
                 Statement newOrdersS = getConnection().createStatement();
                 ResultSet newOrdersRS = newOrdersS.executeQuery("SELECT newOrders.*, " +
@@ -172,14 +171,14 @@ public class DataManagement {
                                 "JOIN addons ON addons.ID = newAddonsToWishes.addonID\n" +
                                 "WHERE wishID = " + newWishesRS.getInt("ID"));
                         while (addonsRS.next()) {
-                            newAddons.add(new Addon(addonsRS.getInt("addonID"), addonsRS.getString("name"), addonsRS.getFloat("price"), addonsRS.getInt("addonCategoryID")));
+                            newAddons.put(addonsRS.getInt("addonID"), new Addon(addonsRS.getInt("addonID"), addonsRS.getString("name"), addonsRS.getFloat("price"), addonsRS.getInt("addonCategoryID")));
                         }
-                        Dish dish = new Dish(newWishesRS.getInt("dishID"), newWishesRS.getInt("number"), newWishesRS.getString("name"), newWishesRS.getFloat("price"), null, null, newWishesRS.getInt("dishCategoryID"), null);
-                        newWishes.add(new Wish(newWishesRS.getInt("ID"), dish, newWishesRS.getInt("amount"), newAddons));
-                        newAddons = new ArrayList<>();
+                        Dish dish = new Dish(newWishesRS.getInt("dishID"), newWishesRS.getInt("number"), newWishesRS.getString("name"), newWishesRS.getFloat("price"), null, null, newWishesRS.getInt("dishCategoryID"), new ArrayMap<>());
+                        newWishes.put(newWishesRS.getInt("ID"), new Wish(newWishesRS.getInt("ID"), dish, newWishesRS.getInt("amount"), newAddons));
+                        newAddons = new ArrayMap<>();
                     }
-                    newOrders.add(new Order(newOrdersRS.getInt("ID"), newOrdersRS.getTime("time"), newOrdersRS.getDate("date"), newOrdersRS.getString("comments"), newOrdersRS.getInt("state"), newOrdersRS.getInt("clientID"), newOrdersRS.getInt("tableID"), newWishes));
-                    newWishes = new ArrayList<>();
+                    newOrders.put(newOrdersRS.getInt("ID"), new Order(newOrdersRS.getInt("ID"), newOrdersRS.getTime("time"), newOrdersRS.getDate("date"), newOrdersRS.getString("comments"), newOrdersRS.getInt("state"), newOrdersRS.getInt("clientID"), newOrdersRS.getInt("tableID"), newWishes));
+                    newWishes = new ArrayMap<>();
                 }
                 ExecuteUpdate("DELETE FROM newAddonsToWishes");
                 ExecuteUpdate("DELETE FROM newWishes");
@@ -187,16 +186,16 @@ public class DataManagement {
             } catch(SQLException e) { Log.wtf("SQLException", "Code: " + e.getErrorCode() + ", \nMessage:" + e.getMessage()); }
             return newOrders;
         }
-        return new ArrayList<>();
+        return new ArrayMap<>();
     }
 
-    public static List<Order> getAllOrders() {
+    public static ArrayMap<Integer, Order> getAllOrders() {
         while (true){
             if(notLocked()) break;
         }
-        List<Order> orders = new ArrayList<>();
-        List<Wish> wishes = new ArrayList<>();
-        List<Addon> addons = new ArrayList<>();
+        ArrayMap<Integer,Order> orders = new ArrayMap<>();
+        ArrayMap<Integer,Wish> wishes = new ArrayMap<>();
+        ArrayMap<Integer,Addon> addons = new ArrayMap<>();
         try {
             Statement ordersS = getConnection().createStatement();
             ResultSet ordersRS = ordersS.executeQuery("SELECT orders.*, " +
@@ -214,14 +213,14 @@ public class DataManagement {
                             "JOIN addons ON addons.ID = addonsToWishes.addonID\n" +
                             "WHERE wishID = " + wishesRS.getInt("ID"));
                     while (addonsRS.next()) {
-                        addons.add(new Addon(addonsRS.getInt("addonID"), addonsRS.getString("name"), addonsRS.getFloat("price"), addonsRS.getInt("addonCategoryID")));
+                        addons.put(addonsRS.getInt("addonID"), new Addon(addonsRS.getInt("addonID"), addonsRS.getString("name"), addonsRS.getFloat("price"), addonsRS.getInt("addonCategoryID")));
                     }
-                    Dish dish = new Dish(wishesRS.getInt("dishID"), wishesRS.getInt("number"), wishesRS.getString("name"), wishesRS.getFloat("price"), null, null, wishesRS.getInt("dishCategoryID"), null);
-                    wishes.add(new Wish(wishesRS.getInt("ID"), dish, wishesRS.getInt("amount"), addons));
-                    addons = new ArrayList<>();
+                    Dish dish = new Dish(wishesRS.getInt("dishID"), wishesRS.getInt("number"), wishesRS.getString("name"), wishesRS.getFloat("price"), null, null, wishesRS.getInt("dishCategoryID"), new ArrayMap<>());
+                    wishes.put(wishesRS.getInt("ID"), new Wish(wishesRS.getInt("ID"), dish, wishesRS.getInt("amount"), addons));
+                    addons = new ArrayMap<>();
                 }
-                orders.add(new Order(ordersRS.getInt("ID"), ordersRS.getTime("time"), ordersRS.getDate("date"), ordersRS.getString("comments"), ordersRS.getInt("state"), ordersRS.getInt("clientID"), ordersRS.getInt("tableID"), wishes));
-                wishes = new ArrayList<>();
+                orders.put(ordersRS.getInt("ID"), new Order(ordersRS.getInt("ID"), ordersRS.getTime("time"), ordersRS.getDate("date"), ordersRS.getString("comments"), ordersRS.getInt("state"), ordersRS.getInt("clientID"), ordersRS.getInt("tableID"), wishes));
+                wishes = new ArrayMap<>();
             }
             ExecuteUpdate("DELETE FROM newAddonsToWishes");
             ExecuteUpdate("DELETE FROM newWishes");
@@ -230,10 +229,10 @@ public class DataManagement {
         return orders;
     }
 
-    public static List<Table> getOnlyTables(){
-        List<Table> tables = new ArrayList<>();
-        List<Client> clients = new ArrayList<>();
-        List<Order> orders = new ArrayList<>();
+    public static ArrayMap<Integer, Table> getOnlyTables(){
+        ArrayMap<Integer, Table> tables = new ArrayMap<>();
+        ArrayMap<Integer, Client> clients = new ArrayMap<>();
+        ArrayMap<Integer, Order> orders = new ArrayMap<>();
         try {
             Statement tablesS = getConnection().createStatement();
             ResultSet tablesRS = tablesS.executeQuery("SELECT * FROM tables");
@@ -246,13 +245,13 @@ public class DataManagement {
                     ResultSet ordersRS = ordersS.executeQuery("SELECT * FROM orders \n" +
                             "WHERE clientID = " + clientRS.getInt("ID"));
                     while (ordersRS.next()) {
-                        orders.add(new Order(ordersRS.getInt("ID"), ordersRS.getTime("time"), ordersRS.getDate("date"), ordersRS.getString("comments"), ordersRS.getInt("state"), clientRS.getInt("ID"), tablesRS.getInt("ID"), null));
+                        orders.put(ordersRS.getInt("ID"), new Order(ordersRS.getInt("ID"), ordersRS.getTime("time"), ordersRS.getDate("date"), ordersRS.getString("comments"), ordersRS.getInt("state"), clientRS.getInt("ID"), tablesRS.getInt("ID"), new ArrayMap<>()));
                     }
-                    clients.add(new Client(clientRS.getInt("ID"), clientRS.getInt("number"), clientRS.getInt("state"), orders));
-                    orders = new ArrayList<>();
+                    clients.put(clientRS.getInt("ID"), new Client(clientRS.getInt("ID"), clientRS.getInt("number"), clientRS.getInt("state"), orders));
+                    orders = new ArrayMap<>();
                 }
-                tables.add(new Table(tablesRS.getInt("ID"), tablesRS.getInt("number"), tablesRS.getString("description"), tablesRS.getInt("state"), clients));
-                clients = new ArrayList<>();
+                tables.put(tablesRS.getInt("ID"), new Table(tablesRS.getInt("ID"), tablesRS.getInt("number"), tablesRS.getString("description"), tablesRS.getInt("state"), clients));
+                clients = new ArrayMap<>();
             }
         } catch(SQLException e) { Log.wtf("SQLException", "Code: " + e.getErrorCode() + ", \nMessage:" + e.getMessage()); }
         return tables;
@@ -274,10 +273,10 @@ public class DataManagement {
     public static void deleteOrder(Order order){
         try {
             for(int wishNumber = 0; wishNumber < order.wishes.size(); wishNumber++) {
-                for (int addonNumber = 0; addonNumber < order.wishes.get(wishNumber).addons.size(); addonNumber++){
-                    ExecuteUpdate("DELETE FROM addonsToWishes WHERE addonID = " + order.wishes.get(wishNumber).addons.get(addonNumber).id);
+                for (int addonNumber = 0; addonNumber < order.wishes.valueAt(wishNumber).addons.size(); addonNumber++){
+                    ExecuteUpdate("DELETE FROM addonsToWishes WHERE addonID = " + order.wishes.valueAt(wishNumber).addons.valueAt(addonNumber).id);
                 }
-                ExecuteUpdate("DELETE FROM wishes WHERE ID = " + order.wishes.get(wishNumber).id);
+                ExecuteUpdate("DELETE FROM wishes WHERE ID = " + order.wishes.valueAt(wishNumber).id);
             }
             ExecuteUpdate("DELETE FROM orders WHERE ID = " + order.id);
         } catch(SQLException e) { Log.wtf("SQLException", "Code: " + e.getErrorCode() + ", \nMessage:" + e.getMessage()); }

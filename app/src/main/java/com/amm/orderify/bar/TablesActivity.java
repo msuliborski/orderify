@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.ArrayMap;
+import android.util.SparseArray;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -26,7 +28,7 @@ public class TablesActivity extends AppCompatActivity {
     LinearLayout tablesLinearLayout;
     UpdateTableTask task = new UpdateTableTask(TablesActivity.this);
 
-    List<Table> tables;
+    ArrayMap<Integer, Table> tables;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,24 +56,23 @@ public class TablesActivity extends AppCompatActivity {
 
         for (int tableNumber = 0; tableNumber < tables.size(); tableNumber++) {
             View tableElement = getLayoutInflater().inflate(R.layout.bar_tables_element_table, null);
-            Table table = tables.get(tableNumber);
             TextView tableNumberTextView = tableElement.findViewById(R.id.TableNumberTextView);
-            tableNumberTextView.setText(table.getNumberString());
-
             TextView tableStateTextView = tableElement.findViewById(R.id.TableStateTextView);
-            tableStateTextView.setText(table.getState());
-
             Button acceptRequestButton = tableElement.findViewById(R.id.AcceptRequestButton);
+            Button freezeStateButton = tableElement.findViewById(R.id.FreezeStateButton);
+
+            Table table = tables.valueAt(tableNumber);
+
+            tableNumberTextView.setText(table.getNumberString());
+            tableStateTextView.setText(table.getState());
             acceptRequestButton.setOnClickListener(v -> {
                 try {
                     table.state = 1;
-                    for(int i = 0; i < table.clients.size(); i++) table.clients.get(i).state = 1;
+                    for(int i = 0; i < table.clients.size(); i++) table.clients.valueAt(i).state = 1;
                     ExecuteUpdate("UPDATE tables SET state = 1 WHERE ID = " + table.id);
                     ExecuteUpdate("UPDATE clients SET state = 1 WHERE tableID = " + table.id);
                 } catch (SQLException ignored) {}
             });
-
-            Button freezeStateButton = tableElement.findViewById(R.id.FreezeStateButton);
             freezeStateButton.setOnClickListener(v -> {
                 try {
                     if (table.state == 1) {
@@ -90,26 +91,21 @@ public class TablesActivity extends AppCompatActivity {
         }
     }
 
-    private void addNewOrdersView(List<Order> newOrders) {
-        for (int orderNumber = 0; orderNumber < newOrders.size(); orderNumber++) {
-            Order order = newOrders.get(orderNumber);
-
+    private void addNewOrdersView(ArrayMap<Integer,Order> orders) {
+        for (int orderNumber = 0; orderNumber < orders.size(); orderNumber++) {
+            Order order = orders.valueAt(orderNumber);
             View tableElement = findTableViewById(order.tableID, tablesLinearLayout);
             LinearLayout ordersLinearLayout = tableElement.findViewById(R.id.OrdersLinearLayout);
-
             View orderElement = getLayoutInflater().inflate(R.layout.bar_tables_element_order, null);
-
-            ImageButton deleteOrderButton = orderElement.findViewById(R.id.DeleteOrderButton);
-            deleteOrderButton.setOnClickListener(v -> {
-                deleteOrder(order);
-                ordersLinearLayout.removeView(orderElement);
-            });
-
             TextView orderNumberTextView = orderElement.findViewById(R.id.OrderNumberTextView);
             TextView orderWaitingTimeTextView = orderElement.findViewById(R.id.OrderWaitingTimeTextView);
             TextView orderPriceTextView = orderElement.findViewById(R.id.OrderPriceTextView);
             TextView orderStateTextView = orderElement.findViewById(R.id.OrderStateTextView);
             TextView commentsTextView = orderElement.findViewById(R.id.CommentsTextView);
+            ImageButton deleteOrderButton = orderElement.findViewById(R.id.DeleteOrderButton);
+            Button changeOrderStateButton = orderElement.findViewById(R.id.ChangeOrderStateButton);
+            Button expandCollapseButton = tableElement.findViewById(R.id.ExpandCollapseButton);
+
             runOnUiThread(() -> {
                 orderNumberTextView.setText(order.getOrderNumberString());
                 orderWaitingTimeTextView.setText(order.getWaitingTime());
@@ -118,7 +114,10 @@ public class TablesActivity extends AppCompatActivity {
                 commentsTextView.setText(order.comments);
             });
 
-            Button changeOrderStateButton = orderElement.findViewById(R.id.ChangeOrderStateButton);
+            deleteOrderButton.setOnClickListener(v -> {
+                deleteOrder(order);
+                ordersLinearLayout.removeView(orderElement);
+            });
             if (order.state == 1) {
                 runOnUiThread(() -> orderStateTextView.setText(R.string.lifecycle_order_preparation));
                 runOnUiThread(() -> changeOrderStateButton.setText(R.string.bar_tables_order_state_prepared_button));
@@ -132,8 +131,8 @@ public class TablesActivity extends AppCompatActivity {
                 runOnUiThread(() -> changeOrderStateButton.setVisibility(View.VISIBLE));
             } else {
                 runOnUiThread(() -> orderStateTextView.setText(R.string.lifecycle_order_paid));
-                runOnUiThread(() -> changeOrderStateButton.setVisibility(View.GONE));
-            }
+                runOnUiThread(() -> changeOrderStateButton.setVisibility(View.GONE)); }
+
             changeOrderStateButton.setOnClickListener(v -> {
                 try {
                     if (order.state == 1) {
@@ -154,22 +153,21 @@ public class TablesActivity extends AppCompatActivity {
 
             LinearLayout wishesLinearLayout = orderElement.findViewById(R.id.WishesLinearLayout);
             for (int wishNumber = 0; wishNumber < order.wishes.size(); wishNumber++) {
-                Wish wish = order.wishes.get(wishNumber);
                 View wishElement = getLayoutInflater().inflate(R.layout.bar_tables_element_wish, null);
-
                 TextView dishNameTextView = wishElement.findViewById(R.id.DishNameTextView);
-                runOnUiThread(() -> dishNameTextView.setText(wish.dish.name + " x" + wish.amount));
-
                 LinearLayout addonsLinearLayout = wishElement.findViewById(R.id.AddonsLinearLayout);
 
-                wish.addons.sort(Comparator.comparing(object -> String.valueOf(object.addonCategoryID))); //sort
+                Wish wish = order.wishes.valueAt(wishNumber);
+
+                runOnUiThread(() -> dishNameTextView.setText(wish.dish.name + " x" + wish.amount));
+
+                //wish.addons.sort(Comparator.comparing(object -> String.valueOf(object.addonCategoryID))); //sort
 
                 for (int addonNumber = 0; addonNumber < wish.addons.size(); addonNumber++) {
-                    Addon addon = wish.addons.get(addonNumber);
-
+                    Addon addon = wish.addons.valueAt(addonNumber);
                     View addonElement = getLayoutInflater().inflate(R.layout.bar_tables_element_addon, null);
-
                     TextView addonNameTextView = addonElement.findViewById(R.id.AddonNameTextView);
+
                     runOnUiThread(() -> {
                         addonNameTextView.setText(addon.name);
                         addonsLinearLayout.addView(addonElement);
@@ -179,7 +177,6 @@ public class TablesActivity extends AppCompatActivity {
             }
             runOnUiThread(() -> ordersLinearLayout.addView(orderElement));
 
-            Button expandCollapseButton = tableElement.findViewById(R.id.ExpandCollapseButton);
             expandCollapseButton.setOnClickListener(v -> {
                 if (ordersLinearLayout.getVisibility() == View.GONE)
                     ordersLinearLayout.setVisibility(View.VISIBLE);
@@ -192,7 +189,7 @@ public class TablesActivity extends AppCompatActivity {
     private void updateTablesView() {
         tables = getFullTablesData();
         for(int tableNumber = 0; tableNumber < tables.size(); tableNumber++) {
-            Table table = tables.get(tableNumber);
+            Table table = tables.valueAt(tableNumber);
             try {
                 View tableElement = findTableViewById(table.id, tablesLinearLayout);
 
@@ -205,9 +202,9 @@ public class TablesActivity extends AppCompatActivity {
             } catch (Exception ignored) { }
 
             for (int clientNumber = 0; clientNumber < table.clients.size(); clientNumber++) {
-                Client client = table.clients.get(clientNumber);
+                Client client = table.clients.valueAt(clientNumber);
                 for (int orderNumber = 0; orderNumber < client.orders.size(); orderNumber++) {
-                    Order order = client.orders.get(orderNumber);
+                    Order order = client.orders.valueAt(orderNumber);
                     try{
                         Thread.sleep(10);//do we really need it?
                         View orderElement = findOrderViewById(order.id, tablesLinearLayout).orderElement;
