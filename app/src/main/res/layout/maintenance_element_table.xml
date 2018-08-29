@@ -10,7 +10,9 @@
         android:id="@+id/IdTextView"
         android:layout_width="60dp"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/tw_cen"
         android:text="2"
+        android:textColor="@color/darkRed"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteY="0dp" />
@@ -20,7 +22,9 @@
         android:layout_width="60dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
+        android:fontFamily="@font/tw_cen"
         android:text="2"
+        android:textColor="@color/darkRed"
         app:layout_constraintStart_toEndOf="@+id/IdTextView"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteY="0dp" />
@@ -30,7 +34,9 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
+        android:fontFamily="@font/tw_cen"
         android:text="W kącie"
+        android:textColor="@color/darkRed"
         app:layout_constraintStart_toEndOf="@+id/NumberTextView"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteY="0dp" />
