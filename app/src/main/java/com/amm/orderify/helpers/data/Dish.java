@@ -1,5 +1,7 @@
 package com.amm.orderify.helpers.data;
 
+import android.util.SparseArray;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +16,7 @@ public class Dish {
     public String descL;
     public int dishCategoryID;
     public List<AddonCategory> addonCategories;
+    public SparseArray<AddonCategory> addonCategories2;
     public List<Addon> chosenAddons = new ArrayList<>(); //for menu handling
 
     public String dishCategoryName;
@@ -27,6 +30,16 @@ public class Dish {
         this.descL = descL;
         this.dishCategoryID = dishCategoryID;
         this.addonCategories = addonCategories;
+    }
+    public Dish(int id, int number, String name, float price, String descS, String descL, int dishCategoryID, SparseArray<AddonCategory> addonCategories) {
+        this.id = id;
+        this.number = number;
+        this.name = name;
+        this.price = price;
+        this.descS = descS;
+        this.descL = descL;
+        this.dishCategoryID = dishCategoryID;
+        this.addonCategories2 = addonCategories;
     }
 
     public String getPriceString(){

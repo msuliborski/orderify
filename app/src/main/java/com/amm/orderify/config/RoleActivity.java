@@ -1,6 +1,7 @@
 package com.amm.orderify.config;
 
 import android.Manifest;
+import android.app.ActionBar;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -47,7 +48,6 @@ public class RoleActivity extends AppCompatActivity {
 
 
     List<Table> tables = new ArrayList<>();
-    List<Client> clients = new ArrayList<>();
     boolean remember = false;
 
     SharedPreferences sharedPreferences;
@@ -68,14 +68,7 @@ public class RoleActivity extends AppCompatActivity {
             case 0: //BAR
                 this.startActivity(new Intent(this, TablesActivity.class)); break;
             case 1: //CLIENT
-                try {
-                    ResultSet tablesRS = ExecuteQuery("SELECT * FROM tables WHERE ID = " + sharedPreferences.getInt("thisTableID", 1));
-                    if (tablesRS.next())
-                        thisTable = new Table(tablesRS.getInt("ID"), tablesRS.getInt("number"), tablesRS.getString("description"), tablesRS.getInt("state"), null);
-                    ResultSet clientRS = ExecuteQuery("SELECT * FROM clients WHERE tableID = " + thisTable.id);
-                    if (clientRS.next())
-                        thisClient = new Client(clientRS.getInt("ID"), clientRS.getInt("number"), clientRS.getInt("state"), null);
-                } catch (SQLException ignored) {}
+                updateThisTableAndClient();
                 this.startActivity(new Intent(this, MenuActivity.class));
                 break;
             case 2: //MAINTENANCE
@@ -90,21 +83,7 @@ public class RoleActivity extends AppCompatActivity {
         choseClientTextView = findViewById(R.id.ChoseClientTextView);
         clientSpinner = findViewById(R.id.ClientSpinner);
 
-        try {
-            Statement tableS = getConnection().createStatement();
-            ResultSet tablesRS = tableS.executeQuery("SELECT * FROM tables");
-            while (tablesRS.next()) {
-                Statement clientS = getConnection().createStatement();
-                ResultSet clientRS = clientS.executeQuery("SELECT * FROM clients \n" +
-                        "WHERE tableID = " + tablesRS.getInt("ID"));
-                while (clientRS.next()){
-                    clients.add(new Client(clientRS.getInt("ID"), clientRS.getInt("number"), clientRS.getInt("state"), null));
-                }
-                tables.add(new Table(tablesRS.getInt("ID"), tablesRS.getInt("number"), tablesRS.getString("description"), tablesRS.getInt("state"), clients));
-                clients = new ArrayList<>();
-            }
-        } catch (SQLException ignored) {}
-
+        tables = getTables();
 
         roleSpinner = findViewById(R.id.RoleSpinner);
         String[] roleStrings = new String[3];
@@ -130,6 +109,8 @@ public class RoleActivity extends AppCompatActivity {
 
                         choseClientTextView.setVisibility(View.VISIBLE);
                         clientSpinner.setVisibility(View.VISIBLE);
+
+                        tables = getTables();
 
                         List<String> tableStrings = new ArrayList<>();
                         for (int tableNumber = 0; tableNumber < tables.size(); tableNumber++)
@@ -201,5 +182,36 @@ public class RoleActivity extends AppCompatActivity {
                     break;
             }
         });
+    }
+
+    private List<Table> getTables() {
+        List<Table> tables = new ArrayList<>();
+        List<Client> clients = new ArrayList<>();
+        try {
+            Statement tableS = getConnection().createStatement();
+            ResultSet tablesRS = tableS.executeQuery("SELECT * FROM tables");
+            while (tablesRS.next()) {
+                Statement clientS = getConnection().createStatement();
+                ResultSet clientRS = clientS.executeQuery("SELECT * FROM clients \n" +
+                        "WHERE tableID = " + tablesRS.getInt("ID"));
+                while (clientRS.next()){
+                    clients.add(new Client(clientRS.getInt("ID"), clientRS.getInt("number"), clientRS.getInt("state"), null));
+                }
+                tables.add(new Table(tablesRS.getInt("ID"), tablesRS.getInt("number"), tablesRS.getString("description"), tablesRS.getInt("state"), clients));
+                clients = new ArrayList<>();
+            }
+        } catch (SQLException ignored) {}
+        return tables;
+    }
+
+    private void updateThisTableAndClient() {
+        try {
+            ResultSet tablesRS = ExecuteQuery("SELECT * FROM tables WHERE ID = " + sharedPreferences.getInt("thisTableID", 1));
+            if (tablesRS.next())
+                thisTable = new Table(tablesRS.getInt("ID"), tablesRS.getInt("number"), tablesRS.getString("description"), tablesRS.getInt("state"), null);
+            ResultSet clientRS = ExecuteQuery("SELECT * FROM clients WHERE tableID = " + thisTable.id);
+            if (clientRS.next())
+                thisClient = new Client(clientRS.getInt("ID"), clientRS.getInt("number"), clientRS.getInt("state"), null);
+        } catch (SQLException ignored) {}
     }
 }

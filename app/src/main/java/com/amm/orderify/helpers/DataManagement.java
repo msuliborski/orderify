@@ -86,7 +86,7 @@ public class DataManagement {
                                 while (addonsRS.next()) {
                                     addons.add(new Addon(addonsRS.getInt("addonID"), addonsRS.getString("name"), addonsRS.getFloat("price"), addonsRS.getInt("addonCategoryID")));
                                 }
-                                Dish dish = new Dish(wishesRS.getInt("dishID"), wishesRS.getInt("number"), wishesRS.getString("name"), wishesRS.getFloat("price"), null, null, wishesRS.getInt("dishCategoryID"), null);
+                                Dish dish = new Dish(wishesRS.getInt("dishID"), wishesRS.getInt("number"), wishesRS.getString("name"), wishesRS.getFloat("price"), null, null, wishesRS.getInt("dishCategoryID"), new ArrayList<>());
                                 wishes.add(new Wish(wishesRS.getInt("ID"), dish, wishesRS.getInt("amount"), addons));
                                 addons = new ArrayList<>();
                             }
@@ -133,7 +133,7 @@ public class DataManagement {
                         while (addonsRS.next()) {
                             addons.add(new Addon(addonsRS.getInt("addonID"), addonsRS.getString("name"), addonsRS.getFloat("price"), addonsRS.getInt("addonCategoryID")));
                         }
-                        Dish dish = new Dish(wishesRS.getInt("dishID"), wishesRS.getInt("number"), wishesRS.getString("name"), wishesRS.getFloat("price"), null, null, wishesRS.getInt("dishCategoryID"), null);
+                        Dish dish = new Dish(wishesRS.getInt("dishID"), wishesRS.getInt("number"), wishesRS.getString("name"), wishesRS.getFloat("price"), null, null, wishesRS.getInt("dishCategoryID"), new ArrayList<>());
                         wishes.add(new Wish(wishesRS.getInt("ID"), dish, wishesRS.getInt("amount"), addons));
                         addons = new ArrayList<>();
                     }
@@ -174,7 +174,7 @@ public class DataManagement {
                         while (addonsRS.next()) {
                             newAddons.add(new Addon(addonsRS.getInt("addonID"), addonsRS.getString("name"), addonsRS.getFloat("price"), addonsRS.getInt("addonCategoryID")));
                         }
-                        Dish dish = new Dish(newWishesRS.getInt("dishID"), newWishesRS.getInt("number"), newWishesRS.getString("name"), newWishesRS.getFloat("price"), null, null, newWishesRS.getInt("dishCategoryID"), null);
+                        Dish dish = new Dish(newWishesRS.getInt("dishID"), newWishesRS.getInt("number"), newWishesRS.getString("name"), newWishesRS.getFloat("price"), null, null, newWishesRS.getInt("dishCategoryID"), new ArrayList<>());
                         newWishes.add(new Wish(newWishesRS.getInt("ID"), dish, newWishesRS.getInt("amount"), newAddons));
                         newAddons = new ArrayList<>();
                     }
@@ -216,7 +216,7 @@ public class DataManagement {
                     while (addonsRS.next()) {
                         addons.add(new Addon(addonsRS.getInt("addonID"), addonsRS.getString("name"), addonsRS.getFloat("price"), addonsRS.getInt("addonCategoryID")));
                     }
-                    Dish dish = new Dish(wishesRS.getInt("dishID"), wishesRS.getInt("number"), wishesRS.getString("name"), wishesRS.getFloat("price"), null, null, wishesRS.getInt("dishCategoryID"), null);
+                    Dish dish = new Dish(wishesRS.getInt("dishID"), wishesRS.getInt("number"), wishesRS.getString("name"), wishesRS.getFloat("price"), null, null, wishesRS.getInt("dishCategoryID"), new ArrayList<>());
                     wishes.add(new Wish(wishesRS.getInt("ID"), dish, wishesRS.getInt("amount"), addons));
                     addons = new ArrayList<>();
                 }

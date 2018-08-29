@@ -3,6 +3,7 @@ package com.amm.orderify.maintenance.editors;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -74,19 +75,19 @@ public class EditDishCategoriesActivity extends AppCompatActivity {
     }
 
 
-    private List<DishCategory> getDishCategories(){
-        List<DishCategory> dishCategories = new ArrayList<>();
+    private SparseArray<DishCategory> getDishCategories(){
+        SparseArray<DishCategory> dishCategories = new SparseArray<>();
         try {
             ResultSet dishCategoriesRS = ExecuteQuery("SELECT * FROM dishCategories");
             while (dishCategoriesRS.next())
-                dishCategories.add(new DishCategory(dishCategoriesRS.getInt("ID"), dishCategoriesRS.getString("name"), null));
+                dishCategories.put(dishCategoriesRS.getInt("ID"), new DishCategory(dishCategoriesRS.getInt("ID"), dishCategoriesRS.getString("name"), null));
         } catch (SQLException ignored) {}
         Log.wtf("ef", dishCategories.size()+"");
         return dishCategories;
     }
 
-    public void updateDishCategoryList(List<DishCategory> dishCategories) {
-        dishCategories.sort(Comparator.comparing(object -> String.valueOf(object.name)));
+    public void updateDishCategoryList(SparseArray<DishCategory> dishCategories) {
+        //dishCategories.sort(Comparator.comparing(object -> String.valueOf(object.name)));
         dishCategoriesLinearLayout.removeAllViews();
         for (int dishCategoryNumber = -1; dishCategoryNumber < dishCategories.size(); dishCategoryNumber++){
 
@@ -105,24 +106,25 @@ public class EditDishCategoriesActivity extends AppCompatActivity {
                 continue;
             }
 
-            idTextView.setText(dishCategories.get(dishCategoryNumber).getIdString());
-            nameTextView.setText(dishCategories.get(dishCategoryNumber).name);
+            DishCategory dishCategory = dishCategories.valueAt(dishCategoryNumber);
 
-            final int finaldishCategoryNumber = dishCategoryNumber;
+            idTextView.setText(dishCategory.getIdString());
+            nameTextView.setText(dishCategory.name);
+
             editButton.setOnClickListener(v -> {
-                nameEditText.setText(dishCategories.get(finaldishCategoryNumber).name);
-                editedDishCategoryID = dishCategories.get(finaldishCategoryNumber).id;
+                nameEditText.setText(dishCategory.name);
+                editedDishCategoryID = dishCategory.id;
                 actionButton.setText("Edit dishCategory");
                 cancelButton.setVisibility(View.VISIBLE);
             });
             deleteButton.setOnClickListener(v -> {
                 try {
-                    ExecuteUpdate("DELETE FROM dishCategories WHERE ID = " + dishCategories.get(finaldishCategoryNumber).id);
-                    dishCategories.remove(dishCategories.get(finaldishCategoryNumber));
+                    ExecuteUpdate("DELETE FROM dishCategories WHERE ID = " + dishCategory.id);
+                    dishCategories.remove(dishCategory.id);
                     updateDishCategoryList(getDishCategories());
                     Toast.makeText(this, "DishCategory deleted!", Toast.LENGTH_SHORT).show();
                 } catch (SQLException e) {
-                    if(e.getErrorCode() == 1451) Toast.makeText(this, "DishCategory " + dishCategories.get(finaldishCategoryNumber).name + " has dishes assigned!", Toast.LENGTH_SHORT).show();
+                    if(e.getErrorCode() == 1451) Toast.makeText(this, "DishCategory " +dishCategory.name + " has dishes assigned!", Toast.LENGTH_SHORT).show();
                 }
             });
 

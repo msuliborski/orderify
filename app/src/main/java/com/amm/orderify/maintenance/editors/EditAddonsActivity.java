@@ -3,6 +3,7 @@ package com.amm.orderify.maintenance.editors;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -100,37 +101,39 @@ public class EditAddonsActivity extends AppCompatActivity {
 
     }
 
-    private List<AddonCategory> getAddonCategories(){
-        List<AddonCategory> addonCategories = new ArrayList<>();
+    private SparseArray<AddonCategory> getAddonCategories(){
+        SparseArray<AddonCategory> addonCategories = new SparseArray<>();
         try {
             ResultSet addonCategoriesRS = ExecuteQuery("SELECT * FROM addonCategories");
-            while (addonCategoriesRS.next()) addonCategories.add(new AddonCategory(addonCategoriesRS.getInt("ID"), addonCategoriesRS.getString("name"), addonCategoriesRS.getString("description"), addonCategoriesRS.getBoolean("multiChoice"), null));
+            while (addonCategoriesRS.next()) addonCategories.put(addonCategoriesRS.getInt("ID"), new AddonCategory(addonCategoriesRS.getInt("ID"), addonCategoriesRS.getString("name"), addonCategoriesRS.getString("description"), addonCategoriesRS.getBoolean("multiChoice"), null));
         } catch (SQLException e2) { Log.wtf("SQL Exception", e2.getMessage()); }
         return addonCategories;
     }
 
-    private List<Addon> getAddons(int addonCategoryID){
-        List<Addon> addons = new ArrayList<>();
+    private SparseArray<Addon> getAddons(int addonCategoryID){
+        SparseArray<Addon> addons = new SparseArray<>();
         try {
             ResultSet addonsRS = ExecuteQuery("SELECT * FROM addons WHERE addonCategoryID = " + addonCategoryID);
-            while (addonsRS.next()) addons.add(new Addon(addonsRS.getInt("ID"), addonsRS.getString("name"), addonsRS.getFloat("price"), addonCategoryID));
+            while (addonsRS.next()) addons.put(addonsRS.getInt("ID"), new Addon(addonsRS.getInt("ID"), addonsRS.getString("name"), addonsRS.getFloat("price"), addonCategoryID));
         } catch (SQLException e2) { Log.wtf("SQL Exception", e2.getMessage()); }
         return addons;
     }
 
-    public void updateAddonCategoryList(List<AddonCategory> addonCategories) {
+    public void updateAddonCategoryList(SparseArray<AddonCategory> addonCategories) {
         //addonCategories.sort(Comparator.comparing(object -> String.valueOf(object.id)));
         List<String> addonCategoriesStrings = new ArrayList<>();
-        for (int addonCategoryNumber = 0; addonCategoryNumber < addonCategories.size(); addonCategoryNumber++)
-            if(addonCategories.get(addonCategoryNumber).description != null) addonCategoriesStrings.add(addonCategories.get(addonCategoryNumber).id + ". " + addonCategories.get(addonCategoryNumber).name + " (" + addonCategories.get(addonCategoryNumber).description + ")");
-            else addonCategoriesStrings.add(addonCategories.get(addonCategoryNumber).id + ". " + addonCategories.get(addonCategoryNumber).name);
+        for (int addonCategoryNumber = 0; addonCategoryNumber < addonCategories.size(); addonCategoryNumber++){
+            AddonCategory addonCategory = addonCategories.valueAt(addonCategoryNumber);
+            if(addonCategory.description != null) addonCategoriesStrings.add(addonCategory.id + ". " + addonCategory.name + " (" + addonCategory.description + ")");
+            else addonCategoriesStrings.add(addonCategory.id + ". " + addonCategory.name);
+        }
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, addonCategoriesStrings);
         addonCategoriesSpinner.setAdapter(adapter);
     }
 
 
-    public void updateAddonsList(List<Addon> addons) {
-        addons.sort(Comparator.comparing(object -> String.valueOf(object.name))); //sort
+    public void updateAddonsList(SparseArray<Addon> addons) {
+        //addons.sort(Comparator.comparing(object -> String.valueOf(object.name))); //sort
         if(addonsLinearLayout != null) addonsLinearLayout.removeAllViews();
         addonsLinearLayout = findViewById(R.id.AddonsLinearLayout);
         for (int addonNumber = 0; addonNumber < addons.size(); addonNumber++){
@@ -142,26 +145,27 @@ public class EditAddonsActivity extends AppCompatActivity {
             ImageButton deleteButton = addonCategoryElement.findViewById(R.id.DeleteButton);
             ImageButton editButton = addonCategoryElement.findViewById(R.id.EditButton);
 
-            nameTextView.setText(addons.get(addonNumber).name);
-            idTextView.setText(addons.get(addonNumber).getIdString());
-            priceTextView.setText(addons.get(addonNumber).getPriceString());
+            Addon addon = addons.valueAt(addonNumber);
 
-            final int finalAddonNumber = addonNumber;
+            nameTextView.setText(addon.name);
+            idTextView.setText(addon.getIdString());
+            priceTextView.setText(addon.getPriceString());
+
             editButton.setOnClickListener(v -> {
-                nameEditText.setText(addons.get(finalAddonNumber).name);
-                priceEditText.setText(addons.get(finalAddonNumber).getPurePriceString());
-                editedAddonID = addons.get(finalAddonNumber).id;
+                nameEditText.setText(addon.name);
+                priceEditText.setText(addon.getPurePriceString());
+                editedAddonID = addon.id;
                 actionButton.setText("Edit addon");
                 cancelButton.setVisibility(View.VISIBLE);
             });
 
             deleteButton.setOnClickListener(v -> {
                 try {
-                    ExecuteUpdate("DELETE FROM addons WHERE ID = " + addons.get(finalAddonNumber).id);
+                    ExecuteUpdate("DELETE FROM addons WHERE ID = " + addon.id);
                     Toast.makeText(this, "Addon deleted!", Toast.LENGTH_SHORT).show();
-                    updateAddonsList(getAddons(addons.get(finalAddonNumber).addonCategoryID));
+                    updateAddonsList(getAddons(addon.addonCategoryID));
                 } catch (SQLException e) {
-                    if(e.getErrorCode() == 1451) Toast.makeText(this, "Addon " + addons.get(finalAddonNumber).name + " is assigned to order!", Toast.LENGTH_SHORT).show();
+                    if(e.getErrorCode() == 1451) Toast.makeText(this, "Addon " + addon.name + " is assigned to order!", Toast.LENGTH_SHORT).show();
                 }
             });
             addonsLinearLayout.addView(addonCategoryElement);
