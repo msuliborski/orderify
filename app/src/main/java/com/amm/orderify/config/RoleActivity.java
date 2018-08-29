@@ -204,7 +204,7 @@ public class RoleActivity extends AppCompatActivity {
                 ResultSet clientRS = clientS.executeQuery("SELECT * FROM clients \n" +
                         "WHERE tableID = " + tablesRS.getInt("ID"));
                 while (clientRS.next()){
-                    clients.put(clientRS.getInt("ID"), new Client(clientRS.getInt("ID"), clientRS.getInt("number"), clientRS.getInt("state"), null));
+                    clients.put(clientRS.getInt("ID"), new Client(clientRS.getInt("ID"), clientRS.getInt("number"), clientRS.getInt("state"), clientRS.getInt("tableID"), null));
                 }
                 tables.put(tablesRS.getInt("ID"), new Table(tablesRS.getInt("ID"), tablesRS.getInt("number"), tablesRS.getString("description"), tablesRS.getInt("state"), clients));
                 clients = new ArrayMap<>();
@@ -220,7 +220,7 @@ public class RoleActivity extends AppCompatActivity {
                 thisTable = new Table(tablesRS.getInt("ID"), tablesRS.getInt("number"), tablesRS.getString("description"), tablesRS.getInt("state"), null);
             ResultSet clientRS = ExecuteQuery("SELECT * FROM clients WHERE tableID = " + thisTable.id);
             if (clientRS.next())
-                thisClient = new Client(clientRS.getInt("ID"), clientRS.getInt("number"), clientRS.getInt("state"), null);
+                thisClient = new Client(clientRS.getInt("ID"), clientRS.getInt("number"), clientRS.getInt("state"), clientRS.getInt("tableID"), null);
         } catch (SQLException ignored) {}
     }
 }

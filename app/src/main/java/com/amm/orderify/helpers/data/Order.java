@@ -1,6 +1,7 @@
 package com.amm.orderify.helpers.data;
 
 import android.util.ArrayMap;
+import android.view.View;
 
 import com.amm.orderify.R;
 
@@ -20,6 +21,7 @@ public class Order {
     public int clientID;
     public int tableID;
     public ArrayMap<Integer, Wish> wishes;
+    public View orderElement;
 
     public Order(int id, Date time, Date date, String comments, int state, int clientID, int tableID, ArrayMap<Integer, Wish> wishes) {
         this.id = id;

@@ -11,12 +11,14 @@ public class Client {
     public int id;
     public int number;
     public int state;
+    public int tableID;
     public ArrayMap<Integer, Order> orders;
 
-    public Client(int id, int number, int state, ArrayMap<Integer, Order> orders) {
+    public Client(int id, int number, int state,  int tableID, ArrayMap<Integer,Order> orders) {
         this.id = id;
         this.number = number;
         this.state = state;
+        this.tableID = tableID;
         this.orders = orders;
     }
 

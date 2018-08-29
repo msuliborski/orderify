@@ -1,6 +1,8 @@
 package com.amm.orderify.helpers.data;
 
 import android.util.ArrayMap;
+import android.view.View;
+
 import com.amm.orderify.R;
 import java.text.DecimalFormat;
 import static com.amm.orderify.MainActivity.context;
@@ -11,6 +13,7 @@ public class Table {
     public String description;
     public int state;
     public ArrayMap<Integer,Client> clients;
+    public View tableElement;
 
     public Table(int id, int number, String description, int state, ArrayMap<Integer, Client> clients) {
         this.id = id;

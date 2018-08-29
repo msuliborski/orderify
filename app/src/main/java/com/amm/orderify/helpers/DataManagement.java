@@ -92,7 +92,7 @@ public class DataManagement {
                             orders.put(ordersRS.getInt("ID"), new Order(ordersRS.getInt("ID"), ordersRS.getTime("time"), ordersRS.getDate("date"), ordersRS.getString("comments"), ordersRS.getInt("state"), clientRS.getInt("ID"), tablesRS.getInt("ID"), wishes));
                             wishes = new ArrayMap<>();
                         }
-                        clients.put(clientRS.getInt("ID"), new Client(clientRS.getInt("ID"), clientRS.getInt("number"), clientRS.getInt("state"), orders));
+                        clients.put(clientRS.getInt("ID"), new Client(clientRS.getInt("ID"), clientRS.getInt("number"), clientRS.getInt("state"), clientRS.getInt("tableID"), orders));
                         orders = new ArrayMap<>();
                     }
                     tables.put(tablesRS.getInt("ID"), new Table(tablesRS.getInt("ID"), tablesRS.getInt("number"), tablesRS.getString("description"), tablesRS.getInt("state"), clients));
@@ -139,7 +139,7 @@ public class DataManagement {
                     orders.put(ordersRS.getInt("ID"), new Order(ordersRS.getInt("ID"), ordersRS.getTime("time"), ordersRS.getDate("date"), ordersRS.getString("comments"), ordersRS.getInt("state"), clientRS.getInt("clientID"), clientRS.getInt("tableID"), wishes));
                     wishes = new ArrayMap<>();
                 }
-                clients.put(clientRS.getInt("clientID"), new Client(clientRS.getInt("clientID"), clientRS.getInt("clientNumber"), clientRS.getInt("clientState"), orders));
+                clients.put(clientRS.getInt("clientID"), new Client(clientRS.getInt("clientID"), clientRS.getInt("clientNumber"), clientRS.getInt("clientState"), clientRS.getInt("tableID"), orders));
                 orders = new ArrayMap<>();
                 table = new Table(clientRS.getInt("tableID"), clientRS.getInt("tableNumber"), clientRS.getString("tableDescription"), clientRS.getInt("tableState"), clients);
             }
@@ -247,7 +247,7 @@ public class DataManagement {
                     while (ordersRS.next()) {
                         orders.put(ordersRS.getInt("ID"), new Order(ordersRS.getInt("ID"), ordersRS.getTime("time"), ordersRS.getDate("date"), ordersRS.getString("comments"), ordersRS.getInt("state"), clientRS.getInt("ID"), tablesRS.getInt("ID"), new ArrayMap<>()));
                     }
-                    clients.put(clientRS.getInt("ID"), new Client(clientRS.getInt("ID"), clientRS.getInt("number"), clientRS.getInt("state"), orders));
+                    clients.put(clientRS.getInt("ID"), new Client(clientRS.getInt("ID"), clientRS.getInt("number"), clientRS.getInt("state"), clientRS.getInt("tableID"), orders));
                     orders = new ArrayMap<>();
                 }
                 tables.put(tablesRS.getInt("ID"), new Table(tablesRS.getInt("ID"), tablesRS.getInt("number"), tablesRS.getString("description"), tablesRS.getInt("state"), clients));

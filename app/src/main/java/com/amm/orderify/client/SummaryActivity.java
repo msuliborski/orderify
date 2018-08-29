@@ -77,18 +77,18 @@ public class SummaryActivity extends AppCompatActivity {
         if(orderListLinearLayout != null) orderListLinearLayout.removeAllViews();
         orderListLinearLayout = findViewById(R.id.WishListLinearLayout);
         for (int orderNumber = 0; orderNumber < thisClient.orders.size(); orderNumber++) {
-            View orderElement = getLayoutInflater().inflate(R.layout.client_summary_element_order, null);
-            TextView orderNumberTextView = orderElement.findViewById(R.id.OrderNumberTextView);
-            TextView orderStateTextView = orderElement.findViewById(R.id.OrderStateTextView);
-            TextView orderSumNumberTextView = orderElement.findViewById(R.id.OrderSumNumberTextView);
-
             Order order =  thisClient.orders.valueAt(orderNumber);
+            order.orderElement = getLayoutInflater().inflate(R.layout.client_summary_element_order, null);
+            TextView orderNumberTextView = order.orderElement.findViewById(R.id.OrderNumberTextView);
+            TextView orderStateTextView = order.orderElement.findViewById(R.id.OrderStateTextView);
+            TextView orderSumNumberTextView = order.orderElement.findViewById(R.id.OrderSumNumberTextView);
+
 
             orderNumberTextView.setText(order.getOrderNumberString());
             orderStateTextView.setText(order.getState());
             orderSumNumberTextView.setText(order.getTotalPriceString());
 
-            LinearLayout wishListLinearLayout = orderElement.findViewById(R.id.WishListLinearLayout);
+            LinearLayout wishListLinearLayout = order.orderElement.findViewById(R.id.WishListLinearLayout);
 
             for (int wishNumber = 0; wishNumber < order.wishes.size(); wishNumber++) {
                 View wishElement = getLayoutInflater().inflate(R.layout.client_summary_element_wish, null);
@@ -101,7 +101,7 @@ public class SummaryActivity extends AppCompatActivity {
                 wishPriceTextView.setText(wish.getTotalPriceString());
                 wishListLinearLayout.addView(wishElement);
             }
-            orderListLinearLayout.addView(orderElement);
+            orderListLinearLayout.addView(order.orderElement);
         }
     }
 
@@ -110,8 +110,7 @@ public class SummaryActivity extends AppCompatActivity {
         for(int orderNumber = 0; orderNumber <  thisClient.orders.size(); orderNumber++) {
             try {
                 Order order =  thisClient.orders.valueAt(orderNumber);
-                View orderElement = findOrderViewById(order.id, orderListLinearLayout);
-                TextView orderStateTextView = orderElement.findViewById(R.id.OrderStateTextView);
+                TextView orderStateTextView = order.orderElement.findViewById(R.id.OrderStateTextView);
                 String orderState = order.getState();
                 runOnUiThread(() -> orderStateTextView.setText(orderState));
             } catch (Exception ignored) { }
@@ -129,17 +128,6 @@ public class SummaryActivity extends AppCompatActivity {
     private void refreshPriceView() {
         runOnUiThread(() -> clientPriceNumberTextView.setText(thisClient.getTotalPriceString()));
         runOnUiThread(() -> tablePriceNumberTextView.setText(thisTable.getTotalPriceString()));
-    }
-
-    private View findOrderViewById(int orderID, LinearLayout orderListLinearLayout) {
-        for (int orderNumber = 0; orderNumber < orderListLinearLayout.getChildCount(); orderNumber++) {
-            View orderElement = orderListLinearLayout.getChildAt(orderNumber);
-            TextView orderNumberTextView = orderElement.findViewById(R.id.OrderNumberTextView);
-            if (orderNumberTextView.getText().equals(String.valueOf("Order #" + orderID))) {
-                return orderElement;
-            }
-        }
-        return null;
     }
 
     @Override
