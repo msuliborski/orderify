@@ -51,4 +51,8 @@ public class Client {
         return state;
     }
 
+    @Override
+    public String toString() {
+        return "Client #" + this.number;
+    }
 }

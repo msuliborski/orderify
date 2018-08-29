@@ -67,6 +67,7 @@ public class SummaryActivity extends AppCompatActivity {
         });
 
 
+
         freezeButtonScreen = findViewById(R.id.FreezeButtonScreen);
     }
 

@@ -83,8 +83,8 @@ public class Comparators {
             if (!(w1.addons.size() == w2.addons.size())) return false;
 
             for (int i = 0; i < w1.addons.size(); i++){
-                if (!(w1.addons.containsValue(w2.addons.valueAt(i)))) return false;
-                if (!(w2.addons.containsValue(w1.addons.valueAt(i)))) return false;
+                if (!(w1.addons.containsKey(w2.addons.valueAt(i).id))) return false;
+                if (!(w2.addons.containsKey(w1.addons.valueAt(i).id))) return false;
             }
         }
         catch(Exception ignored){}

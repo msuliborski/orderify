@@ -62,4 +62,8 @@ public class Table {
         return state;
     }
 
+    @Override
+    public String toString() {
+        return "Table #" + this.number + " - " + this.description;
+    }
 }

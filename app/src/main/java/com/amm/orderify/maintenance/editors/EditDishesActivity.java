@@ -25,6 +25,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static com.amm.orderify.helpers.JBDCDriver.*;
@@ -44,10 +45,10 @@ public class EditDishesActivity extends AppCompatActivity {
     Button actionButton;
     Button cancelButton;
 
-    ArrayMap<Integer, Dish> dishes = new ArrayMap<>();
-    ArrayMap<Integer, AddonCategory> addonCategories = new ArrayMap<>();
-    ArrayMap<Integer, AddonCategory> chosenAddonCategories = new ArrayMap<>();
-
+    ArrayMap<Integer,Dish> dishes = new ArrayMap<>();
+    ArrayMap<Integer,DishCategory> dishCategories = new ArrayMap<>();
+    ArrayMap<Integer,AddonCategory> addonCategories = new ArrayMap<>();
+    ArrayMap<Integer,AddonCategory> chosenAddonCategories = new ArrayMap<>();
 
     int editedDishID = 0;
 
@@ -69,18 +70,16 @@ public class EditDishesActivity extends AppCompatActivity {
         descLEditText = findViewById(R.id.DescLEditText);
 
         updateDishesList();
-        updateDishCategoryList(getDishCategories());
+        updateDishCategoryList();
         updateAddonCategoryList();
         updateChosenAddonCategoryList();
 
         actionButton = findViewById(R.id.ActionButton);
         actionButton.setOnClickListener(e -> {
-
-
             if(editedDishID == 0) {
                 try {
                     ExecuteUpdate("INSERT INTO dishes (name, price, descS, descL, dishCategoryID)\n" +
-                            "VALUES  ('"+ nameEditText.getText() + "', "+ priceEditText.getText() + ", '" + descSEditText.getText() + "', '"+ descLEditText.getText() + "', "+ /*dishCategories.get((int) dishCategoriesSpinner.getSelectedItemId()).id*/1 + ")");
+                            "VALUES  ('"+ nameEditText.getText() + "', "+ priceEditText.getText() + ", '" + descSEditText.getText() + "', '"+ descLEditText.getText() + "', "+ ((DishCategory)(dishCategoriesSpinner.getSelectedItem())).id + ")");
 
                     int newDishID = 0;
                     ResultSet orderIDRS = ExecuteQuery("SELECT LAST_INSERT_ID();");
@@ -95,8 +94,8 @@ public class EditDishesActivity extends AppCompatActivity {
                 } catch (SQLException d) { Log.wtf("SQL Exception", d.getMessage()); }
             } else {
                 try {
-                    ExecuteUpdate("UPDATE dishes SET " + "name = '" + nameEditText.getText() + "', " + "price = " + priceEditText.getText() + ", " +
-                            "descS = '" + descSEditText.getText() + "', " + "descL = '" + descLEditText.getText() + "' WHERE ID = " + editedDishID);
+                    ExecuteUpdate("UPDATE dishes SET " + "name = '" + nameEditText.getText() + "', " + "price = " + priceEditText.getText() + ", " + "descS = '" + descSEditText.getText() + "', " +
+                            "descL = '" + descLEditText.getText() + "', dishCategoryID = " + ((DishCategory)(dishCategoriesSpinner.getSelectedItem())).id + " WHERE ID = " + editedDishID);
 
                     ExecuteUpdate("DELETE FROM addonCategoriesToDishes WHERE dishID = " + editedDishID);
 
@@ -114,10 +113,9 @@ public class EditDishesActivity extends AppCompatActivity {
         cancelButton = findViewById(R.id.CancelButton);
         cancelButton.setVisibility(View.GONE);
         cancelButton.setOnClickListener(e -> {
-
+            dishCategoriesSpinner.setSelection(0);
             addonCategories = getAddonCategories();
             chosenAddonCategories = new ArrayMap<>();
-
             updateAddonCategoryList();
             updateChosenAddonCategoryList();
             nameEditText.setText("");
@@ -133,39 +131,42 @@ public class EditDishesActivity extends AppCompatActivity {
 
     private void getDishes(){
         dishes = new ArrayMap<>();
-        ArrayMap<Integer, AddonCategory> addonCategories = new ArrayMap<>();
+        ArrayMap<Integer,AddonCategory> addonCategories = new ArrayMap<>();
         try {
             Statement dishesS = getConnection().createStatement();
             ResultSet dishesRS = dishesS.executeQuery("SELECT dishes.ID, dishes.number, dishes.name, dishes.price, dishes.descS, dishes.descL, dishes.dishCategoryID, dishCategories.name AS dishCategoryName FROM dishes \n" +
                     "JOIN dishCategories ON dishCategories.ID = dishes.dishCategoryID");
             while (dishesRS.next()) {
                 Statement addonCategoriesS = getConnection().createStatement();
-                ResultSet addonCategoriesRS = addonCategoriesS.executeQuery("SELECT * FROM addonCategoriesToDishes\n" +
+                ResultSet addonCategoriesRS = addonCategoriesS.executeQuery("SELECT addonCategories.* FROM addonCategoriesToDishes\n" +
                         "JOIN addonCategories ON addonCategories.ID = addonCategoriesToDishes.addonCategoryID\n" +
                         "WHERE dishID = " + dishesRS.getInt("ID"));
-                while (addonCategoriesRS.next())
-                    addonCategories.put(addonCategoriesRS.getInt("ID"), new AddonCategory(addonCategoriesRS.getInt("ID"), addonCategoriesRS.getString("name"), addonCategoriesRS.getString("description"), addonCategoriesRS.getBoolean("multiChoice"), null));
+                while (addonCategoriesRS.next()) {
+                    addonCategories.put(addonCategoriesRS.getInt("ID"), new AddonCategory(addonCategoriesRS.getInt("ID"), addonCategoriesRS.getString("name"), addonCategoriesRS.getString("description"), addonCategoriesRS.getBoolean("multiChoice"), new ArrayMap<>()));
+                    Log.wtf("dupa", addonCategoriesRS.getInt("ID")+"");
+                }
                 dishes.put(dishesRS.getInt("ID"), new Dish(dishesRS.getInt("ID"), dishesRS.getInt("number"), dishesRS.getString("name"), dishesRS.getFloat("price"), dishesRS.getString("descS"), dishesRS.getString("descL"), dishesRS.getInt("dishCategoryID"), addonCategories));
                 dishes.get(dishesRS.getInt("ID")).dishCategoryName = dishesRS.getString("dishCategoryName");
+
                 addonCategories = new ArrayMap<>();
             }
         } catch (SQLException e) { Log.wtf("SQLException", e.getMessage() + "");}
     }
 
-    private ArrayMap<Integer, AddonCategory> getAddonCategories(){
-        ArrayMap<Integer, AddonCategory> addonCategories = new ArrayMap<>();
+    private ArrayMap<Integer,AddonCategory> getAddonCategories(){
+        ArrayMap<Integer,AddonCategory> addonCategories = new ArrayMap<>();
         try {
             ResultSet addonCategoriesRS = ExecuteQuery("SELECT * FROM addonCategories");
-            while (addonCategoriesRS.next()) addonCategories.put(addonCategoriesRS.getInt("ID"), new AddonCategory(addonCategoriesRS.getInt("ID"), addonCategoriesRS.getString("name"), addonCategoriesRS.getString("description"), addonCategoriesRS.getBoolean("multiChoice"), null));
+            while (addonCategoriesRS.next()) addonCategories.put(addonCategoriesRS.getInt("ID"), new AddonCategory(addonCategoriesRS.getInt("ID"), addonCategoriesRS.getString("name"), addonCategoriesRS.getString("description"), addonCategoriesRS.getBoolean("multiChoice"), new ArrayMap<>()));
         } catch (SQLException e) { Log.wtf("SQLException", e.getMessage() + "");}
         return addonCategories;
     }
 
-    private ArrayMap<Integer, DishCategory> getDishCategories(){
+    private ArrayMap<Integer,DishCategory> getDishCategories(){
         ArrayMap<Integer, DishCategory> dishCategories = new ArrayMap<>();
         try {
             ResultSet dishCategoriesRS = ExecuteQuery("SELECT * FROM dishCategories");
-            while (dishCategoriesRS.next()) dishCategories.put(dishCategoriesRS.getInt("ID"), new DishCategory(dishCategoriesRS.getInt("ID"), dishCategoriesRS.getString("name"), null));
+            while (dishCategoriesRS.next()) dishCategories.put(dishCategoriesRS.getInt("ID"), new DishCategory(dishCategoriesRS.getInt("ID"), dishCategoriesRS.getString("name"), new ArrayMap<>()));
         } catch (SQLException e) { Log.wtf("SQLException", e.getMessage() + "");}
         return dishCategories;
     }
@@ -196,14 +197,21 @@ public class EditDishesActivity extends AppCompatActivity {
 
             ImageButton editButton = dishElement.findViewById(R.id.EditButton);
             editButton.setOnClickListener(v -> {
-                //Dish dish1 = (Dish) dishes.stream().filter(item -> item.id == finalDishNumber);
-                chosenAddonCategories = new ArrayMap<>(); //add sort here
-                chosenAddonCategories = dish.addonCategories;
-                addonCategories = new ArrayMap<>();
 
+                chosenAddonCategories = dish.addonCategories;
+                addonCategories = getAddonCategories();
+                ArrayMap<Integer,AddonCategory> tempAddonCategories = new ArrayMap<>(addonCategories);
+
+                for (int i = 0; i < addonCategories.size(); i++)
+                    if (chosenAddonCategories.containsKey(addonCategories.valueAt(i).id))
+                        tempAddonCategories.remove(addonCategories.valueAt(i).id);
+                addonCategories = tempAddonCategories;
                 updateAddonCategoryList();
                 updateChosenAddonCategoryList();
-                //dishCategoriesSpinner.setSelection(dish.);
+                for(int i = 0; i < dishCategories.size(); i++)
+                    if(dishCategoriesSpinner.getItemAtPosition(i).equals(dishCategories.get(dish.dishCategoryID))){
+                        dishCategoriesSpinner.setSelection(i); break;}
+
                 nameEditText.setText(dish.name);
                 priceEditText.setText(dish.getPurePriceString());
                 descSEditText.setText(dish.descS);
@@ -227,21 +235,19 @@ public class EditDishesActivity extends AppCompatActivity {
             dishesLinearLayout.addView(dishElement);
         }
     }
-    public void updateDishCategoryList(ArrayMap<Integer, DishCategory> dishCategories) {
-
+    public void updateDishCategoryList() {
+        dishCategories = getDishCategories();
         List<DishCategory> spinnerDishCategories = new ArrayList<>();
         for (int dishCategoryNumber = 0; dishCategoryNumber < dishCategories.size(); dishCategoryNumber++){
             spinnerDishCategories.add(dishCategories.valueAt(dishCategoryNumber));
         }
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, spinnerDishCategories);
+        ArrayAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, spinnerDishCategories);
         dishCategoriesSpinner.setAdapter(adapter);
     }
 
     public void updateAddonCategoryList() {
         //addonCategories.sort(Comparator.comparing(object -> String.valueOf(object.name))); //sort
         addonCategoriesLinearLayout.removeAllViews();
-
-
         for (int addonCategoryNumber = 0; addonCategoryNumber < addonCategories.size(); addonCategoryNumber++){
             View addonCategoryElement = getLayoutInflater().inflate(R.layout.maintenance_element_addoncategory, null);
             TextView idTextView = addonCategoryElement.findViewById(R.id.IdTextView);
@@ -263,8 +269,8 @@ public class EditDishesActivity extends AppCompatActivity {
             removeButton.setVisibility(View.GONE);
             ImageButton addButton = addonCategoryElement.findViewById(R.id.EditButton);
             addButton.setOnClickListener(v -> {
-                addonCategories.remove(addonCategory.id);
                 chosenAddonCategories.put(addonCategory.id, addonCategory);
+                addonCategories.remove(addonCategory.id);
                 updateAddonCategoryList();
                 updateChosenAddonCategoryList();
             });
@@ -273,7 +279,7 @@ public class EditDishesActivity extends AppCompatActivity {
     }
 
     public void updateChosenAddonCategoryList() {
-        //carefull with that
+        //careful with that
         //chosenAddonCategories.sort(Comparator.comparing(object -> String.valueOf(object.name))); //sort
         chosenAddonCategoriesLinearLayout.removeAllViews();
 
@@ -285,9 +291,9 @@ public class EditDishesActivity extends AppCompatActivity {
 
             AddonCategory chosenAddonCategory = chosenAddonCategories.valueAt(chosenAddonCategoryNumber);
 
+            idTextView.setText(chosenAddonCategory.getIdString());
             descriptionTextView.setText(chosenAddonCategory.description);
             nameTextView.setText(chosenAddonCategory.name);
-            idTextView.setText(chosenAddonCategory.getIdString());
 
             TextView multiChoiceTextView = chosenAddonCategoryElement.findViewById(R.id.MultiChoiceTextView);
             String yes = "YES", no = "NO";

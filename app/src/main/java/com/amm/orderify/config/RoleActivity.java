@@ -115,21 +115,21 @@ public class RoleActivity extends AppCompatActivity {
                         clientSpinner.setVisibility(View.VISIBLE);
 
                         tables = getTables();
-
-                        List<String> tableStrings = new ArrayList<>();
-                        for (int tableNumber = 0; tableNumber < tables.size(); tableNumber++)
-                            tableStrings.add("Table #" + tables.valueAt(tableNumber).number + " - " + tables.valueAt(tableNumber).description);
-                        ArrayAdapter<String> tablesAdapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_dropdown_item, tableStrings);
+                        List<Table> spinnerTables = new ArrayList<>();
+                        for (int tableNumber = 0; tableNumber < tables.size(); tableNumber++){
+                            spinnerTables.add(tables.valueAt(tableNumber));
+                        }
+                        ArrayAdapter tablesAdapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_dropdown_item, spinnerTables);
                         tableSpinner.setAdapter(tablesAdapter);
                         tableSpinner.setSelection(0);
                         tableSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
                             @Override
                             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                                 Table table = tables.valueAt(position);
-                                List<String> clientStrings = new ArrayList<>();
+                                List<Client> spinnerClients = new ArrayList<>();
                                 for (int clientNumber = 0; clientNumber < table.clients.size(); clientNumber++)
-                                    clientStrings.add("Client #" + table.clients.valueAt(clientNumber).number);
-                                ArrayAdapter<String>clientAdapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_dropdown_item, clientStrings);
+                                    spinnerClients.add(table.clients.valueAt(clientNumber));
+                                ArrayAdapter clientAdapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_dropdown_item, spinnerClients);
                                 clientSpinner.setAdapter(clientAdapter);
                             }
                             @Override
@@ -167,9 +167,8 @@ public class RoleActivity extends AppCompatActivity {
                     this.startActivity(new Intent(this, TablesActivity.class));
                     break;
                 case 1: //CLIENT
-                    thisTable = tables.valueAt(tableSpinner.getSelectedItemPosition());
-                    thisClient = thisTable.clients.valueAt(clientSpinner.getSelectedItemPosition());
-
+                    thisTable = tables.get(((Table)(tableSpinner.getSelectedItem())).id);
+                    thisClient = thisTable.clients.get(((Client)(clientSpinner.getSelectedItem())).id);
                     if(remember){
                         editor.putInt("thisTableID", thisTable.id);
                         editor.putInt("thisClientID", thisClient.id);
