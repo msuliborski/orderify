@@ -77,55 +77,58 @@ public class SummaryActivity extends AppCompatActivity {
         if(orderListLinearLayout != null) orderListLinearLayout.removeAllViews();
         orderListLinearLayout = findViewById(R.id.WishListLinearLayout);
         for (int orderNumber = 0; orderNumber < thisClient.orders.size(); orderNumber++) {
-            Order order =  thisClient.orders.valueAt(orderNumber);
-            order.orderElement = getLayoutInflater().inflate(R.layout.client_summary_element_order, null);
-            TextView orderNumberTextView = order.orderElement.findViewById(R.id.OrderNumberTextView);
-            TextView orderStateTextView = order.orderElement.findViewById(R.id.OrderStateTextView);
-            TextView orderSumNumberTextView = order.orderElement.findViewById(R.id.OrderSumNumberTextView);
+            Order globalOrder =  thisClient.orders.valueAt(orderNumber);
+            globalOrder.orderElement = getLayoutInflater().inflate(R.layout.client_summary_element_order, null);
+            TextView orderNumberTextView = globalOrder.orderElement.findViewById(R.id.OrderNumberTextView);
+            TextView orderStateTextView = globalOrder.orderElement.findViewById(R.id.OrderStateTextView);
+            TextView orderSumNumberTextView = globalOrder.orderElement.findViewById(R.id.OrderSumNumberTextView);
 
 
-            orderNumberTextView.setText(order.getOrderNumberString());
-            orderStateTextView.setText(order.getState());
-            orderSumNumberTextView.setText(order.getTotalPriceString());
+            orderNumberTextView.setText(globalOrder.getOrderNumberString());
+            orderStateTextView.setText(globalOrder.getState());
+            orderSumNumberTextView.setText(globalOrder.getTotalPriceString());
 
-            LinearLayout wishListLinearLayout = order.orderElement.findViewById(R.id.WishListLinearLayout);
+            LinearLayout wishListLinearLayout = globalOrder.orderElement.findViewById(R.id.WishListLinearLayout);
 
-            for (int wishNumber = 0; wishNumber < order.wishes.size(); wishNumber++) {
+            for (int wishNumber = 0; wishNumber < globalOrder.wishes.size(); wishNumber++) {
                 View wishElement = getLayoutInflater().inflate(R.layout.client_summary_element_wish, null);
                 TextView wishNameTextView = wishElement.findViewById(R.id.WishNameTextView);
                 TextView wishPriceTextView = wishElement.findViewById(R.id.WishPriceTextView);
 
-                Wish wish = order.wishes.valueAt(wishNumber);
+                Wish wish = globalOrder.wishes.valueAt(wishNumber);
 
                 wishNameTextView.setText(wish.dish.name);
                 wishPriceTextView.setText(wish.getTotalPriceString());
                 wishListLinearLayout.addView(wishElement);
             }
-            orderListLinearLayout.addView(order.orderElement);
+            orderListLinearLayout.addView(globalOrder.orderElement);
         }
     }
 
 
-    private void updateOrdersView() {
+    private void updateView() {
+
+        Table table = getFullTableData(thisTable.id);
+        Client client = null;
+        if (table != null) client = table.clients.get(thisClient.id);
+
+        thisClient.state = client.state;
+        thisTable.state = table.state;
+
+        //load everything that is uptodate from getfullData but remember to backup View elements
+        //this way we update global tablepricing
+
         for(int orderNumber = 0; orderNumber <  thisClient.orders.size(); orderNumber++) {
-            try {
-                Order order =  thisClient.orders.valueAt(orderNumber);
-                TextView orderStateTextView = order.orderElement.findViewById(R.id.OrderStateTextView);
-                String orderState = order.getState();
-                runOnUiThread(() -> orderStateTextView.setText(orderState));
-            } catch (Exception ignored) { }
+            Order globalOrder =  thisClient.orders.valueAt(orderNumber);
+            TextView orderStateTextView = globalOrder.orderElement.findViewById(R.id.OrderStateTextView);
+            runOnUiThread(() -> orderStateTextView.setText(thisClient.orders.get(globalOrder.id).getState()));
         }
-    }
 
-    private void refreshTableState() {
         if (thisClient.state == 3) runOnUiThread(() -> cancelBillScreen.setVisibility(View.VISIBLE));
         else runOnUiThread(() -> cancelBillScreen.setVisibility(View.GONE));
-
         if (thisTable.state == 2) runOnUiThread(() -> freezeButtonScreen.setVisibility(View.VISIBLE));
         else runOnUiThread(() -> freezeButtonScreen.setVisibility(View.GONE));
-    }
 
-    private void refreshPriceView() {
         runOnUiThread(() -> clientPriceNumberTextView.setText(thisClient.getTotalPriceString()));
         runOnUiThread(() -> tablePriceNumberTextView.setText(thisTable.getTotalPriceString()));
     }
@@ -157,11 +160,7 @@ public class SummaryActivity extends AppCompatActivity {
             while(true) {
                 try {
                     Thread.sleep(1000);
-                    thisTable = getFullTableData(thisTable.id);
-                    if (thisTable != null) thisClient = thisTable.clients.get(thisClient.id);
-                    updateOrdersView();
-                    refreshTableState();
-                    refreshPriceView();
+                    updateView();
 
                     if(Thread.interrupted()) break;
                     if (!blMyAsyncTask) break;

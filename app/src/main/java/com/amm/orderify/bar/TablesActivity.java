@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.ArrayMap;
 import android.util.Log;
-import android.util.SparseArray;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -17,8 +16,6 @@ import com.amm.orderify.R;
 import com.amm.orderify.helpers.data.*;
 
 import java.sql.SQLException;
-import java.util.Comparator;
-import java.util.List;
 
 import static com.amm.orderify.helpers.DataManagement.*;
 import static com.amm.orderify.helpers.JBDCDriver.*;
@@ -29,7 +26,7 @@ public class TablesActivity extends AppCompatActivity {
     LinearLayout tablesLinearLayout;
     UpdateTableTask task = new UpdateTableTask(TablesActivity.this);
 
-    ArrayMap<Integer,Table> tables = new ArrayMap<>();
+    ArrayMap<Integer,Table> globalTables = new ArrayMap<>();
 
 
     @Override
@@ -52,64 +49,66 @@ public class TablesActivity extends AppCompatActivity {
     //do sortowania - funkcja która sprawdza czy jest nowy order/wezwanier kelnera/platnosc, usuwa wszystkie ordery z danego stolika i wkleja na nowo, posortowane
 
     private void generateTablesView() {
-        tables = getOnlyTables();
+        globalTables = getOnlyTables();
         if(tablesLinearLayout != null) tablesLinearLayout.removeAllViews();
         tablesLinearLayout = findViewById(R.id.TablesLinearLayout);
 
-        for (int tableNumber = 0; tableNumber < tables.size(); tableNumber++) {
-            Table table = tables.valueAt(tableNumber);
-            table.tableElement = getLayoutInflater().inflate(R.layout.bar_tables_element_table, null);
-            TextView tableNumberTextView = table.tableElement.findViewById(R.id.TableNumberTextView);
-            TextView tableStateTextView = table.tableElement.findViewById(R.id.TableStateTextView);
-            Button acceptRequestButton = table.tableElement.findViewById(R.id.AcceptRequestButton);
-            Button freezeStateButton = table.tableElement.findViewById(R.id.FreezeStateButton);
+        for (int tableNumber = 0; tableNumber < globalTables.size(); tableNumber++) {
+            Table globalTable = globalTables.valueAt(tableNumber);
+            globalTable.tableElement = getLayoutInflater().inflate(R.layout.bar_tables_element_table, null);
+            TextView tableNumberTextView = globalTable.tableElement.findViewById(R.id.TableNumberTextView);
+            TextView tableStateTextView = globalTable.tableElement.findViewById(R.id.TableStateTextView);
+            Button acceptRequestButton = globalTable.tableElement.findViewById(R.id.AcceptRequestButton);
+            Button freezeStateButton = globalTable.tableElement.findViewById(R.id.FreezeStateButton);
+            Button expandCollapseButton = globalTable.tableElement.findViewById(R.id.ExpandCollapseButton);
+            LinearLayout ordersLinearLayout = globalTable.tableElement.findViewById(R.id.OrdersLinearLayout);
 
-
-            tableNumberTextView.setText(table.getNumberString());
-            tableStateTextView.setText(table.getState());
+            tableNumberTextView.setText(globalTable.getNumberString());
+            tableStateTextView.setText(globalTable.getState());
             acceptRequestButton.setOnClickListener(v -> {
                 try {
-                    table.state = 1;
-                    for(int i = 0; i < table.clients.size(); i++) table.clients.valueAt(i).state = 1;
-                    ExecuteUpdate("UPDATE tables SET state = 1 WHERE ID = " + table.id);
-                    ExecuteUpdate("UPDATE clients SET state = 1 WHERE tableID = " + table.id);
+                    globalTable.state = 1;
+                    for(int i = 0; i < globalTable.clients.size(); i++) globalTable.clients.valueAt(i).state = 1;
+                    ExecuteUpdate("UPDATE globalTables SET state = 1 WHERE ID = " + globalTable.id);
+                    ExecuteUpdate("UPDATE clients SET state = 1 WHERE tableID = " + globalTable.id);
                 } catch (SQLException ignored) {}
             });
             freezeStateButton.setOnClickListener(v -> {
                 try {
-                    if (table.state == 1) {
-                        table.state = 2;
+                    if (globalTable.state == 1) {
+                        globalTable.state = 2;
                         freezeStateButton.setText(R.string.bar_tables_table_state_unfreeze_button);
                         tableStateTextView.setText(R.string.lifecycle_table_freezed);
-                    } else if(table.state == 2){
-                        table.state = 1;
+                    } else if(globalTable.state == 2){
+                        globalTable.state = 1;
                         freezeStateButton.setText(R.string.bar_tables_table_state_freeze_button);
                         tableStateTextView.setText(R.string.lifecycle_table_ready);
                     }
-                    ExecuteUpdate("UPDATE tables SET state = " + table.state + " WHERE ID = " + table.id);
+                    ExecuteUpdate("UPDATE globalTables SET state = " + globalTable.state + " WHERE ID = " + globalTable.id);
                 } catch (SQLException ignored) { }
             });
-            tablesLinearLayout.addView(table.tableElement);
+            expandCollapseButton.setOnClickListener(v -> {
+                if (ordersLinearLayout.getVisibility() == View.GONE)
+                    ordersLinearLayout.setVisibility(View.VISIBLE);
+                else ordersLinearLayout.setVisibility(View.GONE);
+            });
+            tablesLinearLayout.addView(globalTable.tableElement);
         }
     }
 
     private void addNewOrdersView(ArrayMap<Integer,Order> orders) {
         if(!orders.equals(new ArrayMap<>())) {
             for(int i = 0; i < orders.size(); i++){
-                this.tables.get(orders.valueAt(i).tableID).clients.get(orders.valueAt(i).clientID).orders.put(orders.valueAt(i).id, orders.valueAt(i));
+                this.globalTables.get(orders.valueAt(i).tableID).clients.get(orders.valueAt(i).clientID).orders.put(orders.valueAt(i).id, orders.valueAt(i));
             }
         }
         for (int orderNumber = 0; orderNumber < orders.size(); orderNumber++) {
             Order order = orders.valueAt(orderNumber);
-            Table table = tables.get(order.tableID);
 
-            Order globalOrder = this.tables.get(order.tableID).clients.get(order.clientID).orders.get(order.id);
-
-            Button expandCollapseButton = table.tableElement.findViewById(R.id.ExpandCollapseButton);
-            LinearLayout ordersLinearLayout = table.tableElement.findViewById(R.id.OrdersLinearLayout);
+            Order globalOrder = this.globalTables.get(order.tableID).clients.get(order.clientID).orders.get(order.id);
+            Table globalTable = this.globalTables.get(order.tableID);
 
             globalOrder.orderElement = getLayoutInflater().inflate(R.layout.bar_tables_element_order, null);
-            Log.wtf("tables", this.tables.get(order.tableID).clients.get(order.clientID).orders.get(order.id).orderElement+"");
 
             TextView orderNumberTextView = globalOrder.orderElement.findViewById(R.id.OrderNumberTextView);
             TextView orderWaitingTimeTextView = globalOrder.orderElement.findViewById(R.id.OrderWaitingTimeTextView);
@@ -118,6 +117,7 @@ public class TablesActivity extends AppCompatActivity {
             TextView commentsTextView = globalOrder.orderElement.findViewById(R.id.CommentsTextView);
             ImageButton deleteOrderButton = globalOrder.orderElement.findViewById(R.id.DeleteOrderButton);
             Button changeOrderStateButton = globalOrder.orderElement.findViewById(R.id.ChangeOrderStateButton);
+            LinearLayout ordersLinearLayout = globalTable.tableElement.findViewById(R.id.OrdersLinearLayout);
 
             runOnUiThread(() -> {
                 orderNumberTextView.setText(order.getOrderNumberString());
@@ -129,7 +129,7 @@ public class TablesActivity extends AppCompatActivity {
 
             deleteOrderButton.setOnClickListener(v -> {
                 ordersLinearLayout.removeView(order.orderElement);
-                this.tables.get(order.tableID).clients.get(order.clientID).orders.remove(order.id);
+                this.globalTables.get(order.tableID).clients.get(order.clientID).orders.remove(order.id);
                 deleteOrder(order);
             });
             if (order.state == 1) {
@@ -157,25 +157,24 @@ public class TablesActivity extends AppCompatActivity {
             }
             changeOrderStateButton.setOnClickListener(v -> {
                 try {
-                    if (this.tables.get(order.tableID).clients.get(order.clientID).orders.get(order.id).state == 1) {
-                        this.tables.get(order.tableID).clients.get(order.clientID).orders.get(order.id).state = 2;
+                    if (globalOrder.state == 1) {
+                        globalOrder.state = 2;
                         runOnUiThread(() -> {
                             orderStateTextView.setText(R.string.lifecycle_order_delivered);
                             changeOrderStateButton.setVisibility(View.GONE);
                             changeOrderStateButton.setText(R.string.bar_tables_order_state_paid_button);
                         });
-                    } else if(this.tables.get(order.tableID).clients.get(order.clientID).orders.get(order.id).state == 3){
-                        this.tables.get(order.tableID).clients.get(order.clientID).orders.get(order.id).state = 4;
+                    } else if(globalOrder.state == 3){
+                        globalOrder.state = 4;
                         runOnUiThread(() -> {
                             changeOrderStateButton.setVisibility(View.GONE);
                             orderStateTextView.setText(R.string.lifecycle_order_paid);
                         });
                     }
-                    ExecuteUpdate("UPDATE orders SET state = " + this.tables.get(order.tableID).clients.get(order.clientID).orders.get(order.id).state + " WHERE ID = " + order.id);
+                    ExecuteUpdate("UPDATE orders SET state = " + globalOrder.state + " WHERE ID = " + order.id);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-                Log.wtf("chuja nie wiem", this.tables.get(1).clients.get(1).orders.get(1).orderElement+"");
             });
 
             LinearLayout wishesLinearLayout = order.orderElement.findViewById(R.id.WishesLinearLayout);
@@ -203,28 +202,18 @@ public class TablesActivity extends AppCompatActivity {
                 runOnUiThread(() -> wishesLinearLayout.addView(wishElement));
             }
             runOnUiThread(() -> ordersLinearLayout.addView(globalOrder.orderElement));
-
-            expandCollapseButton.setOnClickListener(v -> {
-                if (ordersLinearLayout.getVisibility() == View.GONE)
-                    ordersLinearLayout.setVisibility(View.VISIBLE);
-                else ordersLinearLayout.setVisibility(View.GONE);
-            });
         }
-        Log.wtf("chuja nie wiem", this.tables.get(1).clients.get(1).orders.get(1).orderElement+"");
     }
 
 
     private void updateTablesView() {
         ArrayMap<Integer,Table> tables = getFullTablesData();
-
-
         for(int tableNumber = 0; tableNumber < tables.size(); tableNumber++) {
             Table table = tables.valueAt(tableNumber);
+            Table globalTable = this.globalTables.get(table.id);
             try {
-
-                TextView tableStateTextView = this.tables.get(table.id).tableElement.findViewById(R.id.TableStateTextView);
-                TextView overallPriceTextView = this.tables.get(table.id).tableElement.findViewById(R.id.OverallPriceTextView);
-
+                TextView tableStateTextView = globalTable.tableElement.findViewById(R.id.TableStateTextView);
+                TextView overallPriceTextView = globalTable.tableElement.findViewById(R.id.OverallPriceTextView);
                 runOnUiThread(() -> tableStateTextView.setText(table.getState()));
                 runOnUiThread(() -> overallPriceTextView.setText(table.getTotalPriceString()));
 
@@ -234,35 +223,26 @@ public class TablesActivity extends AppCompatActivity {
                 Client client = table.clients.valueAt(clientNumber);
                 for (int orderNumber = 0; orderNumber < client.orders.size(); orderNumber++) {
                     Order order = client.orders.valueAt(orderNumber);
-
-                    //Log.wtf("size",  client.orders.size()+"");
+                    Order globalOrder = this.globalTables.get(order.tableID).clients.get(order.clientID).orders.get(order.id);
                     try{
                         Thread.sleep(10);
-                        //View orderElement = findOrderViewById(order.id, tablesLinearLayout).orderElement;
-                       Log.wtf("tables", this.tables.get(order.tableID).clients.get(order.clientID).orders.get(order.id).orderElement+"");
-                       // Log.wtf("clients", this.tables.get(order.tableID).clients.size()+"");
-                        //Log.wtf("orders", this.tables.get(order.tableID).clients.get(order.clientID).orders.size()+"");
-                        Button changeOrderStateButton = this.tables.get(order.tableID).clients.get(order.clientID).orders.get(order.id).orderElement.findViewById(R.id.ChangeOrderStateButton);
-                        TextView orderStateTextView = this.tables.get(order.tableID).clients.get(order.clientID).orders.get(order.id).orderElement.findViewById(R.id.OrderStateTextView);
-                        Log.wtf("aesfeas", order.state+"");
-                        this.tables.get(order.tableID).clients.get(order.clientID).orders.get(order.id).state = order.state;
+                        Button changeOrderStateButton = globalOrder.orderElement.findViewById(R.id.ChangeOrderStateButton);
+                        TextView orderStateTextView = globalOrder.orderElement.findViewById(R.id.OrderStateTextView);
+                        TextView orderWaitingTimeTextView = globalOrder.orderElement.findViewById(R.id.OrderWaitingTimeTextView);
+
+                        this.globalTables.get(order.tableID).clients.get(order.clientID).orders.get(order.id).state = order.state;
                         if(order.state == 2) runOnUiThread(() -> {
                             orderStateTextView.setText(order.getState());
-                            changeOrderStateButton.setVisibility(View.GONE);
-                        });
-                        if(order.state == 3) runOnUiThread(() -> {
+                            changeOrderStateButton.setVisibility(View.GONE); });
+                        else if(order.state == 3) runOnUiThread(() -> {
                             orderStateTextView.setText(order.getState());
                             changeOrderStateButton.setText(R.string.lifecycle_order_paid);
-                            changeOrderStateButton.setVisibility(View.VISIBLE);
-                        });
-                        if(order.state == 4) runOnUiThread(() -> {
+                            changeOrderStateButton.setVisibility(View.VISIBLE); });
+                        else if(order.state == 4) runOnUiThread(() -> {
                             orderStateTextView.setText(order.getState());
-                            changeOrderStateButton.setVisibility(View.GONE);
-                        });
+                            changeOrderStateButton.setVisibility(View.GONE); });
 
-                        TextView orderWaitingTimeTextView = order.orderElement.findViewById(R.id.OrderWaitingTimeTextView);
                         runOnUiThread(() -> orderWaitingTimeTextView.setText(order.getWaitingTime()));
-
                     } catch(Exception e){
                         Log.wtf("ex",  e.getMessage()+"");
                     }
