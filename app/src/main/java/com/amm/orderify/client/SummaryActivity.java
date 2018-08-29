@@ -49,6 +49,7 @@ public class SummaryActivity extends AppCompatActivity {
             try {
                 ExecuteUpdate("UPDATE tables SET state = 3 WHERE ID = " + thisTable.id);
                 ExecuteUpdate("UPDATE clients SET state = 3 WHERE tableID = " + thisTable.id);
+                ExecuteUpdate("UPDATE orders JOIN clients ON orders.clientID = clients.ID SET orders.state = 3 WHERE clients.tableID = " + thisTable.id + " AND orders.state = 2");
             } catch (SQLException ignored) { }
         });
 
@@ -63,6 +64,7 @@ public class SummaryActivity extends AppCompatActivity {
             try {
                 ExecuteUpdate("UPDATE clients SET state = 1 WHERE tableID = " + thisTable.id);
                 ExecuteUpdate("UPDATE tables SET state = 1 WHERE ID = " + thisTable.id);
+                ExecuteUpdate("UPDATE orders JOIN clients ON orders.clientID = clients.ID SET orders.state = 2 WHERE clients.tableID = " + thisTable.id + " AND orders.state = 3");
             } catch (SQLException ignored) { }
         });
 
