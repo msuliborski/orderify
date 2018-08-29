@@ -16,4 +16,9 @@ public class DishCategory {
     public String getIdString(){
         return id+"";
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

@@ -127,7 +127,7 @@ public class EditAddonCategoriesActivity extends AppCompatActivity {
 
             editButton.setOnClickListener(v -> {
                 nameEditText.setText(addonCategory.name);
-                descriptionTextView.setText(addonCategory.description);
+                descriptionEditText.setText(addonCategory.description);
                 multiChoiceToggleButton.setChecked(addonCategory.multiChoice);
                 editedAddonCategoryID = addonCategory.id;
                 actionButton.setText("Edit addonCategory");

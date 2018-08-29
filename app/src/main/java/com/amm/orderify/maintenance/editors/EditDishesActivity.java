@@ -19,6 +19,7 @@ import com.amm.orderify.R;
 import com.amm.orderify.helpers.data.AddonCategory;
 import com.amm.orderify.helpers.data.Dish;
 import com.amm.orderify.helpers.data.DishCategory;
+import com.amm.orderify.helpers.data.Table;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -202,6 +203,7 @@ public class EditDishesActivity extends AppCompatActivity {
 
                 updateAddonCategoryList();
                 updateChosenAddonCategoryList();
+                //dishCategoriesSpinner.setSelection(dish.);
                 nameEditText.setText(dish.name);
                 priceEditText.setText(dish.getPurePriceString());
                 descSEditText.setText(dish.descS);
@@ -226,11 +228,12 @@ public class EditDishesActivity extends AppCompatActivity {
         }
     }
     public void updateDishCategoryList(ArrayMap<Integer, DishCategory> dishCategories) {
-        List<String> dishCategoriesStrings = new ArrayList<>();
+
+        List<DishCategory> spinnerDishCategories = new ArrayList<>();
         for (int dishCategoryNumber = 0; dishCategoryNumber < dishCategories.size(); dishCategoryNumber++){
-            dishCategoriesStrings.add(dishCategories.valueAt(dishCategoryNumber).name);
+            spinnerDishCategories.add(dishCategories.valueAt(dishCategoryNumber));
         }
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, dishCategoriesStrings);
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, spinnerDishCategories);
         dishCategoriesSpinner.setAdapter(adapter);
     }
 

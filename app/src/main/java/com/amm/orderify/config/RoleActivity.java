@@ -170,8 +170,6 @@ public class RoleActivity extends AppCompatActivity {
                     thisTable = tables.valueAt(tableSpinner.getSelectedItemPosition());
                     thisClient = thisTable.clients.valueAt(clientSpinner.getSelectedItemPosition());
 
-                    Log.wtf("table", thisTable.id + "");
-                    Log.wtf("client", thisClient.id + "");
                     if(remember){
                         editor.putInt("thisTableID", thisTable.id);
                         editor.putInt("thisClientID", thisClient.id);
