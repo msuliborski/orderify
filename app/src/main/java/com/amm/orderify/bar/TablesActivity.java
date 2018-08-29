@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.ArrayMap;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
 import android.widget.Button;
@@ -28,7 +29,8 @@ public class TablesActivity extends AppCompatActivity {
     LinearLayout tablesLinearLayout;
     UpdateTableTask task = new UpdateTableTask(TablesActivity.this);
 
-    ArrayMap<Integer, Table> tables;
+    ArrayMap<Integer,Table> tables = new ArrayMap<>();
+    ArrayMap<Integer,Order> orders = new ArrayMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +94,13 @@ public class TablesActivity extends AppCompatActivity {
     }
 
     private void addNewOrdersView(ArrayMap<Integer,Order> orders) {
+        Log.wtf("asd", orders.size()+"");
+        if(!orders.equals(new ArrayMap<>())) {
+            Log.wtf("zxc", orders.size()+"");
+            for(int i = 0; i < orders.size(); i++){
+                this.orders.put(orders.valueAt(i).id, orders.valueAt(i));
+            }
+        }
         for (int orderNumber = 0; orderNumber < orders.size(); orderNumber++) {
             Order order = orders.valueAt(orderNumber);
             View tableElement = findTableViewById(order.tableID, tablesLinearLayout);
@@ -115,51 +124,45 @@ public class TablesActivity extends AppCompatActivity {
             });
 
             deleteOrderButton.setOnClickListener(v -> {
+                this.orders.remove(order.id);
                 deleteOrder(order);
                 ordersLinearLayout.removeView(orderElement);
             });
             if (order.state == 1) {
-                runOnUiThread(() ->
-                {
+                runOnUiThread(() -> {
                     orderStateTextView.setText(R.string.lifecycle_order_preparation);
                     changeOrderStateButton.setText(R.string.bar_tables_order_state_prepared_button);
                     changeOrderStateButton.setVisibility(View.VISIBLE);
                 });
             } else if (order.state == 2) {
-                runOnUiThread(() ->
-                {
+                runOnUiThread(() -> {
                     orderStateTextView.setText(R.string.lifecycle_order_delivered);
                     changeOrderStateButton.setText(R.string.bar_tables_order_state_paid_button);
                     changeOrderStateButton.setVisibility(View.GONE);
                 });
             } else if (order.state == 3) {
-                runOnUiThread(() ->
-                {
+                runOnUiThread(() -> {
                     orderStateTextView.setText(R.string.lifecycle_order_payment);
                     changeOrderStateButton.setVisibility(View.VISIBLE);
                 });
-            } else
-            {
-                runOnUiThread(() ->
-                {
+            } else {
+                runOnUiThread(() -> {
                     orderStateTextView.setText(R.string.lifecycle_order_paid);
                     changeOrderStateButton.setVisibility(View.GONE);
                 });
             }
             changeOrderStateButton.setOnClickListener(v -> {
                 try {
-                    if (order.state == 1) {
-                        order.state = 2;
-                        runOnUiThread(() ->
-                        {
+                    if (this.orders.get(order.id).state == 1) {
+                        this.orders.get(order.id).state = 2;
+                        runOnUiThread(() -> {
                             orderStateTextView.setText(R.string.lifecycle_order_delivered);
                             changeOrderStateButton.setVisibility(View.GONE);
                             changeOrderStateButton.setText(R.string.bar_tables_order_state_paid_button);
                         });
-                    } else if(order.state == 3){
-                        order.state = 4;
-                        runOnUiThread(() ->
-                        {
+                    } else if(this.orders.get(order.id).state == 3){
+                        this.orders.get(order.id).state = 4;
+                        runOnUiThread(() -> {
                             changeOrderStateButton.setVisibility(View.GONE);
                             orderStateTextView.setText(R.string.lifecycle_order_paid);
                         });
@@ -229,6 +232,7 @@ public class TablesActivity extends AppCompatActivity {
                         View orderElement = findOrderViewById(order.id, tablesLinearLayout).orderElement;
                         Button changeOrderStateButton = orderElement.findViewById(R.id.ChangeOrderStateButton);
 
+                        this.orders.get(order.id).state = order.state;
                         TextView orderStateTextView = orderElement.findViewById(R.id.OrderStateTextView);
                         if(order.state == 2) runOnUiThread(() -> {
                             orderStateTextView.setText(order.getState());

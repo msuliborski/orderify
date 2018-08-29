@@ -34,7 +34,9 @@ import static android.widget.AdapterView.OnItemSelectedListener;
 import static com.amm.orderify.MainActivity.context;
 import static com.amm.orderify.MainActivity.thisClient;
 import static com.amm.orderify.MainActivity.thisTable;
+import static com.amm.orderify.helpers.JBDCDriver.ConnectToDatabase;
 import static com.amm.orderify.helpers.JBDCDriver.ExecuteQuery;
+import static com.amm.orderify.helpers.JBDCDriver.InitiateConnection;
 import static com.amm.orderify.helpers.JBDCDriver.getConnection;
 
 public class RoleActivity extends AppCompatActivity {
@@ -61,6 +63,9 @@ public class RoleActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.config_role_activity);
+
+        InitiateConnection();
+        ConnectToDatabase();
 
         ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE }, 1);
 
@@ -167,8 +172,11 @@ public class RoleActivity extends AppCompatActivity {
                     this.startActivity(new Intent(this, TablesActivity.class));
                     break;
                 case 1: //CLIENT
-                    thisTable = tables.get(((Table)(tableSpinner.getSelectedItem())).id);
-                    thisClient = thisTable.clients.get(((Client)(clientSpinner.getSelectedItem())).id);
+//                    thisTable = tables.get(((Table)(tableSpinner.getSelectedItem())).id);
+//                    thisClient = thisTable.clients.get(((Client)(clientSpinner.getSelectedItem())).id);
+                    thisTable = tables.valueAt(tableSpinner.getSelectedItemPosition());
+                    thisClient = thisTable.clients.valueAt(clientSpinner.getSelectedItemPosition());
+
                     if(remember){
                         editor.putInt("thisTableID", thisTable.id);
                         editor.putInt("thisClientID", thisClient.id);
