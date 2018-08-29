@@ -2,6 +2,7 @@ package com.amm.orderify.maintenance.editors;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.ArrayMap;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -101,8 +102,8 @@ public class EditAddonsActivity extends AppCompatActivity {
 
     }
 
-    private SparseArray<AddonCategory> getAddonCategories(){
-        SparseArray<AddonCategory> addonCategories = new SparseArray<>();
+    private ArrayMap<Integer, AddonCategory> getAddonCategories(){
+        ArrayMap<Integer, AddonCategory> addonCategories = new ArrayMap<>();
         try {
             ResultSet addonCategoriesRS = ExecuteQuery("SELECT * FROM addonCategories");
             while (addonCategoriesRS.next()) addonCategories.put(addonCategoriesRS.getInt("ID"), new AddonCategory(addonCategoriesRS.getInt("ID"), addonCategoriesRS.getString("name"), addonCategoriesRS.getString("description"), addonCategoriesRS.getBoolean("multiChoice"), null));
@@ -110,8 +111,8 @@ public class EditAddonsActivity extends AppCompatActivity {
         return addonCategories;
     }
 
-    private SparseArray<Addon> getAddons(int addonCategoryID){
-        SparseArray<Addon> addons = new SparseArray<>();
+    private ArrayMap<Integer, Addon> getAddons(int addonCategoryID){
+        ArrayMap<Integer, Addon> addons = new ArrayMap<>();
         try {
             ResultSet addonsRS = ExecuteQuery("SELECT * FROM addons WHERE addonCategoryID = " + addonCategoryID);
             while (addonsRS.next()) addons.put(addonsRS.getInt("ID"), new Addon(addonsRS.getInt("ID"), addonsRS.getString("name"), addonsRS.getFloat("price"), addonCategoryID));
@@ -119,7 +120,7 @@ public class EditAddonsActivity extends AppCompatActivity {
         return addons;
     }
 
-    public void updateAddonCategoryList(SparseArray<AddonCategory> addonCategories) {
+    public void updateAddonCategoryList(ArrayMap<Integer, AddonCategory> addonCategories) {
         //addonCategories.sort(Comparator.comparing(object -> String.valueOf(object.id)));
         List<String> addonCategoriesStrings = new ArrayList<>();
         for (int addonCategoryNumber = 0; addonCategoryNumber < addonCategories.size(); addonCategoryNumber++){
@@ -132,7 +133,7 @@ public class EditAddonsActivity extends AppCompatActivity {
     }
 
 
-    public void updateAddonsList(SparseArray<Addon> addons) {
+    public void updateAddonsList(ArrayMap<Integer, Addon> addons) {
         //addons.sort(Comparator.comparing(object -> String.valueOf(object.name))); //sort
         if(addonsLinearLayout != null) addonsLinearLayout.removeAllViews();
         addonsLinearLayout = findViewById(R.id.AddonsLinearLayout);

@@ -2,6 +2,7 @@ package com.amm.orderify.maintenance.editors;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.ArrayMap;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
@@ -42,9 +43,9 @@ public class EditDishesActivity extends AppCompatActivity {
     Button actionButton;
     Button cancelButton;
 
-    SparseArray<Dish> dishes = new SparseArray<>();
-    SparseArray<AddonCategory> addonCategories = new SparseArray<>();
-    SparseArray<AddonCategory> chosenAddonCategories = new SparseArray<>();
+    ArrayMap<Integer, Dish> dishes = new ArrayMap<>();
+    ArrayMap<Integer, AddonCategory> addonCategories = new ArrayMap<>();
+    ArrayMap<Integer, AddonCategory> chosenAddonCategories = new ArrayMap<>();
 
 
     int editedDishID = 0;
@@ -114,7 +115,7 @@ public class EditDishesActivity extends AppCompatActivity {
         cancelButton.setOnClickListener(e -> {
 
             addonCategories = getAddonCategories();
-            chosenAddonCategories = new SparseArray<>();
+            chosenAddonCategories = new ArrayMap<>();
 
             updateAddonCategoryList();
             updateChosenAddonCategoryList();
@@ -130,8 +131,8 @@ public class EditDishesActivity extends AppCompatActivity {
 
 
     private void getDishes(){
-        dishes = new SparseArray<>();
-        SparseArray<AddonCategory> addonCategories = new SparseArray<>();
+        dishes = new ArrayMap<>();
+        ArrayMap<Integer, AddonCategory> addonCategories = new ArrayMap<>();
         try {
             Statement dishesS = getConnection().createStatement();
             ResultSet dishesRS = dishesS.executeQuery("SELECT dishes.ID, dishes.number, dishes.name, dishes.price, dishes.descS, dishes.descL, dishes.dishCategoryID, dishCategories.name AS dishCategoryName FROM dishes \n" +
@@ -145,13 +146,13 @@ public class EditDishesActivity extends AppCompatActivity {
                     addonCategories.put(addonCategoriesRS.getInt("ID"), new AddonCategory(addonCategoriesRS.getInt("ID"), addonCategoriesRS.getString("name"), addonCategoriesRS.getString("description"), addonCategoriesRS.getBoolean("multiChoice"), null));
                 dishes.put(dishesRS.getInt("ID"), new Dish(dishesRS.getInt("ID"), dishesRS.getInt("number"), dishesRS.getString("name"), dishesRS.getFloat("price"), dishesRS.getString("descS"), dishesRS.getString("descL"), dishesRS.getInt("dishCategoryID"), addonCategories));
                 dishes.get(dishesRS.getInt("ID")).dishCategoryName = dishesRS.getString("dishCategoryName");
-                addonCategories = new SparseArray<>();
+                addonCategories = new ArrayMap<>();
             }
         } catch (SQLException e) { Log.wtf("SQLException", e.getMessage() + "");}
     }
 
-    private SparseArray<AddonCategory> getAddonCategories(){
-        SparseArray<AddonCategory> addonCategories = new SparseArray<>();
+    private ArrayMap<Integer, AddonCategory> getAddonCategories(){
+        ArrayMap<Integer, AddonCategory> addonCategories = new ArrayMap<>();
         try {
             ResultSet addonCategoriesRS = ExecuteQuery("SELECT * FROM addonCategories");
             while (addonCategoriesRS.next()) addonCategories.put(addonCategoriesRS.getInt("ID"), new AddonCategory(addonCategoriesRS.getInt("ID"), addonCategoriesRS.getString("name"), addonCategoriesRS.getString("description"), addonCategoriesRS.getBoolean("multiChoice"), null));
@@ -159,8 +160,8 @@ public class EditDishesActivity extends AppCompatActivity {
         return addonCategories;
     }
 
-    private SparseArray<DishCategory> getDishCategories(){
-        SparseArray<DishCategory> dishCategories = new SparseArray<>();
+    private ArrayMap<Integer, DishCategory> getDishCategories(){
+        ArrayMap<Integer, DishCategory> dishCategories = new ArrayMap<>();
         try {
             ResultSet dishCategoriesRS = ExecuteQuery("SELECT * FROM dishCategories");
             while (dishCategoriesRS.next()) dishCategories.put(dishCategoriesRS.getInt("ID"), new DishCategory(dishCategoriesRS.getInt("ID"), dishCategoriesRS.getString("name"), null));
@@ -195,9 +196,9 @@ public class EditDishesActivity extends AppCompatActivity {
             ImageButton editButton = dishElement.findViewById(R.id.EditButton);
             editButton.setOnClickListener(v -> {
                 //Dish dish1 = (Dish) dishes.stream().filter(item -> item.id == finalDishNumber);
-                chosenAddonCategories = new SparseArray<>(); //add sort here
-                chosenAddonCategories = dish.addonCategories2;
-                addonCategories = new SparseArray<>();
+                chosenAddonCategories = new ArrayMap<>(); //add sort here
+                chosenAddonCategories = dish.addonCategories;
+                addonCategories = new ArrayMap<>();
 
                 updateAddonCategoryList();
                 updateChosenAddonCategoryList();
@@ -224,7 +225,7 @@ public class EditDishesActivity extends AppCompatActivity {
             dishesLinearLayout.addView(dishElement);
         }
     }
-    public void updateDishCategoryList(SparseArray<DishCategory> dishCategories) {
+    public void updateDishCategoryList(ArrayMap<Integer, DishCategory> dishCategories) {
         List<String> dishCategoriesStrings = new ArrayList<>();
         for (int dishCategoryNumber = 0; dishCategoryNumber < dishCategories.size(); dishCategoryNumber++){
             dishCategoriesStrings.add(dishCategories.valueAt(dishCategoryNumber).name);

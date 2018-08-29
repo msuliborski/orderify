@@ -2,6 +2,7 @@ package com.amm.orderify.maintenance.editors;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.ArrayMap;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
@@ -83,8 +84,8 @@ public class EditAddonCategoriesActivity extends AppCompatActivity {
     }
 
 
-    private SparseArray<AddonCategory> getAddonCategories(){
-        SparseArray<AddonCategory> addonCategories = new SparseArray<>();
+    private ArrayMap<Integer, AddonCategory> getAddonCategories(){
+        ArrayMap<Integer, AddonCategory> addonCategories = new ArrayMap<>();
         try {
             ResultSet addonCategoriesRS = ExecuteQuery("SELECT * FROM addonCategories");
             while (addonCategoriesRS.next())
@@ -93,7 +94,7 @@ public class EditAddonCategoriesActivity extends AppCompatActivity {
         return addonCategories;
     }
 
-    public void updateAddonCategoryList(SparseArray<AddonCategory> addonCategories) {
+    public void updateAddonCategoryList(ArrayMap<Integer, AddonCategory> addonCategories) {
         addonCategoriesLinearLayout.removeAllViews();
         for (int addonCategoryNumber = -1; addonCategoryNumber < addonCategories.size(); addonCategoryNumber++){
             View addonCategoryElement = getLayoutInflater().inflate(R.layout.maintenance_element_addoncategory, null);

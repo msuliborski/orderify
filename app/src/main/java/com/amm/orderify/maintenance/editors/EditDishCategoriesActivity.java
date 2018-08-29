@@ -2,6 +2,7 @@ package com.amm.orderify.maintenance.editors;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.ArrayMap;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -75,8 +76,8 @@ public class EditDishCategoriesActivity extends AppCompatActivity {
     }
 
 
-    private SparseArray<DishCategory> getDishCategories(){
-        SparseArray<DishCategory> dishCategories = new SparseArray<>();
+    private ArrayMap<Integer, DishCategory> getDishCategories(){
+        ArrayMap<Integer, DishCategory> dishCategories = new ArrayMap<>();
         try {
             ResultSet dishCategoriesRS = ExecuteQuery("SELECT * FROM dishCategories");
             while (dishCategoriesRS.next())
@@ -86,7 +87,7 @@ public class EditDishCategoriesActivity extends AppCompatActivity {
         return dishCategories;
     }
 
-    public void updateDishCategoryList(SparseArray<DishCategory> dishCategories) {
+    public void updateDishCategoryList(ArrayMap<Integer, DishCategory> dishCategories) {
         //dishCategories.sort(Comparator.comparing(object -> String.valueOf(object.name)));
         dishCategoriesLinearLayout.removeAllViews();
         for (int dishCategoryNumber = -1; dishCategoryNumber < dishCategories.size(); dishCategoryNumber++){

@@ -1,13 +1,14 @@
 package com.amm.orderify.config;
 
 import android.Manifest;
-import android.app.ActionBar;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.ArrayMap;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -19,7 +20,8 @@ import android.widget.TextView;
 import com.amm.orderify.R;
 import com.amm.orderify.bar.TablesActivity;
 import com.amm.orderify.client.MenuActivity;
-import com.amm.orderify.helpers.data.*;
+import com.amm.orderify.helpers.data.Client;
+import com.amm.orderify.helpers.data.Table;
 import com.amm.orderify.maintenance.MaintenanceActivity;
 
 import java.sql.ResultSet;
@@ -28,8 +30,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.widget.AdapterView.*;
-import static com.amm.orderify.MainActivity.*;
+import static android.widget.AdapterView.OnItemSelectedListener;
+import static com.amm.orderify.MainActivity.context;
+import static com.amm.orderify.MainActivity.thisClient;
+import static com.amm.orderify.MainActivity.thisTable;
 import static com.amm.orderify.helpers.JBDCDriver.ExecuteQuery;
 import static com.amm.orderify.helpers.JBDCDriver.getConnection;
 
@@ -47,7 +51,7 @@ public class RoleActivity extends AppCompatActivity {
     Button selectButton;
 
 
-    List<Table> tables = new ArrayList<>();
+    ArrayMap<Integer,Table> tables = new ArrayMap<>();
     boolean remember = false;
 
     SharedPreferences sharedPreferences;
@@ -114,17 +118,17 @@ public class RoleActivity extends AppCompatActivity {
 
                         List<String> tableStrings = new ArrayList<>();
                         for (int tableNumber = 0; tableNumber < tables.size(); tableNumber++)
-                            tableStrings.add("Table #" + tables.get(tableNumber).number + " - " + tables.get(tableNumber).description);
+                            tableStrings.add("Table #" + tables.valueAt(tableNumber).number + " - " + tables.valueAt(tableNumber).description);
                         ArrayAdapter<String> tablesAdapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_dropdown_item, tableStrings);
                         tableSpinner.setAdapter(tablesAdapter);
                         tableSpinner.setSelection(0);
                         tableSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
                             @Override
                             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                                Table table = tables.get(position);
+                                Table table = tables.valueAt(position);
                                 List<String> clientStrings = new ArrayList<>();
                                 for (int clientNumber = 0; clientNumber < table.clients.size(); clientNumber++)
-                                    clientStrings.add("Client #" + table.clients.get(clientNumber).number);
+                                    clientStrings.add("Client #" + table.clients.valueAt(clientNumber).number);
                                 ArrayAdapter<String>clientAdapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_dropdown_item, clientStrings);
                                 clientSpinner.setAdapter(clientAdapter);
                             }
@@ -163,8 +167,8 @@ public class RoleActivity extends AppCompatActivity {
                     this.startActivity(new Intent(this, TablesActivity.class));
                     break;
                 case 1: //CLIENT
-                    thisTable = tables.get(tableSpinner.getSelectedItemPosition());
-                    thisClient = thisTable.clients.get(clientSpinner.getSelectedItemPosition());
+                    thisTable = tables.valueAt(tableSpinner.getSelectedItemPosition());
+                    thisClient = thisTable.clients.valueAt(clientSpinner.getSelectedItemPosition());
 
                     Log.wtf("table", thisTable.id + "");
                     Log.wtf("client", thisClient.id + "");
@@ -184,9 +188,9 @@ public class RoleActivity extends AppCompatActivity {
         });
     }
 
-    private List<Table> getTables() {
-        List<Table> tables = new ArrayList<>();
-        List<Client> clients = new ArrayList<>();
+    private ArrayMap<Integer,Table> getTables() {
+        ArrayMap<Integer,Table> tables = new ArrayMap<>();
+        ArrayMap<Integer,Client> clients = new ArrayMap<>();
         try {
             Statement tableS = getConnection().createStatement();
             ResultSet tablesRS = tableS.executeQuery("SELECT * FROM tables");
@@ -195,10 +199,10 @@ public class RoleActivity extends AppCompatActivity {
                 ResultSet clientRS = clientS.executeQuery("SELECT * FROM clients \n" +
                         "WHERE tableID = " + tablesRS.getInt("ID"));
                 while (clientRS.next()){
-                    clients.add(new Client(clientRS.getInt("ID"), clientRS.getInt("number"), clientRS.getInt("state"), null));
+                    clients.put(clientRS.getInt("ID"), new Client(clientRS.getInt("ID"), clientRS.getInt("number"), clientRS.getInt("state"), null));
                 }
-                tables.add(new Table(tablesRS.getInt("ID"), tablesRS.getInt("number"), tablesRS.getString("description"), tablesRS.getInt("state"), clients));
-                clients = new ArrayList<>();
+                tables.put(tablesRS.getInt("ID"), new Table(tablesRS.getInt("ID"), tablesRS.getInt("number"), tablesRS.getString("description"), tablesRS.getInt("state"), clients));
+                clients = new ArrayMap<>();
             }
         } catch (SQLException ignored) {}
         return tables;

@@ -1,10 +1,8 @@
 package com.amm.orderify.helpers.data;
 
+import android.util.ArrayMap;
 import com.amm.orderify.R;
-
 import java.text.DecimalFormat;
-import java.util.List;
-
 import static com.amm.orderify.MainActivity.context;
 
 public class Table {
@@ -12,9 +10,9 @@ public class Table {
     public int number;
     public String description;
     public int state;
-    public List<Client> clients;
+    public ArrayMap<Integer,Client> clients;
 
-    public Table(int id, int number, String description, int state, List<Client> clients) {
+    public Table(int id, int number, String description, int state, ArrayMap<Integer, Client> clients) {
         this.id = id;
         this.number = number;
         this.description = description;
@@ -37,7 +35,7 @@ public class Table {
         float totalPrice = 0;
 
         for (int clientNumber = 0; clientNumber < clients.size(); clientNumber++)
-                totalPrice += clients.get(clientNumber).getTotalPrice();
+                totalPrice += clients.valueAt(clientNumber).getTotalPrice();
 
         return totalPrice;
     }
@@ -46,7 +44,7 @@ public class Table {
         float totalPrice = 0;
 
         for (int clientNumber = 0; clientNumber < clients.size(); clientNumber++)
-                totalPrice += clients.get(clientNumber).getTotalPrice();
+                totalPrice += clients.valueAt(clientNumber).getTotalPrice();
 
         DecimalFormat formatter = new DecimalFormat("0.00");
         return formatter.format(totalPrice) + " zł";

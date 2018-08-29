@@ -2,6 +2,7 @@ package com.amm.orderify.maintenance.editors;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.ArrayMap;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
@@ -85,8 +86,8 @@ public class EditTablesActivity extends AppCompatActivity {
 
     }
 
-    private SparseArray<Table> getTables(){
-        SparseArray<Table> tables = new SparseArray<>();
+    private ArrayMap<Integer, Table> getTables(){
+        ArrayMap<Integer, Table> tables = new ArrayMap<>();
         try {
             ResultSet tablesRS = ExecuteQuery("SELECT * FROM tables");
             while (tablesRS.next())
@@ -95,7 +96,7 @@ public class EditTablesActivity extends AppCompatActivity {
         return tables;
     }
 
-    public void updateTableList(SparseArray<Table> tables) {
+    public void updateTableList(ArrayMap<Integer, Table> tables) {
         tablesLinearLayout.removeAllViews();
         for (int tableNumber = -1; tableNumber < tables.size(); tableNumber++){
             View tableElement = getLayoutInflater().inflate(R.layout.maintenance_element_table, null);
