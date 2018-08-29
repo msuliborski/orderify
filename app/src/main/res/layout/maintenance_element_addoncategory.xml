@@ -8,41 +8,56 @@
 
     <TextView
         android:id="@+id/IdTextView"
-        android:layout_width="50dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:fontFamily="@font/tw_cen"
         android:text="2"
+        android:textColor="@color/darkRed"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteY="0dp" />
 
     <TextView
         android:id="@+id/NameTextView"
-        android:layout_width="150dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
+        android:fontFamily="@font/tw_cen"
         android:text="Sosy"
-        app:layout_constraintStart_toEndOf="@+id/IdTextView"
+        android:textColor="@color/darkRed"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.18"
+        app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteY="0dp" />
 
     <TextView
         android:id="@+id/DescriptionTextView"
-        android:layout_width="250dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:layout_weight="1"
+        android:fontFamily="@font/tw_cen"
         android:text="do pizzy"
-        app:layout_constraintStart_toEndOf="@+id/NameTextView"
+        android:textColor="@color/darkRed"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.57"
+        app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteY="0dp" />
 
     <TextView
         android:id="@+id/MultiChoiceTextView"
-        android:layout_width="50dp"
-        android:layout_height="19dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
+        android:fontFamily="@font/tw_cen"
         android:text="YES"
-        app:layout_constraintStart_toEndOf="@+id/DescriptionTextView"
+        android:textColor="@color/darkRed"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.79"
+        app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteY="0dp" />
 
@@ -50,8 +65,8 @@
         android:id="@+id/EditButton"
         android:layout_width="19dp"
         android:layout_height="19dp"
-        android:layout_marginStart="4dp"
-        app:layout_constraintStart_toEndOf="@+id/MultiChoiceTextView"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/DeleteButton"
         app:srcCompat="@drawable/bar_accept_request_button"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteY="0dp" />
@@ -60,8 +75,8 @@
         android:id="@+id/DeleteButton"
         android:layout_width="19dp"
         android:layout_height="19dp"
-        android:layout_marginStart="4dp"
-        app:layout_constraintStart_toEndOf="@+id/EditButton"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/bar_delete_order_button"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteY="0dp" />
