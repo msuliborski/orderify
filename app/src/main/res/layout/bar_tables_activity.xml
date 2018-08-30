@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/barBackground"
-    tools:context=".bar.TablesActivity">
+    tools:context=".bar.TablesActivity"
+    android:animateLayoutChanges="true">
 
     <ImageView
         android:id="@+id/TopBarBackground"

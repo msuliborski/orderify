@@ -1,6 +1,7 @@
 package com.amm.orderify.bar;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -17,7 +19,6 @@ import com.amm.orderify.helpers.data.*;
 
 import java.sql.SQLException;
 
-import static com.amm.orderify.MainActivity.thisTableID;
 import static com.amm.orderify.helpers.FetchDataFromDatabase.*;
 import static com.amm.orderify.helpers.JBDCDriver.*;
 
@@ -215,13 +216,67 @@ public class TablesActivity extends AppCompatActivity {
         for(int tableNumber = 0; tableNumber < tables.size(); tableNumber++) {
             Table table = tables.valueAt(tableNumber);
             Table globalTable = this.globalTables.get(table.id);
+            LinearLayout ordersLinearLayout = globalTable.tableElement.findViewById(R.id.OrdersLinearLayout);
+            ImageView tableNumberBackground = globalTable.tableElement.findViewById(R.id.TableNumberBackground);
+            ImageView tableNumberBackgroundInactive = globalTable.tableElement.findViewById(R.id.TableNumberBackgroundInactive);
+            ImageView tableNumberBackgroundUrgent = globalTable.tableElement.findViewById(R.id.TableNumberBackgroundUrgent);
+            Button acceptRequestButton = globalTable.tableElement.findViewById(R.id.AcceptRequestButton);
+            TextView tableStateTextView = globalTable.tableElement.findViewById(R.id.TableStateTextView);
+            TextView overallPriceTextView = globalTable.tableElement.findViewById(R.id.OverallPriceTextView);
             try {
-                TextView tableStateTextView = globalTable.tableElement.findViewById(R.id.TableStateTextView);
-                TextView overallPriceTextView = globalTable.tableElement.findViewById(R.id.OverallPriceTextView);
+
                 runOnUiThread(() -> tableStateTextView.setText(table.getState()));
                 runOnUiThread(() -> overallPriceTextView.setText(table.getTotalPriceString()));
 
             } catch (Exception ignored) { }
+
+            if (ordersLinearLayout.getChildCount() < 1)
+            {
+                runOnUiThread(() -> {
+                    acceptRequestButton.setVisibility(View.GONE);
+                    tableStateTextView.setVisibility(View.GONE);
+                    tableNumberBackground.setVisibility(View.INVISIBLE);
+                    tableNumberBackgroundInactive.setVisibility(View.VISIBLE);
+                    tableNumberBackgroundUrgent.setVisibility(View.GONE);
+                });
+            }
+            else
+            {
+                switch(table.state)
+                {
+                    case 1:
+                        runOnUiThread(() -> {
+                            acceptRequestButton.setVisibility(View.GONE);
+                            tableStateTextView.setVisibility(View.GONE);
+                            tableNumberBackground.setVisibility(View.VISIBLE);
+                            tableNumberBackgroundInactive.setVisibility(View.GONE);
+                            tableNumberBackgroundUrgent.setVisibility(View.GONE);
+                        });
+                        break;
+                    case 2:
+                        runOnUiThread(() -> {
+                            tableNumberBackground.setVisibility(View.VISIBLE);
+                            tableNumberBackgroundInactive.setVisibility(View.GONE);
+                            tableNumberBackgroundUrgent.setVisibility(View.GONE);
+                        });
+                        break;
+                    case 3:
+                    case 4:
+                        runOnUiThread(() -> {
+                            tableStateTextView.setVisibility(View.VISIBLE);
+                            acceptRequestButton.setVisibility(View.VISIBLE);
+                            tableNumberBackgroundUrgent.setVisibility(View.VISIBLE);
+                            tableNumberBackgroundInactive.setVisibility(View.GONE);
+                            tableNumberBackground.setVisibility(View.INVISIBLE);
+                        });
+                        break;
+
+
+                }
+
+            }
+
+
 
             for (int clientNumber = 0; clientNumber < table.clients.size(); clientNumber++) {
                 Client client = table.clients.valueAt(clientNumber);
@@ -229,7 +284,7 @@ public class TablesActivity extends AppCompatActivity {
                     Order order = client.orders.valueAt(orderNumber);
                     Order globalOrder = this.globalTables.get(order.tableID).clients.get(order.clientID).orders.get(order.id);
                     try{
-                        Thread.sleep(10);
+                        Thread.sleep(30);
                         Button changeOrderStateButton = globalOrder.orderElement.findViewById(R.id.ChangeOrderStateButton);
                         TextView orderStateTextView = globalOrder.orderElement.findViewById(R.id.OrderStateTextView);
                         TextView orderWaitingTimeTextView = globalOrder.orderElement.findViewById(R.id.OrderWaitingTimeTextView);

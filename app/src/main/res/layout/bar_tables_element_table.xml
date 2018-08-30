@@ -10,10 +10,32 @@
         android:id="@+id/TableNumberBackground"
         android:layout_width="0dp"
         android:layout_height="20dp"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/bar_table_number_background" />
+        app:srcCompat="@drawable/bar_table_number_background_active" />
+
+    <ImageView
+        android:id="@+id/TableNumberBackgroundUrgent"
+        android:layout_width="0dp"
+        android:layout_height="20dp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/bar_table_number_background_urgent" />
+
+    <ImageView
+        android:id="@+id/TableNumberBackgroundInactive"
+        android:layout_width="0dp"
+        android:layout_height="20dp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/bar_table_number_background_inactive" />
+
 
     <TextView
         android:id="@+id/TableNumberTextView"
@@ -101,5 +123,6 @@
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TableNumberBackground" />
+        app:layout_constraintTop_toBottomOf="@+id/TableNumberBackground"
+        android:animateLayoutChanges="true"/>
 </android.support.constraint.ConstraintLayout>

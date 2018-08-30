@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         -wielki test wszystkich funkcjonalności!
         -sortowanie dynamiczne (TablesActivity i SummaryActivity)
 
+
         //DESIGN
         -kolorystyka w barze, bo boli
         -usunięcie przycisku cancel bill request

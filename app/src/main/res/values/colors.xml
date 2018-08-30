@@ -17,4 +17,9 @@
     <color name="summaryOrderStateDoneColor">#00d600</color>
     <color name="summaryOrderStateNotDoneColor">#a9a400</color>
     <color name="darkRedFaded">#a49684</color>
+
+    <color name="tableUrgent">#b80000</color>
+    <color name="tableDelivered">#fff200</color>
+    <color name="tableInactive">#969696</color>
+    <color name="tableActive">#c39a13</color>
 </resources>
