@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayout;
 import android.util.ArrayMap;
 import android.util.Log;
-import android.util.SparseArray;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -27,12 +26,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
-import static com.amm.orderify.MainActivity.thisClient;
-import static com.amm.orderify.MainActivity.thisTable;
+import static com.amm.orderify.MainActivity.thisClientID;
+import static com.amm.orderify.MainActivity.thisTableID;
 import static com.amm.orderify.helpers.Comparators.wishesTheSame;
 import static com.amm.orderify.helpers.DataManagement.getFullMenuData;
 import static com.amm.orderify.helpers.JBDCDriver.*;
@@ -61,8 +59,8 @@ public class MenuActivity extends AppCompatActivity {
         dishCategories = getFullMenuData();
         updateMenu();
 
-        Log.wtf("table", thisTable.id + "");
-        Log.wtf("client", thisClient.id + "");
+        Log.wtf("thisTableID", thisTableID + "");
+        Log.wtf("thisClientID", thisClientID + "");
 
         enterCommentsEditText = findViewById(R.id.EnterCommentsEditText);
         freezeButtonScreen = findViewById(R.id.FreezeButtonScreen);
@@ -85,12 +83,9 @@ public class MenuActivity extends AppCompatActivity {
 
         ImageButton askWaiterButton = findViewById(R.id.AskWaiterButton);
         askWaiterButton.setOnClickListener(e -> {
-            if(thisClient.state == 1) {
-                thisClient.state = 3;
-                try {
-                    ExecuteUpdate("UPDATE clients SET state = " + thisClient.state +  " WHERE ID = " + thisClient.id);
-                } catch (SQLException ignored) {}
-            }
+            try {
+                ExecuteUpdate("UPDATE clients SET state = 3 WHERE ID = " + thisClientID);
+            } catch (SQLException ignored) {}
         });
     }
 
@@ -271,9 +266,9 @@ public class MenuActivity extends AppCompatActivity {
             if(lockIDRS.next()) lockID = lockIDRS.getInt(1);
 
             ExecuteUpdate("INSERT INTO orders (time, date, comments, state, clientID) \n" +
-                    "VALUES  ('" + getCurrentTime() +"', '" + getCurrentDate() +"', '" + enterCommentsEditText.getText() + "', 1, " + thisClient.id + "); \n");
+                    "VALUES  ('" + getCurrentTime() +"', '" + getCurrentDate() +"', '" + enterCommentsEditText.getText() + "', 1, " + thisClientID + "); \n");
             ExecuteUpdate( "INSERT INTO newOrders (time, date, comments, state, clientID) \n" +
-                        "VALUES  ('" + getCurrentTime() +"', '" + getCurrentDate() +"', '" + enterCommentsEditText.getText() + "', 1, " + thisClient.id + "); \n");
+                        "VALUES  ('" + getCurrentTime() +"', '" + getCurrentDate() +"', '" + enterCommentsEditText.getText() + "', 1, " + thisClientID + "); \n");
 
             int newOrderID = 0;
             ResultSet orderIDRS = ExecuteQuery("SELECT LAST_INSERT_ID(); \n");
@@ -304,10 +299,11 @@ public class MenuActivity extends AppCompatActivity {
 
     private void refreshTableState() {
         try {
+            int state = 1;
             ResultSet stateRS = ExecuteQuery("SELECT state FROM tables WHERE ID = 1");
-            if(stateRS.next()) thisTable.state = stateRS.getInt("state");
+            if(stateRS.next()) state = stateRS.getInt("state");
 
-            if (thisTable.state == 2) runOnUiThread(() -> freezeButtonScreen.setVisibility(View.VISIBLE));
+            if (state == 2) runOnUiThread(() -> freezeButtonScreen.setVisibility(View.VISIBLE));
             else runOnUiThread(() -> freezeButtonScreen.setVisibility(View.GONE));
 
         } catch (Exception ignored) {}

@@ -7,8 +7,6 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.ArrayMap;
-import android.util.Log;
-import android.util.SparseArray;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -32,8 +30,8 @@ import java.util.List;
 
 import static android.widget.AdapterView.OnItemSelectedListener;
 import static com.amm.orderify.MainActivity.context;
-import static com.amm.orderify.MainActivity.thisClient;
-import static com.amm.orderify.MainActivity.thisTable;
+import static com.amm.orderify.MainActivity.thisClientID;
+import static com.amm.orderify.MainActivity.thisTableID;
 import static com.amm.orderify.helpers.JBDCDriver.ConnectToDatabase;
 import static com.amm.orderify.helpers.JBDCDriver.ExecuteQuery;
 import static com.amm.orderify.helpers.JBDCDriver.InitiateConnection;
@@ -77,7 +75,8 @@ public class RoleActivity extends AppCompatActivity {
             case 0: //BAR
                 this.startActivity(new Intent(this, TablesActivity.class)); break;
             case 1: //CLIENT
-                updateThisTableAndClient();
+                thisTableID = sharedPreferences.getInt("thisTableID", 0);
+                thisClientID = sharedPreferences.getInt("thisClientID", 0);
                 this.startActivity(new Intent(this, MenuActivity.class));
                 break;
             case 2: //MAINTENANCE
@@ -172,14 +171,14 @@ public class RoleActivity extends AppCompatActivity {
                     this.startActivity(new Intent(this, TablesActivity.class));
                     break;
                 case 1: //CLIENT
-//                    thisTable = tables.get(((Table)(tableSpinner.getSelectedItem())).id);
-//                    thisClient = thisTable.clients.get(((Client)(clientSpinner.getSelectedItem())).id);
-                    thisTable = tables.valueAt(tableSpinner.getSelectedItemPosition());
-                    thisClient = thisTable.clients.valueAt(clientSpinner.getSelectedItemPosition());
+//                    thisTableID = tables.get(((Table)(tableSpinner.getSelectedItem())).id);
+//                    thisClientID = thisTableID.clients.get(((Client)(clientSpinner.getSelectedItem())).id);
+                    thisTableID = tables.valueAt(tableSpinner.getSelectedItemPosition()).id;
+                    thisClientID = tables.valueAt(tableSpinner.getSelectedItemPosition()).clients.valueAt(clientSpinner.getSelectedItemPosition()).id;
 
                     if(remember){
-                        editor.putInt("thisTableID", thisTable.id);
-                        editor.putInt("thisClientID", thisClient.id);
+                        editor.putInt("thisTableID", thisTableID);
+                        editor.putInt("thisClientID", thisClientID);
                         editor.apply();
                     }
                     this.startActivity(new Intent(this, MenuActivity.class));
@@ -211,16 +210,5 @@ public class RoleActivity extends AppCompatActivity {
             }
         } catch (SQLException ignored) {}
         return tables;
-    }
-
-    private void updateThisTableAndClient() {
-        try {
-            ResultSet tablesRS = ExecuteQuery("SELECT * FROM tables WHERE ID = " + sharedPreferences.getInt("thisTableID", 1));
-            if (tablesRS.next())
-                thisTable = new Table(tablesRS.getInt("ID"), tablesRS.getInt("number"), tablesRS.getString("description"), tablesRS.getInt("state"), null);
-            ResultSet clientRS = ExecuteQuery("SELECT * FROM clients WHERE tableID = " + thisTable.id);
-            if (clientRS.next())
-                thisClient = new Client(clientRS.getInt("ID"), clientRS.getInt("number"), clientRS.getInt("state"), clientRS.getInt("tableID"), null);
-        } catch (SQLException ignored) {}
     }
 }

@@ -38,6 +38,7 @@ public class TablesActivity extends AppCompatActivity {
         refreshButton.setOnClickListener(v -> {
             generateTablesView();
             try {
+                generateTablesView();
                 addNewOrdersView(getAllOrders());
             } catch (Exception e) {
                 e.printStackTrace();
@@ -97,19 +98,16 @@ public class TablesActivity extends AppCompatActivity {
     }
 
     private void addNewOrdersView(ArrayMap<Integer,Order> orders) {
-        if(!orders.equals(new ArrayMap<>())) {
-            for(int i = 0; i < orders.size(); i++){
-                this.globalTables.get(orders.valueAt(i).tableID).clients.get(orders.valueAt(i).clientID).orders.put(orders.valueAt(i).id, orders.valueAt(i));
-            }
-        }
         for (int orderNumber = 0; orderNumber < orders.size(); orderNumber++) {
             Order order = orders.valueAt(orderNumber);
 
+            this.globalTables.get(order.tableID).clients.get(order.clientID).orders.put(order.id, order);
+
             Order globalOrder = this.globalTables.get(order.tableID).clients.get(order.clientID).orders.get(order.id);
+            Client globalClient = this.globalTables.get(order.tableID).clients.get(order.clientID);
             Table globalTable = this.globalTables.get(order.tableID);
 
             globalOrder.orderElement = getLayoutInflater().inflate(R.layout.bar_tables_element_order, null);
-
             TextView orderNumberTextView = globalOrder.orderElement.findViewById(R.id.OrderNumberTextView);
             TextView orderWaitingTimeTextView = globalOrder.orderElement.findViewById(R.id.OrderWaitingTimeTextView);
             TextView orderPriceTextView = globalOrder.orderElement.findViewById(R.id.OrderPriceTextView);
@@ -129,7 +127,7 @@ public class TablesActivity extends AppCompatActivity {
 
             deleteOrderButton.setOnClickListener(v -> {
                 ordersLinearLayout.removeView(order.orderElement);
-                this.globalTables.get(order.tableID).clients.get(order.clientID).orders.remove(order.id);
+                globalClient.orders.remove(order.id);
                 deleteOrder(order);
             });
             if (order.state == 1) {

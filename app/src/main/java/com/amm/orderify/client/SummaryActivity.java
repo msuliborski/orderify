@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.ArrayMap;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -32,13 +33,16 @@ public class SummaryActivity extends AppCompatActivity {
     ConstraintLayout cancelBillScreen;
     ConstraintLayout freezeButtonScreen;
 
+    Table globalTable;
+    Client globalClient;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.client_summary_activity);
 
-        thisTable = getFullTableData(thisTable.id);
-        if (thisTable != null) thisClient = thisTable.clients.get(thisClient.id);
+        globalTable = getFullTableData(thisTableID);
+        if (globalTable != null) globalClient = globalTable.clients.get(thisClientID);
         generateOrdersView();
 
         clientPriceNumberTextView = findViewById(R.id.ClientPriceNumberTextView);
@@ -47,9 +51,9 @@ public class SummaryActivity extends AppCompatActivity {
         Button askForGlobalBillButton = findViewById(R.id.AskForGlobalBillButton);
         askForGlobalBillButton.setOnClickListener(v -> {
             try {
-                ExecuteUpdate("UPDATE tables SET state = 3 WHERE ID = " + thisTable.id);
-                ExecuteUpdate("UPDATE clients SET state = 3 WHERE tableID = " + thisTable.id);
-                ExecuteUpdate("UPDATE orders JOIN clients ON orders.clientID = clients.ID SET orders.state = 3 WHERE clients.tableID = " + thisTable.id + " AND orders.state = 2");
+                ExecuteUpdate("UPDATE tables SET state = 3 WHERE ID = " + thisTableID);
+                ExecuteUpdate("UPDATE clients SET state = 3 WHERE tableID = " + thisTableID);
+                ExecuteUpdate("UPDATE orders JOIN clients ON orders.clientID = clients.ID SET orders.state = 3 WHERE clients.tableID = " + thisTableID + " AND orders.state = 2");
             } catch (SQLException ignored) { }
         });
 
@@ -62,9 +66,9 @@ public class SummaryActivity extends AppCompatActivity {
         ImageButton cancelBillButton = cancelBillScreen.findViewById(R.id.CancelBillButton);
         cancelBillButton.setOnClickListener(e -> {
             try {
-                ExecuteUpdate("UPDATE clients SET state = 1 WHERE tableID = " + thisTable.id);
-                ExecuteUpdate("UPDATE tables SET state = 1 WHERE ID = " + thisTable.id);
-                ExecuteUpdate("UPDATE orders JOIN clients ON orders.clientID = clients.ID SET orders.state = 2 WHERE clients.tableID = " + thisTable.id + " AND orders.state = 3");
+                ExecuteUpdate("UPDATE clients SET state = 1 WHERE tableID = " + thisTableID);
+                ExecuteUpdate("UPDATE tables SET state = 1 WHERE ID = " + thisTableID);
+                ExecuteUpdate("UPDATE orders JOIN clients ON orders.clientID = clients.ID SET orders.state = 2 WHERE clients.tableID = " + thisTableID + " AND orders.state = 3");
             } catch (SQLException ignored) { }
         });
 
@@ -76,8 +80,10 @@ public class SummaryActivity extends AppCompatActivity {
     private void generateOrdersView() {
         if(orderListLinearLayout != null) orderListLinearLayout.removeAllViews();
         orderListLinearLayout = findViewById(R.id.WishListLinearLayout);
-        for (int orderNumber = 0; orderNumber < thisClient.orders.size(); orderNumber++) {
-            Order globalOrder =  thisClient.orders.valueAt(orderNumber);
+        for (int orderNumber = 0; orderNumber < globalClient.orders.size(); orderNumber++) {
+
+            Order globalOrder =  globalClient.orders.valueAt(orderNumber);
+
             globalOrder.orderElement = getLayoutInflater().inflate(R.layout.client_summary_element_order, null);
             TextView orderNumberTextView = globalOrder.orderElement.findViewById(R.id.OrderNumberTextView);
             TextView orderStateTextView = globalOrder.orderElement.findViewById(R.id.OrderStateTextView);
@@ -108,29 +114,30 @@ public class SummaryActivity extends AppCompatActivity {
 
     private void updateView() {
 
-        Table table = getFullTableData(thisTable.id);
+        Table table = getFullTableData(thisTableID);
         Client client = null;
-        if (table != null) client = table.clients.get(thisClient.id);
+        if (table != null) client = table.clients.get(thisClientID);
 
-        thisClient.state = client.state;
-        thisTable.state = table.state;
+        globalClient.state = client.state;
+        globalTable.state = table.state;
 
-        //load everything that is uptodate from getfullData but remember to backup View elements
+        //load everything that is update from getFullTableData but remember to backup View elements
         //this way we update global tablepricing
-
-        for(int orderNumber = 0; orderNumber <  thisClient.orders.size(); orderNumber++) {
-            Order globalOrder =  thisClient.orders.valueAt(orderNumber);
+        //dunno if it is really necessary
+        for(int orderNumber = 0; orderNumber <  globalClient.orders.size(); orderNumber++) {
+            Order globalOrder =  globalClient.orders.valueAt(orderNumber);
+            globalOrder.state = client.orders.get(globalOrder.id).state;
             TextView orderStateTextView = globalOrder.orderElement.findViewById(R.id.OrderStateTextView);
-            runOnUiThread(() -> orderStateTextView.setText(thisClient.orders.get(globalOrder.id).getState()));
+            runOnUiThread(() -> orderStateTextView.setText(globalOrder.getState()));
         }
 
-        if (thisClient.state == 3) runOnUiThread(() -> cancelBillScreen.setVisibility(View.VISIBLE));
+        if (globalClient.state == 3) runOnUiThread(() -> cancelBillScreen.setVisibility(View.VISIBLE));
         else runOnUiThread(() -> cancelBillScreen.setVisibility(View.GONE));
-        if (thisTable.state == 2) runOnUiThread(() -> freezeButtonScreen.setVisibility(View.VISIBLE));
+        if (globalTable.state == 2) runOnUiThread(() -> freezeButtonScreen.setVisibility(View.VISIBLE));
         else runOnUiThread(() -> freezeButtonScreen.setVisibility(View.GONE));
 
-        runOnUiThread(() -> clientPriceNumberTextView.setText(thisClient.getTotalPriceString()));
-        runOnUiThread(() -> tablePriceNumberTextView.setText(thisTable.getTotalPriceString()));
+        runOnUiThread(() -> clientPriceNumberTextView.setText(globalClient.getTotalPriceString()));
+        runOnUiThread(() -> tablePriceNumberTextView.setText(globalTable.getTotalPriceString()));
     }
 
     @Override

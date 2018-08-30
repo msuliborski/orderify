@@ -23,8 +23,8 @@ public class MainActivity extends AppCompatActivity {
 
     public static Context context;
 
-    public static Table thisTable;
-    public static Client thisClient;
+    public static int thisTableID;
+    public static int thisClientID;
 
 
     @Override
