@@ -17,7 +17,8 @@ import com.amm.orderify.helpers.data.*;
 
 import java.sql.SQLException;
 
-import static com.amm.orderify.helpers.DataManagement.*;
+import static com.amm.orderify.MainActivity.thisTableID;
+import static com.amm.orderify.helpers.FetchDataFromDatabase.*;
 import static com.amm.orderify.helpers.JBDCDriver.*;
 
 public class TablesActivity extends AppCompatActivity {
@@ -70,7 +71,7 @@ public class TablesActivity extends AppCompatActivity {
                 try {
                     globalTable.state = 1;
                     for(int i = 0; i < globalTable.clients.size(); i++) globalTable.clients.valueAt(i).state = 1;
-                    ExecuteUpdate("UPDATE globalTables SET state = 1 WHERE ID = " + globalTable.id);
+                    ExecuteUpdate("UPDATE tables SET state = 1 WHERE ID = " + globalTable.id);
                     ExecuteUpdate("UPDATE clients SET state = 1 WHERE tableID = " + globalTable.id);
                 } catch (SQLException ignored) {}
             });
@@ -85,7 +86,7 @@ public class TablesActivity extends AppCompatActivity {
                         freezeStateButton.setText(R.string.bar_tables_table_state_freeze_button);
                         tableStateTextView.setText(R.string.lifecycle_table_ready);
                     }
-                    ExecuteUpdate("UPDATE globalTables SET state = " + globalTable.state + " WHERE ID = " + globalTable.id);
+                    ExecuteUpdate("UPDATE tables SET state = " + globalTable.state + " WHERE ID = " + globalTable.id);
                 } catch (SQLException ignored) { }
             });
             expandCollapseButton.setOnClickListener(v -> {
@@ -164,12 +165,17 @@ public class TablesActivity extends AppCompatActivity {
                         });
                     } else if(globalOrder.state == 3){
                         globalOrder.state = 4;
+                        globalClient.state = 1;
+                        globalTable.state = 1;
                         runOnUiThread(() -> {
                             changeOrderStateButton.setVisibility(View.GONE);
                             orderStateTextView.setText(R.string.lifecycle_order_paid);
                         });
                     }
-                    ExecuteUpdate("UPDATE orders SET state = " + globalOrder.state + " WHERE ID = " + order.id);
+
+                    ExecuteUpdate("UPDATE tables SET state = " + globalTable.state + " WHERE ID = " + globalOrder.tableID);
+                    ExecuteUpdate("UPDATE clients SET state = " + globalClient.state + " WHERE tableID = " + globalOrder.tableID);
+                    ExecuteUpdate("UPDATE orders SET state = " + globalOrder.state + " WHERE ID = " + globalOrder.id);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }

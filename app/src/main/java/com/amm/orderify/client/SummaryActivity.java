@@ -5,7 +5,6 @@ import android.os.AsyncTask;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.ArrayMap;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -19,7 +18,7 @@ import java.sql.SQLException;
 
 import static com.amm.orderify.MainActivity.*;
 import static com.amm.orderify.helpers.JBDCDriver.*;
-import static com.amm.orderify.helpers.DataManagement.*;
+import static com.amm.orderify.helpers.FetchDataFromDatabase.*;
 
 public class SummaryActivity extends AppCompatActivity {
 
@@ -63,14 +62,14 @@ public class SummaryActivity extends AppCompatActivity {
         });
 
         cancelBillScreen = findViewById(R.id.CancelBillScreen);
-        ImageButton cancelBillButton = cancelBillScreen.findViewById(R.id.CancelBillButton);
-        cancelBillButton.setOnClickListener(e -> {
-            try {
-                ExecuteUpdate("UPDATE clients SET state = 1 WHERE tableID = " + thisTableID);
-                ExecuteUpdate("UPDATE tables SET state = 1 WHERE ID = " + thisTableID);
-                ExecuteUpdate("UPDATE orders JOIN clients ON orders.clientID = clients.ID SET orders.state = 2 WHERE clients.tableID = " + thisTableID + " AND orders.state = 3");
-            } catch (SQLException ignored) { }
-        });
+//        ImageButton cancelBillButton = cancelBillScreen.findViewById(R.id.CancelBillButton);
+//        cancelBillButton.setOnClickListener(e -> {
+//            try {
+//                ExecuteUpdate("UPDATE clients SET state = 1 WHERE tableID = " + thisTableID);
+//                ExecuteUpdate("UPDATE tables SET state = 1 WHERE ID = " + thisTableID);
+//                ExecuteUpdate("UPDATE orders JOIN clients ON orders.clientID = clients.ID SET orders.state = 2 WHERE clients.tableID = " + thisTableID + " AND orders.state = 3");
+//            } catch (SQLException ignored) { }
+//        });
 
 
 
@@ -131,10 +130,31 @@ public class SummaryActivity extends AppCompatActivity {
             runOnUiThread(() -> orderStateTextView.setText(globalOrder.getState()));
         }
 
-        if (globalClient.state == 3) runOnUiThread(() -> cancelBillScreen.setVisibility(View.VISIBLE));
-        else runOnUiThread(() -> cancelBillScreen.setVisibility(View.GONE));
-        if (globalTable.state == 2) runOnUiThread(() -> freezeButtonScreen.setVisibility(View.VISIBLE));
-        else runOnUiThread(() -> freezeButtonScreen.setVisibility(View.GONE));
+        switch (globalClient.state){
+            case 1:
+                runOnUiThread(() -> cancelBillScreen.setVisibility(View.GONE));
+                runOnUiThread(() -> freezeButtonScreen.setVisibility(View.GONE));
+                break;
+            case 2:
+                runOnUiThread(() -> cancelBillScreen.setVisibility(View.GONE));
+                runOnUiThread(() -> freezeButtonScreen.setVisibility(View.VISIBLE));
+                break;
+            case 3:
+                runOnUiThread(() -> cancelBillScreen.setVisibility(View.VISIBLE));
+                runOnUiThread(() -> freezeButtonScreen.setVisibility(View.GONE));
+                break;
+            case 4:
+                runOnUiThread(() -> cancelBillScreen.setVisibility(View.GONE));
+                runOnUiThread(() -> freezeButtonScreen.setVisibility(View.GONE));
+                break;
+            default: break;
+        }
+//        if (globalClient.state == 1 || globalClient.state == 4)
+//        else runOnUiThread(() -> cancelBillScreen.setVisibility(View.GONE));
+//        if (globalTable.state == 2) runOnUiThread(() -> freezeButtonScreen.setVisibility(View.VISIBLE));
+//        else runOnUiThread(() -> freezeButtonScreen.setVisibility(View.GONE));
+//        if (globalClient.state == 3) runOnUiThread(() -> cancelBillScreen.setVisibility(View.VISIBLE));
+//        else runOnUiThread(() -> cancelBillScreen.setVisibility(View.GONE));
 
         runOnUiThread(() -> clientPriceNumberTextView.setText(globalClient.getTotalPriceString()));
         runOnUiThread(() -> tablePriceNumberTextView.setText(globalTable.getTotalPriceString()));

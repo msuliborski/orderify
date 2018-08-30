@@ -7,7 +7,7 @@ public class DishCategory {
     public String name;
     public ArrayMap<Integer,Dish> dishes;
 
-    public DishCategory(int id, String name, ArrayMap<Integer, Dish> dishes){
+    public DishCategory(int id, String name, ArrayMap<Integer,Dish> dishes){
         this.id = id;
         this.name = name;
         this.dishes = dishes;

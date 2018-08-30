@@ -258,38 +258,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageButton
-            android:id="@+id/CancelBillButton"
-            android:layout_width="100dp"
-            android:layout_height="16dp"
-
-            android:background="?android:attr/selectableItemBackground"
-            android:elevation="110dp"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:scaleType="fitStart"
-
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.9"
-            app:srcCompat="@drawable/common_button_background" />
-
         <TextView
             android:id="@+id/CancelBillButtonTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
             android:elevation="111dp"
             android:fontFamily="@font/tw_cen"
             android:text="@string/client_cancel_bill_button"
             android:textColor="@color/darkRed"
             android:textSize="8sp"
-            app:layout_constraintBottom_toBottomOf="@+id/CancelBillButton"
-            app:layout_constraintEnd_toEndOf="@+id/CancelBillButton"
-            app:layout_constraintStart_toStartOf="@+id/CancelBillButton"
-            app:layout_constraintTop_toTopOf="@+id/CancelBillButton" />
+            tools:layout_editor_absoluteX="267dp"
+            tools:layout_editor_absoluteY="334dp" />
 
         <TextView
             android:id="@+id/BillMessage1"

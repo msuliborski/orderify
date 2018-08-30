@@ -32,7 +32,7 @@ import java.util.List;
 import static com.amm.orderify.MainActivity.thisClientID;
 import static com.amm.orderify.MainActivity.thisTableID;
 import static com.amm.orderify.helpers.Comparators.wishesTheSame;
-import static com.amm.orderify.helpers.DataManagement.getFullMenuData;
+import static com.amm.orderify.helpers.FetchDataFromDatabase.getFullMenuData;
 import static com.amm.orderify.helpers.JBDCDriver.*;
 import static com.amm.orderify.helpers.TimeAndDate.*;
 
@@ -49,7 +49,7 @@ public class MenuActivity extends AppCompatActivity {
     TextView totalPriceTextView;
 
     List<Wish> wishes = new ArrayList<>();
-    ArrayMap<Integer, DishCategory> dishCategories;
+    ArrayMap<Integer,DishCategory> dishCategories;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +84,7 @@ public class MenuActivity extends AppCompatActivity {
         ImageButton askWaiterButton = findViewById(R.id.AskWaiterButton);
         askWaiterButton.setOnClickListener(e -> {
             try {
-                ExecuteUpdate("UPDATE clients SET state = 3 WHERE ID = " + thisClientID);
+                ExecuteUpdate("UPDATE clients SET state = 4 WHERE ID = " + thisClientID);
             } catch (SQLException ignored) {}
         });
     }
@@ -300,7 +300,7 @@ public class MenuActivity extends AppCompatActivity {
     private void refreshTableState() {
         try {
             int state = 1;
-            ResultSet stateRS = ExecuteQuery("SELECT state FROM tables WHERE ID = 1");
+            ResultSet stateRS = ExecuteQuery("SELECT state FROM tables WHERE ID = " + thisTableID);
             if(stateRS.next()) state = stateRS.getInt("state");
 
             if (state == 2) runOnUiThread(() -> freezeButtonScreen.setVisibility(View.VISIBLE));

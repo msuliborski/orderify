@@ -32,6 +32,36 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.app_main_activity);
 
+
+        //==========================================================================================
+        /*
+
+        //DATABASE
+        -obsługa dań w wielu języka (do obgadania)
+        -padlock TTL na czas a nie ilość odczytów (po przerobieniu czasu)
+
+        //APP LOGIC
+        -lifecycle nie zakłada wzywanai kelnera z poziomu menu (brak obsługi w TablesActivity)
+        -czas na poprawnych timezone'ach (https://www.baeldung.com/java-8-date-time-intro)
+        -pop-upy z potwierdzeniami (czy na pewno usunąć danie/czy na pewno wezwać kelnera)
+        -wyswietlanie przywijajacych messages
+        -edycja messages
+        -automatyczne usuwanie zapłaconych dań z SummaryActivity oraz TablesActivity
+        -wielki test wszystkich funkcjonalności!
+        -sortowanie dynamiczne (TablesActivity i SummaryActivity)
+
+        //DESIGN
+        -kolorystyka w barze, bo boli
+        -usunięcie przycisku cancel bill request
+        -przebudowa podglądu orderu z wyświetlanymi dodatkami do niego w MenuActivity
+        -redisign na tablet "wielocalowy"
+
+
+         */
+        //==========================================================================================
+
+
+
         context = this.getApplicationContext();
 
         InitiateConnection();

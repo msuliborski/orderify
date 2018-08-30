@@ -7,9 +7,9 @@ public class AddonCategory {
     public String name;
     public String description;
     public Boolean multiChoice;
-    public ArrayMap<Integer, Addon> addons;
+    public ArrayMap<Integer,Addon> addons;
 
-    public AddonCategory(int id, String name, String description, Boolean multiChoice, ArrayMap<Integer, Addon> addons){
+    public AddonCategory(int id, String name, String description, Boolean multiChoice, ArrayMap<Integer,Addon> addons){
         this.id = id;
         this.name = name;
         this.description = description;

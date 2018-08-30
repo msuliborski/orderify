@@ -20,10 +20,10 @@ public class Order {
     public int state;
     public int clientID;
     public int tableID;
-    public ArrayMap<Integer, Wish> wishes;
+    public ArrayMap<Integer,Wish> wishes;
     public View orderElement;
 
-    public Order(int id, Date time, Date date, String comments, int state, int clientID, int tableID, ArrayMap<Integer, Wish> wishes) {
+    public Order(int id, Date time, Date date, String comments, int state, int clientID, int tableID, ArrayMap<Integer,Wish> wishes) {
         this.id = id;
         this.time = time;
         this.date = date;

@@ -12,7 +12,7 @@ public class Client {
     public int number;
     public int state;
     public int tableID;
-    public ArrayMap<Integer, Order> orders;
+    public ArrayMap<Integer,Order> orders;
 
     public Client(int id, int number, int state,  int tableID, ArrayMap<Integer,Order> orders) {
         this.id = id;

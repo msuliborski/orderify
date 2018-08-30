@@ -1,6 +1,7 @@
 package com.amm.orderify.helpers;
 
 import android.util.ArrayMap;
+import android.util.SparseArray;
 
 import com.amm.orderify.helpers.data.Addon;
 import com.amm.orderify.helpers.data.Client;
@@ -10,6 +11,7 @@ import com.amm.orderify.helpers.data.Wish;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SplittableRandom;
 
 public class Comparators {
 
@@ -24,7 +26,7 @@ public class Comparators {
         return newTables;
     }
 
-    public static ArrayMap<Integer, Order> getDifferenceFromOrderLists(ArrayMap<Integer, Order> oldOrders, ArrayMap<Integer, Order> newOrders){
+    public static ArrayMap<Integer,Order> getDifferenceFromOrderLists(ArrayMap<Integer,Order> oldOrders, ArrayMap<Integer,Order> newOrders){
 
         for(int ot = 0; ot < oldOrders.size(); ot++){
             for(int nt = 0; nt < newOrders.size(); nt++){
@@ -83,6 +85,9 @@ public class Comparators {
             if (!(w1.addons.size() == w2.addons.size())) return false;
 
             for (int i = 0; i < w1.addons.size(); i++){
+                SparseArray<Table> t = new SparseArray<>();
+                ArrayMap<Integer,Table> d = new ArrayMap<>();
+
                 if (!(w1.addons.containsKey(w2.addons.valueAt(i).id))) return false;
                 if (!(w2.addons.containsKey(w1.addons.valueAt(i).id))) return false;
             }

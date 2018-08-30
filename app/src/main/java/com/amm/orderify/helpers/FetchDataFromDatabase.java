@@ -2,6 +2,7 @@ package com.amm.orderify.helpers;
 
 import android.util.ArrayMap;
 import android.util.Log;
+import android.util.SparseArray;
 
 import com.amm.orderify.helpers.data.*;
 import java.sql.ResultSet;
@@ -10,15 +11,15 @@ import java.sql.Statement;
 
 import static com.amm.orderify.helpers.JBDCDriver.*;
 
-public class DataManagement {
+public class FetchDataFromDatabase {
 
 
-    public static ArrayMap<Integer, DishCategory> getFullMenuData() {
+    public static ArrayMap<Integer,DishCategory> getFullMenuData() {
 
-        ArrayMap<Integer, Addon> addons = new ArrayMap<>();
-        ArrayMap<Integer, AddonCategory> addonCategories = new ArrayMap<>();
-        ArrayMap<Integer, Dish> dishes = new ArrayMap<>();
-        ArrayMap<Integer, DishCategory> dishCategories = new ArrayMap<>();
+        ArrayMap<Integer,Addon> addons = new ArrayMap<>();
+        ArrayMap<Integer,AddonCategory> addonCategories = new ArrayMap<>();
+        ArrayMap<Integer,Dish> dishes = new ArrayMap<>();
+        ArrayMap<Integer,DishCategory> dishCategories = new ArrayMap<>();
 
         try {
             Statement dishCategoriesS = getConnection().createStatement();
@@ -54,13 +55,13 @@ public class DataManagement {
     }
 
 
-    public static ArrayMap<Integer, Table> getFullTablesData(){
+    public static ArrayMap<Integer,Table> getFullTablesData(){
         if (notLocked()) {
-            ArrayMap<Integer, Table> tables = new ArrayMap<>();
-            ArrayMap<Integer, Client> clients = new ArrayMap<>();
-            ArrayMap<Integer, Order> orders = new ArrayMap<>();
-            ArrayMap<Integer, Wish> wishes = new ArrayMap<>();
-            ArrayMap<Integer, Addon> addons = new ArrayMap<>();
+            ArrayMap<Integer,Table> tables = new ArrayMap<>();
+            ArrayMap<Integer,Client> clients = new ArrayMap<>();
+            ArrayMap<Integer,Order> orders = new ArrayMap<>();
+            ArrayMap<Integer,Wish> wishes = new ArrayMap<>();
+            ArrayMap<Integer,Addon> addons = new ArrayMap<>();
             try {
                 Statement tablesS = getConnection().createStatement();
                 ResultSet tablesRS = tablesS.executeQuery("SELECT * FROM tables");
@@ -106,10 +107,10 @@ public class DataManagement {
 
     public static Table getFullTableData(int tableID){
         Table table = null;
-        ArrayMap<Integer, Client> clients = new ArrayMap<>();
-        ArrayMap<Integer, Order> orders = new ArrayMap<>();
-        ArrayMap<Integer, Wish> wishes = new ArrayMap<>();
-        ArrayMap<Integer, Addon> addons = new ArrayMap<>();
+        ArrayMap<Integer,Client> clients = new ArrayMap<>();
+        ArrayMap<Integer,Order> orders = new ArrayMap<>();
+        ArrayMap<Integer,Wish> wishes = new ArrayMap<>();
+        ArrayMap<Integer,Addon> addons = new ArrayMap<>();
         try {
             Statement clientS = getConnection().createStatement();
             ResultSet clientRS = clientS.executeQuery("SELECT tables.ID AS tableID, tables.number AS tableNumber, tables.description AS tableDescription, tables.state AS tableState, clients.ID AS clientID, clients.number AS clientNumber, clients.state AS clientState FROM tables \n" +
@@ -149,11 +150,11 @@ public class DataManagement {
     }
 
 
-    public static ArrayMap<Integer, Order> getNewOrders() {
+    public static ArrayMap<Integer,Order> getNewOrders() {
         if (notLocked()) {
-            ArrayMap<Integer, Order> newOrders = new ArrayMap<>();
-            ArrayMap<Integer, Wish> newWishes = new ArrayMap<>();
-            ArrayMap<Integer, Addon> newAddons = new ArrayMap<>();
+            ArrayMap<Integer,Order> newOrders = new ArrayMap<>();
+            ArrayMap<Integer,Wish> newWishes = new ArrayMap<>();
+            ArrayMap<Integer,Addon> newAddons = new ArrayMap<>();
             try {
                 Statement newOrdersS = getConnection().createStatement();
                 ResultSet newOrdersRS = newOrdersS.executeQuery("SELECT newOrders.*, " +
@@ -180,16 +181,17 @@ public class DataManagement {
                     newOrders.put(newOrdersRS.getInt("ID"), new Order(newOrdersRS.getInt("ID"), newOrdersRS.getTime("time"), newOrdersRS.getDate("date"), newOrdersRS.getString("comments"), newOrdersRS.getInt("state"), newOrdersRS.getInt("clientID"), newOrdersRS.getInt("tableID"), newWishes));
                     newWishes = new ArrayMap<>();
                 }
-                ExecuteUpdate("DELETE FROM newAddonsToWishes");
-                ExecuteUpdate("DELETE FROM newWishes");
-                ExecuteUpdate("DELETE FROM newOrders");
+                if (!newOrders.equals(new ArrayMap<>())){
+                    ExecuteUpdate("DELETE FROM newAddonsToWishes");
+                    ExecuteUpdate("DELETE FROM newWishes");
+                    ExecuteUpdate("DELETE FROM newOrders");}
             } catch(SQLException e) { Log.wtf("SQLException", "Code: " + e.getErrorCode() + ", \nMessage:" + e.getMessage()); }
             return newOrders;
         }
         return new ArrayMap<>();
     }
 
-    public static ArrayMap<Integer, Order> getAllOrders() {
+    public static ArrayMap<Integer,Order> getAllOrders() {
         while (true){
             if(notLocked()) break;
         }
@@ -229,10 +231,10 @@ public class DataManagement {
         return orders;
     }
 
-    public static ArrayMap<Integer, Table> getOnlyTables(){
-        ArrayMap<Integer, Table> tables = new ArrayMap<>();
-        ArrayMap<Integer, Client> clients = new ArrayMap<>();
-        ArrayMap<Integer, Order> orders = new ArrayMap<>();
+    public static ArrayMap<Integer,Table> getOnlyTables(){
+        ArrayMap<Integer,Table> tables = new ArrayMap<>();
+        ArrayMap<Integer,Client> clients = new ArrayMap<>();
+        ArrayMap<Integer,Order> orders = new ArrayMap<>();
         try {
             Statement tablesS = getConnection().createStatement();
             ResultSet tablesRS = tablesS.executeQuery("SELECT * FROM tables");

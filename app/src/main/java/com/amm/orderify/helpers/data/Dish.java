@@ -13,12 +13,12 @@ public class Dish {
     public String descS;
     public String descL;
     public int dishCategoryID;
-    public ArrayMap<Integer, AddonCategory> addonCategories;
-    public ArrayMap<Integer, Addon> chosenAddons = new ArrayMap<>(); //for menu handling
+    public ArrayMap<Integer,AddonCategory> addonCategories;
+    public ArrayMap<Integer,Addon> chosenAddons = new ArrayMap<>(); //for menu handling
 
     public String dishCategoryName;
 
-    public Dish(int id, int number, String name, float price, String descS, String descL, int dishCategoryID, ArrayMap<Integer, AddonCategory> addonCategories) {
+    public Dish(int id, int number, String name, float price, String descS, String descL, int dishCategoryID, ArrayMap<Integer,AddonCategory> addonCategories) {
         this.id = id;
         this.number = number;
         this.name = name;

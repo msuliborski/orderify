@@ -15,7 +15,7 @@ public class Table {
     public ArrayMap<Integer,Client> clients;
     public View tableElement;
 
-    public Table(int id, int number, String description, int state, ArrayMap<Integer, Client> clients) {
+    public Table(int id, int number, String description, int state, ArrayMap<Integer,Client> clients) {
         this.id = id;
         this.number = number;
         this.description = description;
