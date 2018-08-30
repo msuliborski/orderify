@@ -14,9 +14,15 @@ public class Addon {
         this.price = price;
         this.addonCategoryID = addonCategoryID;
     }
+    public String getIdString() {
+        return id+"";
+    }
 
     public String getPriceString(){
         DecimalFormat formatter = new DecimalFormat("0.00");
         return formatter.format(this.price) + " zł";
+    }
+    public String getPurePriceString(){
+        return this.price + "";
     }
 }

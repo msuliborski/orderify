@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/basket_background">
+
+    <ScrollView
+        android:id="@+id/AddonCategoryScrollView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/enter_comments_edittext_background"
+        app:layout_constraintBottom_toTopOf="@+id/MultiChoiceToggleButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:padding="8dp"
+        tools:ignore="MissingConstraints">
+
+        <LinearLayout
+            android:id="@+id/AddonCategoryLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/NameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/tw_cen"
+        android:text="Name:"
+        android:textColor="@color/backgroundPrimary"
+        app:layout_constraintBottom_toBottomOf="@+id/NameEditText"
+        app:layout_constraintEnd_toStartOf="@+id/NameEditText"
+        app:layout_constraintTop_toTopOf="@+id/NameEditText"
+        tools:ignore="MissingConstraints" />
+
+    <EditText
+        android:id="@+id/NameEditText"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="120dp"
+        android:background="@drawable/enter_comments_edittext_background"
+        android:ems="10"
+        android:paddingHorizontal="8dp"
+        android:fontFamily="@font/tw_cen"
+        android:inputType="textPersonName"
+        android:textColor="@color/darkRed"
+        app:layout_constraintBottom_toTopOf="@+id/DescriptionEditText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/DescriptionTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/tw_cen"
+        android:text="Description:"
+        android:textColor="@color/backgroundPrimary"
+        app:layout_constraintBottom_toBottomOf="@+id/DescriptionEditText"
+        app:layout_constraintEnd_toStartOf="@+id/DescriptionEditText"
+        app:layout_constraintTop_toTopOf="@+id/DescriptionEditText"
+        tools:ignore="MissingConstraints" />
+
+    <EditText
+        android:id="@+id/DescriptionEditText"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="120dp"
+        android:background="@drawable/enter_comments_edittext_background"
+        android:ems="10"
+        android:paddingHorizontal="8dp"
+        android:fontFamily="@font/tw_cen"
+        android:inputType="textPersonName"
+        android:textColor="@color/darkRed"
+        app:layout_constraintBottom_toTopOf="@+id/ActionButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/ActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/enter_comments_edittext_background"
+        android:paddingHorizontal="8dp"
+        android:text="Add AddonCategory"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="HardcodedText,MissingConstraints" />
+
+    <Switch
+        android:id="@+id/MultiChoiceToggleButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/tw_cen"
+        android:text="muliChoice:"
+        android:textColor="@color/backgroundPrimary"
+        app:layout_constraintBottom_toTopOf="@+id/NameEditText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/CancelButton"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/enter_comments_edittext_background"
+        android:text="Cancel"
+        app:layout_constraintStart_toEndOf="@+id/ActionButton"
+        app:layout_constraintTop_toTopOf="@+id/ActionButton"
+        tools:ignore="MissingConstraints" />
+
+</android.support.constraint.ConstraintLayout>

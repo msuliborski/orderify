@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/basket_background">
+
+
+    <Button
+        android:id="@+id/ChoseTablesButton"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+
+        android:layout_marginTop="16dp"
+        android:layout_weight="1"
+        android:background="@drawable/enter_comments_edittext_background"
+        android:fontFamily="@font/tw_cen"
+        android:paddingHorizontal="6dp"
+        android:text="Edit tables"
+        app:layout_constraintStart_toStartOf="@id/TablesTextView"
+        app:layout_constraintTop_toBottomOf="@id/TablesTextView"
+        tools:ignore="HardcodedText,MissingConstraints" />
+
+    <Button
+        android:id="@+id/ChoseDishCategoriesButton"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/enter_comments_edittext_background"
+        android:fontFamily="@font/tw_cen"
+        android:paddingHorizontal="6dp"
+        android:text="Edit dishCategories"
+        app:layout_constraintBottom_toBottomOf="@id/ChoseDishesButton"
+        app:layout_constraintStart_toEndOf="@id/ChoseDishesButton"
+        app:layout_constraintTop_toTopOf="@+id/ChoseDishesButton"
+        tools:ignore="HardcodedText,MissingConstraints" />
+
+    <Button
+        android:id="@+id/ChoseDishesButton"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/enter_comments_edittext_background"
+        android:fontFamily="@font/tw_cen"
+        android:paddingHorizontal="6dp"
+        android:text="Edit dishes"
+        app:layout_constraintStart_toStartOf="@id/DishesTextView"
+        app:layout_constraintTop_toBottomOf="@id/DishesTextView"
+        tools:ignore="HardcodedText,MissingConstraints,NotSibling" />
+
+    <Button
+        android:id="@+id/ChoseAddonCategoriesButton"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/enter_comments_edittext_background"
+        android:fontFamily="@font/tw_cen"
+        android:paddingHorizontal="6dp"
+        android:text="Edit AddonCategories"
+        app:layout_constraintBottom_toBottomOf="@id/ChoseAddonsButton"
+        app:layout_constraintStart_toEndOf="@id/ChoseAddonsButton"
+        app:layout_constraintTop_toTopOf="@+id/ChoseAddonsButton"
+        tools:ignore="HardcodedText,MissingConstraints" />
+
+    <Button
+        android:id="@+id/ChoseAddonsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/enter_comments_edittext_background"
+        android:fontFamily="@font/tw_cen"
+        android:paddingHorizontal="6dp"
+        android:text="Edit addons"
+        app:layout_constraintStart_toStartOf="@id/AddonsTextView"
+        app:layout_constraintTop_toBottomOf="@id/AddonsTextView"
+        tools:ignore="HardcodedText,MissingConstraints" />
+
+    <Button
+        android:id="@+id/ClearLogButton"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/enter_comments_edittext_background"
+        android:fontFamily="@font/tw_cen"
+        android:paddingHorizontal="6dp"
+        android:text="CLEAR LOG"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/TablesTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="60dp"
+        android:fontFamily="@font/tw_cen"
+        android:text="Tables:"
+        android:textColor="@color/backgroundPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/DishesTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/tw_cen"
+        android:text="Dishes:"
+        android:textColor="@color/backgroundPrimary"
+        app:layout_constraintStart_toStartOf="@id/TablesTextView"
+        app:layout_constraintTop_toBottomOf="@id/ChoseTablesButton" />
+
+    <TextView
+        android:id="@+id/AddonsTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/tw_cen"
+        android:text="Addons:"
+        android:textColor="@color/backgroundPrimary"
+        app:layout_constraintStart_toStartOf="@id/TablesTextView"
+        app:layout_constraintTop_toBottomOf="@id/ChoseDishesButton" />
+
+</android.support.constraint.ConstraintLayout>

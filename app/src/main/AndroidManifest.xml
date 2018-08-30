@@ -21,9 +21,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".config.RoleActivity"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="stateHidden" />
+
         <activity
             android:name=".bar.TablesActivity"
             android:screenOrientation="landscape" />
+
         <activity
             android:name=".client.MenuActivity"
             android:screenOrientation="landscape"
@@ -32,32 +39,29 @@
             android:name=".client.SummaryActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="stateHidden" />
+
         <activity
-            android:name=".config.RoleActivity"
+            android:name=".maintenance.MaintenanceActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".maintenance.EditActivity"
+            android:name=".maintenance.editors.EditTablesActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".maintenance.adders.AddTableActivity"
+            android:name=".maintenance.editors.EditDishCategoriesActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".maintenance.adders.AddDishCategoryActivity"
+            android:name=".maintenance.editors.EditDishesActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".maintenance.adders.AddDishActivity"
+            android:name=".maintenance.editors.EditAddonCategoriesActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".maintenance.adders.AddAddonCategoryActivity"
-            android:screenOrientation="landscape"
-            android:windowSoftInputMode="stateHidden" />
-        <activity
-            android:name=".maintenance.adders.AddAddonActivity"
+            android:name=".maintenance.editors.EditAddonsActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="stateHidden" />
     </application>

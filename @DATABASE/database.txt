@@ -1,10 +1,11 @@
 /etc/mysql/mysql.d/mysql.conf
-bind-address = MY_IP (local address, not 'localhost')
+bind-address = <192.168.1.100> (local address, not 'localhost')
 
 
 CREATE USER 'root'@'%' IDENTIFIED BY '1234';
 GRANT ALL PRIVILEGES ON *.* TO 'root'@'%';
 flush privileges;
+//in the future grand access only to valid tables in the network
 
 To access MySQL:
 local:

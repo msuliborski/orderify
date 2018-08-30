@@ -105,7 +105,7 @@
             android:layout_marginStart="8dp"
             android:fontFamily="@font/tw_cen"
             android:gravity="center"
-            android:text="@string/add_to_order_textview_string"
+            android:text="@string/client_menu_add_to_order_button"
             android:textColor="@color/backgroundPrimary"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@+id/AddToOrderButton"

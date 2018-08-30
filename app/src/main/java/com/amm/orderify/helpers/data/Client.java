@@ -1,22 +1,24 @@
 package com.amm.orderify.helpers.data;
 
+import android.util.ArrayMap;
+
 import com.amm.orderify.R;
 
 import java.text.DecimalFormat;
-import java.util.List;
-
 import static com.amm.orderify.MainActivity.context;
 
 public class Client {
     public int id;
     public int number;
     public int state;
-    public List<Order> orders;
+    public int tableID;
+    public ArrayMap<Integer,Order> orders;
 
-    public Client(int id, int number, int state, List<Order> orders) {
+    public Client(int id, int number, int state,  int tableID, ArrayMap<Integer,Order> orders) {
         this.id = id;
         this.number = number;
         this.state = state;
+        this.tableID = tableID;
         this.orders = orders;
     }
 
@@ -24,7 +26,7 @@ public class Client {
         float totalPrice = 0;
 
         for (int orderNumber = 0; orderNumber < orders.size(); orderNumber++)
-            totalPrice += orders.get(orderNumber).getTotalPrice();
+            totalPrice += orders.valueAt(orderNumber).getTotalPrice();
 
         return totalPrice;
     }
@@ -33,7 +35,7 @@ public class Client {
         float totalPrice = 0;
 
         for (int orderNumber = 0; orderNumber < orders.size(); orderNumber++)
-            totalPrice += orders.get(orderNumber).getTotalPrice();
+            totalPrice += orders.valueAt(orderNumber).getTotalPrice();
 
         DecimalFormat formatter = new DecimalFormat("0.00");
         return formatter.format(totalPrice) + " zł";
@@ -51,4 +53,8 @@ public class Client {
         return state;
     }
 
+    @Override
+    public String toString() {
+        return "Client #" + this.number;
+    }
 }

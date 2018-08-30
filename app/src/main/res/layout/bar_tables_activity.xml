@@ -51,7 +51,7 @@
         android:layout_marginStart="2dp"
         android:background="@color/backgroundPrimary"
         android:fontFamily="@font/tw_cen"
-        android:text="@string/edit_messages_textview_string"
+        android:text="@string/bar_edit_messages_textview"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/RefreshButton"
         app:layout_constraintStart_toStartOf="parent" />
@@ -79,7 +79,7 @@
         android:layout_marginStart="8dp"
         android:background="@color/backgroundPrimary"
         android:fontFamily="@font/tw_cen"
-        android:text="@string/edit_menu_textview_string"
+        android:text="@string/bar_edit_menu_textview"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/BottomBarBackground"
         app:layout_constraintStart_toEndOf="@+id/RefreshButton" />

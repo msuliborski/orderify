@@ -4,16 +4,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/basket_background"
+    android:animateLayoutChanges="true">
 
     <TextView
         android:id="@+id/WelcomeTextView"
         android:layout_width="wrap_content"
-        android:layout_height="18dp"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="WELCOME TO CONFIG"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/tw_cen"
+        android:text="CONFIG"
+        android:textColor="@color/backgroundPrimary"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -22,78 +27,76 @@
         android:id="@+id/ChoseRoleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="CHOSE ROLE"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:fontFamily="@font/tw_cen"
+        android:text="CHOOSE ROLE"
+        android:textColor="@color/backgroundPrimary"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/WelcomeTextView" />
 
     <Spinner
         android:id="@+id/RoleSpinner"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ChoseRoleTextView" />
+        android:layout_height="30dp"
+        android:layout_marginStart="32dp"
+        android:background="@drawable/enter_comments_edittext_background"
+        android:popupBackground="@drawable/enter_comments_edittext_background"
+        app:layout_constraintBottom_toBottomOf="@+id/ChoseRoleTextView"
+        app:layout_constraintStart_toEndOf="@+id/ChoseRoleTextView"
+        app:layout_constraintTop_toTopOf="@+id/ChoseRoleTextView" />
 
     <TextView
         android:id="@+id/ChoseTableTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="CHOSE TABLE"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/RoleSpinner" />
+        android:layout_marginTop="32dp"
+        android:fontFamily="@font/tw_cen"
+        android:text="CHOOSE TABLE"
+        android:textColor="@color/backgroundPrimary"
+        app:layout_constraintEnd_toEndOf="@+id/ChoseRoleTextView"
+        app:layout_constraintTop_toBottomOf="@+id/ChoseRoleTextView" />
 
     <Spinner
         android:id="@+id/TableSpinner"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ChoseTableTextView" />
+        android:layout_height="30dp"
+        android:background="@drawable/enter_comments_edittext_background"
+        android:popupBackground="@drawable/enter_comments_edittext_background"
+        app:layout_constraintBottom_toBottomOf="@+id/ChoseTableTextView"
+        app:layout_constraintStart_toStartOf="@id/RoleSpinner"
+        app:layout_constraintTop_toTopOf="@+id/ChoseTableTextView" />
 
     <TextView
         android:id="@+id/ChoseClientTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="CHOSE CLIENT"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TableSpinner" />
+        android:layout_marginTop="32dp"
+        android:fontFamily="@font/tw_cen"
+        android:text="CHOOSE CLIENT"
+        android:textColor="@color/backgroundPrimary"
+        app:layout_constraintEnd_toEndOf="@+id/ChoseTableTextView"
+        app:layout_constraintTop_toBottomOf="@+id/ChoseTableTextView" />
 
     <Spinner
         android:id="@+id/ClientSpinner"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ChoseClientTextView" />
+        android:layout_height="30dp"
+        android:background="@drawable/enter_comments_edittext_background"
+        android:popupBackground="@drawable/enter_comments_edittext_background"
+        app:layout_constraintBottom_toBottomOf="@+id/ChoseClientTextView"
+        app:layout_constraintStart_toStartOf="@id/RoleSpinner"
+        app:layout_constraintTop_toTopOf="@+id/ChoseClientTextView" />
 
     <Button
         android:id="@+id/SelectRoleButton"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="35dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/enter_comments_edittext_background"
+        android:fontFamily="@font/tw_cen"
         android:text="SELECT"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -103,9 +106,12 @@
         android:id="@+id/RememberCheckBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:fontFamily="@font/tw_cen"
         android:text="REMEMBER"
+        android:textColor="@color/backgroundPrimary"
+        app:layout_constraintBottom_toBottomOf="@+id/SelectRoleButton"
         app:layout_constraintStart_toEndOf="@+id/SelectRoleButton"
-        app:layout_constraintTop_toBottomOf="@+id/ClientSpinner" />
+        app:layout_constraintTop_toTopOf="@+id/SelectRoleButton" />
 
 </android.support.constraint.ConstraintLayout>

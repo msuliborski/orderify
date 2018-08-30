@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/basket_background">
+
+    <ScrollView
+        android:id="@+id/DishCategoryScrollView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/enter_comments_edittext_background"
+        android:padding="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/NameEditText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints">
+
+        <LinearLayout
+            android:id="@+id/DishCategoryLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/NameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/tw_cen"
+        android:text="Name:"
+        android:textColor="@color/backgroundPrimary"
+        app:layout_constraintBottom_toBottomOf="@+id/NameEditText"
+        app:layout_constraintEnd_toStartOf="@+id/NameEditText"
+        app:layout_constraintTop_toTopOf="@+id/NameEditText"
+        tools:ignore="MissingConstraints" />
+
+    <EditText
+        android:id="@+id/NameEditText"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="120dp"
+        android:ems="10"
+        android:background="@drawable/enter_comments_edittext_background"
+        android:inputType="textPersonName"
+        android:paddingHorizontal="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/ActionButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/ActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/enter_comments_edittext_background"
+        android:fontFamily="@font/tw_cen"
+        android:paddingHorizontal="4dp"
+        android:text="Add DishCategory"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="HardcodedText,MissingConstraints" />
+
+    <Button
+        android:id="@+id/CancelButton"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/enter_comments_edittext_background"
+        android:fontFamily="@font/tw_cen"
+        android:text="Cancel"
+        app:layout_constraintStart_toEndOf="@+id/ActionButton"
+        app:layout_constraintTop_toTopOf="@+id/ActionButton"
+        tools:ignore="MissingConstraints" />
+
+</android.support.constraint.ConstraintLayout>
