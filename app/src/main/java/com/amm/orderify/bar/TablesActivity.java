@@ -1,13 +1,18 @@
 package com.amm.orderify.bar;
 
+import android.animation.LayoutTransition;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.ArrayMap;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -36,6 +41,7 @@ public class TablesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bar_tables_activity);
 
+
         Button refreshButton = findViewById(R.id.RefreshButton);
         refreshButton.setOnClickListener(v -> {
             generateTablesView();
@@ -47,6 +53,8 @@ public class TablesActivity extends AppCompatActivity {
             }
         });
         generateTablesView();
+
+
     }
 
     //do sortowania - funkcja która sprawdza czy jest nowy order/wezwanier kelnera/platnosc, usuwa wszystkie ordery z danego stolika i wkleja na nowo, posortowane
@@ -74,6 +82,7 @@ public class TablesActivity extends AppCompatActivity {
                     for(int i = 0; i < globalTable.clients.size(); i++) globalTable.clients.valueAt(i).state = 1;
                     ExecuteUpdate("UPDATE tables SET state = 1 WHERE ID = " + globalTable.id);
                     ExecuteUpdate("UPDATE clients SET state = 1 WHERE tableID = " + globalTable.id);
+                    sortTable(globalTable.state, globalTable, 1000);
                 } catch (SQLException ignored) {}
             });
             freezeStateButton.setOnClickListener(v -> {
@@ -96,6 +105,7 @@ public class TablesActivity extends AppCompatActivity {
                 else ordersLinearLayout.setVisibility(View.GONE);
             });
             tablesLinearLayout.addView(globalTable.tableElement);
+
         }
     }
 
@@ -207,6 +217,80 @@ public class TablesActivity extends AppCompatActivity {
                 runOnUiThread(() -> wishesLinearLayout.addView(wishElement));
             }
             runOnUiThread(() -> ordersLinearLayout.addView(globalOrder.orderElement));
+            sortTable(5, globalTable, 1000);
+        }
+    }
+    private void sortTable(int tableState, Table table, int time)
+    {
+        View tableElementChange = table.tableElement;
+
+        if (((LinearLayout)table.tableElement.findViewById(R.id.OrdersLinearLayout)).getChildCount() == 0 && tableState != 5) tableState = 0;
+
+        try
+        {
+            switch (tableState)
+            {
+                case 0:
+                    Log.wtf("Sort started", table.getState() + " nr: " + table.number + " case 0");
+                    
+                    runOnUiThread(() -> tablesLinearLayout.removeView(table.tableElement));
+                    Thread.sleep(time);
+                    runOnUiThread(() -> tablesLinearLayout.addView(table.tableElement));
+
+
+                    break;
+                case 1:
+                    Log.wtf("Sort started", table.getState() + " nr: " + table.number + " case 1");
+                    int position = 0;
+                    if (tablesLinearLayout.getChildCount() == 0) runOnUiThread(() -> tablesLinearLayout.addView(table.tableElement));
+                    else
+                    {
+                       while (tablesLinearLayout.getChildAt(position).findViewById(R.id.TableNumberBackgroundUrgent).getVisibility() == View.VISIBLE || tablesLinearLayout.getChildAt(position).findViewById(R.id.TableNumberBackground).getVisibility() == View.VISIBLE)
+                            position++;
+                       position--;
+                        if(tablesLinearLayout.indexOfChild(table.tableElement) != position)
+                        {
+                            runOnUiThread(() -> tablesLinearLayout.removeView(table.tableElement));
+                            Thread.sleep(time);
+                            final int finalPosition = position;
+                            runOnUiThread(() -> tablesLinearLayout.addView(table.tableElement, finalPosition));
+                        }
+                    }
+                    break;
+                case 3:
+                case 4:
+                    Log.wtf("Sort started", table.getState() + " nr: " + table.number + " case 3,4");
+                    if(tablesLinearLayout.indexOfChild(table.tableElement) != 0)
+                    {
+                        runOnUiThread(() -> tablesLinearLayout.removeView(table.tableElement));
+                        Thread.sleep(time);
+                        runOnUiThread(() -> tablesLinearLayout.addView(table.tableElement, 0));
+                    }
+                    break;
+                case 5:
+                    Log.wtf("Sort started", table.getState() + " nr: " + table.number + " case 5");
+                    int position2 = 0;
+                    if (tablesLinearLayout.getChildCount() == 0) runOnUiThread(() -> tablesLinearLayout.addView(table.tableElement));
+                    else
+                    {
+                        while (tablesLinearLayout.getChildAt(position2).findViewById(R.id.TableNumberBackgroundUrgent).getVisibility() == View.VISIBLE)
+                            position2++;
+                        //position2--;
+                        if(tablesLinearLayout.indexOfChild(table.tableElement) != position2)
+                        {
+                            runOnUiThread(() -> tablesLinearLayout.removeView(table.tableElement));
+                            Thread.sleep(time);
+                            final int finalPosition = position2;
+                            Log.wtf("FINAL POSITION", finalPosition + "");
+                            runOnUiThread(() -> tablesLinearLayout.addView(table.tableElement, finalPosition));
+                        }
+                    }
+                    break;
+            }
+        }
+        catch (Exception e)
+        {
+            Log.wtf("!!!!!!!!!!!!!!!!!!!!!!!Ex", e.getMessage());
         }
     }
 
@@ -216,6 +300,7 @@ public class TablesActivity extends AppCompatActivity {
         for(int tableNumber = 0; tableNumber < tables.size(); tableNumber++) {
             Table table = tables.valueAt(tableNumber);
             Table globalTable = this.globalTables.get(table.id);
+            boolean areAllOrdersFinished = true;
             LinearLayout ordersLinearLayout = globalTable.tableElement.findViewById(R.id.OrdersLinearLayout);
             ImageView tableNumberBackground = globalTable.tableElement.findViewById(R.id.TableNumberBackground);
             ImageView tableNumberBackgroundInactive = globalTable.tableElement.findViewById(R.id.TableNumberBackgroundInactive);
@@ -223,8 +308,8 @@ public class TablesActivity extends AppCompatActivity {
             Button acceptRequestButton = globalTable.tableElement.findViewById(R.id.AcceptRequestButton);
             TextView tableStateTextView = globalTable.tableElement.findViewById(R.id.TableStateTextView);
             TextView overallPriceTextView = globalTable.tableElement.findViewById(R.id.OverallPriceTextView);
-            try {
 
+            try {
                 runOnUiThread(() -> tableStateTextView.setText(table.getState()));
                 runOnUiThread(() -> overallPriceTextView.setText(table.getTotalPriceString()));
 
@@ -235,13 +320,20 @@ public class TablesActivity extends AppCompatActivity {
                 runOnUiThread(() -> {
                     acceptRequestButton.setVisibility(View.GONE);
                     tableStateTextView.setVisibility(View.GONE);
-                    tableNumberBackground.setVisibility(View.INVISIBLE);
                     tableNumberBackgroundInactive.setVisibility(View.VISIBLE);
                     tableNumberBackgroundUrgent.setVisibility(View.GONE);
+                    tableNumberBackground.setVisibility(View.INVISIBLE);
                 });
+
+                if (table.state != globalTable.state)
+                {
+                    globalTable.state = table.state;
+                    sortTable(0, globalTable, 1000);
+                }
             }
             else
             {
+
                 switch(table.state)
                 {
                     case 1:
@@ -273,16 +365,22 @@ public class TablesActivity extends AppCompatActivity {
 
 
                 }
+                if (table.state != globalTable.state)
+                {
+                    globalTable.state = table.state;
+                    sortTable(table.state, globalTable, 1000);
+                }
 
             }
 
 
-
+            boolean isTableEmpty = true;
             for (int clientNumber = 0; clientNumber < table.clients.size(); clientNumber++) {
                 Client client = table.clients.valueAt(clientNumber);
                 for (int orderNumber = 0; orderNumber < client.orders.size(); orderNumber++) {
                     Order order = client.orders.valueAt(orderNumber);
                     Order globalOrder = this.globalTables.get(order.tableID).clients.get(order.clientID).orders.get(order.id);
+                    if (client.orders.size() > 0) isTableEmpty = false;
                     try{
                         Thread.sleep(30);
                         Button changeOrderStateButton = globalOrder.orderElement.findViewById(R.id.ChangeOrderStateButton);
@@ -302,10 +400,39 @@ public class TablesActivity extends AppCompatActivity {
                             changeOrderStateButton.setVisibility(View.GONE); });
 
                         runOnUiThread(() -> orderWaitingTimeTextView.setText(order.getWaitingTime()));
+                        if (order.state != 4) areAllOrdersFinished = false;
                     } catch(Exception e){
                         Log.wtf("ex",  e.getMessage()+"");
                     }
                 }
+            }
+
+            if(areAllOrdersFinished && !isTableEmpty) {
+                for (int clientNumber = 0; clientNumber < globalTable.clients.size(); clientNumber++) {
+                    Client globalClient = globalTable.clients.valueAt(clientNumber);
+                    for (int orderNumber = 0; orderNumber < globalClient.orders.size(); orderNumber++) {
+                        Order order = globalClient.orders.valueAt(orderNumber);
+                        globalClient.orders.remove(order.id);
+                        deleteOrder(order);
+                    }
+                }
+
+                    for (int toDeletePosition = ordersLinearLayout.getChildCount() - 1; toDeletePosition >= 0; toDeletePosition--)
+                    {
+                        View toDeleteView = ordersLinearLayout.getChildAt(toDeletePosition);
+                        runOnUiThread(() -> { ordersLinearLayout.removeView(toDeleteView); });
+                        try
+                        {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e)
+                        {
+                            e.printStackTrace();
+                        }
+                    }
+
+
+                sortTable(globalTable.state, globalTable, 1000);
+                areAllOrdersFinished = false;
             }
         }
     }
@@ -344,6 +471,15 @@ public class TablesActivity extends AppCompatActivity {
                 addNewOrdersView(getAllOrders());
             } catch (Exception e) {
                 e.printStackTrace();
+            }
+            updateTablesView();
+            for (int tableNumber = 0; tableNumber < globalTables.size(); tableNumber++)
+            {
+                try
+                {
+                    sortTable(globalTables.valueAt(tableNumber).state, globalTables.valueAt(tableNumber), 1000);
+                }
+                catch (Exception e) {}
             }
             while(true) {
                 try {
