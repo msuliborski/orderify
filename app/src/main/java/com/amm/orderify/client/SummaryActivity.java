@@ -114,8 +114,7 @@ public class SummaryActivity extends AppCompatActivity {
     private void updateView() {
 
         Table table = getFullTableData(thisTableID);
-        Client client = null;
-        if (table != null) client = table.clients.get(thisClientID);
+        Client client = table.clients.get(thisClientID);
 
         globalClient.state = client.state;
         globalTable.state = table.state;
@@ -156,8 +155,8 @@ public class SummaryActivity extends AppCompatActivity {
 //        if (globalClient.state == 3) runOnUiThread(() -> cancelBillScreen.setVisibility(View.VISIBLE));
 //        else runOnUiThread(() -> cancelBillScreen.setVisibility(View.GONE));
 
-        runOnUiThread(() -> clientPriceNumberTextView.setText(globalClient.getTotalPriceString()));
-        runOnUiThread(() -> tablePriceNumberTextView.setText(globalTable.getTotalPriceString()));
+        runOnUiThread(() -> clientPriceNumberTextView.setText(client.getTotalPriceString()));
+        runOnUiThread(() -> tablePriceNumberTextView.setText(table.getTotalPriceString()));
     }
 
     @Override

@@ -33,11 +33,11 @@ public class JBDCDriver {
         database = "Orderify";
         user = "root";
 
-        ip = "10.0.2.2";
-        password = "";
+//        ip = "10.0.2.2";
+//        password = "";
 
-//        ip = "192.168.1.100";
-//        password = "1234";
+        ip = "192.168.1.100";
+        password = "1234";
         
     }
 
