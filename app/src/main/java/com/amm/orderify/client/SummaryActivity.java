@@ -122,11 +122,18 @@ public class SummaryActivity extends AppCompatActivity {
         //load everything that is update from getFullTableData but remember to backup View elements
         //this way we update global tablepricing
         //dunno if it is really necessary
+
         for(int orderNumber = 0; orderNumber <  globalClient.orders.size(); orderNumber++) {
+
             Order globalOrder =  globalClient.orders.valueAt(orderNumber);
-            globalOrder.state = client.orders.get(globalOrder.id).state;
-            TextView orderStateTextView = globalOrder.orderElement.findViewById(R.id.OrderStateTextView);
-            runOnUiThread(() -> orderStateTextView.setText(globalOrder.getState()));
+
+//            if(globalClient.orders.containsKey(globalOrder.id)){
+                globalOrder.state = client.orders.get(globalOrder.id).state;
+                TextView orderStateTextView = globalOrder.orderElement.findViewById(R.id.OrderStateTextView);
+                runOnUiThread(() -> orderStateTextView.setText(globalOrder.getState()));
+//            } else {
+//                ((LinearLayout)(table.tableElement.findViewById(R.id.WishListLinearLayout))).removeView(globalClient.orders.get(globalOrder.id).orderElement);
+//            }
         }
 
         switch (globalClient.state){
@@ -157,6 +164,10 @@ public class SummaryActivity extends AppCompatActivity {
 
         runOnUiThread(() -> clientPriceNumberTextView.setText(client.getTotalPriceString()));
         runOnUiThread(() -> tablePriceNumberTextView.setText(table.getTotalPriceString()));
+
+
+
+
     }
 
     @Override
