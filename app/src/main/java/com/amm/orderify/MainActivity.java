@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         -automatyczne usuwanie zapłaconych dań z SummaryActivity oraz TablesActivity
         -sortowanie dynamiczne (TablesActivity i SummaryActivity)
 
+
         //DESIGN
         -paski do przewijania w Tablesactivity i MenuActivity i w ogóle tam gdzie sroll jest
         -kolorystyka w barze, bo boli
