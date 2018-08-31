@@ -75,6 +75,7 @@
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@+id/TableNumberBackground"
         app:layout_constraintEnd_toEndOf="@+id/TableNumberBackground"
+        app:layout_constraintHorizontal_bias="0.41"
         app:layout_constraintStart_toStartOf="@+id/TableNumberBackground"
         app:layout_constraintTop_toTopOf="@+id/TableNumberBackground" />
 
@@ -84,6 +85,7 @@
         android:layout_height="10dp"
         android:layout_marginStart="8dp"
         android:background="@drawable/bar_accept_request_button"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/TableNumberBackground"
         app:layout_constraintStart_toEndOf="@+id/TableStateTextView"
         app:layout_constraintTop_toTopOf="@+id/TableNumberBackground" />
@@ -115,6 +117,22 @@
         app:layout_constraintHorizontal_bias="0.87"
         app:layout_constraintStart_toStartOf="@+id/TableNumberBackground"
         app:layout_constraintTop_toTopOf="@+id/TableNumberBackground" />
+
+    <Button
+        android:id="@+id/OrdersPaidButton"
+        android:layout_width="46dp"
+        android:layout_height="15dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/bar_order_state_button_background"
+        android:fontFamily="@font/tw_cen"
+        android:text="@string/bar_tables_order_state_paid_button"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:textSize="12sp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@id/TableStateTextView"
+        app:layout_constraintStart_toEndOf="@+id/AcceptRequestButton"
+        app:layout_constraintTop_toTopOf="@id/TableStateTextView" />
 
     <LinearLayout
         android:id="@+id/OrdersLinearLayout"

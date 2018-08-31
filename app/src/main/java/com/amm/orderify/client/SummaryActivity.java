@@ -31,6 +31,7 @@ public class SummaryActivity extends AppCompatActivity {
     TextView tablePriceNumberTextView;
     ConstraintLayout cancelBillScreen;
     ConstraintLayout freezeButtonScreen;
+    boolean wereThereAnyOrders = false;
 
     Table globalTable;
     Client globalClient;
@@ -108,6 +109,7 @@ public class SummaryActivity extends AppCompatActivity {
             }
             orderListLinearLayout.addView(globalOrder.orderElement);
         }
+        if (orderListLinearLayout.getChildCount() > 0) wereThereAnyOrders = true;
     }
 
 
@@ -122,6 +124,17 @@ public class SummaryActivity extends AppCompatActivity {
         //load everything that is update from getFullTableData but remember to backup View elements
         //this way we update global tablepricing
         //dunno if it is really necessary
+
+        if (client.orders.size() == 0 && wereThereAnyOrders)
+        {
+            runOnUiThread(() -> this.startActivity(new Intent(this, WelcomeActivity.class)));
+            if (blMyAsyncTask)
+            {
+                blMyAsyncTask = false;
+                task.cancel(true);
+            }
+            return;
+        }
 
         for(int orderNumber = 0; orderNumber <  globalClient.orders.size(); orderNumber++) {
 

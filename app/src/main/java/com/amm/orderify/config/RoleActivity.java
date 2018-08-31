@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.amm.orderify.R;
 import com.amm.orderify.bar.TablesActivity;
 import com.amm.orderify.client.MenuActivity;
+import com.amm.orderify.client.WelcomeActivity;
 import com.amm.orderify.helpers.data.Client;
 import com.amm.orderify.helpers.data.Table;
 import com.amm.orderify.maintenance.MaintenanceActivity;
@@ -181,7 +182,7 @@ public class RoleActivity extends AppCompatActivity {
                         editor.putInt("thisClientID", thisClientID);
                         editor.apply();
                     }
-                    this.startActivity(new Intent(this, MenuActivity.class));
+                    this.startActivity(new Intent(this, WelcomeActivity.class));
                     break;
                 case 2: //MAINTENANCE
                     this.startActivity(new Intent(this, MaintenanceActivity.class));

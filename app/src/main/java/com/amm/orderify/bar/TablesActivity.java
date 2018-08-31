@@ -1,5 +1,6 @@
 package com.amm.orderify.bar;
 
+import android.animation.LayoutTransition;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +8,8 @@ import android.os.Bundle;
 import android.util.ArrayMap;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -57,6 +60,8 @@ public class TablesActivity extends AppCompatActivity {
         globalTables = getOnlyTables();
         if(tablesLinearLayout != null) tablesLinearLayout.removeAllViews();
         tablesLinearLayout = findViewById(R.id.TablesLinearLayout);
+        LayoutTransition layoutTransition = tablesLinearLayout.getLayoutTransition();
+        layoutTransition.enableTransitionType(LayoutTransition.CHANGING);
 
         for (int tableNumber = 0; tableNumber < globalTables.size(); tableNumber++) {
             Table globalTable = globalTables.valueAt(tableNumber);
@@ -66,10 +71,22 @@ public class TablesActivity extends AppCompatActivity {
             Button acceptRequestButton = globalTable.tableElement.findViewById(R.id.AcceptRequestButton);
             Button freezeStateButton = globalTable.tableElement.findViewById(R.id.FreezeStateButton);
             Button expandCollapseButton = globalTable.tableElement.findViewById(R.id.ExpandCollapseButton);
+            Button ordersPaidButton = globalTable.tableElement.findViewById(R.id.OrdersPaidButton);
             LinearLayout ordersLinearLayout = globalTable.tableElement.findViewById(R.id.OrdersLinearLayout);
 
             tableNumberTextView.setText(globalTable.getNumberString());
             tableStateTextView.setText(globalTable.getState());
+
+            ordersPaidButton.setOnClickListener(e -> {
+                try {
+                    globalTable.state = 1;
+                    for(int i = 0; i < globalTable.clients.size(); i++) globalTable.clients.valueAt(i).state = 1;
+                    ExecuteUpdate("UPDATE tables SET state = 1 WHERE ID = " + globalTable.id);
+                    ExecuteUpdate("UPDATE clients SET state = 1 WHERE tableID = " + globalTable.id);
+                    ExecuteUpdate("UPDATE orders JOIN clients ON orders.clientID = clients.ID SET orders.state = 4 WHERE clients.tableID = " + globalTable.id);
+                } catch (SQLException ignored) {}
+            });
+
             acceptRequestButton.setOnClickListener(v -> {
                 try {
                     globalTable.state = 1;
@@ -166,17 +183,18 @@ public class TablesActivity extends AppCompatActivity {
                         runOnUiThread(() -> {
                             orderStateTextView.setText(R.string.lifecycle_order_delivered);
                             changeOrderStateButton.setVisibility(View.GONE);
-                            changeOrderStateButton.setText(R.string.bar_tables_order_state_paid_button);
-                        });
-                    } else if(globalOrder.state == 3){
-                        globalOrder.state = 4;
-                        globalClient.state = 1;
-                        globalTable.state = 1;
-                        runOnUiThread(() -> {
-                            changeOrderStateButton.setVisibility(View.GONE);
-                            orderStateTextView.setText(R.string.lifecycle_order_paid);
+                            //changeOrderStateButton.setText(R.string.bar_tables_order_state_paid_button);
                         });
                     }
+//                    else if(globalOrder.state == 3){
+//                        globalOrder.state = 4;
+//                        globalClient.state = 1;
+//                        globalTable.state = 1;
+//                        runOnUiThread(() -> {
+//                            changeOrderStateButton.setVisibility(View.GONE);
+//                            orderStateTextView.setText(R.string.lifecycle_order_paid);
+//                        });
+//                    }
 
                     ExecuteUpdate("UPDATE tables SET state = " + globalTable.state + " WHERE ID = " + globalOrder.tableID);
                     ExecuteUpdate("UPDATE clients SET state = " + globalClient.state + " WHERE tableID = " + globalOrder.tableID);
@@ -302,6 +320,7 @@ public class TablesActivity extends AppCompatActivity {
             Button acceptRequestButton = globalTable.tableElement.findViewById(R.id.AcceptRequestButton);
             TextView tableStateTextView = globalTable.tableElement.findViewById(R.id.TableStateTextView);
             TextView overallPriceTextView = globalTable.tableElement.findViewById(R.id.OverallPriceTextView);
+            Button ordersPaidButton = globalTable.tableElement.findViewById(R.id.OrdersPaidButton);
 
             try {
                 runOnUiThread(() -> tableStateTextView.setText(table.getState()));
@@ -313,6 +332,7 @@ public class TablesActivity extends AppCompatActivity {
             {
                 runOnUiThread(() -> {
                     acceptRequestButton.setVisibility(View.GONE);
+                    ordersPaidButton.setVisibility(View.GONE);
                     tableStateTextView.setVisibility(View.GONE);
                     tableNumberBackgroundInactive.setVisibility(View.VISIBLE);
                     tableNumberBackgroundUrgent.setVisibility(View.GONE);
@@ -332,6 +352,7 @@ public class TablesActivity extends AppCompatActivity {
                 {
                     case 1:
                         runOnUiThread(() -> {
+                            ordersPaidButton.setVisibility(View.GONE);
                             acceptRequestButton.setVisibility(View.GONE);
                             tableStateTextView.setVisibility(View.GONE);
                             tableNumberBackground.setVisibility(View.VISIBLE);
@@ -347,6 +368,15 @@ public class TablesActivity extends AppCompatActivity {
                         });
                         break;
                     case 3:
+                        runOnUiThread(() -> {
+                            tableStateTextView.setVisibility(View.VISIBLE);
+                            ordersPaidButton.setVisibility(View.VISIBLE);
+                            acceptRequestButton.setVisibility(View.GONE);
+                            tableNumberBackgroundUrgent.setVisibility(View.VISIBLE);
+                            tableNumberBackgroundInactive.setVisibility(View.GONE);
+                            tableNumberBackground.setVisibility(View.INVISIBLE);
+                        });
+                        break;
                     case 4:
                         runOnUiThread(() -> {
                             tableStateTextView.setVisibility(View.VISIBLE);
@@ -385,10 +415,10 @@ public class TablesActivity extends AppCompatActivity {
                         if(order.state == 2) runOnUiThread(() -> {
                             orderStateTextView.setText(order.getState());
                             changeOrderStateButton.setVisibility(View.GONE); });
-                        else if(order.state == 3) runOnUiThread(() -> {
-                            orderStateTextView.setText(order.getState());
-                            changeOrderStateButton.setText(R.string.lifecycle_order_paid);
-                            changeOrderStateButton.setVisibility(View.VISIBLE); });
+//                        else if(order.state == 3) runOnUiThread(() -> {
+//                            orderStateTextView.setText(order.getState());
+//                            changeOrderStateButton.setText(R.string.lifecycle_order_paid);
+//                            changeOrderStateButton.setVisibility(View.VISIBLE); });
                         else if(order.state == 4) runOnUiThread(() -> {
                             orderStateTextView.setText(order.getState());
                             changeOrderStateButton.setVisibility(View.GONE); });
@@ -410,23 +440,16 @@ public class TablesActivity extends AppCompatActivity {
                         deleteOrder(order);
                     }
                 }
-
-                    for (int toDeletePosition = ordersLinearLayout.getChildCount() - 1; toDeletePosition >= 0; toDeletePosition--)
-                    {
-                        View toDeleteView = ordersLinearLayout.getChildAt(toDeletePosition);
-                        runOnUiThread(() -> { ordersLinearLayout.removeView(toDeleteView); });
-                        try
-                        {
-                            Thread.sleep(1000);
-                        } catch (InterruptedException e)
-                        {
-                            e.printStackTrace();
-                        }
-                    }
-
-
+                Log.wtf("Log before animation", globalTable.number + "");
+                Animation quitAnim = AnimationUtils.loadAnimation(this, R.anim.lefttoright);
+                //runOnUiThread(() -> ordersLinearLayout.startAnimation(quitAnim));
+                Log.wtf("Log after animation", globalTable.number + "");
+                try { Thread.sleep(1000); } catch (InterruptedException e) { e.getMessage(); }
+                Log.wtf("Log after wait", globalTable.number + "");
+                runOnUiThread(() -> ordersLinearLayout.removeAllViews());
+                Log.wtf("Log before sorting", globalTable.number + "");
                 sortTable(globalTable.state, globalTable, 1000);
-                areAllOrdersFinished = false;
+                Log.wtf("Log after sorting", globalTable.number + "");
             }
         }
     }
