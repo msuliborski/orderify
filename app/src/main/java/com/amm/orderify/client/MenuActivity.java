@@ -104,6 +104,8 @@ public class MenuActivity extends AppCompatActivity {
         if(dishCategoriesLinearLayout != null) dishCategoriesLinearLayout.removeAllViews();
         //dishCategories.sort(Comparator.comparing(object -> String.valueOf(object.id))); //sort
         dishCategoriesLinearLayout = findViewById(R.id.DishCategoriesLinearLayout);
+        LayoutTransition layoutTransition = dishCategoriesLinearLayout.getLayoutTransition();
+        layoutTransition.enableTransitionType(LayoutTransition.CHANGING);
         for (int dishCategoryNumber = 0; dishCategoryNumber < dishCategories.size(); dishCategoryNumber++){
             //dishCategory.dishes.sort(Comparator.comparing(object -> String.valueOf(object.name))); //sort
             View dishCategoryElement = getLayoutInflater().inflate(R.layout.client_menu_element_dishcategory, null);
@@ -114,16 +116,22 @@ public class MenuActivity extends AppCompatActivity {
             dishCategoryTextView.setText(dishCategory.name);
 
             LinearLayout dishesLinearLayout = dishCategoryElement.findViewById(R.id.DishesLinearLayout);
+            LayoutTransition layoutTransition2 = dishesLinearLayout.getLayoutTransition();
+            layoutTransition2.enableTransitionType(LayoutTransition.CHANGING);
             for (int dishNumber = 0; dishNumber < dishCategory.dishes.size(); dishNumber++){
                 //dish.addonCategories.sort(Comparator.comparing(object -> String.valueOf(object.name))); //sort
 
                 View dishElement = getLayoutInflater().inflate(R.layout.client_menu_element_dish, null);
+                View dishExpandElement = getLayoutInflater().inflate(R.layout.client_menu_element_expand, null);
+                LinearLayout menuExpandLinearLayout = dishElement.findViewById(R.id.MenuExpandLinearLayout);
+                LayoutTransition layoutTransition3 = menuExpandLinearLayout.getLayoutTransition();
+                layoutTransition3.enableTransitionType(LayoutTransition.CHANGING);
                 TextView nameTextView = dishElement.findViewById(R.id.NameTextView);
                 TextView priceTextView = dishElement.findViewById(R.id.PriceTextView);
                 TextView shortDescriptionTextView = dishElement.findViewById(R.id.ShortDescriptionTextView);
-                TextView longDescriptionTextView = dishElement.findViewById(R.id.LongDescriptionTextView);
+                TextView longDescriptionTextView = dishExpandElement.findViewById(R.id.LongDescriptionTextView);
                 ImageButton menuBackgroundButton = dishElement.findViewById(R.id.MenuBackgroundButton);
-                ImageView addToOrderButton = dishElement.findViewById(R.id.AddToOrderButton);
+                ImageView addToOrderButton = dishExpandElement.findViewById(R.id.AddToOrderButton);
 
                 Dish dish = dishCategory.dishes.valueAt(dishNumber);
 
@@ -136,11 +144,11 @@ public class MenuActivity extends AppCompatActivity {
                 ConstraintSet constraintSetCopy = new ConstraintSet();
                 constraintSetCopy.clone(cl);
 
-                ConstraintLayout menuExpand = dishElement.findViewById(R.id.MenuExpand);
+
 
                 menuBackgroundButton.setOnClickListener(v -> {
-                    if(menuExpand.getVisibility() == View.GONE) {
-                        menuExpand.setVisibility(View.VISIBLE);
+                    if(menuExpandLinearLayout.getChildCount() == 0) {
+                        menuExpandLinearLayout.addView(dishExpandElement);
                         shortDescriptionTextView.setVisibility(View.GONE);
                         ConstraintSet constraintSet = new ConstraintSet();
                         constraintSet.clone(cl);
@@ -149,7 +157,7 @@ public class MenuActivity extends AppCompatActivity {
                         constraintSet.applyTo(cl);
                     }
                     else  {
-                        menuExpand.setVisibility(View.GONE);
+                        menuExpandLinearLayout.removeAllViews();
                         constraintSetCopy.applyTo(cl);
                         shortDescriptionTextView.setVisibility(View.VISIBLE);
                     }
@@ -167,7 +175,7 @@ public class MenuActivity extends AppCompatActivity {
                     updateWishes();
                 });
 
-                GridLayout addonCategoriesGridLayout = dishElement.findViewById(R.id.AddonCategoriesGridLayout);
+                GridLayout addonCategoriesGridLayout = dishExpandElement.findViewById(R.id.AddonCategoriesGridLayout);
                 for (int addonCategoriesNumber = 0; addonCategoriesNumber < dish.addonCategories.size(); addonCategoriesNumber++) {
                     AddonCategory addonCategory = dish.addonCategories.valueAt(addonCategoriesNumber);
                     //addonCategory.addons.sort(Comparator.comparing(object -> String.valueOf(object.name))); //sort
