@@ -83,7 +83,7 @@ public class TablesActivity extends AppCompatActivity {
                     for(int i = 0; i < globalTable.clients.size(); i++) globalTable.clients.valueAt(i).state = 1;
                     ExecuteUpdate("UPDATE tables SET state = 1 WHERE ID = " + globalTable.id);
                     ExecuteUpdate("UPDATE clients SET state = 1 WHERE tableID = " + globalTable.id);
-                    ExecuteUpdate("UPDATE orders JOIN clients ON orders.clientID = clients.ID SET orders.state = 4 WHERE clients.tableID = " + globalTable.id);
+                    ExecuteUpdate("UPDATE orders JOIN clients ON orders.clientID = clients.ID SET orders.state = 4 WHERE clients.tableID = " + globalTable.id + " AND orders.state = 3");
                 } catch (SQLException ignored) {}
             });
 

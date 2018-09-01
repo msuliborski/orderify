@@ -14,7 +14,7 @@ public class WelcomeActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_welcome);
+        setContentView(R.layout.client_welcome_activity);
 
         Button goToMenuButton = findViewById(R.id.GoToMenuButton);
         goToMenuButton.setOnClickListener(e -> {
