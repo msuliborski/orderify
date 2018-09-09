@@ -32,12 +32,10 @@ public class TablesActivity extends AppCompatActivity {
 
     ArrayMap<Integer,Table> globalTables = new ArrayMap<>();
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bar_tables_activity);
-
 
         Button refreshButton = findViewById(R.id.RefreshButton);
         refreshButton.setOnClickListener(v -> {
