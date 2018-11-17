@@ -44,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
 
         //APP LOGIC
         -update ceny w summeryactivity
+        -w menu lista orderow musi nie odswiezac sie po calosci tylko dodawac nowe rzeczy
+        -nie mozna placic zanim wszystkie ordery są delivered
+        -dodaj sort w odpoiwiednie miejsce (po usuniecuiu orderrasasa)
 
         -lifecycle (ogarnac warunek konca)
         -czas na poprawnych timezone'ach (https://www.baeldung.com/java-8-date-time-intro)
@@ -60,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
         -kolorystyka w barze, bo boli
         -przebudowa podglądu orderu z wyświetlanymi dodatkami do niego w MenuActivity
         -redisign na tablet "wielocalowy"
+        -komunikat gdy dajesz pusty order
 
         //LONG-TERM
         -zabijacz czasu

@@ -78,6 +78,7 @@ public class TablesActivity extends AppCompatActivity {
             ordersPaidButton.setOnClickListener(e -> {
                 try {
                     globalTable.state = 1;
+                    ordersPaidButton.setVisibility(View.INVISIBLE);
                     for(int i = 0; i < globalTable.clients.size(); i++) globalTable.clients.valueAt(i).state = 1;
                     ExecuteUpdate("UPDATE tables SET state = 1 WHERE ID = " + globalTable.id);
                     ExecuteUpdate("UPDATE clients SET state = 1 WHERE tableID = " + globalTable.id);

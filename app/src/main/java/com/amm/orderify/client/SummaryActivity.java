@@ -52,11 +52,26 @@ public class SummaryActivity extends AppCompatActivity {
 
         Button askForGlobalBillButton = findViewById(R.id.AskForGlobalBillButton);
         askForGlobalBillButton.setOnClickListener(v -> {
-            try {
-                ExecuteUpdate("UPDATE tables SET state = 3 WHERE ID = " + thisTableID);
-                ExecuteUpdate("UPDATE clients SET state = 3 WHERE tableID = " + thisTableID);
-                ExecuteUpdate("UPDATE orders JOIN clients ON orders.clientID = clients.ID SET orders.state = 3 WHERE clients.tableID = " + thisTableID + " AND orders.state = 2");
-            } catch (SQLException ignored) { }
+            Table table = getFullTableData(thisTableID);
+            boolean allDelivered = true;
+            for (int clientNumber = 0; clientNumber < table.clients.size(); clientNumber++) {
+                for (int orderNumber = 0; orderNumber < table.clients.valueAt(clientNumber).orders.size(); orderNumber++) {
+                    if (table.clients.valueAt(clientNumber).orders.valueAt(orderNumber).state != 2){
+                        allDelivered = false;
+                        break;
+                    }
+                }
+            }
+            if (allDelivered) {
+                try {
+                    ExecuteUpdate("UPDATE tables SET state = 3 WHERE ID = " + thisTableID);
+                    ExecuteUpdate("UPDATE clients SET state = 3 WHERE tableID = " + thisTableID);
+                    ExecuteUpdate("UPDATE orders JOIN clients ON orders.clientID = clients.ID SET orders.state = 3 WHERE clients.tableID = " + thisTableID + " AND orders.state = 2");
+                } catch (SQLException ignored) { }
+            } else {
+                //komunikat
+                Log.wtf("KOMUNIKAT", "all must be delivered");
+            }
         });
 
         Button goToMenuButton = findViewById(R.id.GoToMenuButton);
@@ -81,12 +96,13 @@ public class SummaryActivity extends AppCompatActivity {
 
     private void generateOrdersView() {
         if(orderListLinearLayout != null) orderListLinearLayout.removeAllViews();
-        orderListLinearLayout = findViewById(R.id.WishListLinearLayout);
+        orderListLinearLayout = findViewById(R.id.OrderListLinearLayout);
         for (int orderNumber = 0; orderNumber < globalClient.orders.size(); orderNumber++) {
 
             Order globalOrder =  globalClient.orders.valueAt(orderNumber);
 
             globalOrder.orderElement = getLayoutInflater().inflate(R.layout.client_summary_element_order, null);
+            globalTable.ordersElements.put(globalOrder.id, globalOrder.orderElement);
             TextView orderNumberTextView = globalOrder.orderElement.findViewById(R.id.OrderNumberTextView);
             TextView orderStateTextView = globalOrder.orderElement.findViewById(R.id.OrderStateTextView);
             TextView orderSumNumberTextView = globalOrder.orderElement.findViewById(R.id.OrderSumNumberTextView);
@@ -144,28 +160,17 @@ public class SummaryActivity extends AppCompatActivity {
 
             Order globalOrder =  globalClient.orders.valueAt(orderNumber);
 
-            Log.wtf("kuuuufa", globalOrder.id + "");
-            if (table.tableElement == null) Log.wtf("jets nullem", "jest nullem");
-            else Log.wtf("nie jest null", "nie jest null");
-
             if(client.orders.get(globalOrder.id) != null) {
-                Log.wtf("aefaefawdwa", client.orders.size() + "");
-                Log.wtf("ewfw", client.orders.get(globalOrder.id).id + "  " + client.orders.get(globalOrder.id).getState());
                 globalOrder.state = client.orders.get(globalOrder.id).state;
                 TextView orderStateTextView = globalOrder.orderElement.findViewById(R.id.OrderStateTextView);
                 runOnUiThread(() -> orderStateTextView.setText(globalOrder.getState()));
             } else {
-
-                LinearLayout testLL = findViewById(R.id.WishListLinearLayout);
-                int finalOrderNumber = orderNumber;
-                runOnUiThread(() -> testLL.removeView(testLL.getChildAt(finalOrderNumber)));
-
-//                ScrollView testLL = findViewById(R.id.OrderListScrollView);
-//                testLL.removeView(testLL.getChildAt(orderNumber));
+                LinearLayout testLL = findViewById(R.id.OrderListLinearLayout);
+                runOnUiThread(() -> testLL.removeView(globalTable.ordersElements.get(globalOrder.id)));
             }
         }
 
-        switch (globalClient.state){
+        switch (globalTable.state){
             case 1:
                 runOnUiThread(() -> cancelBillScreen.setVisibility(View.GONE));
                 runOnUiThread(() -> freezeButtonScreen.setVisibility(View.GONE));
