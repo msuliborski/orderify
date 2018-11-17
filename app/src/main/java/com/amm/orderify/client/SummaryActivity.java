@@ -5,10 +5,12 @@ import android.os.AsyncTask;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.amm.orderify.R;
@@ -89,7 +91,6 @@ public class SummaryActivity extends AppCompatActivity {
             TextView orderStateTextView = globalOrder.orderElement.findViewById(R.id.OrderStateTextView);
             TextView orderSumNumberTextView = globalOrder.orderElement.findViewById(R.id.OrderSumNumberTextView);
 
-
             orderNumberTextView.setText(globalOrder.getOrderNumberString());
             orderStateTextView.setText(globalOrder.getState());
             orderSumNumberTextView.setText(globalOrder.getTotalPriceString());
@@ -121,6 +122,7 @@ public class SummaryActivity extends AppCompatActivity {
         globalClient.state = client.state;
         globalTable.state = table.state;
 
+
         //load everything that is update from getFullTableData but remember to backup View elements
         //this way we update global tablepricing
         //dunno if it is really necessary
@@ -136,17 +138,31 @@ public class SummaryActivity extends AppCompatActivity {
             return;
         }
 
+
+
         for(int orderNumber = 0; orderNumber <  globalClient.orders.size(); orderNumber++) {
 
             Order globalOrder =  globalClient.orders.valueAt(orderNumber);
 
-//            if(globalClient.orders.containsKey(globalOrder.id)){
+            Log.wtf("kuuuufa", globalOrder.id + "");
+            if (table.tableElement == null) Log.wtf("jets nullem", "jest nullem");
+            else Log.wtf("nie jest null", "nie jest null");
+
+            if(client.orders.get(globalOrder.id) != null) {
+                Log.wtf("aefaefawdwa", client.orders.size() + "");
+                Log.wtf("ewfw", client.orders.get(globalOrder.id).id + "  " + client.orders.get(globalOrder.id).getState());
                 globalOrder.state = client.orders.get(globalOrder.id).state;
                 TextView orderStateTextView = globalOrder.orderElement.findViewById(R.id.OrderStateTextView);
                 runOnUiThread(() -> orderStateTextView.setText(globalOrder.getState()));
-//            } else {
-//                ((LinearLayout)(table.tableElement.findViewById(R.id.WishListLinearLayout))).removeView(globalClient.orders.get(globalOrder.id).orderElement);
-//            }
+            } else {
+
+                LinearLayout testLL = findViewById(R.id.WishListLinearLayout);
+                int finalOrderNumber = orderNumber;
+                runOnUiThread(() -> testLL.removeView(testLL.getChildAt(finalOrderNumber)));
+
+//                ScrollView testLL = findViewById(R.id.OrderListScrollView);
+//                testLL.removeView(testLL.getChildAt(orderNumber));
+            }
         }
 
         switch (globalClient.state){
@@ -177,10 +193,6 @@ public class SummaryActivity extends AppCompatActivity {
 
         runOnUiThread(() -> clientPriceNumberTextView.setText(client.getTotalPriceString()));
         runOnUiThread(() -> tablePriceNumberTextView.setText(table.getTotalPriceString()));
-
-
-
-
     }
 
     @Override
@@ -230,5 +242,4 @@ public class SummaryActivity extends AppCompatActivity {
             super.onProgressUpdate(values);
         }
     }
-
 }
