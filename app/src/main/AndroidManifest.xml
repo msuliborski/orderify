@@ -12,34 +12,31 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme.Fullscreen" >
+        android:theme="@style/AppTheme.Fullscreen">
         <activity
             android:name=".MainActivity"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".config.RoleActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="stateHidden" />
-
         <activity
             android:name=".bar.TablesActivity"
             android:screenOrientation="landscape" />
-
         <activity
             android:name=".client.MenuActivity"
             android:screenOrientation="landscape"
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".client.SummaryActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="stateHidden" />
-
         <activity
             android:name=".maintenance.MaintenanceActivity"
             android:screenOrientation="landscape"
@@ -64,6 +61,8 @@
             android:name=".maintenance.editors.EditAddonsActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".client.WelcomeActivity"
+            android:screenOrientation="landscape" />
     </application>
 
 </manifest>

@@ -13,6 +13,7 @@ public class Table {
     public String description;
     public int state;
     public ArrayMap<Integer,Client> clients;
+    public ArrayMap<Integer,View> ordersElements;
     public View tableElement;
 
     public Table(int id, int number, String description, int state, ArrayMap<Integer,Client> clients) {
@@ -21,6 +22,7 @@ public class Table {
         this.description = description;
         this.state = state;
         this.clients = clients;
+        this.ordersElements = new ArrayMap<>();
     }
 
     public String getNumberString() {

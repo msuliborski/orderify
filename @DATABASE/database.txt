@@ -1,11 +1,23 @@
-/etc/mysql/mysql.d/mysql.conf
-bind-address = <192.168.1.100> (local address, not 'localhost')
+sudo apt install mysql-server
 
+log: sudo mysql -p -u root   (bez hasla)
 
 CREATE USER 'root'@'%' IDENTIFIED BY '1234';
 GRANT ALL PRIVILEGES ON *.* TO 'root'@'%';
 flush privileges;
-//in the future grand access only to valid tables in the network
+
+sudo nano /etc/mysql/mysql.d/mysql.conf
+OR
+sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf     <--- pref this
+#-out this:
+bind-address = 127.0.0.1
+
+execute:
+
+sudo /etc/init.d/mysql restart
+OR 
+sudo service mysql restart
+
 
 To access MySQL:
 local:

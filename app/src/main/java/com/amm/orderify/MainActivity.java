@@ -40,21 +40,30 @@ public class MainActivity extends AppCompatActivity {
         //DATABASE
         -obsługa dań w wielu języka (do obgadania)
         -padlock TTL na czas a nie ilość odczytów (po przerobieniu czasu)
+        --one query to rule them all
 
         //APP LOGIC
-        -lifecycle refactor
+        -update ceny w summeryactivity
+        -w menu lista orderow musi nie odswiezac sie po calosci tylko dodawac nowe rzeczy
+        -nie mozna placic zanim wszystkie ordery są delivered
+        -dodaj sort w odpoiwiednie miejsce (po usuniecuiu orderrasasa)
+
+        -lifecycle (ogarnac warunek konca)
         -czas na poprawnych timezone'ach (https://www.baeldung.com/java-8-date-time-intro)
+        -popros o rachjunek z karta lub bez
         -pop-upy z potwierdzeniami (czy na pewno usunąć danie/czy na pewno wezwać kelnera)
         -wyswietlanie przywijajacych messages
         -edycja messages
         -automatyczne usuwanie zapłaconych dań z SummaryActivity oraz TablesActivity
         -sortowanie dynamiczne (TablesActivity i SummaryActivity)
 
+
         //DESIGN
-        -paski do przewijania w Tablesactivity i MenuActivity i w ogóle tam gdzie sroll jest
+        -paski z kategoriami
         -kolorystyka w barze, bo boli
         -przebudowa podglądu orderu z wyświetlanymi dodatkami do niego w MenuActivity
         -redisign na tablet "wielocalowy"
+        -komunikat gdy dajesz pusty order
 
         //LONG-TERM
         -zabijacz czasu

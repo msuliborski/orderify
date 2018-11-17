@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cl"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:animateLayoutChanges="true">
+    android:layout_height="wrap_content">
 
 
     <TextView
@@ -52,80 +51,19 @@
         app:layout_constraintStart_toEndOf="@+id/PriceTextView"
         app:layout_constraintTop_toTopOf="@+id/PriceTextView" />
 
-
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/MenuExpand"
+    <LinearLayout
+        android:id="@+id/MenuExpandLinearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="32dp"
         android:orientation="vertical"
-        android:visibility="gone"
+        android:animateLayoutChanges="true"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/MenuBackgroundButton">
+        app:layout_constraintTop_toBottomOf="@id/MenuBackgroundButton">
 
-        <TextView
-            android:id="@+id/LongDescriptionTextView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginEnd="16dp"
-            android:fontFamily="@font/tw_cen"
-            android:text="LongD"
-            android:textColor="@color/darkRedFaded"
-            android:textSize="10sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    </LinearLayout>
 
-        <ImageView
-            android:id="@+id/AddToOrderButton"
-            android:layout_width="100dp"
-            android:layout_height="22dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:scaleType="fitStart"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.15"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/AddonCategoriesGridLayout"
-            app:srcCompat="@drawable/add_button_background" />
-
-        <TextView
-            android:id="@+id/AddButtonTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:fontFamily="@font/tw_cen"
-            android:gravity="center"
-            android:text="@string/client_menu_add_to_order_button"
-            android:textColor="@color/backgroundPrimary"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="@+id/AddToOrderButton"
-            app:layout_constraintEnd_toEndOf="@+id/AddToOrderButton"
-            app:layout_constraintStart_toStartOf="@+id/AddToOrderButton"
-            app:layout_constraintTop_toTopOf="@+id/AddToOrderButton" />
-
-        <android.support.v7.widget.GridLayout
-            android:id="@+id/AddonCategoriesGridLayout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:columnCount="3"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/LongDescriptionTextView">
-
-
-        </android.support.v7.widget.GridLayout>
-
-    </android.support.constraint.ConstraintLayout>
 
     <ImageButton
         android:id="@+id/MenuBackgroundButton"
@@ -133,7 +71,6 @@
         android:layout_height="45dp"
         android:background="?android:attr/selectableItemBackground"
         android:text="Button"
-        app:layout_constraintBottom_toTopOf="@+id/MenuExpand"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
