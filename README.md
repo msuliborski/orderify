@@ -1,6 +1,6 @@
 # Orderify
 
-Application to manage restaurant involving taking client's orders, informing kitchen staff about orders and displaying theirs pay requests. <br/>
+Application to manage restaurant involving taking client's orders, informing kitchen staff about orders and displaying their pay requests. <br/>
 
 <p align="center">
   <img width="940" src="@ART/menu 0.1.png">
