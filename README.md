@@ -1,6 +1,6 @@
-# Pixel Voyager
+# Orderify
 
-Simple game in which you have to avoid balls and survive as long as possible. <br/>
+Application to manage restaurant involving taking client's orders, informing kitchen staff about orders and displaying theirs pay requests. <br/>
 
 <p align="center">
   <img width="940" src="@ART/menu 0.1.png">
@@ -44,7 +44,7 @@ Open project in Android Studio and install all dependencies needed. Currently pr
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+(detailed license in preparation)
 
 
 
