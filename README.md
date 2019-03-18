@@ -3,9 +3,9 @@
 Simple game in which you have to avoid balls and survive as long as possible. <br/>
 
 <p align="center">
-  <img width="280" src="@ART/menu 0.1.png">
-  <img width="280" src="@ART/podsumowanie 0.1.png">
-  <img width="280" src="go@ART/ekran obslugi 0.1.png">
+  <img width="940" src="@ART/menu 0.1.png">
+  <img width="940" src="@ART/podsumowanie 0.1.png">
+  <img width="940" src="@ART/ekran obslugi 0.1.png">
 </p>
 
 ## Getting Started
