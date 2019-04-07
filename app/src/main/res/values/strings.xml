@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">Orderify</string>
 
+    <string name="client_welcome_welcome_textview">WELCOME</string>
+    <string name="client_welcome_message">Press the button to start placing orders</string>
+    <string name="client_welcome_go_to_menu_button">GO TO MENU</string>
+
     <string name="client_menu_order_textview">Order</string>
     <string name="client_menu_menu_textview">Menu</string>
 

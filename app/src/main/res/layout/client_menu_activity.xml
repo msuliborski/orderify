@@ -12,9 +12,8 @@
 
     <ImageView
         android:id="@+id/BasketBackground"
-        android:layout_width="0dp"
+        android:layout_width="271dp"
         android:layout_height="0dp"
-        android:layout_marginEnd="350dp"
         android:clipToPadding="false"
         android:elevation="10dp"
         android:outlineProvider="bounds"
@@ -22,8 +21,10 @@
         android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/basket_background" />
 
     <ImageView
@@ -354,12 +355,12 @@
 
     <ScrollView
         android:id="@+id/DishCategoriesScrollView"
-        android:layout_width="0dp"
+        android:layout_width="454dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@id/SeparatingLineBottom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/BasketBackground"
-        app:layout_constraintTop_toBottomOf="@+id/ArrowDark" >
+        app:layout_constraintTop_toBottomOf="@+id/ArrowDark">
 
         <LinearLayout
             android:id="@+id/DishCategoriesLinearLayout"
