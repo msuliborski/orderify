@@ -1,50 +1,40 @@
 # Orderify
-
-Application to manage restaurant involving taking client's orders, informing kitchen staff about orders and displaying their pay requests. <br/>
-
+Application to manage restaurant involving taking client's orders, informing kitchen staff about orders and displaying their pay requests
+<br/>
 <p align="center">
-  <img width="940" src="@ART/menu 0.1.png">
-  <img width="940" src="@ART/podsumowanie 0.1.png">
-  <img width="940" src="@ART/ekran obslugi 0.1.png">
+  <img width="840" src="@ART/menu 0.1.png"/>
+  <img width="840" src="@ART/podsumowanie 0.1.png"/>
+  <img width="840" src="@ART/ekran obslugi 0.1.png"/>
 </p>
 
-## Getting Started
+### Download
+All releases of the game are avaliable on the github page in the [releases](https://github.com/msuliborski/name/releases) tab. 
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+## Getting Started
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
 ### Prerequisites
-
 In order to properly build application one might need to install [Android Studio](https://developer.android.com/studio). </br>
-
 Proper configuration of mySQL is also necessary. (detailed instruction in preparation)
 
 ### Cloning
-
 ```
 $ git clone https://github.com/msuliborski/orderify
 ```
 
 ### Building
-
-Open project in Android Studio and install all dependencies needed. Currently project is compatible with SDK 29 (Pie).
+Open project in Android Studio and install all dependencies needed. Currently project is compatible with Android 10 (SDK 29).
 
 ### Usage
-
 (detailed instruction in preparation)
 
 ## Built with
-
 * [Android Studio](https://developer.android.com/studio) - the fastest tools for building apps on every type of Android device.
 
-
 ## Authors
-
 * **Michał Suliborski** - [msuliborski](https://github.com/msuliborski)
 * **Arkadiusz Zasina** - [217868](https://github.com/217868)
 
 ## License
-
-(detailed license in preparation)
-
-
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
