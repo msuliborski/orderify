@@ -4,8 +4,8 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.ArrayMap;
 import android.view.View;
 import android.widget.AdapterView;
@@ -34,7 +34,6 @@ import static com.amm.orderify.MainActivity.context;
 import static com.amm.orderify.MainActivity.thisClientID;
 import static com.amm.orderify.MainActivity.thisTableID;
 import static com.amm.orderify.helpers.JBDCDriver.ConnectToDatabase;
-import static com.amm.orderify.helpers.JBDCDriver.ExecuteQuery;
 import static com.amm.orderify.helpers.JBDCDriver.InitiateConnection;
 import static com.amm.orderify.helpers.JBDCDriver.getConnection;
 

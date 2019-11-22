@@ -1,11 +1,9 @@
 package com.amm.orderify.maintenance.editors;
 
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.ArrayMap;
 import android.util.Log;
-import android.util.SparseArray;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,9 +17,6 @@ import com.amm.orderify.helpers.data.DishCategory;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
 
 import static com.amm.orderify.helpers.JBDCDriver.*;
 

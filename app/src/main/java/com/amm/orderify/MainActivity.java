@@ -2,16 +2,13 @@ package com.amm.orderify;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 
 import com.amm.orderify.bar.TablesActivity;
 import com.amm.orderify.client.MenuActivity;
 import com.amm.orderify.config.RoleActivity;
-import com.amm.orderify.helpers.data.Client;
-import com.amm.orderify.helpers.data.Table;
 import com.amm.orderify.maintenance.MaintenanceActivity;
 
 import java.util.Timer;
@@ -57,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
         -edycja messages
         -automatyczne usuwanie zapłaconych dań z SummaryActivity oraz TablesActivity
         -sortowanie dynamiczne (TablesActivity i SummaryActivity)
-
 
         //DESIGN
         -paski z kategoriami
