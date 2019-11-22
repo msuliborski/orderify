@@ -11,9 +11,9 @@ Application to manage restaurant involving taking client's orders, informing kit
 </p>
 
 <p align="center">
-  <img width="280" src="@art/showcase/5.or.jpg"/>
-  <img width="280" src="@art/showcase/6.or.jpg"/>
-  <img width="280" src="@art/showcase/7.or.jpg"/>
+  <img width="840" src="@art/showcase/5.or.jpg"/>
+  <img width="840" src="@art/showcase/6.or.jpg"/>
+  <img width="840" src="@art/showcase/7.or.jpg"/>
 </p>
 
 <p align="center">
