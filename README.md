@@ -1,4 +1,4 @@
-# Orderify
+<h1><img width="25" src="app/src/main/res/mipmap-xxxhdpi/ic_launcher.png">Orderify</h1>
 Application to manage restaurant involving taking client's orders, informing kitchen staff about orders and displaying their pay requests. <br/>
 <p align="center">
   <img width="420" src="@art/showcase/1.config.jpg"/>
